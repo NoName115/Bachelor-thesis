@@ -4,7 +4,7 @@
 # E-mail: dytrych AT fit vutbr cz
 #===========================================
 # asi budete chtit prejmenovat / you will probably rename:
-CO=projekt
+CO=xkolcu00-Urceni-typu-a-smeru-zbrane
 
 all: $(CO).pdf
 

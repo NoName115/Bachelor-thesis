@@ -1,4 +1,4 @@
-\select@language {czech}
+\select@language {slovak}
 \contentsline {chapter}{\numberline {1}\IeC {\'U}vod}{2}{chapter.1}
 \contentsline {section}{\numberline {1.1}Mus\IeC {\'\i }me m\IeC {\'\i }t co \IeC {\v r}\IeC {\'\i }ci}{2}{section.1.1}
 \contentsline {section}{\numberline {1.2}Mus\IeC {\'\i }me v\IeC {\v e}d\IeC {\v e}t, komu to chceme \IeC {\v r}\IeC {\'\i }ci}{2}{section.1.2}
@@ -9,7 +9,7 @@
 \contentsline {chapter}{\numberline {4}Typografick\IeC {\'e} a~jazykov\IeC {\'e} z\IeC {\'a}sady}{6}{chapter.4}
 \contentsline {section}{\numberline {4.1}Co to je normovan\IeC {\'a} str\IeC {\'a}nka?}{7}{section.4.1}
 \contentsline {chapter}{\numberline {5}Z\IeC {\'a}v\IeC {\v e}r}{9}{chapter.5}
-\contentsline {chapter}{Literatura}{10}{chapter*.2}
+\contentsline {chapter}{Literat\IeC {\'u}ra}{10}{chapter*.2}
 \ttl@starttoc {chapters@1}
 \contentsline {chapter}{\numberline {A}Jak pracovat s touto \IeC {\v s}ablonou}{11}{appendix.A}
 \contentsline {paragraph}{Pozor na \IeC {\v c}\IeC {\'\i }slov\IeC {\'a}n\IeC {\'\i } str\IeC {\'a}nek!}{12}{section*.4}

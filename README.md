@@ -1,7 +1,7 @@
 # Určení typu a směru zbraně v obrazové scéně
 * EN - Determination of Gun Type and Position in Image Scene
-* **Vedoucí:** Drahanský Martin, prof. Ing., Dipl.-Ing., Ph.D., UITS FIT VUT
-* **Oponent:** Goldmann Tomáš, Ing., UITS FIT VUT
+* **Vedoucí:** Prof. Ing., Dipl.-Ing. Martin Drahanský, Ph.D., UITS FIT VUT
+* **Oponent:** Ing. Tomáš Goldmann, UITS FIT VUT
 * **Student:** Kolcún Róbert
 
 ## Zadání:
