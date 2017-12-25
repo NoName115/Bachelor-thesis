@@ -15,14 +15,27 @@
 
 
 \section{Úvod a motivácia}
+Žvasty o tom koľko je útokov zbrani v ČR a pod...
+
+O čom je všeobecne Maching Learning možno (Dať to možno do ďalšej kapitoly)
+[Useful-things-about-machine-learning]
+
+Machine Learning sa pouziva v širokej škále oblasti npr .....
+My sme sa rozhodli použit ho na detekovanie typu zbrane a náklonu zbrane v obrazovej scéne.
 
 
 
-\section{Extrakcia príznakov}
+\section{Preprocessing}
+
+\subsection{Extrakcia príznakov}
 
 
 
 \section{Nearest Neighbor Classifier}
+
+Nevyhody:
+The classifier must remember all of the training data and store it for future comparisons with the test data. This is space inefficient because datasets may easily be gigabytes in size.
+Classifying a test image is expensive since it requires a comparison to all training images.
 
 \subsection{Approximate Nearest Neighbor (ANN)}
 
@@ -31,8 +44,34 @@ algorithms and libraries exist that can accelerate the nearest neighbor lookup i
 
 
 
-\section{Rekurentné neurónové siete}
-Branie predchadzajúceho výsledku v úvahu.
+\section{Linear classificator}
+Info o linearnom klasifikatore - http://cs231n.github.io/linear-classify/
+
+Čerpanie poznakov z https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es1999--461.pdf
+
+\subsection{Loss function/cost function/the objective}
+Intuitively, the loss will be high if we’re doing a poor job of classifying the training data, and it will be low if we’re doing well.
+
+\subsubsection{Multiclass Support Vector Machine loss(SVM)}
+A last piece of terminology we will mention before we finish with this section is that the threshold at zero max(0,--) function is often called the hinge loss.
+
+\subsubsection{Regularization}
+In other words, we wish to encode some preference for a certain set of weights W over others to remove this ambiguity. We can do so by extending the loss function with a regularization penalty $R(W)R(W)$.
+
+\subsubsection{Other SVM}
+It is worth noting that the Multiclass SVM presented in this section is one of few ways of formulating the SVM over multiple classes.
+Another commonly used form is the One-Vs-All (OVA) SVM which trains an independent binary SVM for each class vs. all other classes.
+Related, but less common to see in practice is also the All-vs-All (AVA) strategy.
+Our formulation follows the Weston and Watkins 1999 (pdf) version, which is a more powerful version than OVA (in the sense that you can construct multiclass datasets where this version can achieve zero data loss, but OVA cannot.
+See details in the paper if interested).
+The last formulation you may see is a Structured SVM, which maximizes the margin between the score of the correct class and the score of the highest-scoring incorrect runner-up class.
+Understanding the differences between these formulations is outside of the scope of the class.
+The version presented in these notes is a safe bet to use in practice, but the arguably simplest OVA strategy is likely to work just as well (as also argued by Rikin et al. 2004 in In Defense of One-Vs-All Classification (pdf)).
+
+
+
+\section{Softmax classificator}
+If you’ve heard of the binary Logistic Regression classifier before, the Softmax classifier is its generalization to multiple classes.
 
 
 
@@ -50,9 +89,14 @@ Branie predchadzajúceho výsledku v úvahu.
 
 
 
-\section{Stochastic Gradient Descent}
+\section{Stochastic Gradient Descent classifier}
 We use the Stochastic Gradient Descent (SGD),
 which is commonly used in deep CNNs to update the weights
+
+
+
+\section{Overfitting}
+
 
 
 
@@ -61,6 +105,18 @@ which is commonly used in deep CNNs to update the weights
 \subsection{Rozdelenie trenovacich dat}
 
 \subsection{Cross-validation}
+
+
+
+\section{Optimization}
+
+\subsection{Kernels, Duals, SMO algorithm}
+
+
+
+% Not needed
+%\section{Rekurentné neurónové siete}
+%Branie predchadzajúceho výsledku v úvahu.
 
 
 \end{document}

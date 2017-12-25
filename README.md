@@ -13,3 +13,6 @@
 ## Literatura:
 * Olmos R., Tabik S., Herrera S. Automatic Handgun Detection Alarm in Videos Using Deep Learning. Neurocomputing, 2017, DOI https://doi.org/10.1016/j.neucom.2017.05.012
 * Lai J., Maples S. Developing a Real-Time Gun Detection Classifier. Dostupný on-line: http://cs231n.stanford.edu/reports/2017/pdfs/716.pdf
+
+## Poznámky
+* https://hackmd.io/EYQwnAzADAJgTGAtHAHANhIgLAUzAVkRAGNpswQB2FHARkqxThCA
