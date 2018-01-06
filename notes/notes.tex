@@ -17,13 +17,78 @@
 \section{Úvod a motivácia}
 Žvasty o tom koľko je útokov zbrani v ČR a pod...
 
-O čom je všeobecne Maching Learning možno (Dať to možno do ďalšej kapitoly)
+
+\section{Technológie}
+
+http://scikit-learn.org/stable/tutorial/machine\_learning\_map/index.html
+
+- 16008.pdf - Klasifikacne algoritmy - str.10+
+
+\subsection{Zbrane}
+- rozdelenie zbrani
+
+\subsection{Obraz}
+- z nejakej prace nieco vytiahnut
+
+\subsection{Nearest-Neighbor Classifiers}
+
+\subsection{Support Vector Machines}
+
+\subsection{Stochastic Gradient Descent}
+
+\subsection{Neural Network}
+- 17150\_FULLTEXT.pdf - Background str.25, Deep learning str.30
+
+- DiplomovaPraca.pdf - HLBOKÉ UČENIE A NEURÓNOVÉ SIETE str.20
+
+- DP\_MajtánMartin.pdf - 1 NEURÓNOVÉ\ SIETE str.10
+
+O čom je všeobecne Maching Learning
 [Useful-things-about-machine-learning]
 
 Machine Learning sa pouziva v širokej škále oblasti npr .....
 My sme sa rozhodli použit ho na detekovanie typu zbrane a náklonu zbrane v obrazovej scéne.
 
 
+\subsection{Decision Trees}
+Asi NIE
+
+http://scikit-learn.org/stable/modules/tree.html
+
+
+\section{Predspracovanie obrazu}
+http://scikit-image.org/docs/dev/auto\_examples/
+
+\subsection{Hogova transformacia}
+
+\subsection{Detekcia hran}
+
+
+\section{Návrh riešenia}
+
+- Exploiting-the-complementary-strengths-of-multi-layer-CNN-image-retrieval.pdf,
+preco pouzivat CNN na tento problem
+
+\subsection{Keras}
+- 17150\_FULLTEXT.pdf - Tensorflow and Keras str.26
+
+- Navrhovana technologia pre ucenie
+
+\subsection{scikit-learn}
+- Kratky popis
+
+\subsection{Klasifikácia typu zbrane}
+
+\subsection{Určenie natočenia zbrane}
+
+
+\pagebreak
+\section{Implementácia}
+
+\subsection{Dataset}
+
+
+\pagebreak
 
 \section{Preprocessing}
 
@@ -70,12 +135,20 @@ The version presented in these notes is a safe bet to use in practice, but the a
 
 
 
-\section{Softmax classificator}
+\subsubsection{Softmax loss function}
 If you’ve heard of the binary Logistic Regression classifier before, the Softmax classifier is its generalization to multiple classes.
 
 
 
+\section{Neural Network}
+
+\subsection{Architecture}
+
+
+
 \section{Convolutional Neural Network classifer}
+
+\subsection{Architecture}
 
 \subsection{VGG-16 classificator model}
 
@@ -86,12 +159,6 @@ If you’ve heard of the binary Logistic Regression classifier before, the Softm
 \subsubsection{Region proposal}
 
 \subsection{Cascade classifiers}
-
-
-
-\section{Stochastic Gradient Descent classifier}
-We use the Stochastic Gradient Descent (SGD),
-which is commonly used in deep CNNs to update the weights
 
 
 
@@ -109,14 +176,24 @@ which is commonly used in deep CNNs to update the weights
 
 
 \section{Optimization}
+Optimization is the process of finding the set of parameters W that minimize the loss function.
 
-\subsection{Kernels, Duals, SMO algorithm}
+http://cs231n.github.io/optimization-1/
 
+\subsection{Computing the gradient}
 
 
 % Not needed
 %\section{Rekurentné neurónové siete}
 %Branie predchadzajúceho výsledku v úvahu.
 
+%\section{Stochastic Gradient Descent classifier}
+%We use the Stochastic Gradient Descent (SGD),
+%which is commonly used in deep CNNs to update the weights
+
+
+\section{Návrh}
+
+\subsection{Kronos}
 
 \end{document}
