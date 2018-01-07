@@ -47,28 +47,23 @@ V tejto práci sa zameramé na osobné, strelné zbrane.
 \subsubsection{Strelné zbrane}
 - Z knihy zobrat rozdelenie a info
 
-\subsection{Digitalizácia obrazu}
+\subsection{Spracovanie obrazu}
 Pre popis obrázkov a ostatných signálov sú často používané matematické modely.
 Kde signál je funkcia závislá na nejakých premenných s fyzikálnym významom, môže byť 1-dimenzionálna (napr. závisla na čase),
-    2-dimenzionálna (napr. obrázok závislý na 2 koordinátoch v ploche), 3-dimenzionálna (napr. popis pozície objektu v priestore), alebo aj viac-dimenzionálna.
+2-dimenzionálna (napr. obrázok závislý na 2 koordinátoch v ploche), 3-dimenzionálna (napr. popis pozície objektu v priestore), alebo aj viac-dimenzionálna\cite{book:ImageProcessing}.
 
     Každý obraz môže byť definovaný ako spojitá funkcia s dvomi neznámymi $$f(x,y)$$ kde $x$ a $y$ sú súradnice v ploche.
 Tento spojitý obraz je digitalizovaný na tzv. vzorkovacích miestach.
-Tieto vzorkovanie miesta sú usporiadané v ploche, ich geometrický vzťah sa nazýva mriežka.
-Digitálny obraz je potom dátova štruktúra, bežné reprezentovaná ako matica.
+Tieto vzorkovacie miesta sú usporiadané v ploche, ich geometrický vzťah sa nazýva mriežka.
+Digitálny obraz je potom dátova štruktúra, ktorá je bežne reprezentovaná ako matica.
+Jeden bod v mriežke reprezentuje jeden element 2-dimenzionálneho obraze nazývany pixel, v 3-dimenzionálnom obraze sá tento element nazýva voxel\cite{book:ImageProcessing}.
+Pri viac-dimenzionálnych digitálnych obrazoch sa pri spracovaní obrazu používa vektor hodnôt(napr. RGB hodnoty obrazového bodu).
 
-Skalárne funkcie môžu byť vhodné pre popis monochromatických obrázkov, zatiaľ čo vektorové funkcie sa používajú v spracovaní obrazu, napr. pre reprezentáciu obrázku ktorý pozostáva z 3 komponentov farieb (napr. RGB hodnoty obrazového bodu).
-
-Oblasť spracovania digitálneho obrazu
-
-
-
-
-- z nejakej prace nieco vytiahnut
-
-- Rozpoznávání-termosnímků-obličeju.pdf
-
-
+Oblasť spracovania digitálneho obrazu je v dnešnej dobe veľmi široká a nachádza uplatnenie vo viacerých oboroch.
+Môže sa využívať pri automatickej vizuálnej inšpekcií produktou, pre zaistenie vyššej produktivity a kvality výrobku v továrňach.
+Ďalej pri spracovaní snímkou z lietadiel alebo satelitou pre získanie dát o prírodnych zdrojoch, ako napr. v poľnohospodárstve alebo lesníctve.
+Širokú aplikáciu má v medicíne pri obrázkoch získavaných pomocou röngenových zariadení, CT a magnetickej rezonancie\cite{book:ImageProcessingApplication}.
+A v súčastnosti v automobilovom priemysle pri rozvýjajúcej sa oblati autonómneho riadenia automobilov.
 
 \subsection{Klasifikácia}
 
@@ -145,114 +140,5 @@ preco pouzivat CNN na tento problem
 \pagebreak
 \renewcommand\refname{Odkazy}
 \bibliography{literatura}
-
-% ------------------ OLD -----------------
-\pagebreak
-
-\section{Preprocessing}
-
-\subsection{Extrakcia príznakov}
-
-
-
-\section{Nearest Neighbor Classifier}
-
-Nevyhody:
-The classifier must remember all of the training data and store it for future comparisons with the test data. This is space inefficient because datasets may easily be gigabytes in size.
-Classifying a test image is expensive since it requires a comparison to all training images.
-
-\subsection{Approximate Nearest Neighbor (ANN)}
-
-\subsection{FLANN}
-algorithms and libraries exist that can accelerate the nearest neighbor lookup in a dataset
-
-
-
-\section{Linear classificator}
-Info o linearnom klasifikatore - http://cs231n.github.io/linear-classify/
-
-Čerpanie poznakov z https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es1999--461.pdf
-
-\subsection{Loss function/cost function/the objective}
-Intuitively, the loss will be high if we’re doing a poor job of classifying the training data, and it will be low if we’re doing well.
-
-\subsubsection{Multiclass Support Vector Machine loss(SVM)}
-A last piece of terminology we will mention before we finish with this section is that the threshold at zero max(0,--) function is often called the hinge loss.
-
-\subsubsection{Regularization}
-In other words, we wish to encode some preference for a certain set of weights W over others to remove this ambiguity. We can do so by extending the loss function with a regularization penalty $R(W)R(W)$.
-
-\subsubsection{Other SVM}
-It is worth noting that the Multiclass SVM presented in this section is one of few ways of formulating the SVM over multiple classes.
-Another commonly used form is the One-Vs-All (OVA) SVM which trains an independent binary SVM for each class vs. all other classes.
-Related, but less common to see in practice is also the All-vs-All (AVA) strategy.
-Our formulation follows the Weston and Watkins 1999 (pdf) version, which is a more powerful version than OVA (in the sense that you can construct multiclass datasets where this version can achieve zero data loss, but OVA cannot.
-See details in the paper if interested).
-The last formulation you may see is a Structured SVM, which maximizes the margin between the score of the correct class and the score of the highest-scoring incorrect runner-up class.
-Understanding the differences between these formulations is outside of the scope of the class.
-The version presented in these notes is a safe bet to use in practice, but the arguably simplest OVA strategy is likely to work just as well (as also argued by Rikin et al. 2004 in In Defense of One-Vs-All Classification (pdf)).
-
-
-
-\subsubsection{Softmax loss function}
-If you’ve heard of the binary Logistic Regression classifier before, the Softmax classifier is its generalization to multiple classes.
-
-
-
-\section{Neural Network}
-
-\subsection{Architecture}
-
-
-
-\section{Convolutional Neural Network classifer}
-
-\subsection{Architecture}
-
-\subsection{VGG-16 classificator model}
-
-\subsection{Classification model approach}
-
-\subsubsection{Sliding window}
-
-\subsubsection{Region proposal}
-
-\subsection{Cascade classifiers}
-
-
-
-\section{Overfitting}
-
-
-
-
-\section{Validacia dat}
-
-\subsection{Rozdelenie trenovacich dat}
-
-\subsection{Cross-validation}
-
-
-
-\section{Optimization}
-Optimization is the process of finding the set of parameters W that minimize the loss function.
-
-http://cs231n.github.io/optimization-1/
-
-\subsection{Computing the gradient}
-
-
-% Not needed
-%\section{Rekurentné neurónové siete}
-%Branie predchadzajúceho výsledku v úvahu.
-
-%\section{Stochastic Gradient Descent classifier}
-%We use the Stochastic Gradient Descent (SGD),
-%which is commonly used in deep CNNs to update the weights
-
-
-\section{Návrh}
-
-\subsection{Kronos}
 
 \end{document}

@@ -120,6 +120,7 @@ ENV/
 *.fot
 *.cb
 *.cb2
+*.ptc
 
 ## Intermediate documents:
 *.dvi
