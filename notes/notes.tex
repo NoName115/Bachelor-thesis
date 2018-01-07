@@ -7,6 +7,8 @@
 \usepackage{float}
 \usepackage{url}
 
+\bibliographystyle{czplain}
+
 \begin{document}
 
 \title{Poznamky k bakalárke}
@@ -20,28 +22,71 @@
 
 \section{Technológie}
 
-http://scikit-learn.org/stable/tutorial/machine\_learning\_map/index.html
+V tejto kapitole sa zoznámime so základnymi pojmami a princípmi, ktoré súvia s probletikou tejto práce a ktoré budú dalej využívané.
+Kapitola vysvetľuje základne rozdelenia zbraní, princíp spracovania digitálneho obrazu a metódy jeho predspracovanie.
+Ďalej sú tu vysvetlené rôzne spôsoby pre klasifikáciu týchto obrazových dát.
 
-- 16008.pdf - Klasifikacne algoritmy - str.10+
+% http://scikit-learn.org/stable/tutorial/machine\_learning\_map/index.html
+% 16008.pdf - Klasifikacne algoritmy - str.10+
+% imagenet-classification-with-deep-convolutional-neural-networks.pdf - Introduction str.1+
+% Rozpoznávání-termosnímků-obličeju.pdf
+% 9614.pdf
 
 \subsection{Zbrane}
-- rozdelenie zbrani
+Zbraň je akýkoľvek nástroj alebo prostriedok, ktorý môže spôsobiť poškodenie iných osôb alebo skupiny osôb.
+Táto definícia nezahŕňa iba typické zbrane, ako nôž a strelná zbraň, ale aj výbušniny, chemikálie, etc.
+Za prvé zbrane môžeme považovať kopije ktoré používali luďia pri love zvierat asi pred 400,000 rokmi\cite{prop:SpearHistory}.
+Vo všeobecnoti by sme mohli rozdeliť zbrane do 3 zakladných kategórií:
+\begin{enumerate}
+	\item[$\bullet$] \textbf{Podľa používateľa} - do tejto kategórie môžeme zaradiž zbrane ako osobné - vyrobené pre účeli použia jednou osobou, tažké - zbrane delostrelectva,  alebo autonómne.
+	\item[$\bullet$] \textbf{Podľa funkcie} - npr. biologické, chemické, výbušné zbrane alebo rakety.
+    \item[$\bullet$] \textbf{Podľa cieľu} - väčsina týchto zbraní su označované ako "proti(eng. anti)", tj. proti-lietadové alebo proti-tankové zbrane.
+\end{enumerate}
+V tejto práci sa zameramé na osobné, strelné zbrane.
 
-\subsection{Obraz}
+\subsubsection{Strelné zbrane}
+- Z knihy zobrat rozdelenie a info
+
+\subsection{Digitalizácia obrazu}
+Pre popis obrázkov a ostatných signálov sú často používané matematické modely.
+Kde signál je funkcia závislá na nejakých premenných s fyzikálnym významom, môže byť 1-dimenzionálna (napr. závisla na čase),
+    2-dimenzionálna (napr. obrázok závislý na 2 koordinátoch v ploche), 3-dimenzionálna (napr. popis pozície objektu v priestore), alebo aj viac-dimenzionálna.
+
+    Každý obraz môže byť definovaný ako spojitá funkcia s dvomi neznámymi $$f(x,y)$$ kde $x$ a $y$ sú súradnice v ploche.
+Tento spojitý obraz je digitalizovaný na tzv. vzorkovacích miestach.
+Tieto vzorkovanie miesta sú usporiadané v ploche, ich geometrický vzťah sa nazýva mriežka.
+Digitálny obraz je potom dátova štruktúra, bežné reprezentovaná ako matica.
+
+Skalárne funkcie môžu byť vhodné pre popis monochromatických obrázkov, zatiaľ čo vektorové funkcie sa používajú v spracovaní obrazu, napr. pre reprezentáciu obrázku ktorý pozostáva z 3 komponentov farieb (napr. RGB hodnoty obrazového bodu).
+
+Oblasť spracovania digitálneho obrazu
+
+
+
+
 - z nejakej prace nieco vytiahnut
 
-\subsection{Nearest-Neighbor Classifiers}
+- Rozpoznávání-termosnímků-obličeju.pdf
 
-\subsection{Support Vector Machines}
 
-\subsection{Stochastic Gradient Descent}
 
-\subsection{Neural Network}
+\subsection{Klasifikácia}
+
+\subsubsection{Nearest-Neighbor Classifiers}
+- DP\_xbarne02.pdf
+
+\subsubsection{Support Vector Machines}
+
+\subsubsection{Stochastic Gradient Descent}
+
+\subsubsection{Neural Network}
 - 17150\_FULLTEXT.pdf - Background str.25, Deep learning str.30
 
 - DiplomovaPraca.pdf - HLBOKÉ UČENIE A NEURÓNOVÉ SIETE str.20
 
 - DP\_MajtánMartin.pdf - 1 NEURÓNOVÉ\ SIETE str.10
+
+- FIT\_neuronky.pdf - Kap 3 Neuronové siete str.21
 
 O čom je všeobecne Maching Learning
 [Useful-things-about-machine-learning]
@@ -50,18 +95,22 @@ Machine Learning sa pouziva v širokej škále oblasti npr .....
 My sme sa rozhodli použit ho na detekovanie typu zbrane a náklonu zbrane v obrazovej scéne.
 
 
+
 \subsection{Decision Trees}
 Asi NIE
 
 http://scikit-learn.org/stable/modules/tree.html
 
 
-\section{Predspracovanie obrazu}
+
+\subsection{Predspracovanie obrazu}
 http://scikit-image.org/docs/dev/auto\_examples/
 
-\subsection{Hogova transformacia}
+\subsubsection{Hogova transformacia}
+- F3-DP-2016-Erlebach-Jonas-Automaticka detekce pupily v obraze.pdf
 
-\subsection{Detekcia hran}
+\subsubsection{Detekcia hran}
+
 
 
 \section{Návrh riešenia}
@@ -77,6 +126,9 @@ preco pouzivat CNN na tento problem
 \subsection{scikit-learn}
 - Kratky popis
 
+\subsubsection{Databáza zbraní}
+- ....
+
 \subsection{Klasifikácia typu zbrane}
 
 \subsection{Určenie natočenia zbrane}
@@ -88,6 +140,13 @@ preco pouzivat CNN na tento problem
 \subsection{Dataset}
 
 
+
+% ------------- Bibliografy --------------
+\pagebreak
+\renewcommand\refname{Odkazy}
+\bibliography{literatura}
+
+% ------------------ OLD -----------------
 \pagebreak
 
 \section{Preprocessing}
