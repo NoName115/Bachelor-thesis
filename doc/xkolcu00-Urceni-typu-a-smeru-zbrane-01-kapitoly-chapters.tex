@@ -59,7 +59,7 @@ A v súčastnosti v automobilovom priemysle pri rozvýjajúcej sa oblati autonó
 
 \# TODO - dopisať čo je to Klasifikácia
 
-\subsection{K-Nearest-Neighbor Classifiers}
+\subsection{K-Nearest-Neighbor}
 \textit{k}-Nearest Neighbor je algoritmus ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácií,
 avšak je možné ho použiť aj pre odhad a predikciu\cite{book:DataMining}.
 Algoritmus je pamäťovo náročný [eng. memory-based] a nepotrebuje žiaden model.
@@ -73,33 +73,39 @@ Predpokladáme že každé $x_i$ je v nejakom multidimenzionálnom priestore pr�
 Cieľom je priradiť neoznačeny vektor $x$ do zodpovedajucej triedy z množiny $\{ 1, 2, \dots, l \}$.
 
 Najjednoduchšia verzia algoritmu \textit{k}-NN je 1-NN, kde vektor $x$ je priradený najbližsiemu susedovy.
-To znamená že ak $x_j$, kde $j \in \{ 1, 2, \dots, n \}$, je najbližšií k $x$ vo forme vzdialenosti $P$:
-$$x_j = arg \; min_{\{x_i, 1 \leq i \leq n\}} P(x, x_i)$$
+To znamená že ak $x_j$, kde $j \in \{ 1, 2, \dots, n \}$, je najbližšií k $x$ vo forme vzdialenosti $P$ \cite{prop:KnnClassification}:
+\begin{equation}
+    \label{eq:kNNMetric}
+    x_j = arg \; min_{\{x_i, 1 \leq i \leq n\}} P(x, x_i)
+\end{equation}
 tak označenie triedy pre vektor $x$ je číslo $y_i$.
 
-Pre formu algoritmu \textit{k}-NN, kde $k > 1$ je postup podobný, ale priradenie označenia triedy pre $x$ je na základe najčastejšie sa vyskutovaného označenia
-spomedzi \textit{k} najbližších susedov z trénovacých bodov $x_i$, kde $k$ je užívateľom definovaná konštanta.
+Pre formu algoritmu \textit{k}-NN, kde $k > 1$ je postup podobný, ale priradenie označenia triedy pre $x$ je na základe najčastejšie sa vyskutovaného označenia triedy
+spomedzi \textit{k} najbližších susedov z trénovacých bodov $x_i$, kde $k$ je užívateľom definovaná konštanta \cite{prop:KnnClassification}.
 
-\# TODO - porovnanie obrazkov
+Najbežnejší výpočet pre vzdielenosť bodov je pomocou Euklidovskej vzdielenosti.
+Táto vzdielnosť je medzi dvoma $J$-dimenzionálnymi vektormi $a$ a $b$ vyjadrená ako \cite{prop:KnnClassification}:
+\begin{equation}
+    \label{eq:euclidMetric}
+    d_{a,b} = \sqrt{\sum_{j=1}^{J}{(a_j - b_j)^2}}
+\end{equation}
+
+Na obrázku \ref{pic:kNN} je zobrazený rozdiel medzi 1-NN a 5-NN algoritmom pre klasifikáciou,
+    použitím 2-dimenzionálnych bodov a 3 tried dát (červená, modrá, zelená).
+Farebné regióny vyznačujú rozhodovacie hranice klasifikátora, ktorý využíva Euklidovskú vzdielnosť.
+Biele oblasti ukazujú body, ktoré sú nejednoznačne klasifikované (to znamená, že hodnotenie triedy je viazané aspoň na dve triedy).
+V ukážke je vidno že v prípade 1-NN klasifikátora, niektré body vytvárajú "malé ostrovy"
+    (napr. zelený bod v strede mraku medzi modrými bodmi), zatiaľ čo 5-NN klasifikátor vyhladzuje tieto nezrovnalosti,
+    a pravdepodobne vedie k lepšiemu zovšeobecneniu nad testovacími údajmi.
 
 \begin{figure}[H]
-	%\begin{center}
 	\centering
-	%\includegraphics[width=0.8\textwidth]{knn}
-	\caption{ASDAS}
-	\label{pic:ASDAS}
-    %\scalebox{0.6}
-    %{
-        %\includegraphics{knn}
-    %}
-    %\caption{Popis}
-    %\label{pic:IMSPRESTUP}
-    %\end{center}
+	\includegraphics[width=1\textwidth]{knn}
+	\caption{Porovnanie k-NN klasifikátorov}
+	\label{pic:kNN}
 \end{figure}
 
-\# TODO - Funkcie pre vzdialenost
-
-bla \cite{prop:KnnClassification}.
+\# TODO odkaz na obrazok
 
 \subsection{Support Vector Machines}
 
@@ -134,6 +140,8 @@ http://scikit-image.org/docs/dev/auto\_examples/
 
 \subsection{Detekcia hran}
 
+- Sobelov filter - podľa knižky patri medzi najpopulárnejšie hranové filter.
+Urobiť z neho magnitúdu obrazu potom.
 
 % ------------ NEW CHAPTER ------------
 \chapter{Návrh riešenia}
