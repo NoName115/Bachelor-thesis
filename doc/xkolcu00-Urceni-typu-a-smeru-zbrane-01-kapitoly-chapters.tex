@@ -57,8 +57,49 @@ A v súčastnosti v automobilovom priemysle pri rozvýjajúcej sa oblati autonó
 
 \section{Klasifikácia}
 
-\subsection{Nearest-Neighbor Classifiers}
-- DP\_xbarne02.pdf
+\# TODO - dopisať čo je to Klasifikácia
+
+\subsection{K-Nearest-Neighbor Classifiers}
+\textit{k}-Nearest Neighbor je algoritmus ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácií,
+avšak je možné ho použiť aj pre odhad a predikciu\cite{book:DataMining}.
+Algoritmus je pamäťovo náročný [eng. memory-based] a nepotrebuje žiaden model.
+Pre jeho fungovanie nie je potrebný žiaden explicitný postup trénovania, okrem zberu vektorov príznakov s označeniami tried do ktorých patria.
+
+Klasifikácia dát prebieha v 2 krokoch: nájdenie \textit{k} najbližších susedov spomedzi trénovaných dát a
+vykonanie "väčšinové hlasovanie" medzi nájdenými susedmi pre priradenie najčastejšie sa vykytovaného označenia triedy.
+
+Nech $\{ (x_i, y_i), i = 1, 2, \dots, n \}$ je množína trénovacích dát, kde $x_i$ je vektor príznakov a $y_i$ je názov triedy do ktorej patrí vektor $x_i$.
+Predpokladáme že každé $x_i$ je v nejakom multidimenzionálnom priestore príznakov s metrikov $P$ a $y_i \in \{ 1, 2, \dots, l \}$, kde $l$ je číslo odpovedajúcej triedy.
+Cieľom je priradiť neoznačeny vektor $x$ do zodpovedajucej triedy z množiny $\{ 1, 2, \dots, l \}$.
+
+Najjednoduchšia verzia algoritmu \textit{k}-NN je 1-NN, kde vektor $x$ je priradený najbližsiemu susedovy.
+To znamená že ak $x_j$, kde $j \in \{ 1, 2, \dots, n \}$, je najbližšií k $x$ vo forme vzdialenosti $P$:
+$$x_j = arg \; min_{\{x_i, 1 \leq i \leq n\}} P(x, x_i)$$
+tak označenie triedy pre vektor $x$ je číslo $y_i$.
+
+Pre formu algoritmu \textit{k}-NN, kde $k > 1$ je postup podobný, ale priradenie označenia triedy pre $x$ je na základe najčastejšie sa vyskutovaného označenia
+spomedzi \textit{k} najbližších susedov z trénovacých bodov $x_i$, kde $k$ je užívateľom definovaná konštanta.
+
+\# TODO - porovnanie obrazkov
+
+\begin{figure}[H]
+	%\begin{center}
+	\centering
+	%\includegraphics[width=0.8\textwidth]{knn}
+	\caption{ASDAS}
+	\label{pic:ASDAS}
+    %\scalebox{0.6}
+    %{
+        %\includegraphics{knn}
+    %}
+    %\caption{Popis}
+    %\label{pic:IMSPRESTUP}
+    %\end{center}
+\end{figure}
+
+\# TODO - Funkcie pre vzdialenost
+
+bla \cite{prop:KnnClassification}.
 
 \subsection{Support Vector Machines}
 
