@@ -155,9 +155,32 @@ Lineárne rozdelenie v transformovanom priestore príznakov zodpovedá nelineár
 
 Mapovanie dát do nejakého iného Hilbertovho priestora \cite{prop:HilbertSpace} $H$ ako $\Phi:R^d \rightarrow H$.
 Potom trénovací algoritmus záležal len na údajoch zo skalárneho súčinu[eng. dot products] v priestore $H$, t.j na funkciách v tvare $\Phi(x_i) * \Phi(x_j)$.
+Ak bude existovať "funkcia jadra"[eng. kernel function] $K$ ako $K(x_i, x_j) = \Phi(x_i)*\Phi(x_j)$, tak budeme musieť použiť iba funkciu $K$ v trénovacom algoritme
+    a nikdy nebudeme potrebovať explicitne definovať $\Phi$\cite{prop:SupervisedMachineLearning}.
 
+Takže jadrá[eng. kernels] sú špeciálnou triedou funkcií, ktoré dovoľujú, aby sa vnútorné produkty vypočítali priamo vo funkčnom priestore[eng. feature space] bez toho, aby sa vykonalo vyššie popísané mapovanie.
+Po vytvorení hyper--roviny sa funkcia jadra použije na mapovanie nových bodov do funkčného priestoru pre klasifikáciu\cite{prop:SupervisedMachineLearning}.
 
-%- obrazok pre scikit-learn.org/stable/modules/svm.html\#classification
+Voľba správnej funkcie jadra je veľmi dôležitá, kedže definujú transformovaný priestor príznakov v ktorom budú trénovacie dáta klasifikované.
+Genton \cite{prop:KernelClasses} popísal niekoľko tried jadier, avšak, neadresoval otázku ktorá trieda je najvhodnejšie pre daný problém.
+
+Zoznam populárnych jadier\cite{prop:SupervisedMachineLearning}:
+\begin{equation}
+    K(x, y) = (x*y+1)^P
+\end{equation}
+\begin{equation}
+    K(x, y) = e^{\frac{-||x-y||^2}{2 \sigma^2}}
+\end{equation}
+\begin{equation}
+    K(x, y) = tanh(\kappa x*y - \delta)^P
+\end{equation}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{sphx_glr_plot_iris_0012}
+	\caption{Porovnanie rôznych typov SVM klasifikátorov\cite{odkaz:SVMImage}}
+	\label{pic:SVMComparison}
+\end{figure}
 
 \subsection{Stochastic Gradient Descent}
 
