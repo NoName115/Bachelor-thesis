@@ -107,7 +107,57 @@ V ukážke je vidno že v prípade 1-NN klasifikátora, niektré body vytváraj�
 
 \subsection{Support Vector Machines}
 
-\cite{book:SupportVectorMachines}
+Support Vector Machines (SVM's) sú metódy učenia používané pre binárnu klasifikáciu.
+Základnou myšlienkou je nájdenie hyper--roviny ktorá perfektne oddelí \textit{d}--dimenzionálne dáta do dvoch tried\cite{prop:IntroductionToSVM}.
+SVM sa snaží maximalizovať vzdialenosť medzi rozdeľujúcov rovinou a dátami nachádzajúcimi sa v každej z 2 polrovín\cite{prop:SupervisedMachineLearning}.
+Avšak kedže vstupné dáta väčšinou niesu lineárne separovatelné, SVM's predstavujú pojem "jadrový priestor indukovaný príznakom"[eng. “kernel induced feature space”],
+    ktorý prevádza dáta do vyššieho dimenzionálneho pristoru, kde dáta sú oddeliteľné.\cite{prop:IntroductionToSVM}
+
+Ak trénovacie dáta sú lineárne separovatelné, tak dvojica $(w, b)$ existuje ako\cite{prop:SupervisedMachineLearning}:
+\begin{equation}
+    \label{eq:SVMPair1}
+    w^T * x_i + b \geq 1, \; pre \; x_i \in P
+\end{equation}
+\begin{equation}
+    \label{eq:SVMPair2}
+    w^T * x_i + b \leq -1, \; pre \; x_i \in N
+\end{equation}
+s rozhodovacím pravidlom
+\begin{equation}
+    \label{eq:SVMDecisionRule}
+    f_{w,b}(x) = sgn(w^T x + b)
+\end{equation}
+kde $w$ je váhový vektor a $b$ je predpoveď(alebo $-b$ je prahová hodnota).
+V tomto prípade keď je možné lineárne rozdeliť dve triedy, tak optimálna hyper-rovina pre rozdelenie
+    môže byť nájdena, minimalizáciou kvadratickej formy rozdeľujúcej hyper-roviny
+\begin{equation}
+    \label{eq:SVMDecisionRule}
+    mininimize_{w,h} \; \Phi(w) = \frac{1}{2}||w||^2, \; pre \; y_i(w^Tx_i + b) \geq 1, i = 1, \dots, l
+\end{equation}
+
+V tomto prípade lineárneho rozdelenia dát, prí nájdení optimálnej rozdeľujúcej hyper--roviny, dátove body ktoré ležia na jej okraji
+    sa nazývajú podporné vektorové body[eng. support vector points] a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodou(vid. obrázok \ref{pic:SVMMAxMargin} ).
+Ostatné body sú ignorované\cite{prop:SupervisedMachineLearning}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{SVM_max_margin}
+	\caption{Maximálne rozpätie\cite{prop:SupervisedMachineLearning}}
+	\label{pic:SVMMAxMargin}
+\end{figure}
+
+Avšak väčsina reálnych problémov zahŕňa nelineárne rozdelenie dát pre ktoré neexistuje žiadna hyper--rovina ktorá by úspešne rozdelila trénovacie dáta.
+Riešenie tohto problému je mapovať dáta do vyššie--dimenzionálneho priestoru a definovať rozdeľujúcu hyper--rovinu tam.
+Tento vyššíe-dimenzionálny priestor je nazývaný transformovaný priestor príznakov[eng. transformed feature space], ako opak ku vstupnému priestoru[eng. input space] obsahujúci trénovacie dáta\cite{prop:SupervisedMachineLearning}.
+
+Pri vhodne zvolenom transformovanom priestore príznakov dostatočnej veľkosti, môžu byť každé treningové dáta rozdelitelné.
+Lineárne rozdelenie v transformovanom priestore príznakov zodpovedá nelineárnemu rozdeleniu v pôvodnom vstupnej priestore.
+
+Mapovanie dát do nejakého iného Hilbertovho priestora \cite{prop:HilbertSpace} $H$ ako $\Phi:R^d \rightarrow H$.
+Potom trénovací algoritmus záležal len na údajoch zo skalárneho súčinu[eng. dot products] v priestore $H$, t.j na funkciách v tvare $\Phi(x_i) * \Phi(x_j)$.
+
+
+%- obrazok pre scikit-learn.org/stable/modules/svm.html\#classification
 
 \subsection{Stochastic Gradient Descent}
 
@@ -132,7 +182,7 @@ My sme sa rozhodli použit ho na detekovanie typu zbrane a náklonu zbrane v obr
 %http://scikit-learn.org/stable/modules/tree.html
 
 
-- Mozno dat Deep Learning in computer vision z 17150_FULLTEXT.pdf, ako bouncing box a pod...
+- Mozno dat Deep Learning in computer vision z 17150\_FULLTEXT.pdf, ako bouncing box a pod...
 Nech tu mam nieco na detekciu a nie len klasifikacia.
 
 \section{Predspracovanie obrazu}
