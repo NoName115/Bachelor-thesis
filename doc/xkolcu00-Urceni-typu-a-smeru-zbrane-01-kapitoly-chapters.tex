@@ -1,21 +1,20 @@
+% ------------ TODO ------------
+% - Co je to strojove ucenie
+% - Nejaka extrakcia priznakov
+% - 
+% ------------------------------
+
 \chapter{Úvod}
 
 %\section{Úvod a motivácia}
-Žvasty o tom koľko je útokov zbrani v ČR a pod...
-
+%Žvasty o tom koľko je útokov zbrani v ČR a pod...
 
 % ------------ NEW CHAPTER ------------
 \chapter{Technológie}
-
 V tejto kapitole sa zoznámime so základnymi pojmami a princípmi, ktoré súvia s probletikou tejto práce a ktoré budú dalej využívané.
 Kapitola vysvetľuje základne rozdelenia zbraní, princíp spracovania digitálneho obrazu a metódy jeho predspracovanie.
 Ďalej sú tu vysvetlené rôzne spôsoby pre klasifikáciu týchto obrazových dát.
 
-% http://scikit-learn.org/stable/tutorial/machine\_learning\_map/index.html
-% 16008.pdf - Klasifikacne algoritmy - str.10+
-% imagenet-classification-with-deep-convolutional-neural-networks.pdf - Introduction str.1+
-% Rozpoznávání-termosnímků-obličeju.pdf
-% 9614.pdf
 
 \section{Zbrane}
 Obvýklá definícia hovorí, že zbraň je nástroj, predmet, či dokonca celé zariadenie,
@@ -37,6 +36,7 @@ a podľa ovládateľnosti a možnosti prenášania ich delíme na\cite{book:Stre
 \end{enumerate}
 V tejto práci sa zameramé hlavne na strelné, ručné zbrane.
 
+
 \section{Spracovanie obrazu}
 Pre popis obrázkov a ostatných signálov sú často používané matematické modely.
 Kde signál je funkcia závislá na nejakých premenných s fyzikálnym významom, môže byť 1-dimenzionálna (napr. závisla na čase),
@@ -55,9 +55,10 @@ Môže sa využívať pri automatickej vizuálnej inšpekcií produktou, pre zai
 Širokú aplikáciu má v medicíne pri obrázkoch získavaných pomocou röngenových zariadení, CT a magnetickej rezonancie\cite{book:ImageProcessingApplication}.
 A v súčastnosti v automobilovom priemysle pri rozvýjajúcej sa oblati autonómneho riadenia automobilov.
 
-\section{Klasifikácia}
 
+\section{Klasifikácia}
 \# TODO - dopisať čo je to Klasifikácia
+
 
 \subsection{K-Nearest-Neighbor}
 \textit{k}-Nearest Neighbor je algoritmus ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácií,
@@ -105,8 +106,8 @@ V ukážke je vidno že v prípade 1-NN klasifikátora, niektré body vytváraj�
 	\label{pic:kNN}
 \end{figure}
 
-\subsection{Support Vector Machines}
 
+\subsection{Support Vector Machines}
 Support Vector Machines (SVM's) sú metódy učenia používané pre binárnu klasifikáciu.
 Základnou myšlienkou je nájdenie hyper--roviny ktorá perfektne oddelí \textit{d}--dimenzionálne dáta do dvoch tried\cite{prop:IntroductionToSVM}.
 SVM sa snaží maximalizovať vzdialenosť medzi rozdeľujúcov rovinou a dátami nachádzajúcimi sa v každej z 2 polrovín\cite{prop:SupervisedMachineLearning}.
@@ -182,31 +183,176 @@ Zoznam populárnych jadier\cite{prop:SupervisedMachineLearning}:
 	\label{pic:SVMComparison}
 \end{figure}
 
+
 \subsection{Stochastic Gradient Descent}
-
-\subsection{Neural Network}
-- 17150\_FULLTEXT.pdf - Background str.25, Deep learning str.30
-
-- DiplomovaPraca.pdf - HLBOKÉ UČENIE A NEURÓNOVÉ SIETE str.20
-
-- DP\_MajtánMartin.pdf - 1 NEURÓNOVÉ\ SIETE str.10
-
-- FIT\_neuronky.pdf - Kap 3 Neuronové siete str.21
-
-O čom je všeobecne Maching Learning
-[Useful-things-about-machine-learning]
-
-Machine Learning sa pouziva v širokej škále oblasti npr .....
-My sme sa rozhodli použit ho na detekovanie typu zbrane a náklonu zbrane v obrazovej scéne.
+\# TODO
 
 
-%\subsection{Decision Trees}
-%Asi NIE
-%http://scikit-learn.org/stable/modules/tree.html
+\subsection{Neurónové siete}
+Neurónová sieť (NN) je masívne paralelný procesor, ktorý má sklon k uchovávaniu experimentálnych znalostí a ich ďalšieho využívania.
+Napodobňuje ľudský mozog v dvoch aspektoch \cite{odkaz:NNIntroduction}:
+\begin{enumerate}
+	\item[$\bullet$] poznatky sú zbierané v NN počas učenia
+	\item[$\bullet$] medzineurónové spojenia (synaptické váhy - SV) sú využívané na ukladanie znalostí
+\end{enumerate}
+Toto je jedna z definícii NN, akceptovaná NN komunitou.
+Je zrejmé, že inšpirácia ku vzniku NN prišla z biologických systémov.
+Na prvý dojem vysoko abstraktná disciplína nachádza množstvo aplikácii v praxi a stáva sa prostriedkom pre riešenie problémov v širokom spektre odborných oblastí\cite{odkaz:NNIntroduction}.
+
+Rôzne architektúry umelých neurónových sieti[eng. artificial neural network] sa používajú pre riešenie rôznych úloh.
+Konvolučné a rekurentné NN sú dve z najúspešnejších a sú z veľkej časti zodpovedné za nedávnu revolúciu umelej inteligencie\cite{odkaz:CorrectionOfImageOrentation}.
+
+Vo všeobecnosti môžeme vymenovať nasledovné oblasti využitia neurónových sieti\cite{odkaz:NNIntroduction}:
+\begin{enumerate}
+    \item[$\bullet$] klasifikácie do tried, klasifikácia situácií
+    \item[$\bullet$] riešenie predikčných problémov
+    \item[$\bullet$] problémy riadenia procesov
+    \item[$\bullet$] tranformácia signálov
+\end{enumerate}
+
+Neurónové siete su usporiadané do vnútorne prepojených vrstiev umelých neurónov.
+Jednoducho povedané, každá vrstva berie výstup z prechádzajucej vrstvy, aplikuje transformácie a výsledok pošle na vstup ďalšej vrstve.
+Prvá vrstva vstupov je propojená na vstupné dáta ktoré sa majú spracovať a posledná vrstva je akýkoľvek výstup ktorý chceme predpovedať \cite{odkaz:CorrectionOfImageOrentation} (vid. obrázok \ref{pic:NNExample}).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{nn}
+	\caption{Jednoduchá architektúra NN s 1 vstupnov, 3 skrytímy a 1 výstupov vrstvov\cite{odkaz:CorrectionOfImageOrentation}}
+	\label{pic:NNExample}
+\end{figure}
+
+\subsubsection{Perceptron}
+Pre pochopenie fungovania neurónovej siete je potrebné najprv pochopiť umelý neurón, zvaný perceptron.
+Perceptron vynašiel vedec Frank Rosenblatt v 1950 až 1960 rokov, inšpirovaný predchádzajucov prácov Warren McCulloch a Walter Pitts.
+Dnes sa bežné používa iný model umelého neurónu tzv. sigmoid neurón\cite{odkaz:HandwrittenDigitRecognision}.
+
+V jednoduchosti, perceptron zoberie niekoľko vstupov, $x_1, x_2, \dots$ a reprodukuje ich na jediný binárny výstup.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{tikz0}
+	\caption{Jednoduchý príklad perceptronu\cite{odkaz:HandwrittenDigitRecognision}}
+	\label{pic:NNExample}
+\end{figure}
+Rosenblatt navrhol jednoduché pravidlo pre výpočet výstupu.
+Zaviedol váhy[eng. weights], $w_1, w_2, \dots$,
+Reálne čisla ktoré vyjadrujú dôležitosť príslušných vstupov vzhľadom na výstupy.
+Výstup neurónu, 0 alebo 1, sa určuje podľa toho či vážena suma $\sum_j w_j x_j$ je menšia alebo väčsia ako určitá prahová hodnota.
+Matematické vyjadrenie aktivačnej funkcie perceptronu by potom bolo\cite{odkaz:HandwrittenDigitRecognision}:
+\begin{equation}
+    output = 0, \; ak \; \sum_j w_j x_j \leq threshold
+\end{equation}
+\begin{equation}
+    output = 1, \; ak \; \sum_j w_j x_j > threshold
+\end{equation}
+
+Matematický model perceptronu je možné zjednodušiť a to prepísaním formuly $\sum_j w_j x_j$ na skalárny súčin[eng. dot product],
+    $w*x \equiv \sum_j w_j x_j$, kde $w$ a $x$ sú vektory váh a vstupov.
+Druhá zmena je presun prahovej hodnoty na opačnú stranu nerovnice, a nahradiť ju tzv. perceptron bias, $b \equiv -threshold$.
+Použitím týchto úprav bude model vyzerať nasledovne\cite{odkaz:HandwrittenDigitRecognision}:
+\begin{equation}
+    output = 0, \; ak \; w*x + b \leq 0
+\end{equation}
+\begin{equation}
+    output = 1, \; ak \; w*x + b > 0
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{neuron}
+    \qquad
+    \includegraphics[width=0.4\textwidth]{neuron_model}
+    \caption{biologický neurón(vľavo) a jeho matematický model(vpravo)\cite{odkaz:ConvolutionalNeuralNetworkCS231n}}
+    \label{pic:Neuron}
+\end{figure}
+
+\subsubsection{Sigmoid}
+Sigmoid je jedna z aktivačných funkcií používana v neúronových sietach, jej matematická formula je
+\begin{equation}
+    \sigma(x) = \frac{1}{1 + e^{-x}}
+\end{equation}
+je zobrazená na obrázku \ref{pic:ActivationFunctions} vľavo.
+
+Funkcia zoberie skutočné číslo a "stlačí"[eng. squashes] ho do rozmedzia 0 až 1.
+Kde veľké záporne čísla nadobudnú hodnotu 0 a veľke kladné pozitívne čísla hodnotu 1.
+Funkcia sigmoid sa historicky často používala pretože má peknú interpretáciu pre spúštanie "výstrelu" neurónu,
+    od nevýpalanie (0) až po úplne nasýtenie strely pri predpokladanej maximálnej frekvancií (1).
+V praxi, sa sigmoid používa už len zriedka.
+Pretože ma 2 hlavné nevýhody\cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
+\begin{enumerate}
+    \item[$\bullet$] \textbf{Zabíjane gradientov} - keď sa aktivácia neurónu nasýti na obidvoch koncoch 0 alebo 1, gradient v týchto oblastiach je takmer nulový.
+    Tento gradient sa používa pri spätnejpropagácií[eng. backpropagation] v neurónových sietach. Preto ak je miestny gradient veľmi malý, takmer žiaden signál
+    neurónom nepreteká k jeho váham a rekurzívne k jeho dátam. Taktiež ak pri inicializácií sú váhy príliš veľké, väčsina neurónov by bolo nasýtených a sieť by sa sotva niečo učila.
+    \item[$\bullet$] \textbf{Výstupy nie sú centrované na nulu} - to má dôsledky na dynamiku pri klesaní gradient-u, pretože ak sú údaje prichádzajúce do neurónu vždy kladné,
+    potom gradient na váhach $w$ nadobudne, počas spätnejpropagáciie, všetky hodnoty pozitívne alebo negatívne (v závisloti na gradient-e celého výrazu $f$).
+    To by mohlo viesť k nežiadúcemu cik-cakovitej dynamike pri aktualizáciach gradient-ov pre váhy.
+\end{enumerate}
 
 
-- Mozno dat Deep Learning in computer vision z 17150\_FULLTEXT.pdf, ako bouncing box a pod...
-Nech tu mam nieco na detekciu a nie len klasifikacia.
+\subsubsection{Tanh}
+Funkcia tanh dalšia z aktivačných funkcií neurónu je zobrazená na obrázku \ref{pic:ActivationFunctions} vpravo.
+Tanh zoberie skutočné čislo a stlačí ho do rozmedzia -1 až 1. Pracuje podobne ako sigmoid.
+Matematický zápis je\cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
+\begin{equation}
+    tanh(x) = 2\sigma(2x) - 1
+\end{equation}
+Kedže netrpí nevýhodami ako sigmoid tak v praxi je preferovanejší.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{sigmoid}
+    \qquad
+    \includegraphics[width=0.45\textwidth]{tanh}
+    \caption{
+        Vľavo: Sigmoid nelineárne stlačenie čísel do rozsahu [0,1],
+        Vpravo: Tanh nelineárne stlačenie čísel do rozsahu [-1,1] \cite{odkaz:ConvolutionalNeuralNetworkCS231n}
+    }
+    \label{pic:ActivationFunctions}
+\end{figure}
+
+\subsubsection{ReLU a Leaky ReLU}
+V praxi existuje niekoľko dalšich aktivačných funkcií, každá je použitelná pre riešenie iného problému,
+    ciže každá ma svoje výhody ale aj nevýhody.
+Ako príklad môžeme uviesť ReLU (Rectified Linear Unit)
+\begin{equation}
+    f(x) = max(0,x)
+\end{equation}
+alebo jeho obdobu Leaky ReLU, ktorá sa snaží vyriešiť nevýhody ReLU.
+\begin{equation}
+    f(x) = x \quad ak \; x > 0
+\end{equation}
+\begin{equation}
+    f(x) = ax \quad ak \; x <= 0
+\end{equation}
+kde $a$ je malá konštanta (napr. 0.01) \cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
+
+\subsubsection{Architektúra neurónovej siete}
+Ako bolo spomínane už vyššie, neúronova sieť je modelovaná ako kolekcia neurónov ktoré sú prepojené v acyklickom grafe.
+Modely neúronovych sieti sú často organizované do odlišných vrstiev neurónov.
+Pre bežné neúronove siete je najbežnejšou vrstvou tzv. plne-prepojená vrstva [eng. fully-connected layer],
+    v ktorej sú neuróny medzi dvoma priľahlými vrstvami plne párovo prepojené, ale neuróny v jeden vrstve nemajú medzi sebou žiadne spojenia.
+Na obrázku \ref{pic:NeuralNetworkArchitecture} nižšie sú uvedené dve topológie ktoré využívajú plne-prepojené vrstvy\cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.38\textwidth]{neural_net}
+    \qquad
+    \includegraphics[width=0.52\textwidth]{neural_net2}
+    \caption{Vľavo: 2-vrstvová neurónová sieť, Vpravo: 3-vrstvová neurónová sieť \cite{odkaz:ConvolutionalNeuralNetworkCS231n}}
+    \label{pic:NeuralNetworkArchitecture}
+\end{figure}
+
+Vačšie neúronove sieťe dokážu reprezentovať komplikovanjšie funkcie.
+Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2 tried (červená, zelená) použít rôznych veľkostí neúronových sieti.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{layer_sizes}
+	\caption{Zobrazenie klasifikácie dát rôznymi veľkostami NN \cite{odkaz:ConvolutionalNeuralNetworkCS231n}}
+	\label{pic:XNNLayerExample}
+\end{figure}
+
+\subsection{Konvolučné neurónové siete}
+
+%- Mozno dat Deep Learning in computer vision z 17150\_FULLTEXT.pdf, ako bouncing box a pod...
+%Nech tu mam nieco na detekciu a nie len klasifikacia.
 
 \section{Predspracovanie obrazu}
 http://scikit-image.org/docs/dev/auto\_examples/
