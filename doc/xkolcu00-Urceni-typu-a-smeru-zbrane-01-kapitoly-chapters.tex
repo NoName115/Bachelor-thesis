@@ -1,6 +1,8 @@
 % ------------ TODO ------------
 % - Co je to strojove ucenie
 % - Nejaka extrakcia priznakov
+% - Mozno dat Deep Learning in computer vision z 17150\_FULLTEXT.pdf,
+%    ako bouncing box a pod...
 % - 
 % ------------------------------
 
@@ -11,6 +13,7 @@
 
 % ------------ NEW CHAPTER ------------
 \chapter{Technológie}
+\label{chap:technologie}
 V tejto kapitole sa zoznámime so základnymi pojmami a princípmi, ktoré súvia s probletikou tejto práce a ktoré budú dalej využívané.
 Kapitola vysvetľuje základne rozdelenia zbraní, princíp spracovania digitálneho obrazu a metódy jeho predspracovanie.
 Ďalej sú tu vysvetlené rôzne spôsoby pre klasifikáciu týchto obrazových dát.
@@ -147,7 +150,7 @@ Ostatné body sú ignorované\cite{prop:SupervisedMachineLearning}.
 	\label{pic:SVMMAxMargin}
 \end{figure}
 
-Avšak väčsina reálnych problémov zahŕňa nelineárne rozdelenie dát pre ktoré neexistuje žiadna hyper--rovina ktorá by úspešne rozdelila trénovacie dáta.
+Avšak väčsina reálnych problémou zahŕňa nelineárne rozdelenie dát pre ktoré neexistuje žiadna hyper--rovina ktorá by úspešne rozdelila trénovacie dáta.
 Riešenie tohto problému je mapovať dáta do vyššie--dimenzionálneho priestoru a definovať rozdeľujúcu hyper--rovinu tam.
 Tento vyššíe-dimenzionálny priestor je nazývaný transformovaný priestor príznakov[eng. transformed feature space], ako opak ku vstupnému priestoru[eng. input space] obsahujúci trénovacie dáta\cite{prop:SupervisedMachineLearning}.
 
@@ -221,7 +224,7 @@ Napodobňuje ľudský mozog v dvoch aspektoch \cite{odkaz:NNIntroduction}:
 \end{enumerate}
 Toto je jedna z definícii NN, akceptovaná NN komunitou.
 Je zrejmé, že inšpirácia ku vzniku NN prišla z biologických systémov.
-Na prvý dojem vysoko abstraktná disciplína nachádza množstvo aplikácii v praxi a stáva sa prostriedkom pre riešenie problémov v širokom spektre odborných oblastí\cite{odkaz:NNIntroduction}.
+Na prvý dojem vysoko abstraktná disciplína nachádza množstvo aplikácii v praxi a stáva sa prostriedkom pre riešenie problémou v širokom spektre odborných oblastí\cite{odkaz:NNIntroduction}.
 
 Rôzne architektúry umelých neurónových sieti[eng. artificial neural network] sa používajú pre riešenie rôznych úloh.
 Konvolučné a rekurentné NN sú dve z najúspešnejších a sú z veľkej časti zodpovedné za nedávnu revolúciu umelej inteligencie\cite{odkaz:CorrectionOfImageOrentation}.
@@ -229,7 +232,7 @@ Konvolučné a rekurentné NN sú dve z najúspešnejších a sú z veľkej čas
 Vo všeobecnosti môžeme vymenovať nasledovné oblasti využitia neurónových sieti\cite{odkaz:NNIntroduction}:
 \begin{enumerate}
     \item[$\bullet$] klasifikácie do tried, klasifikácia situácií
-    \item[$\bullet$] riešenie predikčných problémov
+    \item[$\bullet$] riešenie predikčných problémou
     \item[$\bullet$] problémy riadenia procesov
     \item[$\bullet$] tranformácia signálov
 \end{enumerate}
@@ -364,7 +367,7 @@ Na obrázku \ref{pic:NeuralNetworkArchitecture} nižšie sú uvedené dve topol�
     \label{pic:NeuralNetworkArchitecture}
 \end{figure}
 
-Vačšie neúronove sieťe dokážu reprezentovať komplikovanjšie funkcie.
+Vačšie neúronove sieťe dokážu reprezentovať komplikovanejšie funkcie.
 Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2 tried (červená, zelená) použít rôznych veľkostí neúronových sieti.
 \begin{figure}[H]
 	\centering
@@ -422,13 +425,10 @@ Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
 	\label{pic:NNExample}
 \end{figure}
 
-%- Mozno dat Deep Learning in computer vision z 17150\_FULLTEXT.pdf, ako bouncing box a pod...
-%Nech tu mam nieco na detekciu a nie len klasifikacia.
-
 \section{Predspracovanie obrazu}
 http://scikit-image.org/docs/dev/auto\_examples/
 
-% Normalizacia obrazu - github ten kurz c231n
+% Normalizacia obrazu - github ten kurz c231n - 17150\_FULLTEXT.pdf (normalization)
 
 \subsection{Hogova transformacia}
 - F3-DP-2016-Erlebach-Jonas-Automaticka detekce pupily v obraze.pdf
@@ -441,13 +441,24 @@ Urobiť z neho magnitúdu obrazu potom.
 % ------------ NEW CHAPTER ------------
 \chapter{Návrh riešenia}
 
-- Exploiting-the-complementary-strengths-of-multi-layer-CNN-image-retrieval.pdf,
-preco pouzivat CNN na tento problem
+V tejto kapitole si priblížime navrhované technológie pre riešienie problému, tejto práce.
+Kapitola zahŕňa popis knižníc pre strojové učenie ako je Tensorflow a Keras ktorý zovšeobecnuje a používa Tensorflow pre svoju prácu.
+Následne nástroj scikit-learn ktorý budeme používať pre jednoduchú klasifikáciu pomocou postup ktoré boli vysvetlené v kapitole \ref{chap:technologie}.
 
-\section{Keras}
-- 17150\_FULLTEXT.pdf - Tensorflow and Keras str.26
+\section{Tensorflow a Keras}
 
-- Navrhovana technologia pre ucenie
+\subsubsection{Tensorflow}
+TensorFlow je softvérová knižnica s otvoreným zdrojovým kódom[eng. open source library] pre numerické výpočty pomocou dátových vývojovím diagramov[eng. data flow graphs].
+Uzly v grafe reprezentujú matematické operácie, zatiaľ čo hrany grafu reprezentujú multidimenzionálne dátové polia (tensors), ktoré medzi sebou kominukujú.
+Flexibilná architektúra umožnuje nasadenie na viacerých CPU alebo GPU, serveroch alebo aj mobilných zariadeniach.
+TensorFlow bol pôvodne vyvinutý na účely výskumu strojového učenia a výskumu hlbokých neurónových sieti, systém je dostatočne všeobecný aby bol aplikovaný v mnohých iných oblastiach \cite{odkaz:TensorFlow}.
+
+\subsubsection{Keras}
+Vysoká všeobecnosť knižice TensorFlow pre jej širokú aplikáciu, robí jej použitie pre tvornu neurónových sieti komplikovanejšiu.
+Kde Keras bol postavený nad TensorFlow ktorý využíva ako svoj backend a tvorbu neurónových sieti zjednodušil.
+Za jeho backend je možné použiť aj CNTK alebo Theona.
+Táto implementácia knižnice Keras robí experimentovanie s NN jednoduchšiu a rýchlejšiu.
+Aj keď sa snaží implementáciu zjednodušiť tak stále si zachováva modularitu a preto je možné dostatočne dobre modely NN upravovať a prisposobovať pre riešienie rôznych problémou \cite{odkaz:Keras}.
 
 \section{scikit-learn}
 - Kratky popis
@@ -457,7 +468,8 @@ preco pouzivat CNN na tento problem
 - ....
 
 \section{Klasifikácia typu zbrane}
-- Pouzit vsetky veci z teorie, pri SGD pre vacsi dataset.
+%- Exploiting-the-complementary-strengths-of-multi-layer-CNN-image-retrieval.pdf, preco pouzivat CNN na tento problem
+%- Pouzit vsetky veci z teorie, pri SGD pre vacsi dataset.
 
 \section{Určenie natočenia zbrane}
 
@@ -465,5 +477,3 @@ preco pouzivat CNN na tento problem
 % ------------ NEW CHAPTER ------------
 \pagebreak
 \chapter{Implementácia}
-
-\section{Dataset}
