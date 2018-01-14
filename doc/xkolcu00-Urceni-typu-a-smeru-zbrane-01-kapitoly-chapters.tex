@@ -206,7 +206,7 @@ Pomocou klesania gradientu[eng. gradient descent] minimalizujeme $E_n(f_w)$, kde
 kde $\gamma$ je vhodne zvolený zisk[eng. gain].
 
 Stochastic Gradient Descent algoritmus je drastické zjednodušenie.
-Namiesto počítania gradientu pre $E_n(f_n)$, každá iterácia odhadne tento gradient na základe jednej náhodne vybranej vzorky $z_t$:
+Namiesto počítania gradientu pre $E_n(f_n)$, každá iterácia odhadne tento gradient na základe jednej náhodne vybranej vzorky $z_t$\cite{prop:StochasticGradientDescent}:
 \begin{equation}
     w_{t+1} = w_t - \gamma \bigtriangledown_w Q(z_t, w_t)
 \end{equation}
@@ -374,12 +374,61 @@ Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2
 \end{figure}
 
 \subsection{Konvolučné neurónové siete}
+Konvolučné neurónové siete [eng. convolutional neural networks] (CNNs), sú špeciálnym prípadom neurónových sieti pre spracovanie
+    dát ktoré mau známu topológie podobnú mriežke.
+Pre príklad je možné uviesť napríklad 2-dimenzionálne dát ako sieť pixelov pri spracovaní obrázkov.
+Názov týchto sieti \textit{konvolučné} indikuje že používajú matematickú operáciu zvanú konvolúcia[eng. convolution]\cite{book:Goodfellow-et-al-2016}.
+
+\subsubsection{Konvolúcia}
+Vo svojej najobecnejšej podobe, konvolúcia je operácie dvoch funkcií s reálnymi hodnotami argumentov.
+Operácia konvolúcie je typicky označovaná hviezdičkov:
+\begin{equation}
+    s(t) = (x * w)(t)
+\end{equation}
+V terminilógií konvolucnej siete je prvý argument (v tomto príklade funkcie $x$) sa často označuje ako vstup a druhý
+    argument (v tomto príklade funkcia $w$) ako jadro[eng. kernel]. Výstup je niekedy označovaný ako mapa príznakov.
+
+Bežne konvolúciu používa na viac ako jedej osy súčasne.
+Pri použítí 2-dimenzionálne obrázku $I$ ako náš vstup, tak budeme chcieť použiť aj 2-dimenzionálne jadro $K$\cite{book:Goodfellow-et-al-2016}:
+\begin{equation}
+    S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(m,n) K(i - m, j - n)
+\end{equation}
+
+Avšak množstvo knižníc ktoré implmentujú neúronove siete, používaju tzv. cross-correlation funkciu\cite{book:Goodfellow-et-al-2016}:
+\begin{equation}
+    S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(i + m, i + n) K(m, n)
+\end{equation}
+
+\subsubsection{Architektúra}
+CNN využívajú skutočnosti, že vstup pozostáva z obrázkov.
+Na rozdiel od obyčajnej neurónovej siete majú vrstvy CNN neuróny usporiadané v troch rozmeroch: šírka, výška, hĺbka[eng. width, height, depth].
+Hĺbka odkazuje na 3.dimenziu aktivačného zväzku[eng. activation volume], nie ne celkovú hĺbku neurónovej siete.
+Neuróny vo vrtsve budú prepojené iba k malej oblasti vrstvy pred ňou, namiesto plného prepojenia \cite{odkaz:CNNArchitecture}.
+
+Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
+\begin{enumerate}
+    \item[$\bullet$] \textbf{Convolutional layer} - konvolučná vrstva je hlavný stavebný blok CNN, ktorá robí väčšinu výpočtov.
+    Parametre tejto vrstvy pozostávajú zo súboru filtrov ktoré sa dokážu učit.
+    Takto naučené filtre sa aktivujú keď uvidia nejaký typ vizuálneho prvku, napr. hranu určitej orientácie alebo škvrnu určitej farby a pod..
+    \item[$\bullet$] \textbf{Pooling layer} - túto vrstvu je obvyklé vkladať ako spojenie medzi dvoma konvolučnímy vrstvami.
+    Jej funkciou je postupné znižovanie priestorovej veľkosti reprezentovaného vstupu, pre zníženie množstva parametrov a výpočtov v sieti, a teda aj kontroly pretrénovania.
+    \item[$\bullet$] \textbf{Fully-Connected layer} - rovnako ako v obvyklých neúronových sietach, je to vrstva kde všetky neuróny sú prepojené s predchádzajucov vrstvov.
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{convnet}
+	\caption{Príklad architektúry konvolučnej neúronovej siete \cite{odkaz:CNNArchitecture}}
+	\label{pic:NNExample}
+\end{figure}
 
 %- Mozno dat Deep Learning in computer vision z 17150\_FULLTEXT.pdf, ako bouncing box a pod...
 %Nech tu mam nieco na detekciu a nie len klasifikacia.
 
 \section{Predspracovanie obrazu}
 http://scikit-image.org/docs/dev/auto\_examples/
+
+% Normalizacia obrazu - github ten kurz c231n
 
 \subsection{Hogova transformacia}
 - F3-DP-2016-Erlebach-Jonas-Automaticka detekce pupily v obraze.pdf
