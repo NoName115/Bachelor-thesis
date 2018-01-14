@@ -5,7 +5,7 @@
 % ------------------------------
 
 \chapter{Úvod}
-
+\dots
 %\section{Úvod a motivácia}
 %Žvasty o tom koľko je útokov zbrani v ČR a pod...
 
@@ -185,7 +185,31 @@ Zoznam populárnych jadier\cite{prop:SupervisedMachineLearning}:
 
 
 \subsection{Stochastic Gradient Descent}
-\# TODO
+Výpočtova zložitosť algoritmou učenia sa stáva kritickým obmedzujúcim faktorom, pri používaní veľmi rozsiahlých množín dát.
+Preto pre veľké množíný dát sa začal používať Stochastic Gradient Descent\cite{prop:StochasticGradientDescent}, ktorý tieto výpočty dokáže optimalizovať.
+
+Každý vzor $z$ je pár $(x, y)$ kde $x$ je ľubovolný vstup a $y$ skalárny výstup.
+Máme stratovú funkciu [eng. loss function] $\ell(\hat{y},y)$ ktorá meria hodnotu predpovedania $\hat{y}$ keď správna odpoveď je $y$,
+    a zvolíme si rodinu $\mathcal{F}$ funkcií $f_w(x)$ parametrizované váhovym vektorom $w$.
+
+Hľadáme funkciue $f \in \mathcal{F}$, ktorá minimalizuje stratu $Q(z,w) = \ell(f_w(x), y)$ spriemerovanú vzhlaďom na vzory $z$.
+Avšak pre napodobenie príprody je prirodzenejšie priemerovať vzhľadom na neznámu distribúciu $dP(z)$\cite{prop:StochasticGradientDescent}.
+\begin{equation}
+    E(f) = \int{\ell(f(x), y)dP(z)} \quad E_n(f) = \frac{1}{n}\sum_{i=1}^{n}\ell(f(x_i), y_i)
+\end{equation}
+$E_n(f)$ meria výkonnosť trénovacích dát. $E(f)$ meria generalizovanú výkonnosť, teda očakávaný výkon v budúcich vzorkách.
+
+Pomocou klesania gradientu[eng. gradient descent] minimalizujeme $E_n(f_w)$, kde každá iterácia aktualizuje váhove vektory $w$ na základne gradientu.
+\begin{equation}
+    w_{t+1} = w_t - \gamma \frac{1}{n}\sum_{i=1}^{n}\bigtriangledown_w Q(z_i, w_t)
+\end{equation}
+kde $\gamma$ je vhodne zvolený zisk[eng. gain].
+
+Stochastic Gradient Descent algoritmus je drastické zjednodušenie.
+Namiesto počítania gradientu pre $E_n(f_n)$, každá iterácia odhadne tento gradient na základe jednej náhodne vybranej vzorky $z_t$:
+\begin{equation}
+    w_{t+1} = w_t - \gamma \bigtriangledown_w Q(z_t, w_t)
+\end{equation}
 
 
 \subsection{Neurónové siete}
@@ -378,11 +402,13 @@ preco pouzivat CNN na tento problem
 
 \section{scikit-learn}
 - Kratky popis
+- Triedy pre kazdy klasifikator
 
 \section{Databáza zbraní}
 - ....
 
 \section{Klasifikácia typu zbrane}
+- Pouzit vsetky veci z teorie, pri SGD pre vacsi dataset.
 
 \section{Určenie natočenia zbrane}
 
