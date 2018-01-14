@@ -14,9 +14,9 @@
 % ------------ NEW CHAPTER ------------
 \chapter{Technológie}
 \label{chap:technologie}
-V tejto kapitole sa zoznámime so základnymi pojmami a princípmi, ktoré súvia s probletikou tejto práce a ktoré budú dalej využívané.
-Kapitola vysvetľuje základne rozdelenia zbraní, princíp spracovania digitálneho obrazu a metódy jeho predspracovanie.
-Ďalej sú tu vysvetlené rôzne spôsoby pre klasifikáciu týchto obrazových dát.
+V tejto kapitole sa zoznámime so základnymi pojmami a princípmi, ktoré súvisia s probletikou tejto práce a ktoré budú dalej využívané.
+Kapitola vysvetľuje základné rozdelenia zbraní, princíp spracovania digitálneho obrazu a metódy jeho predspracovanie.
+Ďalej sú tu vysvetlené rôzne spôsoby klasifikácie týchto obrazových dát.
 
 
 \section{Zbrane}
@@ -25,24 +25,24 @@ ktoré je prispôsobené k vyvolaniu ranivého účinku na živý organizmus ale
 Za prvé zbrane môžeme považovať kopije ktoré používali luďia pri love zvierat asi pred 400,000 rokmi\cite{prop:SpearHistory}.
 
 Vo všeobecnosti môžeme zbrane rozdeliť podľa množstvá krytérií, napr. podľa zdroja energie použitej k vypudeniu projektilu zo zbrane,
-podľa konštrukcie a režimu streľby, ďalej z hľadiska postupu pri nabíjaní alebo podľa veku zbrane na nové - slúžiace svojmu účelu a historické - ktoré sú uź nespôsobilé k pôvodnemu účelu.
+podľa konštrukcie a režimu streľby, ďalej z hľadiska postupu pri nabíjaní alebo podľa veku zbrane na nové - slúžiace svojmu účelu a historické - ktoré sú už nespôsobilé k pôvodnemu účelu.
 My sa zameriame na 2 základne rozdelenia a to poďla toho ako zbrane pôsobia na živú sílu[cz. živou sílu], delíme na\cite{book:StrelneZbrane}:
 \begin{enumerate}
 	\item[$\bullet$] \textbf{Strelné} - rozrušujú vzdialený cieľ, živý alebo neživý, prodstredníctvom depadovej energie strely vypudenej zo zbrane.
-	\item[$\bullet$] \textbf{Chladné} - účinkujú bodom alebo sekom naostrenej čepele, ktorá je vsadená do rukoväťe lebo je nasadená na tyč alebo porísko.
-    \item[$\bullet$] \textbf{Úderné} - pôsobia na živý objekt tupým úderom s vojej časti, tkorá býva spojená s vhodnou rukoväťou.
+	\item[$\bullet$] \textbf{Chladné} - účinkujú bodom alebo sekom naostrenej čepele, ktorá je vsadená do rukoväťe alebo je nasadená na tyč či porísko.
+    \item[$\bullet$] \textbf{Úderné} - pôsobia na živý objekt tupým úderom svojej časti, ktorá býva spojená s vhodnou rukoväťou.
 \end{enumerate}
 a podľa ovládateľnosti a možnosti prenášania ich delíme na\cite{book:StrelneZbrane}:
 \begin{enumerate}
 	\item[$\bullet$] \textbf{Ručné} strelné zbrane môže prenášať a ovládať jediná osoba. Sú ovládané buď jednou rukou - krátke zbrane - alebo oboma rukami - dlhé zbrane.
-	\item[$\bullet$] \textbf{Lafetované} zbrane musia byť vzhľadom ku svojej hmotnosti a rozmerom umiestnené na zvláštnom podstavci - \textit{lafete}. Takúto zbraň takisto väčsinou obsluhuje viac ľudí.
+	\item[$\bullet$] \textbf{Lafetované} zbrane musia byť vzhľadom ku svojej hmotnosti a rozmerom umiestnené na zvláštnom podstavci - \textit{lafete}. Takúto zbraň takisto väčšinou obsluhuje viac ľudí.
 \end{enumerate}
 V tejto práci sa zameramé hlavne na strelné, ručné zbrane.
 
 
 \section{Spracovanie obrazu}
 Pre popis obrázkov a ostatných signálov sú často používané matematické modely.
-Kde signál je funkcia závislá na nejakých premenných s fyzikálnym významom, môže byť 1-dimenzionálna (napr. závisla na čase),
+Kde signál je funkcia závislá na určitých premenných s fyzikálnym významom, môže byť 1-dimenzionálna (napr. závisla na čase),
 2-dimenzionálna (napr. obrázok závislý na 2 koordinátoch v ploche), 3-dimenzionálna (napr. popis pozície objektu v priestore), alebo aj viac-dimenzionálna\cite{book:ImageProcessing}.
 
     Každý obraz môže byť definovaný ako spojitá funkcia s dvomi neznámymi $$f(x,y)$$ kde $x$ a $y$ sú súradnice v ploche.
@@ -54,7 +54,7 @@ Pri viac-dimenzionálnych digitálnych obrazoch sa pri spracovaní obrazu použ�
 
 Oblasť spracovania digitálneho obrazu je v dnešnej dobe veľmi široká a nachádza uplatnenie vo viacerých oboroch.
 Môže sa využívať pri automatickej vizuálnej inšpekcií produktou, pre zaistenie vyššej produktivity a kvality výrobku v továrňach.
-Ďalej pri spracovaní snímkou z lietadiel alebo satelitou pre získanie dát o prírodnych zdrojoch, ako napr. v poľnohospodárstve alebo lesníctve.
+Ďalej pri spracovaní snímkov z lietadiel alebo satelitov pre získanie dát o prírodnych zdrojoch, ako napr. v poľnohospodárstve alebo lesníctve.
 Širokú aplikáciu má v medicíne pri obrázkoch získavaných pomocou röngenových zariadení, CT a magnetickej rezonancie\cite{book:ImageProcessingApplication}.
 A v súčastnosti v automobilovom priemysle pri rozvýjajúcej sa oblati autonómneho riadenia automobilov.
 
@@ -64,7 +64,7 @@ A v súčastnosti v automobilovom priemysle pri rozvýjajúcej sa oblati autonó
 
 
 \subsection{K-Nearest-Neighbor}
-\textit{k}-Nearest Neighbor je algoritmus ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácií,
+\textit{k}-Nearest Neighbor je algoritmus, ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácií,
 avšak je možné ho použiť aj pre odhad a predikciu\cite{book:DataMining}.
 Algoritmus je pamäťovo náročný [eng. memory-based] a nepotrebuje žiaden model.
 Pre jeho fungovanie nie je potrebný žiaden explicitný postup trénovania, okrem zberu vektorov príznakov s označeniami tried do ktorých patria.
@@ -73,10 +73,10 @@ Klasifikácia dát prebieha v 2 krokoch: nájdenie \textit{k} najbližších sus
 vykonanie "väčšinové hlasovanie" medzi nájdenými susedmi pre priradenie najčastejšie sa vykytovaného označenia triedy.
 
 Nech $\{ (x_i, y_i), i = 1, 2, \dots, n \}$ je množína trénovacích dát, kde $x_i$ je vektor príznakov a $y_i$ je názov triedy do ktorej patrí vektor $x_i$.
-Predpokladáme že každé $x_i$ je v nejakom multidimenzionálnom priestore príznakov s metrikov $P$ a $y_i \in \{ 1, 2, \dots, l \}$, kde $l$ je číslo odpovedajúcej triedy.
+Predpokladáme že každé $x_i$ je v určitom multidimenzionálnom priestore príznakov s metrikov $P$ a $y_i \in \{ 1, 2, \dots, l \}$, kde $l$ je číslo odpovedajúcej triedy.
 Cieľom je priradiť neoznačeny vektor $x$ do zodpovedajucej triedy z množiny $\{ 1, 2, \dots, l \}$.
 
-Najjednoduchšia verzia algoritmu \textit{k}-NN je 1-NN, kde vektor $x$ je priradený najbližsiemu susedovy.
+Najjednoduchšia verzia algoritmu \textit{k}-NN je 1-NN, kde vektor $x$ je priradený najbližsiemu susedovi.
 To znamená že ak $x_j$, kde $j \in \{ 1, 2, \dots, n \}$, je najbližšií k $x$ vo forme vzdialenosti $P$ \cite{prop:KnnClassification}:
 \begin{equation}
     \label{eq:kNNMetric}
@@ -84,8 +84,8 @@ To znamená že ak $x_j$, kde $j \in \{ 1, 2, \dots, n \}$, je najbližšií k $
 \end{equation}
 tak označenie triedy pre vektor $x$ je číslo $y_i$.
 
-Pre formu algoritmu \textit{k}-NN, kde $k > 1$ je postup podobný, ale priradenie označenia triedy pre $x$ je na základe najčastejšie sa vyskutovaného označenia triedy
-spomedzi \textit{k} najbližších susedov z trénovacých bodov $x_i$, kde $k$ je užívateľom definovaná konštanta \cite{prop:KnnClassification}.
+Pre formu algoritmu \textit{k}-NN, kde $k > 1$ je postup podobný, ale priradenie označenia triedy pre $x$ je na základe najčastejšie sa vyskytovaného označenia triedy
+spomedzi \textit{k} najbližších susedov z trénovacích bodov $x_i$, kde $k$ je užívateľom definovaná konštanta \cite{prop:KnnClassification}.
 
 Najbežnejší výpočet pre vzdielenosť bodov je pomocou Euklidovskej vzdielenosti.
 Táto vzdielnosť je medzi dvoma $J$-dimenzionálnymi vektormi $a$ a $b$ vyjadrená ako \cite{prop:KnnClassification}:
@@ -112,10 +112,10 @@ V ukážke je vidno že v prípade 1-NN klasifikátora, niektré body vytváraj�
 
 \subsection{Support Vector Machines}
 Support Vector Machines (SVM's) sú metódy učenia používané pre binárnu klasifikáciu.
-Základnou myšlienkou je nájdenie hyper--roviny ktorá perfektne oddelí \textit{d}--dimenzionálne dáta do dvoch tried\cite{prop:IntroductionToSVM}.
-SVM sa snaží maximalizovať vzdialenosť medzi rozdeľujúcov rovinou a dátami nachádzajúcimi sa v každej z 2 polrovín\cite{prop:SupervisedMachineLearning}.
-Avšak kedže vstupné dáta väčšinou niesu lineárne separovatelné, SVM's predstavujú pojem "jadrový priestor indukovaný príznakom"[eng. “kernel induced feature space”],
-    ktorý prevádza dáta do vyššieho dimenzionálneho pristoru, kde dáta sú oddeliteľné.\cite{prop:IntroductionToSVM}
+Základnou myšlienkou je nájdenie hyper--roviny, ktorá perfektne oddelí \textit{d}--dimenzionálne dáta do dvoch tried\cite{prop:IntroductionToSVM}.
+SVM sa snaží maximalizovať vzdialenosť medzi rozdeľujúcou rovinou a dátami nachádzajúcimi sa v každej z 2 polrovín\cite{prop:SupervisedMachineLearning}.
+Avšak kedže vstupné dáta väčšinou nie su lineárne separovatelné, SVM's predstavujú pojem "jadrový priestor indukovaný príznakom"[eng. “kernel induced feature space”],
+    ktorý prevádza dáta do vyššieho dimenzionálneho priestoru, kde dáta sú oddeliteľné.\cite{prop:IntroductionToSVM}
 
 Ak trénovacie dáta sú lineárne separovatelné, tak dvojica $(w, b)$ existuje ako\cite{prop:SupervisedMachineLearning}:
 \begin{equation}
@@ -131,16 +131,16 @@ s rozhodovacím pravidlom
     \label{eq:SVMDecisionRule}
     f_{w,b}(x) = sgn(w^T x + b)
 \end{equation}
-kde $w$ je váhový vektor a $b$ je predpoveď(alebo $-b$ je prahová hodnota).
-V tomto prípade keď je možné lineárne rozdeliť dve triedy, tak optimálna hyper-rovina pre rozdelenie
-    môže byť nájdena, minimalizáciou kvadratickej formy rozdeľujúcej hyper-roviny
+kde $w$ je váhový vektor a $b$ je predpoveď[eng. #TODO biases asi] (alebo $-b$ je prahová hodnota).
+V tomto prípade keď je možné lineárne rozdeliť dve triedy, tak optimálna hyper--rovina pre rozdelenie
+    môže byť nájdena, minimalizáciou kvadratickej formy rozdeľujúcej hyper--roviny
 \begin{equation}
     \label{eq:SVMDecisionRule}
     mininimize_{w,h} \; \Phi(w) = \frac{1}{2}||w||^2, \; pre \; y_i(w^Tx_i + b) \geq 1, i = 1, \dots, l
 \end{equation}
 
-V tomto prípade lineárneho rozdelenia dát, prí nájdení optimálnej rozdeľujúcej hyper--roviny, dátove body ktoré ležia na jej okraji
-    sa nazývajú podporné vektorové body[eng. support vector points] a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodou(vid. obrázok \ref{pic:SVMMAxMargin} ).
+V tomto prípade lineárneho rozdelenia dát, pri nájdení optimálnej rozdeľujúcej hyper--roviny, dátove body, ktoré ležia na jej okraji
+    sa nazývajú podporné vektorové body[eng. support vector points] a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodov(vid. obrázok \ref{pic:SVMMAxMargin} ).
 Ostatné body sú ignorované\cite{prop:SupervisedMachineLearning}.
 
 \begin{figure}[H]
@@ -150,15 +150,15 @@ Ostatné body sú ignorované\cite{prop:SupervisedMachineLearning}.
 	\label{pic:SVMMAxMargin}
 \end{figure}
 
-Avšak väčsina reálnych problémou zahŕňa nelineárne rozdelenie dát pre ktoré neexistuje žiadna hyper--rovina ktorá by úspešne rozdelila trénovacie dáta.
-Riešenie tohto problému je mapovať dáta do vyššie--dimenzionálneho priestoru a definovať rozdeľujúcu hyper--rovinu tam.
-Tento vyššíe-dimenzionálny priestor je nazývaný transformovaný priestor príznakov[eng. transformed feature space], ako opak ku vstupnému priestoru[eng. input space] obsahujúci trénovacie dáta\cite{prop:SupervisedMachineLearning}.
+Avšak väčsina reálnych problémou zahŕňa nelineárne rozdelenie dát pre ktoré neexistuje žiadna hyper--rovina, ktorá by úspešne rozdelila trénovacie dáta.
+Riešenie tohto problému je mapovať dáta do vyššie--dimenzionálneho priestoru a definovať tam rozdeľujúcu hyper--rovinu.
+Tento vyššíe-dimenzionálny priestor je nazývaný transformovaný priestor príznakov[eng. transformed feature space], ako opak ku vstupnému priestoru[eng. input space] obsahujúcemu trénovacie dáta\cite{prop:SupervisedMachineLearning}.
 
-Pri vhodne zvolenom transformovanom priestore príznakov dostatočnej veľkosti, môžu byť každé treningové dáta rozdelitelné.
-Lineárne rozdelenie v transformovanom priestore príznakov zodpovedá nelineárnemu rozdeleniu v pôvodnom vstupnej priestore.
+Pri vhodne zvolenom transformovanom priestore príznakov dostatočnej veľkosti, môžu byť všetky treningové dáta rozdelitelné.
+Lineárne rozdelenie v transformovanom priestore príznakov zodpovedá nelineárnemu rozdeleniu v pôvodnom vstupnom priestore.
 
-Mapovanie dát do nejakého iného Hilbertovho priestora \cite{prop:HilbertSpace} $H$ ako $\Phi:R^d \rightarrow H$.
-Potom trénovací algoritmus záležal len na údajoch zo skalárneho súčinu[eng. dot products] v priestore $H$, t.j na funkciách v tvare $\Phi(x_i) * \Phi(x_j)$.
+Mapovanie dát do určitého Hilbertovho priestora \cite{prop:HilbertSpace} $H$ ako $\Phi:R^d \rightarrow H$.
+Potom trénovací algoritmus závisý len na údajoch zo skalárneho súčinu[eng. dot products] v priestore $H$, t.j na funkciách v tvare $\Phi(x_i) * \Phi(x_j)$.
 Ak bude existovať "funkcia jadra"[eng. kernel function] $K$ ako $K(x_i, x_j) = \Phi(x_i)*\Phi(x_j)$, tak budeme musieť použiť iba funkciu $K$ v trénovacom algoritme
     a nikdy nebudeme potrebovať explicitne definovať $\Phi$\cite{prop:SupervisedMachineLearning}.
 
@@ -166,7 +166,7 @@ Takže jadrá[eng. kernels] sú špeciálnou triedou funkcií, ktoré dovoľujú
 Po vytvorení hyper--roviny sa funkcia jadra použije na mapovanie nových bodov do funkčného priestoru pre klasifikáciu\cite{prop:SupervisedMachineLearning}.
 
 Voľba správnej funkcie jadra je veľmi dôležitá, kedže definujú transformovaný priestor príznakov v ktorom budú trénovacie dáta klasifikované.
-Genton \cite{prop:KernelClasses} popísal niekoľko tried jadier, avšak, neadresoval otázku ktorá trieda je najvhodnejšie pre daný problém.
+Genton \cite{prop:KernelClasses} popísal niekoľko tried jadier, avšak, neadresoval otázku, ktorá trieda je najvhodnejšie pre daný problém.
 
 Zoznam populárnych jadier\cite{prop:SupervisedMachineLearning}:
 \begin{equation}
@@ -237,19 +237,19 @@ Vo všeobecnosti môžeme vymenovať nasledovné oblasti využitia neurónových
     \item[$\bullet$] tranformácia signálov
 \end{enumerate}
 
-Neurónové siete su usporiadané do vnútorne prepojených vrstiev umelých neurónov.
+Neurónové siete sú usporiadané do vnútorne prepojených vrstiev umelých neurónov.
 Jednoducho povedané, každá vrstva berie výstup z prechádzajucej vrstvy, aplikuje transformácie a výsledok pošle na vstup ďalšej vrstve.
-Prvá vrstva vstupov je propojená na vstupné dáta ktoré sa majú spracovať a posledná vrstva je akýkoľvek výstup ktorý chceme predpovedať \cite{odkaz:CorrectionOfImageOrentation} (vid. obrázok \ref{pic:NNExample}).
+Prvá vrstva vstupov je prepojená na vstupné dáta, ktoré sa majú spracovať a posledná vrstva je akýkoľvek výstup, ktorý chceme predpovedať \cite{odkaz:CorrectionOfImageOrentation} (vid. obrázok \ref{pic:NNExample}).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{nn}
-	\caption{Jednoduchá architektúra NN s 1 vstupnov, 3 skrytímy a 1 výstupov vrstvov\cite{odkaz:CorrectionOfImageOrentation}}
+	\caption{Jednoduchá architektúra NN s 1 vstupnou, 3 skrytímy a 1 výstupou vrstvou\cite{odkaz:CorrectionOfImageOrentation}}
 	\label{pic:NNExample}
 \end{figure}
 
 \subsubsection{Perceptron}
 Pre pochopenie fungovania neurónovej siete je potrebné najprv pochopiť umelý neurón, zvaný perceptron.
-Perceptron vynašiel vedec Frank Rosenblatt v 1950 až 1960 rokov, inšpirovaný predchádzajucov prácov Warren McCulloch a Walter Pitts.
+Perceptron vynašiel vedec Frank Rosenblatt v 1950 až 1960 roku, inšpirovaný predchádzajucov prácov Warren McCulloch a Walter Pitts.
 Dnes sa bežné používa iný model umelého neurónu tzv. sigmoid neurón\cite{odkaz:HandwrittenDigitRecognision}.
 
 V jednoduchosti, perceptron zoberie niekoľko vstupov, $x_1, x_2, \dots$ a reprodukuje ich na jediný binárny výstup.
@@ -305,12 +305,12 @@ Funkcia sigmoid sa historicky často používala pretože má peknú interpretá
 V praxi, sa sigmoid používa už len zriedka.
 Pretože ma 2 hlavné nevýhody\cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
 \begin{enumerate}
-    \item[$\bullet$] \textbf{Zabíjane gradientov} - keď sa aktivácia neurónu nasýti na obidvoch koncoch 0 alebo 1, gradient v týchto oblastiach je takmer nulový.
-    Tento gradient sa používa pri spätnejpropagácií[eng. backpropagation] v neurónových sietach. Preto ak je miestny gradient veľmi malý, takmer žiaden signál
+    \item[$\bullet$] \textbf{Zabíjanie gradientov} - keď sa aktivácia neurónu nasýti na obidvoch koncoch 0 alebo 1, gradient v týchto oblastiach je takmer nulový.
+    Tento gradient sa používa pri spätnej propagácií[eng. backpropagation] v neurónových sietach. Preto ak je miestny gradient veľmi malý, takmer žiaden signál
     neurónom nepreteká k jeho váham a rekurzívne k jeho dátam. Taktiež ak pri inicializácií sú váhy príliš veľké, väčsina neurónov by bolo nasýtených a sieť by sa sotva niečo učila.
     \item[$\bullet$] \textbf{Výstupy nie sú centrované na nulu} - to má dôsledky na dynamiku pri klesaní gradient-u, pretože ak sú údaje prichádzajúce do neurónu vždy kladné,
-    potom gradient na váhach $w$ nadobudne, počas spätnejpropagáciie, všetky hodnoty pozitívne alebo negatívne (v závisloti na gradient-e celého výrazu $f$).
-    To by mohlo viesť k nežiadúcemu cik-cakovitej dynamike pri aktualizáciach gradient-ov pre váhy.
+    potom gradient na váhach $w$ nadobudne, počas spätnej propagáciie, všetky hodnoty pozitívne alebo negatívne (v závisloti na gradient-e celého výrazu $f$).
+    To by mohlo viesť k nežiadúcej cik-cakovitej dynamike pri aktualizáciach gradient-ov pre váhy.
 \end{enumerate}
 
 
@@ -338,7 +338,7 @@ Kedže netrpí nevýhodami ako sigmoid tak v praxi je preferovanejší.
 
 \subsubsection{ReLU a Leaky ReLU}
 V praxi existuje niekoľko dalšich aktivačných funkcií, každá je použitelná pre riešenie iného problému,
-    ciže každá ma svoje výhody ale aj nevýhody.
+    čiže každá ma svoje výhody ale aj nevýhody.
 Ako príklad môžeme uviesť ReLU (Rectified Linear Unit)
 \begin{equation}
     f(x) = max(0,x)
@@ -353,7 +353,7 @@ alebo jeho obdobu Leaky ReLU, ktorá sa snaží vyriešiť nevýhody ReLU.
 kde $a$ je malá konštanta (napr. 0.01) \cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
 
 \subsubsection{Architektúra neurónovej siete}
-Ako bolo spomínane už vyššie, neúronova sieť je modelovaná ako kolekcia neurónov ktoré sú prepojené v acyklickom grafe.
+Ako bolo spomínane už vyššie, neúronova sieť je modelovaná ako kolekcia neurónov, ktoré sú prepojené v acyklickom grafe.
 Modely neúronovych sieti sú často organizované do odlišných vrstiev neurónov.
 Pre bežné neúronove siete je najbežnejšou vrstvou tzv. plne-prepojená vrstva [eng. fully-connected layer],
     v ktorej sú neuróny medzi dvoma priľahlými vrstvami plne párovo prepojené, ale neuróny v jeden vrstve nemajú medzi sebou žiadne spojenia.
@@ -412,10 +412,10 @@ Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
 \begin{enumerate}
     \item[$\bullet$] \textbf{Convolutional layer} - konvolučná vrstva je hlavný stavebný blok CNN, ktorá robí väčšinu výpočtov.
     Parametre tejto vrstvy pozostávajú zo súboru filtrov ktoré sa dokážu učit.
-    Takto naučené filtre sa aktivujú keď uvidia nejaký typ vizuálneho prvku, napr. hranu určitej orientácie alebo škvrnu určitej farby a pod..
+    Takto naučené filtre sa aktivujú keď uvidia určitý typ vizuálneho prvku, napr. hranu určitej orientácie alebo škvrnu určitej farby a pod..
     \item[$\bullet$] \textbf{Pooling layer} - túto vrstvu je obvyklé vkladať ako spojenie medzi dvoma konvolučnímy vrstvami.
     Jej funkciou je postupné znižovanie priestorovej veľkosti reprezentovaného vstupu, pre zníženie množstva parametrov a výpočtov v sieti, a teda aj kontroly pretrénovania.
-    \item[$\bullet$] \textbf{Fully-Connected layer} - rovnako ako v obvyklých neúronových sietach, je to vrstva kde všetky neuróny sú prepojené s predchádzajucov vrstvov.
+    \item[$\bullet$] \textbf{Fully-Connected layer} - rovnako ako v obvyklých neúronových sietach, je to vrstva kde všetky neuróny sú prepojené s predchádzajucou vrstvou.
 \end{enumerate}
 
 \begin{figure}[H]
