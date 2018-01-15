@@ -60,8 +60,8 @@ A v súčastnosti v automobilovom priemysle pri rozvýjajúcej sa oblati autonó
 
 
 \section{Klasifikácia}
-\# TODO - dopisať čo je to Klasifikácia
-
+\label{sec:klasifikacia}
+%\# TODO - dopisať čo je to Klasifikácia
 
 \subsection{K-Nearest-Neighbor}
 \textit{k}-Nearest Neighbor je algoritmus, ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácií,
@@ -131,7 +131,7 @@ s rozhodovacím pravidlom
     \label{eq:SVMDecisionRule}
     f_{w,b}(x) = sgn(w^T x + b)
 \end{equation}
-kde $w$ je váhový vektor a $b$ je predpoveď[eng. #TODO biases asi] (alebo $-b$ je prahová hodnota).
+kde $w$ je váhový vektor a $b$ je predpoveď[eng. \#TODO biases asi] (alebo $-b$ je prahová hodnota).
 V tomto prípade keď je možné lineárne rozdeliť dve triedy, tak optimálna hyper--rovina pre rozdelenie
     môže byť nájdena, minimalizáciou kvadratickej formy rozdeľujúcej hyper--roviny
 \begin{equation}
@@ -154,7 +154,7 @@ Avšak väčsina reálnych problémou zahŕňa nelineárne rozdelenie dát pre k
 Riešenie tohto problému je mapovať dáta do vyššie--dimenzionálneho priestoru a definovať tam rozdeľujúcu hyper--rovinu.
 Tento vyššíe-dimenzionálny priestor je nazývaný transformovaný priestor príznakov[eng. transformed feature space], ako opak ku vstupnému priestoru[eng. input space] obsahujúcemu trénovacie dáta\cite{prop:SupervisedMachineLearning}.
 
-Pri vhodne zvolenom transformovanom priestore príznakov dostatočnej veľkosti, môžu byť všetky treningové dáta rozdelitelné.
+Pri vhodne zvolenom transformovanom priestore príznakov dostatočnej veľkosti, môžu byť všetky trénovacie dáta rozdelitelné.
 Lineárne rozdelenie v transformovanom priestore príznakov zodpovedá nelineárnemu rozdeleniu v pôvodnom vstupnom priestore.
 
 Mapovanie dát do určitého Hilbertovho priestora \cite{prop:HilbertSpace} $H$ ako $\Phi:R^d \rightarrow H$.
@@ -257,7 +257,7 @@ V jednoduchosti, perceptron zoberie niekoľko vstupov, $x_1, x_2, \dots$ a repro
 	\centering
 	\includegraphics[width=0.4\textwidth]{tikz0}
 	\caption{Jednoduchý príklad perceptronu\cite{odkaz:HandwrittenDigitRecognision}}
-	\label{pic:NNExample}
+	\label{pic:Perceptron}
 \end{figure}
 Rosenblatt navrhol jednoduché pravidlo pre výpočet výstupu.
 Zaviedol váhy[eng. weights], $w_1, w_2, \dots$,
@@ -422,21 +422,39 @@ Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
 	\centering
 	\includegraphics[width=1\textwidth]{convnet}
 	\caption{Príklad architektúry konvolučnej neúronovej siete \cite{odkaz:CNNArchitecture}}
-	\label{pic:NNExample}
+	\label{pic:CNNExample}
 \end{figure}
 
 \section{Predspracovanie obrazu}
-http://scikit-image.org/docs/dev/auto\_examples/
-
+%http://scikit-image.org/docs/dev/auto\_examples/
 % Normalizacia obrazu - github ten kurz c231n - 17150\_FULLTEXT.pdf (normalization)
+%\subsection{Hogova transformacia}
+% - F3-DP-2016-Erlebach-Jonas-Automaticka detekce pupily v obraze.pdf
+%\subsection{Detekcia hran}
+%- Sobelov filter - podľa knižky patri medzi najpopulárnejšie hranové filter. Urobiť z neho magnitúdu obrazu potom.
 
-\subsection{Hogova transformacia}
-- F3-DP-2016-Erlebach-Jonas-Automaticka detekce pupily v obraze.pdf
+\subsubsection{Rovnomerný pomer strán}
+Pre sprcovanie obrazkou pomocou neúronových sieti je potrebné zabezpečiť aby každý obrázok mal rovnakú veľkosť a rovnaký pomer strán.
+Väčšina modelov neurónovej siete predpokladá štvorcový vstupný obraz \cite{odkaz:NNPreprocessing}.
 
-\subsection{Detekcia hran}
+\subsubsection{Priemerna štandartná odchylka vstupných údajov}
+Je užitočné vytvoriť si tzv. "stredný obraz" získaný priemernými hodnotami pre každý pixel zo všetkých trénovacích dát.
+Tímto spôsobom je možné vytvoriť si základny prehľad o štruktúre vstupných dát.
+Na základe toho môžeme potom do vstupným dát pridať rôzne dalšie variácie klasifikovaných objektov pre lepšie generalizovanie klasifikátora \cite{odkaz:NNPreprocessing}.
 
-- Sobelov filter - podľa knižky patri medzi najpopulárnejšie hranové filter.
-Urobiť z neho magnitúdu obrazu potom.
+\subsubsection{Šedotónový obraz}
+Dalším možnou technikou je vytvorenie šedotónového obrazu, kde všetky 3 zložky farby (RGB) zlúčime do jednej, šedotónovéj.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{grayscale}
+	\caption{Prevod do šedotónového obrazu[eng. grayscaling]\cite{odkaz:NNPreprocessing}}
+	\label{pic:GrayScaling}
+\end{figure}
+
+\subsubsection{Rožírenie vstupných dát}
+Ďalšou bežnou technickou predspracovanie dát je rožšírenie existujúceho súboru dát s rôznymi variáciami existujúcich obrázkov.
+Tieto variácie môžu zahŕňať zväčšovanie, zmenšovanie, rotačné zmeny a iné transformácie obrázkou.
+Tento postup znižuje šancu že neúronová sieť rozpozná nežiadúce charakteristiky v množine vstupných dát \cite{odkaz:NNPreprocessing}.
 
 % ------------ NEW CHAPTER ------------
 \chapter{Návrh riešenia}
@@ -461,11 +479,19 @@ Táto implementácia knižnice Keras robí experimentovanie s NN jednoduchšiu a
 Aj keď sa snaží implementáciu zjednodušiť tak stále si zachováva modularitu a preto je možné dostatočne dobre modely NN upravovať a prisposobovať pre riešienie rôznych problémou \cite{odkaz:Keras}.
 
 \section{scikit-learn}
-- Kratky popis
-- Triedy pre kazdy klasifikator
-
-\section{Databáza zbraní}
-- ....
+Scikit-learn je softvérová knižica pre strojové učenie pre programovací jazyk Python.
+Obsahuje množstvo algoritmou pre klasifikáciu, regresiu alebo zhlukovanie dát \cite{odkaz:scikitlearn}.
+Pre riešenie tejto práce obsahuje vhodné triedy ktoré implementujú spomínane postupy zo sekcie \ref{sec:klasifikacia}.
+Príklady tried pre jednotlivé algoritmy:
+\begin{enumerate}
+    \item[$\bullet$] \textbf{Nearest Neighbors} - scikit-learn poskytuje 2 rôzne klasifikátory pre algoritmus najbližsieho suseda.
+    Trieda \textit{KNeighborsClassifier} klasifikuje na základe $k$ najbližšich susedov, kde $k$ je celé číslo špecifikované užívateľom.
+    Druhá trieda \textit{RadiusNeighborsClassifier} implementuje klasifikáciu na základe počtu susedov v rámci pevného polomeru $r$ každého trénovacieho bodu,
+    kde $r$ je hodnota s pohyblivou desatinou čiarkou určená užívateľom\footnote{\url{http://scikit-learn.org/stable/modules/neighbors.html\#nearest-neighbors-classification}}.
+    \item[$\bullet$] \textbf{Support Vector Machines} - \textit{SVC}, \textit{NuSVC} a \textit{LinearSVC} sú triedy pre viac-triednu klasifikáciu.
+    Pre ktoré je možné použit rôzne typy jadier[eng. kernels] \footnote{\url{http://scikit-learn.org/stable/modules/svm.html\#custom-kernels}}.
+    \item[$\bullet$] \textbf{Stochastic Gradient Descent} - \textit{SGDClassifier} podporuje viac-triednu klasifikáciu pomocou kombinácie viacerých binárnych klasifikátorov v tzv.“one versus all” (OVA) schéme \footnote{\url{http://scikit-learn.org/stable/modules/sgd.html\#stochastic-gradient-descent}}.
+\end{enumerate}
 
 \section{Klasifikácia typu zbrane}
 %- Exploiting-the-complementary-strengths-of-multi-layer-CNN-image-retrieval.pdf, preco pouzivat CNN na tento problem
@@ -477,3 +503,6 @@ Aj keď sa snaží implementáciu zjednodušiť tak stále si zachováva modular
 % ------------ NEW CHAPTER ------------
 \pagebreak
 \chapter{Implementácia}
+
+\section{Databáza zbraní}
+- ....
