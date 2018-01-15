@@ -14,21 +14,21 @@
 % ------------ NEW CHAPTER ------------
 \chapter{Technológie}
 \label{chap:technologie}
-V tejto kapitole sa zoznámime so základnymi pojmami a princípmi, ktoré súvisia s probletikou tejto práce a ktoré budú dalej využívané.
-Kapitola vysvetľuje základné rozdelenia zbraní, princíp spracovania digitálneho obrazu a metódy jeho predspracovanie.
+V tejto kapitole sa zoznámime so základnymi pojmami a princípmi, ktoré súvisia s probletikou tejto práce a ktoré budú ďalej využívané.
+Kapitola vysvetľuje základné rozdelenia zbraní, princíp spracovania digitálneho obrazu a metódy jeho predspracovania.
 Ďalej sú tu vysvetlené rôzne spôsoby klasifikácie týchto obrazových dát.
 
 
 \section{Zbrane}
 Obvýklá definícia hovorí, že zbraň je nástroj, predmet, či dokonca celé zariadenie,
-ktoré je prispôsobené k vyvolaniu ranivého účinku na živý organizmus alebo k ničeniu objektu\cite{book:StrelneZbrane}.
+ktoré je prispôsobené k vyvolaniu zranenia na živý organizmus alebo k ničeniu objektu\cite{book:StrelneZbrane}.
 Za prvé zbrane môžeme považovať kopije ktoré používali luďia pri love zvierat asi pred 400,000 rokmi\cite{prop:SpearHistory}.
 
 Vo všeobecnosti môžeme zbrane rozdeliť podľa množstvá krytérií, napr. podľa zdroja energie použitej k vypudeniu projektilu zo zbrane,
 podľa konštrukcie a režimu streľby, ďalej z hľadiska postupu pri nabíjaní alebo podľa veku zbrane na nové - slúžiace svojmu účelu a historické - ktoré sú už nespôsobilé k pôvodnemu účelu.
-My sa zameriame na 2 základne rozdelenia a to poďla toho ako zbrane pôsobia na živú sílu[cz. živou sílu], delíme na\cite{book:StrelneZbrane}:
+My sa zameriame na 2 základne rozdelenia a to poďla toho ako zbrane pôsobia na živú silu, delíme na\cite{book:StrelneZbrane}:
 \begin{enumerate}
-	\item[$\bullet$] \textbf{Strelné} - rozrušujú vzdialený cieľ, živý alebo neživý, prodstredníctvom depadovej energie strely vypudenej zo zbrane.
+	\item[$\bullet$] \textbf{Strelné} - rozrušujú vzdialený cieľ, živý alebo neživý, prodstredníctvom dopadovej energie strely vypudenej zo zbrane.
 	\item[$\bullet$] \textbf{Chladné} - účinkujú bodom alebo sekom naostrenej čepele, ktorá je vsadená do rukoväťe alebo je nasadená na tyč či porísko.
     \item[$\bullet$] \textbf{Úderné} - pôsobia na živý objekt tupým úderom svojej časti, ktorá býva spojená s vhodnou rukoväťou.
 \end{enumerate}
@@ -66,14 +66,14 @@ A v súčastnosti v automobilovom priemysle pri rozvýjajúcej sa oblati autonó
 \subsection{K-Nearest-Neighbor}
 \textit{k}-Nearest Neighbor je algoritmus, ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácií,
 avšak je možné ho použiť aj pre odhad a predikciu\cite{book:DataMining}.
-Algoritmus je pamäťovo náročný [eng. memory-based] a nepotrebuje žiaden model.
+Algoritmus je pamäťovo náročný [eng. memory-based] a nepotrebuje žiaden trénovací model.
 Pre jeho fungovanie nie je potrebný žiaden explicitný postup trénovania, okrem zberu vektorov príznakov s označeniami tried do ktorých patria.
 
 Klasifikácia dát prebieha v 2 krokoch: nájdenie \textit{k} najbližších susedov spomedzi trénovaných dát a
-vykonanie "väčšinové hlasovanie" medzi nájdenými susedmi pre priradenie najčastejšie sa vykytovaného označenia triedy.
+vykonanie ''väčšinové hlasovanie'' medzi nájdenými susedmi pre priradenie najčastejšie sa vykytovaného označenia triedy.
 
-Nech $\{ (x_i, y_i), i = 1, 2, \dots, n \}$ je množína trénovacích dát, kde $x_i$ je vektor príznakov a $y_i$ je názov triedy do ktorej patrí vektor $x_i$.
-Predpokladáme že každé $x_i$ je v určitom multidimenzionálnom priestore príznakov s metrikov $P$ a $y_i \in \{ 1, 2, \dots, l \}$, kde $l$ je číslo odpovedajúcej triedy.
+Nech $\{ (x_i, y_i); i = 1, 2, \dots, n \}$ je množína trénovacích dát, kde $x_i$ je vektor príznakov a $y_i$ je názov triedy do ktorej patrí vektor $x_i$.
+Predpokladáme že každé $x_i$ je v určitom multidimenzionálnom priestore príznakov s metrikov $P$ a $y_i \in \{ 1, 2, \dots, l \}$, kde $y_i$ je číslo odpovedajúcej triedy.
 Cieľom je priradiť neoznačeny vektor $x$ do zodpovedajucej triedy z množiny $\{ 1, 2, \dots, l \}$.
 
 Najjednoduchšia verzia algoritmu \textit{k}-NN je 1-NN, kde vektor $x$ je priradený najbližsiemu susedovi.
@@ -98,7 +98,7 @@ Na obrázku \ref{pic:kNN} je zobrazený rozdiel medzi 1-NN a 5-NN algoritmom pre
     použitím 2-dimenzionálnych bodov a 3 tried dát (červená, modrá, zelená).
 Farebné regióny vyznačujú rozhodovacie hranice klasifikátora, ktorý využíva Euklidovskú vzdielnosť.
 Biele oblasti ukazujú body, ktoré sú nejednoznačne klasifikované (to znamená, že hodnotenie triedy je viazané aspoň na dve triedy).
-V ukážke je vidno že v prípade 1-NN klasifikátora, niektré body vytvárajú "malé ostrovy"
+V ukážke je vidno že v prípade 1-NN klasifikátora, niektré body vytvárajú ''malé ostrovy''
     (napr. zelený bod v strede mraku medzi modrými bodmi), zatiaľ čo 5-NN klasifikátor vyhladzuje tieto nezrovnalosti,
     a pravdepodobne vedie k lepšiemu zovšeobecneniu nad testovacími údajmi.
 
@@ -114,8 +114,8 @@ V ukážke je vidno že v prípade 1-NN klasifikátora, niektré body vytváraj�
 Support Vector Machines (SVM's) sú metódy učenia používané pre binárnu klasifikáciu.
 Základnou myšlienkou je nájdenie hyper--roviny, ktorá perfektne oddelí \textit{d}--dimenzionálne dáta do dvoch tried\cite{prop:IntroductionToSVM}.
 SVM sa snaží maximalizovať vzdialenosť medzi rozdeľujúcou rovinou a dátami nachádzajúcimi sa v každej z 2 polrovín\cite{prop:SupervisedMachineLearning}.
-Avšak kedže vstupné dáta väčšinou nie su lineárne separovatelné, SVM's predstavujú pojem "jadrový priestor indukovaný príznakom"[eng. “kernel induced feature space”],
-    ktorý prevádza dáta do vyššieho dimenzionálneho priestoru, kde dáta sú oddeliteľné.\cite{prop:IntroductionToSVM}
+Avšak kedže vstupné dáta väčšinou nie su lineárne separovatelné, SVM's predstavujú pojem “kernel induced feature space”,
+    ktorý prevádza dáta do vyššieho dimenzionálneho priestoru, kde sú dáta oddeliteľné.\cite{prop:IntroductionToSVM}
 
 Ak trénovacie dáta sú lineárne separovatelné, tak dvojica $(w, b)$ existuje ako\cite{prop:SupervisedMachineLearning}:
 \begin{equation}
@@ -131,7 +131,7 @@ s rozhodovacím pravidlom
     \label{eq:SVMDecisionRule}
     f_{w,b}(x) = sgn(w^T x + b)
 \end{equation}
-kde $w$ je váhový vektor a $b$ je predpoveď[eng. \#TODO biases asi] (alebo $-b$ je prahová hodnota).
+kde $w$ je váhový vektor a $b$ je predpoveď (alebo $-b$ je prahová hodnota).
 V tomto prípade keď je možné lineárne rozdeliť dve triedy, tak optimálna hyper--rovina pre rozdelenie
     môže byť nájdena, minimalizáciou kvadratickej formy rozdeľujúcej hyper--roviny
 \begin{equation}
@@ -140,7 +140,7 @@ V tomto prípade keď je možné lineárne rozdeliť dve triedy, tak optimálna 
 \end{equation}
 
 V tomto prípade lineárneho rozdelenia dát, pri nájdení optimálnej rozdeľujúcej hyper--roviny, dátove body, ktoré ležia na jej okraji
-    sa nazývajú podporné vektorové body[eng. support vector points] a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodov(vid. obrázok \ref{pic:SVMMAxMargin} ).
+    sa nazývajú podporné vektorové body[eng. support vector points] a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodov (vid. obrázok \ref{pic:SVMMAxMargin} ).
 Ostatné body sú ignorované\cite{prop:SupervisedMachineLearning}.
 
 \begin{figure}[H]
@@ -152,14 +152,14 @@ Ostatné body sú ignorované\cite{prop:SupervisedMachineLearning}.
 
 Avšak väčsina reálnych problémou zahŕňa nelineárne rozdelenie dát pre ktoré neexistuje žiadna hyper--rovina, ktorá by úspešne rozdelila trénovacie dáta.
 Riešenie tohto problému je mapovať dáta do vyššie--dimenzionálneho priestoru a definovať tam rozdeľujúcu hyper--rovinu.
-Tento vyššíe-dimenzionálny priestor je nazývaný transformovaný priestor príznakov[eng. transformed feature space], ako opak ku vstupnému priestoru[eng. input space] obsahujúcemu trénovacie dáta\cite{prop:SupervisedMachineLearning}.
+Tento vyššíe-dimenzionálny priestor je tzv. transformovaný priestor príznakov[eng. transformed feature space], ako opak ku vstupnému priestoru[eng. input space] obsahujúcemu trénovacie dáta\cite{prop:SupervisedMachineLearning}.
 
 Pri vhodne zvolenom transformovanom priestore príznakov dostatočnej veľkosti, môžu byť všetky trénovacie dáta rozdelitelné.
-Lineárne rozdelenie v transformovanom priestore príznakov zodpovedá nelineárnemu rozdeleniu v pôvodnom vstupnom priestore.
+Lineárne rozdelenie v tomto priestore zodpovedá nelineárnemu rozdeleniu v pôvodnom vstupnom priestore.
 
-Mapovanie dát do určitého Hilbertovho priestora \cite{prop:HilbertSpace} $H$ ako $\Phi:R^d \rightarrow H$.
+Pri mapovaní dát do určitého Hilbertovho priestora \cite{prop:HilbertSpace} $H$ ako $\Phi:R^d \rightarrow H$.
 Potom trénovací algoritmus závisý len na údajoch zo skalárneho súčinu[eng. dot products] v priestore $H$, t.j na funkciách v tvare $\Phi(x_i) * \Phi(x_j)$.
-Ak bude existovať "funkcia jadra"[eng. kernel function] $K$ ako $K(x_i, x_j) = \Phi(x_i)*\Phi(x_j)$, tak budeme musieť použiť iba funkciu $K$ v trénovacom algoritme
+Ak bude existovať ''funkcia jadra''[eng. kernel function] $K$ ako $K(x_i, x_j) = \Phi(x_i)*\Phi(x_j)$, tak budeme musieť použiť iba funkciu $K$ v trénovacom algoritme
     a nikdy nebudeme potrebovať explicitne definovať $\Phi$\cite{prop:SupervisedMachineLearning}.
 
 Takže jadrá[eng. kernels] sú špeciálnou triedou funkcií, ktoré dovoľujú, aby sa vnútorné produkty vypočítali priamo vo funkčnom priestore[eng. feature space] bez toho, aby sa vykonalo vyššie popísané mapovanie.
@@ -188,8 +188,8 @@ Zoznam populárnych jadier\cite{prop:SupervisedMachineLearning}:
 
 
 \subsection{Stochastic Gradient Descent}
-Výpočtova zložitosť algoritmov učenia sa stáva kritickým obmedzujúcim faktorom, pri používaní veľmi rozsiahlých množín dát.
-Preto pre veľké množiny dát sa začal používať Stochastic Gradient Descent\cite{prop:StochasticGradientDescent}, ktorý tieto výpočty dokáže optimalizovať.
+Výpočtova zložitosť algoritmov učenia sa stáva kritickým obmedzujúcim faktorom, pri používaní veľmi rozsiahlých množín vstupným dát.
+Preto sa pre veľké množiny dát začal používať Stochastic Gradient Descent\cite{prop:StochasticGradientDescent}, ktorý tieto výpočty dokáže optimalizovať.
 
 Každý vzor $z$ je pár $(x, y)$ kde $x$ je ľubovolný vstup a $y$ skalárny výstup.
 Máme stratovú funkciu [eng. loss function] $\ell(\hat{y},y)$ ktorá meria hodnotu predpovedania $\hat{y}$ keď správna odpoveď je $y$,
@@ -243,7 +243,7 @@ Prvá vrstva vstupov je prepojená na vstupné dáta, ktoré sa majú spracovať
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{nn}
-	\caption{Jednoduchá architektúra NN s 1 vstupnou, 3 skrytímy a 1 výstupou vrstvou\cite{odkaz:CorrectionOfImageOrentation}}
+	\caption{Jednoduchá architektúra NN s 1 vstupnou, 3 skrytími a 1 výstupou vrstvou\cite{odkaz:CorrectionOfImageOrentation}}
 	\label{pic:NNExample}
 \end{figure}
 
@@ -261,7 +261,7 @@ V jednoduchosti, perceptron zoberie niekoľko vstupov, $x_1, x_2, \dots$ a repro
 \end{figure}
 Rosenblatt navrhol jednoduché pravidlo pre výpočet výstupu.
 Zaviedol váhy[eng. weights], $w_1, w_2, \dots$,
-Reálne čisla ktoré vyjadrujú dôležitosť príslušných vstupov vzhľadom na výstupy.
+    reálne čisla ktoré vyjadrujú dôležitosť príslušných vstupov vzhľadom na výstupy.
 Výstup neurónu, 0 alebo 1, sa určuje podľa toho či vážena suma $\sum_j w_j x_j$ je menšia alebo väčsia ako určitá prahová hodnota.
 Matematické vyjadrenie aktivačnej funkcie perceptronu by potom bolo\cite{odkaz:HandwrittenDigitRecognision}:
 \begin{equation}
@@ -296,26 +296,26 @@ Sigmoid je jedna z aktivačných funkcií používana v neurónových sietach, j
 \begin{equation}
     \sigma(x) = \frac{1}{1 + e^{-x}}
 \end{equation}
-je zobrazená na obrázku \ref{pic:ActivationFunctions} vľavo.
+zobrazená na obrázku \ref{pic:ActivationFunctions} vľavo.
 
-Funkcia zoberie skutočné číslo a "stlačí"[eng. squashes] ho do rozmedzia 0 až 1.
-Kde veľké záporne čísla nadobudnú hodnotu 0 a veľke kladné pozitívne čísla hodnotu 1.
-Funkcia sigmoid sa historicky často používala pretože má peknú interpretáciu pre spúštanie "výstrelu" neurónu,
+Funkcia zoberie skutočné číslo a ''stlačí'' ho do rozmedzia 0 až 1.
+Kde veľké záporne čísla nadobudnú hodnotu 0 a veľke kladné čísla hodnotu 1.
+Funkcia sigmoid sa historicky často používala pretože má peknú interpretáciu pre spúštanie ''výstrelu'' neurónu,
     od nevýpalanie (0) až po úplne nasýtenie strely pri predpokladanej maximálnej frekvancií (1).
 V praxi, sa sigmoid používa už len zriedka.
 Pretože ma 2 hlavné nevýhody\cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
 \begin{enumerate}
     \item[$\bullet$] \textbf{Zabíjanie gradientov} - keď sa aktivácia neurónu nasýti na obidvoch koncoch 0 alebo 1, gradient v týchto oblastiach je takmer nulový.
     Tento gradient sa používa pri spätnej propagácií[eng. backpropagation] v neurónových sietach. Preto ak je miestny gradient veľmi malý, takmer žiaden signál
-    neurónom nepreteká k jeho váham a rekurzívne k jeho dátam. Taktiež ak pri inicializácií sú váhy príliš veľké, väčsina neurónov by bolo nasýtených a sieť by sa sotva niečo učila.
+    neurónom nepreteká k jeho váham a rekurzívne k jeho dátam. Rovnako ak pri inicializácií sú váhy príliš veľké, väčsina neurónov by bola nasýtených a sieť by sa sotva niečo učila.
     \item[$\bullet$] \textbf{Výstupy nie sú centrované na nulu} - to má dôsledky na dynamiku pri klesaní gradient-u, pretože ak sú údaje prichádzajúce do neurónu vždy kladné,
-    potom gradient na váhach $w$ nadobudne, počas spätnej propagáciie, všetky hodnoty pozitívne alebo negatívne (v závisloti na gradient-e celého výrazu $f$).
+    potom gradient na váhach $w$ nadobudne, počas spätnej propagáciie, všetky hodnoty pozitívne alebo negatívne (v závisloti na gradient-e celého výrazu).
     To by mohlo viesť k nežiadúcej cik-cakovitej dynamike pri aktualizáciach gradient-ov pre váhy.
 \end{enumerate}
 
 
 \subsubsection{Tanh}
-Funkcia tanh dalšia z aktivačných funkcií neurónu je zobrazená na obrázku \ref{pic:ActivationFunctions} vpravo.
+Funkcia tanh je dalšou z aktivačných funkcií neurónu je zobrazená na obrázku \ref{pic:ActivationFunctions} vpravo.
 Tanh zoberie skutočné čislo a stlačí ho do rozmedzia -1 až 1. Pracuje podobne ako sigmoid.
 Matematický zápis je\cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
 \begin{equation}
@@ -368,7 +368,7 @@ Na obrázku \ref{pic:NeuralNetworkArchitecture} nižšie sú uvedené dve topol�
 \end{figure}
 
 Vačšie neurónové sieťe dokážu reprezentovať komplikovanejšie funkcie.
-Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2 tried (červená, zelená) použít rôznych veľkostí neurónových sieti.
+Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2 tried (červená, zelená) použitím rôznych veľkostí neurónových sieti.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{layer_sizes}
@@ -383,7 +383,7 @@ Pre príklad je možné uviesť 2-dimenzionálne dáta ako sieť pixelov pri spr
 Názov týchto sieti \textit{konvolučné} indikuje používanie matematickej operácie zvanej konvolúcia[eng. convolution]\cite{book:Goodfellow-et-al-2016}.
 
 \subsubsection{Konvolúcia}
-Vo svojej najobecnejšej podobe, konvolúcia je operácie dvoch funkcií s reálnymi hodnotami argumentov.
+Vo svojej najvšeobecnejšej podobe, konvolúcia je operácia dvoch funkcií s reálnymi hodnotami argumentov.
 Operácia konvolúcie je typicky označovaná hviezdičkou:
 \begin{equation}
     s(t) = (x * w)(t)
@@ -391,13 +391,13 @@ Operácia konvolúcie je typicky označovaná hviezdičkou:
 V terminilógií konvolučnej siete je prvý argument (v tomto príklade funkcie $x$) sa často označuje ako vstup a druhý
     argument (v tomto príklade funkcia $w$) ako jadro[eng. kernel]. Výstup je niekedy označovaný ako mapa príznakov.
 
-Bežne konvolúciu používa na viac ako jednej osy súčasne.
-Pri použítí 2-dimenzionálneho obrázku $I$ ako náš vstup, tak budeme chcieť použiť aj 2-dimenzionálne jadro $K$\cite{book:Goodfellow-et-al-2016}:
+Bežne konvolúciu používame na viac ako jednej osy súčasne.
+Pri použítí 2-dimenzionálneho obrázku $I$ ako náš vstup, budeme chcieť použiť aj 2-dimenzionálne jadro $K$\cite{book:Goodfellow-et-al-2016}:
 \begin{equation}
     S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(m,n) K(i - m, j - n)
 \end{equation}
 
-Avšak množstvo knižníc, ktoré implementujú neurónové siete, používaju tzv. cross-correlation funkciu\cite{book:Goodfellow-et-al-2016}:
+Avšak množstvo knižníc, ktoré implementujú neurónové siete, používajú tzv. cross-correlation funkciu\cite{book:Goodfellow-et-al-2016}:
 \begin{equation}
     S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(i + m, i + n) K(m, n)
 \end{equation}
@@ -434,16 +434,16 @@ Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
 %- Sobelov filter - podľa knižky patri medzi najpopulárnejšie hranové filter. Urobiť z neho magnitúdu obrazu potom.
 
 \subsubsection{Rovnomerný pomer strán}
-Pre sprcovanie obrazkou pomocou neurónových sieti je potrebné zabezpečiť aby každý obrázok mal rovnakú veľkosť a rovnaký pomer strán.
+Pre spracovanie obrázkov pomocou neurónových sieti je potrebné zabezpečiť, aby každý obrázok mal rovnakú veľkosť a rovnaký pomer strán.
 Väčšina modelov neurónovej siete predpokladá štvorcový vstupný obraz \cite{odkaz:NNPreprocessing}.
 
 \subsubsection{Priemerna štandartná odchylka vstupných údajov}
-Je užitočné vytvoriť si tzv. "stredný obraz" získaný priemernými hodnotami pre každý pixel zo všetkých trénovacích dát.
-Tímto spôsobom je možné vytvoriť si základny prehľad o štruktúre vstupných dát.
+Je užitočné vytvoriť si tzv. ''stredný obraz'' získaný priemernými hodnotami pre každý pixel zo všetkých trénovacích dát.
+Timto spôsobom je možné vytvoriť si základny prehľad o štruktúre vstupných dát.
 Na základe toho môžeme potom do vstupným dát pridať rôzne dalšie variácie klasifikovaných objektov pre lepšie generalizovanie klasifikátora \cite{odkaz:NNPreprocessing}.
 
 \subsubsection{Šedotónový obraz}
-Dalším možnou technikou je vytvorenie šedotónového obrazu, kde všetky 3 zložky farby (RGB) zlúčime do jednej, šedotónovéj.
+Ďalšou možnou technikou je vytvorenie šedotónového obrazu, kde všetky 3 zložky farby (RGB) zlúčime do jednej, šedotónovéj.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth]{grayscale}
@@ -451,10 +451,10 @@ Dalším možnou technikou je vytvorenie šedotónového obrazu, kde všetky 3 z
 	\label{pic:GrayScaling}
 \end{figure}
 
-\subsubsection{Rožírenie vstupných dát}
+\subsubsection{Rožšírenie vstupných dát}
 Ďalšou bežnou technickou predspracovanie dát je rožšírenie existujúceho súboru dát s rôznymi variáciami existujúcich obrázkov.
-Tieto variácie môžu zahŕňať zväčšovanie, zmenšovanie, rotačné zmeny a iné transformácie obrázkou.
-Tento postup znižuje šancu že neurónová sieť rozpozná nežiadúce charakteristiky v množine vstupných dát \cite{odkaz:NNPreprocessing}.
+Tieto variácie môžu zahŕňať zväčšovanie, zmenšovanie, rotačné zmeny a iné transformácie obrázkov.
+Tento postup znižuje šancu, že neurónová sieť rozpozná nežiadúce charakteristiky v množine vstupných dát \cite{odkaz:NNPreprocessing}.
 
 
 % ------------ NEW CHAPTER ------------
@@ -465,6 +465,7 @@ Kapitola zahŕňa popis knižníc pre strojové učenie ako je Tensorflow a Kera
 Následne nástroj scikit-learn, ktorý budeme používať pre jednoduchú klasifikáciu pomocou postupov, ktoré boli vysvetlené v kapitole \ref{chap:technologie}.
 
 \section{Tensorflow a Keras}
+\label{sec:TensorflowKeras}
 
 \subsubsection{Tensorflow}
 TensorFlow je softvérová knižnica s otvoreným zdrojovým kódom[eng. open source library] pre numerické výpočty pomocou dátových vývojových diagramov[eng. data flow graphs].
@@ -476,14 +477,16 @@ Systém je dostatočne všeobecný aby bol aplikovaný v mnohých iných oblasti
 \subsubsection{Keras}
 Vysoká všeobecnosť knižice TensorFlow pre jej širokú aplikáciu, robí jej použitie pre tvorbu neurónových sieti komplikovanejšiu.
 Kde Keras, ktorý využíva TensorFlow ako svoj backend túto tvorbu neurónových sieti zjednodušil.
-Za jeho backend je možné použiť aj CNTK alebo Theona.
+Za jeho backend je možné použiť aj CNTK alebo Theano.
 Táto implementácia knižnice Keras robí experimentovanie s NN jednoduchšiu a rýchlejšiu.
 Aj keď sa snaží implementáciu zjednodušiť, tak stále si zachováva modularitu a preto je možné dostatočne dobre modely NN upravovať a prisposobovať pre riešienie rôznych problémov \cite{odkaz:Keras}.
 
 \section{scikit-learn}
+\label{sec:scikitlearn}
+
 Scikit-learn je softvérová knižica pre strojové učenie pre programovací jazyk Python.
 Obsahuje množstvo algoritmov pre klasifikáciu, regresiu alebo zhlukovanie dát \cite{odkaz:scikitlearn}.
-Pre riešenie tejto práce obsahuje vhodné triedy ktoré implementujú spomínane postupy zo sekcie \ref{sec:klasifikacia}.
+Pre riešenie tejto práce obsahuje vhodné triedy, ktoré implementujú spomínané postupy zo sekcie \ref{sec:klasifikacia}.
 Príklady tried pre jednotlivé algoritmy:
 \begin{enumerate}
     \item[$\bullet$] \textbf{Nearest Neighbors} - scikit-learn poskytuje 2 rôzne klasifikátory pre algoritmus najbližsieho suseda.
@@ -495,16 +498,23 @@ Príklady tried pre jednotlivé algoritmy:
     \item[$\bullet$] \textbf{Stochastic Gradient Descent} - \textit{SGDClassifier} podporuje viac-triednu klasifikáciu pomocou kombinácie viacerých binárnych klasifikátorov v tzv.“one versus all” (OVA) schéme \footnote{\url{http://scikit-learn.org/stable/modules/sgd.html\#stochastic-gradient-descent}}.
 \end{enumerate}
 
-\section{Klasifikácia typu zbrane}
+
+\section{Klasifikácia typu a určenie náklonu zbrane}
+Prvým bodom pri návrhu riešenia je výber programovacie jazyka a nástrojov, ktoré sú prispôsobné pre riešenie daného problému a tak uľahčujú výslednú implementáciu.
+Pre riešenie tejto práce bol vybraný programovací jazyk Python spolu s nástrojmi ktoré boli spomenúte už vyššie vid. sekcia \ref{sec:TensorflowKeras} a \ref{sec:scikitlearn}.
+Výsledny program bude mať za úlohu klasifikovať typ zbrane (krátka, dlhá) zo vstupného obrázku a následne určiť jej náklon.
+Pre klasifikáciu zbrane do daných kategórií sa ponúka niekoľko postupov klasifikácie, ktoré sú podrobne opísane v sekcíí \ref{sec:klasifikacia},
+    pri určovaní náklonu zbrane v obraze môžeme použiť konvolučné neurónové siete.
+
+
 %- Exploiting-the-complementary-strengths-of-multi-layer-CNN-image-retrieval.pdf, preco pouzivat CNN na tento problem
 %- Pouzit vsetky veci z teorie, pri SGD pre vacsi dataset.
 
-\section{Určenie náklonu zbrane}
 
 
 % ------------ NEW CHAPTER ------------
-\pagebreak
-\chapter{Implementácia}
+%\pagebreak
+%\chapter{Implementácia}
 
-\section{Databáza zbraní}
-\dots
+%\section{Databáza zbraní}
+%\dots
