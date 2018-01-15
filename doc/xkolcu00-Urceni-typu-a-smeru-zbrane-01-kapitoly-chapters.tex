@@ -188,15 +188,15 @@ Zoznam populárnych jadier\cite{prop:SupervisedMachineLearning}:
 
 
 \subsection{Stochastic Gradient Descent}
-Výpočtova zložitosť algoritmou učenia sa stáva kritickým obmedzujúcim faktorom, pri používaní veľmi rozsiahlých množín dát.
-Preto pre veľké množíný dát sa začal používať Stochastic Gradient Descent\cite{prop:StochasticGradientDescent}, ktorý tieto výpočty dokáže optimalizovať.
+Výpočtova zložitosť algoritmov učenia sa stáva kritickým obmedzujúcim faktorom, pri používaní veľmi rozsiahlých množín dát.
+Preto pre veľké množiny dát sa začal používať Stochastic Gradient Descent\cite{prop:StochasticGradientDescent}, ktorý tieto výpočty dokáže optimalizovať.
 
 Každý vzor $z$ je pár $(x, y)$ kde $x$ je ľubovolný vstup a $y$ skalárny výstup.
 Máme stratovú funkciu [eng. loss function] $\ell(\hat{y},y)$ ktorá meria hodnotu predpovedania $\hat{y}$ keď správna odpoveď je $y$,
     a zvolíme si rodinu $\mathcal{F}$ funkcií $f_w(x)$ parametrizované váhovym vektorom $w$.
 
-Hľadáme funkciue $f \in \mathcal{F}$, ktorá minimalizuje stratu $Q(z,w) = \ell(f_w(x), y)$ spriemerovanú vzhlaďom na vzory $z$.
-Avšak pre napodobenie príprody je prirodzenejšie priemerovať vzhľadom na neznámu distribúciu $dP(z)$\cite{prop:StochasticGradientDescent}.
+Hľadáme funkciue $f \in \mathcal{F}$, ktorá minimalizuje stratu $Q(z,w) = \ell(f_w(x), y)$ spriemerovanú vzhľaďom na vzory $z$.
+Avšak pre napodobenie prírody je prirodzenejšie priemerovať vzhľadom na neznámu distribúciu $dP(z)$\cite{prop:StochasticGradientDescent}.
 \begin{equation}
     E(f) = \int{\ell(f(x), y)dP(z)} \quad E_n(f) = \frac{1}{n}\sum_{i=1}^{n}\ell(f(x_i), y_i)
 \end{equation}
@@ -292,7 +292,7 @@ Použitím týchto úprav bude model vyzerať nasledovne\cite{odkaz:HandwrittenD
 \end{figure}
 
 \subsubsection{Sigmoid}
-Sigmoid je jedna z aktivačných funkcií používana v neúronových sietach, jej matematická formula je
+Sigmoid je jedna z aktivačných funkcií používana v neurónových sietach, jej matematická formula je
 \begin{equation}
     \sigma(x) = \frac{1}{1 + e^{-x}}
 \end{equation}
@@ -353,9 +353,9 @@ alebo jeho obdobu Leaky ReLU, ktorá sa snaží vyriešiť nevýhody ReLU.
 kde $a$ je malá konštanta (napr. 0.01) \cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
 
 \subsubsection{Architektúra neurónovej siete}
-Ako bolo spomínane už vyššie, neúronova sieť je modelovaná ako kolekcia neurónov, ktoré sú prepojené v acyklickom grafe.
-Modely neúronovych sieti sú často organizované do odlišných vrstiev neurónov.
-Pre bežné neúronove siete je najbežnejšou vrstvou tzv. plne-prepojená vrstva [eng. fully-connected layer],
+Ako bolo spomínane už vyššie, neurónová sieť je modelovaná ako kolekcia neurónov, ktoré sú prepojené v acyklickom grafe.
+Modely neurónových sieti sú často organizované do odlišných vrstiev neurónov.
+Pre bežné neurónové siete je najbežnejšou vrstvou tzv. plne-prepojená vrstva [eng. fully-connected layer],
     v ktorej sú neuróny medzi dvoma priľahlými vrstvami plne párovo prepojené, ale neuróny v jeden vrstve nemajú medzi sebou žiadne spojenia.
 Na obrázku \ref{pic:NeuralNetworkArchitecture} nižšie sú uvedené dve topológie ktoré využívajú plne-prepojené vrstvy\cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
 \begin{figure}[H]
@@ -367,8 +367,8 @@ Na obrázku \ref{pic:NeuralNetworkArchitecture} nižšie sú uvedené dve topol�
     \label{pic:NeuralNetworkArchitecture}
 \end{figure}
 
-Vačšie neúronove sieťe dokážu reprezentovať komplikovanejšie funkcie.
-Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2 tried (červená, zelená) použít rôznych veľkostí neúronových sieti.
+Vačšie neurónové sieťe dokážu reprezentovať komplikovanejšie funkcie.
+Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2 tried (červená, zelená) použít rôznych veľkostí neurónových sieti.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{layer_sizes}
@@ -378,26 +378,26 @@ Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2
 
 \subsection{Konvolučné neurónové siete}
 Konvolučné neurónové siete [eng. convolutional neural networks] (CNNs), sú špeciálnym prípadom neurónových sieti pre spracovanie
-    dát ktoré mau známu topológie podobnú mriežke.
-Pre príklad je možné uviesť napríklad 2-dimenzionálne dát ako sieť pixelov pri spracovaní obrázkov.
-Názov týchto sieti \textit{konvolučné} indikuje že používajú matematickú operáciu zvanú konvolúcia[eng. convolution]\cite{book:Goodfellow-et-al-2016}.
+    dát, ktoré majú známu topológiu podobnú mriežke.
+Pre príklad je možné uviesť 2-dimenzionálne dáta ako sieť pixelov pri spracovaní obrázkov.
+Názov týchto sieti \textit{konvolučné} indikuje používanie matematickej operácie zvanej konvolúcia[eng. convolution]\cite{book:Goodfellow-et-al-2016}.
 
 \subsubsection{Konvolúcia}
 Vo svojej najobecnejšej podobe, konvolúcia je operácie dvoch funkcií s reálnymi hodnotami argumentov.
-Operácia konvolúcie je typicky označovaná hviezdičkov:
+Operácia konvolúcie je typicky označovaná hviezdičkou:
 \begin{equation}
     s(t) = (x * w)(t)
 \end{equation}
-V terminilógií konvolucnej siete je prvý argument (v tomto príklade funkcie $x$) sa často označuje ako vstup a druhý
+V terminilógií konvolučnej siete je prvý argument (v tomto príklade funkcie $x$) sa často označuje ako vstup a druhý
     argument (v tomto príklade funkcia $w$) ako jadro[eng. kernel]. Výstup je niekedy označovaný ako mapa príznakov.
 
-Bežne konvolúciu používa na viac ako jedej osy súčasne.
-Pri použítí 2-dimenzionálne obrázku $I$ ako náš vstup, tak budeme chcieť použiť aj 2-dimenzionálne jadro $K$\cite{book:Goodfellow-et-al-2016}:
+Bežne konvolúciu používa na viac ako jednej osy súčasne.
+Pri použítí 2-dimenzionálneho obrázku $I$ ako náš vstup, tak budeme chcieť použiť aj 2-dimenzionálne jadro $K$\cite{book:Goodfellow-et-al-2016}:
 \begin{equation}
     S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(m,n) K(i - m, j - n)
 \end{equation}
 
-Avšak množstvo knižníc ktoré implmentujú neúronove siete, používaju tzv. cross-correlation funkciu\cite{book:Goodfellow-et-al-2016}:
+Avšak množstvo knižníc, ktoré implementujú neurónové siete, používaju tzv. cross-correlation funkciu\cite{book:Goodfellow-et-al-2016}:
 \begin{equation}
     S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(i + m, i + n) K(m, n)
 \end{equation}
@@ -405,23 +405,23 @@ Avšak množstvo knižníc ktoré implmentujú neúronove siete, používaju tzv
 \subsubsection{Architektúra}
 CNN využívajú skutočnosti, že vstup pozostáva z obrázkov.
 Na rozdiel od obyčajnej neurónovej siete majú vrstvy CNN neuróny usporiadané v troch rozmeroch: šírka, výška, hĺbka[eng. width, height, depth].
-Hĺbka odkazuje na 3.dimenziu aktivačného zväzku[eng. activation volume], nie ne celkovú hĺbku neurónovej siete.
+Hĺbka odkazuje na 3.dimenziu aktivačného zväzku[eng. activation volume], nie na celkovú hĺbku neurónovej siete.
 Neuróny vo vrtsve budú prepojené iba k malej oblasti vrstvy pred ňou, namiesto plného prepojenia \cite{odkaz:CNNArchitecture}.
 
 Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
 \begin{enumerate}
-    \item[$\bullet$] \textbf{Convolutional layer} - konvolučná vrstva je hlavný stavebný blok CNN, ktorá robí väčšinu výpočtov.
-    Parametre tejto vrstvy pozostávajú zo súboru filtrov ktoré sa dokážu učit.
+    \item[$\bullet$] \textbf{Convolutional layer} - konvolučná vrstva je hlavný stavebný blok CNN, ktorá vykonáva väčšinu výpočtov.
+    Parametre tejto vrstvy pozostávajú zo súboru filtrov, ktoré sa dokážu učiť.
     Takto naučené filtre sa aktivujú keď uvidia určitý typ vizuálneho prvku, napr. hranu určitej orientácie alebo škvrnu určitej farby a pod..
-    \item[$\bullet$] \textbf{Pooling layer} - túto vrstvu je obvyklé vkladať ako spojenie medzi dvoma konvolučnímy vrstvami.
+    \item[$\bullet$] \textbf{Pooling layer} - táto vrstva je obvykle vkladaná ako spojenie medzi dvoma konvolučnímy vrstvami.
     Jej funkciou je postupné znižovanie priestorovej veľkosti reprezentovaného vstupu, pre zníženie množstva parametrov a výpočtov v sieti, a teda aj kontroly pretrénovania.
-    \item[$\bullet$] \textbf{Fully-Connected layer} - rovnako ako v obvyklých neúronových sietach, je to vrstva kde všetky neuróny sú prepojené s predchádzajucou vrstvou.
+    \item[$\bullet$] \textbf{Fully-Connected layer} - rovnako ako v obvyklých neurónových sietach, je to vrstva kde všetky neuróny sú prepojené s predchádzajucou vrstvou.
 \end{enumerate}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{convnet}
-	\caption{Príklad architektúry konvolučnej neúronovej siete \cite{odkaz:CNNArchitecture}}
+	\caption{Príklad architektúry konvolučnej neurónovej siete \cite{odkaz:CNNArchitecture}}
 	\label{pic:CNNExample}
 \end{figure}
 
@@ -434,7 +434,7 @@ Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
 %- Sobelov filter - podľa knižky patri medzi najpopulárnejšie hranové filter. Urobiť z neho magnitúdu obrazu potom.
 
 \subsubsection{Rovnomerný pomer strán}
-Pre sprcovanie obrazkou pomocou neúronových sieti je potrebné zabezpečiť aby každý obrázok mal rovnakú veľkosť a rovnaký pomer strán.
+Pre sprcovanie obrazkou pomocou neurónových sieti je potrebné zabezpečiť aby každý obrázok mal rovnakú veľkosť a rovnaký pomer strán.
 Väčšina modelov neurónovej siete predpokladá štvorcový vstupný obraz \cite{odkaz:NNPreprocessing}.
 
 \subsubsection{Priemerna štandartná odchylka vstupných údajov}
@@ -454,33 +454,35 @@ Dalším možnou technikou je vytvorenie šedotónového obrazu, kde všetky 3 z
 \subsubsection{Rožírenie vstupných dát}
 Ďalšou bežnou technickou predspracovanie dát je rožšírenie existujúceho súboru dát s rôznymi variáciami existujúcich obrázkov.
 Tieto variácie môžu zahŕňať zväčšovanie, zmenšovanie, rotačné zmeny a iné transformácie obrázkou.
-Tento postup znižuje šancu že neúronová sieť rozpozná nežiadúce charakteristiky v množine vstupných dát \cite{odkaz:NNPreprocessing}.
+Tento postup znižuje šancu že neurónová sieť rozpozná nežiadúce charakteristiky v množine vstupných dát \cite{odkaz:NNPreprocessing}.
+
 
 % ------------ NEW CHAPTER ------------
 \chapter{Návrh riešenia}
 
 V tejto kapitole si priblížime navrhované technológie pre riešienie problému, tejto práce.
-Kapitola zahŕňa popis knižníc pre strojové učenie ako je Tensorflow a Keras ktorý zovšeobecnuje a používa Tensorflow pre svoju prácu.
-Následne nástroj scikit-learn ktorý budeme používať pre jednoduchú klasifikáciu pomocou postup ktoré boli vysvetlené v kapitole \ref{chap:technologie}.
+Kapitola zahŕňa popis knižníc pre strojové učenie ako je Tensorflow a Keras, ktorý zovšeobecňuje a používa Tensorflow pre svoju prácu.
+Následne nástroj scikit-learn, ktorý budeme používať pre jednoduchú klasifikáciu pomocou postupov, ktoré boli vysvetlené v kapitole \ref{chap:technologie}.
 
 \section{Tensorflow a Keras}
 
 \subsubsection{Tensorflow}
-TensorFlow je softvérová knižnica s otvoreným zdrojovým kódom[eng. open source library] pre numerické výpočty pomocou dátových vývojovím diagramov[eng. data flow graphs].
+TensorFlow je softvérová knižnica s otvoreným zdrojovým kódom[eng. open source library] pre numerické výpočty pomocou dátových vývojových diagramov[eng. data flow graphs].
 Uzly v grafe reprezentujú matematické operácie, zatiaľ čo hrany grafu reprezentujú multidimenzionálne dátové polia (tensors), ktoré medzi sebou kominukujú.
-Flexibilná architektúra umožnuje nasadenie na viacerých CPU alebo GPU, serveroch alebo aj mobilných zariadeniach.
-TensorFlow bol pôvodne vyvinutý na účely výskumu strojového učenia a výskumu hlbokých neurónových sieti, systém je dostatočne všeobecný aby bol aplikovaný v mnohých iných oblastiach \cite{odkaz:TensorFlow}.
+Flexibilná architektúra umožňuje nasadenie na viacerých CPU alebo GPU, serveroch alebo aj mobilných zariadeniach.
+TensorFlow bol pôvodne vyvinutý na účely výskumu strojového učenia a výskumu hlbokých neurónových sieti.
+Systém je dostatočne všeobecný aby bol aplikovaný v mnohých iných oblastiach \cite{odkaz:TensorFlow}.
 
 \subsubsection{Keras}
-Vysoká všeobecnosť knižice TensorFlow pre jej širokú aplikáciu, robí jej použitie pre tvornu neurónových sieti komplikovanejšiu.
-Kde Keras bol postavený nad TensorFlow ktorý využíva ako svoj backend a tvorbu neurónových sieti zjednodušil.
+Vysoká všeobecnosť knižice TensorFlow pre jej širokú aplikáciu, robí jej použitie pre tvorbu neurónových sieti komplikovanejšiu.
+Kde Keras, ktorý využíva TensorFlow ako svoj backend túto tvorbu neurónových sieti zjednodušil.
 Za jeho backend je možné použiť aj CNTK alebo Theona.
 Táto implementácia knižnice Keras robí experimentovanie s NN jednoduchšiu a rýchlejšiu.
-Aj keď sa snaží implementáciu zjednodušiť tak stále si zachováva modularitu a preto je možné dostatočne dobre modely NN upravovať a prisposobovať pre riešienie rôznych problémou \cite{odkaz:Keras}.
+Aj keď sa snaží implementáciu zjednodušiť, tak stále si zachováva modularitu a preto je možné dostatočne dobre modely NN upravovať a prisposobovať pre riešienie rôznych problémov \cite{odkaz:Keras}.
 
 \section{scikit-learn}
 Scikit-learn je softvérová knižica pre strojové učenie pre programovací jazyk Python.
-Obsahuje množstvo algoritmou pre klasifikáciu, regresiu alebo zhlukovanie dát \cite{odkaz:scikitlearn}.
+Obsahuje množstvo algoritmov pre klasifikáciu, regresiu alebo zhlukovanie dát \cite{odkaz:scikitlearn}.
 Pre riešenie tejto práce obsahuje vhodné triedy ktoré implementujú spomínane postupy zo sekcie \ref{sec:klasifikacia}.
 Príklady tried pre jednotlivé algoritmy:
 \begin{enumerate}
@@ -497,7 +499,7 @@ Príklady tried pre jednotlivé algoritmy:
 %- Exploiting-the-complementary-strengths-of-multi-layer-CNN-image-retrieval.pdf, preco pouzivat CNN na tento problem
 %- Pouzit vsetky veci z teorie, pri SGD pre vacsi dataset.
 
-\section{Určenie natočenia zbrane}
+\section{Určenie náklonu zbrane}
 
 
 % ------------ NEW CHAPTER ------------
@@ -505,4 +507,4 @@ Príklady tried pre jednotlivé algoritmy:
 \chapter{Implementácia}
 
 \section{Databáza zbraní}
-- ....
+\dots
