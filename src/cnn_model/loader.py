@@ -101,7 +101,7 @@ class DataLoader():
         return (image_data, image_labels, labels_dict, number_of_labels)
 
     @staticmethod
-    def split_data(training_data, labels, split_size):
+    def split_data(training_data, labels, split_size=0.25):
         if (not 0 <= split_size <= 0.5):
             print('[ERROR]: Invalid split size: ' + str(split_size))
             return None
@@ -119,3 +119,13 @@ class DataLoader():
             test_x,
             to_categorical(test_y, num_classes=2)
         )
+
+    @staticmethod
+    def load_and_preprocess_image(image_path, width, height):
+        # Preprocess image
+        image = cv2.resize(
+            cv2.imread(image_path),
+            (width, height)
+        )
+        image = img_to_array(image.astype("float") / 255.0)
+        return np.expand_dims(image, axis=0)

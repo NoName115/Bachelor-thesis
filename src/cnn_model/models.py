@@ -6,18 +6,14 @@ from keras import backend as K
 
 class LeNet():
 
-    def __init__(self, width, height, num_of_classes, depth=3):
-        self.model = self.build(depth, num_of_classes)
-        self.width = width
-        self.height = height
-
-    def build(self, num_of_classes, depth):
+    @staticmethod
+    def build(self, width, height, num_of_classes, depth=3):
         # Initialize the model
         model = Sequential()
-        inputShape = (self.height, self.width, depth)
+        inputShape = (height, width, depth)
 
         if (K.image_data_format() == "channels_first"):
-            inputShape = (depth, self.height, self.width)
+            inputShape = (depth, height, width)
         
         # first set of CONV => RELU => POOL layers
         model.add(
