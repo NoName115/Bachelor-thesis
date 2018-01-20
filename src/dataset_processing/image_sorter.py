@@ -1,3 +1,5 @@
+# kill $(ps -A | grep python | awk '{print $1}')
+
 import argparse
 import cv2
 import glob
@@ -46,11 +48,9 @@ for folder in folders_to_load:
         elif (key == ord('r')): # short_weapon
             cv2.imwrite(folder_short_weapon + image_name, img)
             print("R")
-        elif (key == ord('o')):  # other
+        else:  # other
             cv2.imwrite(folder_other + image_name, img)
-            print("O")
-        else:
-            print("BLABAL")
+            print("Other")
 
         cv2.destroyAllWindows()
 
