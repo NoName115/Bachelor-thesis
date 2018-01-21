@@ -1,10 +1,12 @@
 from keras.preprocessing.image import ImageDataGenerator, img_to_array
 from keras.utils import to_categorical
+from keras.models import load_model
 from sklearn.model_selection import train_test_split
 from imutils import paths
 
 import numpy as np
 import random
+import json
 import glob
 import cv2
 import os
@@ -132,6 +134,17 @@ class DataLoader():
         return np.expand_dims(image, axis=0)
 
     @staticmethod
-    def load_model(model_path):
-        # TODO
-        pass
+    def load_model_data(model_path):
+        # Get model name
+        model_name = model_path.split(os.path.sep)[-2]
+
+        # Read data from json file
+        json_file = open(model_path + model_name + '.json')
+        model_data = json.load(json_file)
+
+        return (
+            load_model(model_path + model_name + '.model'),
+            model_data['width'],
+            model_data['height'],
+            model_data['labels'],
+        )

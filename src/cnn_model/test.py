@@ -1,13 +1,18 @@
 from keras.models import load_model
-from base import parse_arguments_training
+from base import parse_arguments_prediction, translate_prediction
 from loader import DataLoader
 
 
-IMAGE_WIDTH = 28
-IMAGE_HEIGHT = 28
+args = parse_arguments_prediction()
 
-args = parse_arguments_training()
+model, image_width, image_height, labels = DataLoader.load_model_data(
+    args['model']
+)
+image = DataLoader.load_and_preprocess_image(
+    args['image'],
+    image_width,
+    image_height
+)
 
-image = DataLoader.load_and_preprocess_image(args['image'])
-
-model = load_model(args['model'])
+result = model.predict(image)[0]
+print(translate_prediction(result, labels, get_max=True))

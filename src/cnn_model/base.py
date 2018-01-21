@@ -34,3 +34,16 @@ def parse_arguments_prediction():
         help="path to input image"
     )
     return vars(ap.parse_args())
+
+def translate_prediction(prediction, labels_dict, get_max=False):
+    swiched_labels = dict((y,x) for x,y in labels_dict.items())
+    result_dict = {}
+    for i, value in enumerate(prediction):
+        result_dict.update({
+            swiched_labels[i]: value
+        })
+    if (not get_max):
+        return result_dict
+    else:
+        max_key = max(result_dict, key=result_dict.get)
+        return [max_key, result_dict[max_key]]
