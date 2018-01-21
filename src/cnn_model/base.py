@@ -10,7 +10,7 @@ def parse_arguments_training():
         )
     ap.add_argument(
         "--model",
-        required=False,
+        required=True,
         help="path where model will be saved",
     )
     ap.add_argument(

@@ -1,4 +1,5 @@
 from keras.preprocessing.image import ImageDataGenerator, img_to_array
+from keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
 from imutils import paths
 
@@ -46,15 +47,15 @@ class DataLoader():
         image_data = []
         image_labels = []
         labels_dict = {}
-        number_of_labels = 0
+        labels_counter = 0
         num_of_images_per_category = {}
 
         # Create labels_dict
         for category in os.listdir(root_path):
             labels_dict.update({
-                category: number_of_labels
+                category: labels_counter
             })
-            number_of_labels += 1
+            labels_counter += 1
 
         # Correct dataset size
         category_counter = []
@@ -98,7 +99,7 @@ class DataLoader():
         image_data = np.array(image_data, dtype="float") / 255.0
         image_labels = np.array(image_labels)
 
-        return (image_data, image_labels, labels_dict, number_of_labels)
+        return (image_data, image_labels, labels_dict)
 
     @staticmethod
     def split_data(training_data, labels, split_size=0.25):
@@ -129,3 +130,8 @@ class DataLoader():
         )
         image = img_to_array(image.astype("float") / 255.0)
         return np.expand_dims(image, axis=0)
+
+    @staticmethod
+    def load_model(model_path):
+        # TODO
+        pass
