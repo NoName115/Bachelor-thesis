@@ -7,7 +7,9 @@
 *.gif
 
 # Models
-*.model
+#*.model
+models/
+*.debris
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

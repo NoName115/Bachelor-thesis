@@ -17,14 +17,14 @@ class DataLoader():
     @staticmethod
     def get_default_datagen():
         return ImageDataGenerator(
-            rotation_range=30,
-            width_shift_range=0.1,
-            height_shift_range=0.1,
-            shear_range=0.2,
-            zoom_range=0.2,
-            horizontal_flip=True,
-            vertical_flip=True,
-            #fill_mode="nearest"
+            rotation_range=180,
+            width_shift_range=0.2,   # 6 images - 0.2
+            height_shift_range=0.3,  # 8 images - 0.3
+            zoom_range=[0.7, 1.3],   # 10 images - [0.6, 1.4]
+            channel_shift_range=10,  # 10 images - 10
+            fill_mode='nearest',
+            horizontal_flip=True,    # 5 images - True
+            vertical_flip=True,      # 5 images - True
         )
 
     @staticmethod

@@ -1,9 +1,0 @@
-{
-    "model_name":"LeNet",
-    "width":28,
-    "height":28,
-    "labels":{
-        "short_weapon":0,
-        "long_weapon":1
-    }
-}
