@@ -1,3 +1,7 @@
+# Other
+.vscode/
+virenv/
+
 # All images
 *.jpg
 *.JPG
@@ -7,7 +11,6 @@
 *.gif
 
 # Models
-#*.model
 models/
 *.debris
 
