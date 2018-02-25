@@ -4,7 +4,7 @@ from loader import DataLoader
 from models import LeNet, KerasBlog
 
 
-EPOCHS = 50
+EPOCHS = 10
 INIT_LR = 1e-3
 BS = 16
 IMAGE_WIDTH = 50
