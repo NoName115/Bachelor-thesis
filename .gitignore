@@ -12,6 +12,8 @@ virenv/
 
 # Models
 models/
+
+# MEGA
 *.debris
 
 # Byte-compiled / optimized / DLL files
@@ -24,6 +26,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+virenv/
 env/
 build/
 develop-eggs/
