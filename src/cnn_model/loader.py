@@ -12,28 +12,91 @@ import glob
 import cv2
 import os
 
+import scipy.misc
 
 class DataSaver():
 
     @staticmethod
     def save_image(image, path, image_name, rescale=True):
+        image = image * 255 if (rescale) else image
+        '''
         cv2.imwrite(
             path + image_name + ".png",
-            image * 255 if (rescale) else image
+            image
         )
+        '''
+        scipy.misc.imsave(path + image_name + ".png", image)
 
     @staticmethod
-    def save_images(image_data, path, image_name=None, rescale=True):
+    def save_images(image_data, folder_path, rescale=True, print_mod=1):
+        print_info("Saving images to: " + folder_path)
+
+        # Create folder
+        if (not os.path.exists(folder_path)):
+            os.mkdir(folder_path)
+
+        # Saving images
         for i, image in enumerate(image_data):
-            name = image_name if (image_name) else str(i)
+            name = str(i)
             DataSaver.save_image(
                 image,
-                path,
+                folder_path,
                 name,
                 rescale
             )
             # Debug
-            print_info('Saving ' + name + ".png")
+            if (i % print_mod == 0):
+                print_info('Saving ' + name + ".png", 1)
+
+    @staticmethod
+    def save_image_batch(data_gen, folder_path, train_x, train_y, batch_size=16, rescale=True):
+        print_info("Saving image batch to: " + folder_path)
+
+        # Generate & save images
+        i = 0
+        for batch in data_gen.flow(train_x, train_y, batch_size=1):
+            DataSaver.save_image(
+                batch[0],
+                folder_path,
+                str(i),
+                rescale
+            )
+            i += 1
+            if i > batch_size:
+                break
+
+    # TODO
+    @staticmethod
+    def save_model(model, preprocesor, save_to_folder):
+        if (not model_name):
+            model_name = self.__class__.__name__
+
+        # Model folder path
+        model_folder_path = path_to_models + model_name
+        if (not os.path.exists(model_folder_path)):
+            os.mkdir(model_folder_path)
+
+        model_path = model_folder_path + '/' + model_name
+
+        # Save model info
+        json_file = open(model_path + '.json', 'w')
+        json_file.write(
+            json.dumps(
+                {
+                    'model_name': model_name,
+                    'width': self.width,
+                    'height': self.height,
+                    'labels': self.labels_dict,
+                },
+                sort_keys=False,
+                indent=4,
+                separators=(',', ':')
+            )
+        )
+        json_file.close()
+
+        # Save model
+        self.model.save(model_path + '.model')
 
 
 class DataLoader():
@@ -57,12 +120,18 @@ class DataLoader():
         labels_counter = 0
         num_of_images_per_category = {}
 
+        # DEBUG
+        print_info("Creating category dictionary...")
+
         # Create labels_dict
         for category in os.listdir(root_path):
             labels_dict.update({
                 category: labels_counter
             })
             labels_counter += 1
+
+        # DEBUG
+        print_info("Loading input dataset...")
 
         # Correct dataset size
         category_counter = []
@@ -103,7 +172,7 @@ class DataLoader():
 
 
         # Scale the raw pixel intensities to the range [0, 1]
-        image_data = np.array(image_data) #, dtype="float32")# / 255.0
+        image_data = np.array(image_data, dtype="float32")# / 255.0
         image_labels = np.array(image_labels)
 
         return (image_data, image_labels, labels_dict)
@@ -112,7 +181,9 @@ class DataLoader():
     def split_data(training_data, labels, split_size=0.25):
         if (not 0 <= split_size <= 0.5):
             print_error("Invalid split size: " + str(split_size))
-            return None
+
+        # DEBUG
+        print_info("Spliting input data...")
 
         train_x, test_x, train_y, test_y = train_test_split(
             training_data,
@@ -128,6 +199,7 @@ class DataLoader():
             to_categorical(test_y, num_classes=2)
         )
 
+    '''
     @staticmethod
     def load_and_preprocess_image(image_path, width, height):
         # Preprocess image
@@ -137,6 +209,7 @@ class DataLoader():
         )
         image = img_to_array(image.astype("float") / 255.0)
         return np.expand_dims(image, axis=0)
+    '''
 
     @staticmethod
     def load_model_data(model_path):

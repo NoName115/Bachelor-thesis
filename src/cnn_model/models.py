@@ -3,6 +3,7 @@ from keras.layers.core import Activation, Flatten, Dense, Dropout
 from keras.models import Sequential
 from keras import backend as K
 from abc import ABCMeta, abstractmethod
+from preprocessing import Preprocessor
 
 import json
 import os
@@ -25,37 +26,6 @@ class Model():
             self.input_shape = (self.depth, self.height, self.width)
 
         self.model = self.build()
-
-    def save(self, path_to_models, model_name=None):
-        if (not model_name):
-            model_name = self.__class__.__name__
-
-        # Model folder path
-        model_folder_path = path_to_models + model_name
-        if (not os.path.exists(model_folder_path)):
-            os.mkdir(model_folder_path)
-
-        model_path = model_folder_path + '/' + model_name
-
-        # Save model info
-        json_file = open(model_path + '.json', 'w')
-        json_file.write(
-            json.dumps(
-                {
-                    'model_name': model_name,
-                    'width': self.width,
-                    'height': self.height,
-                    'labels': self.labels_dict,
-                },
-                sort_keys=False,
-                indent=4,
-                separators=(',', ':')
-            )
-        )
-        json_file.close()
-
-        # Save model
-        self.model.save(model_path + '.model')
 
     @abstractmethod
     def build(self):
