@@ -18,17 +18,16 @@ class DataSaver():
 
     @staticmethod
     def save_image(image, path, image_name, rescale=True):
-        image = image * 255 if (rescale) else image
+        '''Save input array as image, only for PNG image extention
         '''
+        image = image * 255 if (rescale) else image
         cv2.imwrite(
             path + image_name + ".png",
             image
         )
-        '''
-        scipy.misc.imsave(path + image_name + ".png", image)
 
     @staticmethod
-    def save_images(image_data, folder_path, rescale=True, print_mod=1):
+    def save_images(image_data, folder_path, rescale=True, print_mod=5):
         print_info("Saving images to: " + folder_path)
 
         # Create folder
@@ -49,20 +48,22 @@ class DataSaver():
                 print_info('Saving ' + name + ".png", 1)
 
     @staticmethod
-    def save_image_batch(data_gen, folder_path, train_x, train_y, batch_size=16, rescale=True):
-        print_info("Saving image batch to: " + folder_path)
+    def save_image_batch(img_data, datagen, folder_path,
+        batch_size=1, loops=15, rescale=True, print_mod=5):
+        '''Augment data with input datagen
 
-        # Generate & save images
+        Input data must have shape (x, y, 1 or 3)
+        '''
+        # Debug
+        print_info("Saving image batch to: " + folder_path)
         i = 0
-        for batch in data_gen.flow(train_x, train_y, batch_size=1):
-            DataSaver.save_image(
-                batch[0],
-                folder_path,
-                str(i),
-                rescale
-            )
+        for batch in datagen.flow(img_data, batch_size=batch_size,
+             save_to_dir=folder_path, save_prefix='weapon', save_format='jpg'):
+            # Debug
+            if (i % print_mod == 0):
+                print_info("Saving loop " + str(i), 1)
             i += 1
-            if i > batch_size:
+            if i > loops:
                 break
 
     # TODO
@@ -182,7 +183,7 @@ class DataLoader():
         if (not 0 <= split_size <= 0.5):
             print_error("Invalid split size: " + str(split_size))
 
-        # DEBUG
+        # Debug
         print_info("Spliting input data...")
 
         train_x, test_x, train_y, test_y = train_test_split(

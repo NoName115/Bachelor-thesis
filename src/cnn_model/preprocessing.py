@@ -21,11 +21,12 @@ class Preprocessor():
             print_warning("Data generator already added")
 
     def apply(self, image_data):
-        # Debug
+        # DEBUG
         print_info('Applying preprocessing...')
-        # Image preprocessing
         for func in self.func_list:
-            print_info(func.__name__, 1)    # DEBUG
+            # DEBUG
+            print_info(func.__name__, 1)
+            # Image preprocessing
             image_data = func(image_data)
 
         return image_data
@@ -56,10 +57,33 @@ class Preprocessing():
             zca_whitening=zca_whitening
         )
 
+    def reshape(image_data):
+        '''Reshape input grayscale data into (x, y, 1)
+        '''
+        if (len(image_data.shape) == 3):    # List of images
+            return image_data.reshape(image_data.shape + (1,))
+        else:
+            return image_data.reshape((1,) + image_data.shape + (1,))
+
+    def denormalize(image_data):
+        '''Multiply input data with 255.0 to [0..255]
+        '''
+        return image_data * 255.0
+
     @staticmethod
     def normalize(image_data):
+        '''Normalize input data to [0..1] scale
+        '''
         return image_data / 255.0
 
     @staticmethod
     def grayscale(image_data):
-        return np.array([rgb2grey(image) for image in image_data])
+        '''Rescale input RGB data to grayscale
+
+        Input images must be normalized & have shape (x, y, 3)
+        Return data have shape (x, y)
+        '''
+        if (len(image_data.shape) == 4):    # List of images
+            return np.array([rgb2grey(image) for image in image_data])
+        else:
+            return rgb2grey(image_data)
