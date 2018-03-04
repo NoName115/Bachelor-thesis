@@ -4,6 +4,7 @@ from keras.models import load_model
 from sklearn.model_selection import train_test_split
 from imutils import paths
 from printer import print_info, print_warning, print_error
+from preprocessing import Preprocessor, Preprocessing
 
 import numpy as np
 import random
@@ -12,7 +13,6 @@ import glob
 import cv2
 import os
 
-import scipy.misc
 
 class DataSaver():
 
@@ -66,28 +66,27 @@ class DataSaver():
             if i > loops:
                 break
 
-    # TODO
     @staticmethod
-    def save_model(model, preprocesor, save_to_folder):
-        if (not model_name):
-            model_name = self.__class__.__name__
+    def save_model(save_to_folder, model, preprocesor):
+        model_name = model.__class__.__name__
 
         # Model folder path
-        model_folder_path = path_to_models + model_name
+        model_folder_path = save_to_folder + model_name
         if (not os.path.exists(model_folder_path)):
             os.mkdir(model_folder_path)
 
-        model_path = model_folder_path + '/' + model_name
+        model_file = model_folder_path + '/' + model_name
 
         # Save model info
-        json_file = open(model_path + '.json', 'w')
+        json_file = open(model_file + '.json', 'w')
         json_file.write(
             json.dumps(
                 {
                     'model_name': model_name,
-                    'width': self.width,
-                    'height': self.height,
-                    'labels': self.labels_dict,
+                    'width': model.width,
+                    'height': model.height,
+                    'labels': model.labels_dict,
+                    'preprocessing': preprocesor.get_json(),
                 },
                 sort_keys=False,
                 indent=4,
@@ -97,7 +96,7 @@ class DataSaver():
         json_file.close()
 
         # Save model
-        self.model.save(model_path + '.model')
+        model.model.save(model_file + '.model')
 
 
 class DataLoader():
@@ -200,17 +199,18 @@ class DataLoader():
             to_categorical(test_y, num_classes=2)
         )
 
-    '''
     @staticmethod
-    def load_and_preprocess_image(image_path, width, height):
+    def load_and_preprocess_image(image_path, width, height, preproc):
+        # Debug
+        print_info("Loading image from: " + image_path)
         # Preprocess image
         image = cv2.resize(
             cv2.imread(image_path),
             (width, height)
         )
-        image = img_to_array(image.astype("float") / 255.0)
-        return np.expand_dims(image, axis=0)
-    '''
+        image = img_to_array(image.astype("float"))
+        image = preproc.apply(image)
+        return image
 
     @staticmethod
     def load_model_data(model_path):
@@ -221,9 +221,19 @@ class DataLoader():
         json_file = open(model_path + model_name + '.json')
         model_data = json.load(json_file)
 
+        preproc = Preprocessor()
+        for func in model_data['preprocessing']['func_list']:
+            preproc.add_func(Preprocessing.__getattribute__(func))
+
+        datagen = Preprocessing.get_datagen(
+            **dict(model_data['preprocessing']['datagen_args'])
+        )
+
         return (
             load_model(model_path + model_name + '.model'),
             model_data['width'],
             model_data['height'],
             model_data['labels'],
+            preproc,
+            datagen
         )

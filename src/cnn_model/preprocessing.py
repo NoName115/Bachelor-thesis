@@ -9,16 +9,11 @@ class Preprocessor():
 
     def __init__(self):
         self.func_list = []
-        self.data_gen = None
+        self.datagen = None
+        self.datagen_args = None
 
     def add_func(self, func):
         self.func_list.append(func)
-
-    def set_datagen(self, data_gen):
-        if (not self.data_gen):
-            self.data_gen = data_gen
-        else:
-            print_warning("Data generator already added")
 
     def apply(self, image_data):
         # DEBUG
@@ -37,26 +32,45 @@ class Preprocessor():
             ' --> '.join(func.__name__ for func in self.func_list)
         )
 
+    def set_datagen(self, default=True, **kwargs):
+        # Set default settings
+        if (default):
+            datagen_kwargs = dict(
+                rotation_range=180,
+                width_shift_range=0.2,   # 6 images - 0.2
+                height_shift_range=0.3,  # 8 images - 0.3
+                zoom_range=[0.7, 1.3],   # 10 images - [0.6, 1.4]
+                channel_shift_range=10,  # 10 images - 10
+                fill_mode='nearest',
+                horizontal_flip=True,    # 5 images - True
+                vertical_flip=True,      # 5 images - True
+            )
+        else:
+            datagen_kwargs = kwargs
+
+        self.datagen_args = datagen_kwargs
+        self.datagen = Preprocessing.get_datagen(**datagen_kwargs)
+
+    def get_datagen(self):
+        return self.datagen
+
+    def fit(self, **kwargs):
+        self.datagen.fit(**kwargs)
+
     def get_json(self):
-        pass
+        return {
+            'func_list': [func.__name__ for func in self.func_list],
+            'datagen_args': self.datagen_args,
+        }
 
 
 class Preprocessing():
 
     @staticmethod
-    def get_default_datagen(zca_whitening=False):
-        return ImageDataGenerator(
-            rotation_range=180,
-            width_shift_range=0.2,   # 6 images - 0.2
-            height_shift_range=0.3,  # 8 images - 0.3
-            zoom_range=[0.7, 1.3],   # 10 images - [0.6, 1.4]
-            channel_shift_range=10,  # 10 images - 10
-            fill_mode='nearest',
-            horizontal_flip=True,    # 5 images - True
-            vertical_flip=True,      # 5 images - True
-            zca_whitening=zca_whitening
-        )
+    def get_datagen(**kwargs):
+        return ImageDataGenerator(**kwargs)
 
+    @staticmethod
     def reshape(image_data):
         '''Reshape input grayscale data into (x, y, 1)
         '''
@@ -65,6 +79,7 @@ class Preprocessing():
         else:
             return image_data.reshape((1,) + image_data.shape + (1,))
 
+    @staticmethod
     def denormalize(image_data):
         '''Multiply input data with 255.0 to [0..255]
         '''
