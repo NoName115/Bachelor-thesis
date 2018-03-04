@@ -68,6 +68,9 @@ class DataSaver():
 
     @staticmethod
     def save_model(save_to_folder, model, preprocesor):
+        # Debug info
+        print_info("Saving model to: " + save_to_folder)
+
         model_name = model.__class__.__name__
 
         # Model folder path
@@ -157,10 +160,10 @@ class DataLoader():
                 num_of_images_per_category.update({
                     label: 0
                 })
-            
+
             # Correct dataset size
             if (correct_dataset_size and num_of_images_per_category[label] >= max_images):
-                break
+                continue
 
             # Load and rescale images
             image = cv2.resize(cv2.imread(path), (width, height))
@@ -178,23 +181,31 @@ class DataLoader():
         return (image_data, image_labels, labels_dict)
 
     @staticmethod
-    def split_data(training_data, labels, split_size=0.25):
+    def split_data(training_data, labels, split_size=0.20):
         if (not 0 <= split_size <= 0.5):
             print_error("Invalid split size: " + str(split_size))
 
         # Debug
         print_info("Spliting input data...")
 
-        train_x, test_x, train_y, test_y = train_test_split(
+        train_x, val_x, train_y, val_y = train_test_split(
             training_data,
             labels,
             test_size=split_size,
+            random_state=42
+        )
+        val_x, test_x, val_y, test_y = train_test_split(
+            val_x,
+            val_y,
+            test_size=0.5,
             random_state=42
         )
 
         return (
             train_x,
             to_categorical(train_y, num_classes=2),
+            val_x,
+            to_categorical(val_y, num_classes=2),
             test_x,
             to_categorical(test_y, num_classes=2)
         )
@@ -223,7 +234,7 @@ class DataLoader():
 
         preproc = Preprocessor()
         for func in model_data['preprocessing']['func_list']:
-            preproc.add_func(Preprocessing.__getattribute__(func))
+            preproc.add_func(Preprocessing().__getattribute__(func))
 
         datagen = Preprocessing.get_datagen(
             **dict(model_data['preprocessing']['datagen_args'])
