@@ -207,7 +207,7 @@ class DataLoader():
             val_x,
             to_categorical(val_y, num_classes=2),
             test_x,
-            to_categorical(test_y, num_classes=2)
+            test_y
         )
 
     @staticmethod
@@ -225,6 +225,9 @@ class DataLoader():
 
     @staticmethod
     def load_model_data(model_path):
+        # Debug
+        print_info('Loading model from: ' + model_path)
+
         # Get model name
         model_name = model_path.split(os.path.sep)[-2]
 
