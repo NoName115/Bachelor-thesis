@@ -134,6 +134,7 @@ class DataLoader():
             labels_counter += 1
 
         # DEBUG
+        print_info("Category dictionary: " + str(labels_dict), 1)
         print_info("Loading input dataset...")
 
         # Correct dataset size
@@ -178,6 +179,18 @@ class DataLoader():
         image_data = np.array(image_data, dtype="float32")# / 255.0
         image_labels = np.array(image_labels)
 
+        # Debug
+        print_info(
+            "Loaded " + str(len(image_data)) + " images in " +
+            str(len(labels_dict)) + " categories",
+            1
+        )
+        for key, value in num_of_images_per_category.items():
+            print_info(
+                "Category: " + key + " - " + str(value) + " images",
+                2
+            )
+
         return (image_data, image_labels, labels_dict)
 
     @staticmethod
@@ -201,6 +214,32 @@ class DataLoader():
             random_state=42
         )
 
+        # Debug
+        print_info(
+            '{0:20} {1:4d} ({2:2d}%) images'.format(
+                "Training dataset:",
+                len(train_x),
+                int((1 - split_size) * 100)
+            ),
+            1
+        )
+        print_info(
+            '{0:20} {1:4d} ({2:2d}%) images'.format(
+                "Validation dataset:",
+                len(val_x),
+                int((split_size * 0.5) * 100)
+            ),
+            1
+        )
+        print_info(
+            '{0:20} {1:4d} ({2:2d}%) images'.format(
+                "Test dataset:",
+                len(test_x),
+                int((split_size * 0.5) * 100)
+            ),
+            1
+        )
+
         return (
             train_x,
             to_categorical(train_y, num_classes=2),
@@ -214,6 +253,7 @@ class DataLoader():
     def load_and_preprocess_image(image_path, width, height, preproc):
         # Debug
         print_info("Loading image from: " + image_path)
+
         # Preprocess image
         image = cv2.resize(
             cv2.imread(image_path),
