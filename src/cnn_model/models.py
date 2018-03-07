@@ -29,6 +29,15 @@ class Model():
 
     @abstractmethod
     def build(self):
+        '''Notes
+
+        Convolution layer:
+            (W - F + 2P)/S + 1 = cele cislo
+            W - velkost vstupnych dat
+            F - velkost filtra
+            P - padding, zero-padding = 1 ('same')
+            S - stride size
+        '''
         pass
 
 
@@ -100,3 +109,24 @@ class LeNet(Model):
 
         # return the network architecture
         return model
+
+
+class MyModel(Model):
+
+    def build(self):
+        model = Sequential()
+
+        model.add(
+            Conv2D(
+                20,
+                (5, 5),
+                strides=(1, 1),
+                padding='same',
+                input_shape=self.input_shape,
+                activation='relu'
+            )
+        )
+        model.add(
+            MaxPooling2D(pool_size=(2, 2), strides=(2, 2))
+        )
+
