@@ -1,0 +1,25 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+keras = "*"
+scikit-learn = "*"
+scikit-image = "*"
+numpy = "*"
+"h5py" = "*"
+imutils = "*"
+opencv-python = "*"
+
+
+[dev-packages]
+
+
+
+[requires]
+
+python_version = "3.6"
