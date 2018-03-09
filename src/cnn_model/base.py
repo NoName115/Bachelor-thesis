@@ -26,17 +26,17 @@ def parse_arguments_training():
 def parse_arguments_prediction():
     ap = argparse.ArgumentParser()
     ap.add_argument(
-        "-m", "--model",
+        "--model",
         required=True,
-        help="path to trained model model"
+        help="path to folder of trained model"
     )
     ap.add_argument(
-        "-i", "--image",
+        "--image",
         required=False,
         help="path to input image"
     )
     ap.add_argument(
-        "-d", "--dataset",
+        "--dataset",
         required=False,
         help="path to input images"
     )

@@ -5,6 +5,7 @@ from printer import print_info, print_error
 
 
 # Parse and check input arguments
+# --model, --image, --dataset
 args = parse_arguments_prediction()
 if (not args['image'] and not args['dataset']):
     print_error('No input image or dataset to be tested')

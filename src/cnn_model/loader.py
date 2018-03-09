@@ -7,6 +7,7 @@ from printer import print_info, print_warning, print_error
 from preprocessing import Preprocessor, Preprocessing
 from models import Model
 from datetime import datetime
+from hashlib import sha1
 
 import numpy as np
 import random
@@ -175,6 +176,9 @@ class DataLoader():
                 )
             max_images = min(category_counter)
 
+        # Image hash table
+        image_hash_table = {}
+
         # Grab the image paths and randomly shuffle them
         image_paths = list(paths.list_images(root_path))
         #random.seed(42)
@@ -196,15 +200,30 @@ class DataLoader():
 
             # Load and rescale images
             image = cv2.resize(cv2.imread(path), (width, height))
-            image_data.append(img_to_array(image))
+            image = img_to_array(image)
+            image_data.append(image)
 
             # Labels operations
             image_labels.append(labels_dict[label])
             num_of_images_per_category[label] += 1
 
+            # Add image to image hash table
+            image_hash = sha1(image).hexdigest()
 
-        # Scale the raw pixel intensities to the range [0, 1]
-        image_data = np.array(image_data, dtype="float32")# / 255.0
+            if (image_hash in image_hash_table):
+                print_warning(
+                    'Duplicite image: ' + path + " & " + image_hash_table[image_hash],
+                    2
+                )
+                continue
+
+            image_hash_table.update({
+                image_hash: path
+            })
+
+
+        # Conver arrays to numpy arrays and convert to float32 type
+        image_data = np.array(image_data, dtype="float32")
         image_labels = np.array(image_labels)
 
         # Debug
@@ -219,7 +238,14 @@ class DataLoader():
                 2
             )
 
-        return (image_data, image_labels, labels_dict)
+        # Check number of loaded images with image hash table
+        if (len(image_data) != len(image_hash_table)):
+            print_warning(
+                "Different length of image_data (" + str(len(image_data)) + ") & " +
+                "image_hash_table (" + str(len(image_hash_table)) + ")"
+            )
+
+        return (image_data, image_labels, labels_dict, image_hash_table)
 
     @staticmethod
     def split_data(training_data, labels, split_size=0.20):
