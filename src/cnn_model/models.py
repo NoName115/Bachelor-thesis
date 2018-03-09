@@ -13,19 +13,27 @@ class Model():
 
     __metaclass__ = ABCMeta
 
-    def __init__(self, width, height, labels_dict, depth=3):
+    def __init__(self, width, height, labels_dict, depth=3,
+                 model_name=None, model=None):
         self.width = width
         self.height = height
         self.labels_dict = labels_dict
         self.num_of_classes = len(labels_dict)
         self.depth = depth
+        self.model_name = model_name if (model_name) else self.__class__.__name__
 
         # Initialize first layer shape
         self.input_shape = (self.height, self.width, self.depth)
         if (K.image_data_format() == "channels_first"):
             self.input_shape = (self.depth, self.height, self.width)
 
-        self.model = self.build()
+        if (not model):
+            self.model = self.build()
+        else:
+            self.model = model
+
+    def get_name(self):
+        return self.model_name
 
     @abstractmethod
     def build(self):
@@ -114,19 +122,43 @@ class LeNet(Model):
 class MyModel(Model):
 
     def build(self):
+        # Input shape 64x64x1
         model = Sequential()
 
         model.add(
             Conv2D(
-                20,
-                (5, 5),
+                16,
+                (2, 2),
                 strides=(1, 1),
                 padding='same',
                 input_shape=self.input_shape,
-                activation='relu'
+                #activation='relu'
             )
-        )
+        )   # Output 64x64x16
+        model.add(Activation('relu'))
         model.add(
             MaxPooling2D(pool_size=(2, 2), strides=(2, 2))
-        )
+        )   # Output 32x32x16
+
+        model.add(Conv2D(32, (2, 2), strides=(1, 1), padding='same'))   # Output 32x32x32
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))   # Output 16x16x32
+
+        model.add(Conv2D(64, (2, 2), strides=(1, 1), padding='same'))   # Output 16x16x64
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))   # Output 8x8x64
+
+        model.add(Conv2D(128, (2, 2), strides=(1, 1), padding='same'))   # Output 8x8x128
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))   # Output 4x4x128
+
+        model.add(Flatten())
+        model.add(Dense(1024))
+        model.add(Activation('relu'))
+
+        #model.add(Dropout(0.5))
+        model.add(Dense(self.num_of_classes))
+        model.add(Activation('softmax'))
+
+        return model
 

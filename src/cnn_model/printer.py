@@ -1,13 +1,13 @@
 
-def print_info(message, tabs=0):
+def print_info(message, spaces=0):
     print(
-        (' ' * tabs * 2) +
+        (' ' * spaces * 2) +
         "[INFO] " + message
     )
 
-def print_warning(message, tabs=0):
+def print_warning(message, spaces=0):
     print(
-        (' ' * tabs * 2) +
+        (' ' * spaces * 2) +
         "[! WARNING !] " + message
     )
 

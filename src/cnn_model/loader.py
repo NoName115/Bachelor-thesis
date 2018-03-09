@@ -1,10 +1,11 @@
 from keras.preprocessing.image import img_to_array
-from keras.utils import to_categorical
-from keras.models import load_model
+from keras.utils import to_categorical, print_summary
+from keras.models import load_model, model_from_json
 from sklearn.model_selection import train_test_split
 from imutils import paths
 from printer import print_info, print_warning, print_error
 from preprocessing import Preprocessor, Preprocessing
+from models import Model
 
 import numpy as np
 import random
@@ -71,7 +72,7 @@ class DataSaver():
         # Debug info
         print_info("Saving model to: " + save_to_folder)
 
-        model_name = model.__class__.__name__
+        model_name = model.get_name()
 
         # Model folder path
         model_folder_path = save_to_folder + model_name
@@ -89,6 +90,7 @@ class DataSaver():
                     'width': model.width,
                     'height': model.height,
                     'labels': model.labels_dict,
+                    'depth': model.depth,
                     'preprocessing': preprocesor.get_json(),
                 },
                 sort_keys=False,
@@ -98,8 +100,30 @@ class DataSaver():
         )
         json_file.close()
 
-        # Save model
-        model.model.save(model_file + '.model')
+        # Save model as h5
+        model.model.save(model_file + '.h5')
+
+        # Save model summary info
+        summary_file = open(model_name + '.summary', 'w')
+        print_summary(
+            model.model,
+            line_length=None,
+            positions=None,
+            print_fn=lambda in_str: summary_file.write(in_str + '\n')
+        )
+        summary_file.close()
+
+        # Save model architecture as json
+        arch_file = open(model_folder_path + '/architecture.json', 'w')
+        arch_file.write(
+            json.dumps(
+                json.loads(model.model.to_json()),
+                sort_keys=False,
+                indent=4,
+                separators=(',', ':')
+            )
+        )
+        arch_file.close()
 
 
 class DataLoader():
@@ -149,8 +173,8 @@ class DataLoader():
 
         # Grab the image paths and randomly shuffle them
         image_paths = list(paths.list_images(root_path))
-        random.seed(42)
-        random.shuffle(image_paths)
+        #random.seed(42)
+        #random.shuffle(image_paths)
 
         for path in image_paths:
             # Load image label
@@ -264,7 +288,14 @@ class DataLoader():
         return image
 
     @staticmethod
-    def load_model_data(model_path):
+    def load_model_data(model_path, from_json=False):
+        '''Load model data as width, height, depth, labels_dict
+        Model can be loaded from .h5 file as trained model or
+        from json file as model architecture - model is not trained
+
+        model_path - string, path to model folder
+        from_json - boolean, if true untrained model architecture is loaded
+        '''
         # Debug
         print_info('Loading model from: ' + model_path)
 
@@ -275,19 +306,44 @@ class DataLoader():
         json_file = open(model_path + model_name + '.json')
         model_data = json.load(json_file)
 
+        # Preprocessor class
         preproc = Preprocessor()
         for func in model_data['preprocessing']['func_list']:
             preproc.add_func(Preprocessing().__getattribute__(func))
 
-        datagen = Preprocessing.get_datagen(
+        # Datagen class
+        preproc.set_datagen(
+            default=False,
             **dict(model_data['preprocessing']['datagen_args'])
         )
 
-        return (
-            load_model(model_path + model_name + '.model'),
+        # Load (un)trained model
+        if (not from_json):
+            loaded_model = load_model(model_path + model_name + '.h5')
+        else:
+            # Debug
+            print_warning(
+                'Loading only model architecture(untrained model) from json',
+                1
+            )
+
+            # TODO
+            # error dajaky
+            with open(model_path + 'architecture.json') as jsonfile:
+                #loaded_model = model_from_json(str(json.load(jsonfile)))
+                pass
+
+        # Model class
+        model_class = Model(
             model_data['width'],
             model_data['height'],
             model_data['labels'],
+            depth=model_data['depth'],
+            model_name=model_name,
+            model=loaded_model
+        )
+
+        return (
+            model_class,
             preproc,
-            datagen
         )
