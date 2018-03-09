@@ -1,27 +1,46 @@
 from keras.models import load_model
-from base import parse_arguments_prediction, translate_prediction
+from base import parse_arguments_prediction, translate_prediction, test_training
 from loader import DataLoader
+from printer import print_info, print_error
 
 
+# Parse and check input arguments
 args = parse_arguments_prediction()
+if (not args['image'] and not args['dataset']):
+    print_error('No input image or dataset to be tested')
 
-model_data = DataLoader.load_model_data(
+# Load model & model data
+model_class, preproc = DataLoader.load_model_data(
     args['model']
 )
+image_width = model_class.width
+image_height = model_class.height
+labels = model_class.labels_dict
+model = model_class.get_model()
 
-model = model_data[0]
-image_width = model_data[1]
-image_height = model_data[2]
-labels = model_data[3]
-preproc = model_data[4]
-datagen = model_data[5]
+# Predict one image
+if (args['image']):
+    print_info('Image prediction...')
+    image = DataLoader.load_and_preprocess_image(
+        args['image'],
+        model_class.width,
+        model_class.height,
+        preproc
+    )
 
-image = DataLoader.load_and_preprocess_image(
-    args['image'],
-    image_width,
-    image_height,
-    preproc
-)
+    result = model.predict(image)[0]
+    print(translate_prediction(result, labels, get_max=False))
+    print(translate_prediction(result, labels, get_max=True))
 
-result = model.predict(image)[0]
-print(translate_prediction(result, labels, get_max=True))
+# Predict more images
+if (args['dataset']):
+    print_info('Dataset prediction...')
+    image_data, image_labels, labels_dict = DataLoader.load_scaled_data_with_labels(
+        args['dataset'],
+        image_width,
+        image_height,
+        correct_dataset_size=False
+    )
+    image_data = preproc.apply(image_data)
+
+    test_training(image_data, image_labels, model, labels)

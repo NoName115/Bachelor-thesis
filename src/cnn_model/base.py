@@ -32,8 +32,13 @@ def parse_arguments_prediction():
     )
     ap.add_argument(
         "-i", "--image",
-        required=True,
+        required=False,
         help="path to input image"
+    )
+    ap.add_argument(
+        "-d", "--dataset",
+        required=False,
+        help="path to input images"
     )
     return vars(ap.parse_args())
 

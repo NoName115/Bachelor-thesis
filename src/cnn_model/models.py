@@ -35,6 +35,9 @@ class Model():
     def get_name(self):
         return self.model_name
 
+    def get_model(self):
+        return self.model
+
     @abstractmethod
     def build(self):
         '''Notes
