@@ -6,6 +6,7 @@ from imutils import paths
 from printer import print_info, print_warning, print_error
 from preprocessing import Preprocessor, Preprocessing
 from models import Model
+from datetime import datetime
 
 import numpy as np
 import random
@@ -68,16 +69,19 @@ class DataSaver():
                 break
 
     @staticmethod
-    def save_model(save_to_folder, model, preprocesor):
-        # Debug info
-        print_info("Saving model to: " + save_to_folder)
-
+    def save_model(save_to_folder, model, preprocesor, with_datetime=False):
         model_name = model.get_name()
 
         # Model folder path
         model_folder_path = save_to_folder + model_name
+        if (with_datetime):
+            model_folder_path += '_' + datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+
         if (not os.path.exists(model_folder_path)):
             os.mkdir(model_folder_path)
+
+        # Debug info
+        print_info("Saving model to: " + model_folder_path)
 
         model_file = model_folder_path + '/' + model_name
 
@@ -104,10 +108,10 @@ class DataSaver():
         model.model.save(model_file + '.h5')
 
         # Save model summary info
-        summary_file = open(model_name + '.summary', 'w')
+        summary_file = open(model_file + '.summary', 'w')
         print_summary(
             model.model,
-            line_length=None,
+            line_length=79,
             positions=None,
             print_fn=lambda in_str: summary_file.write(in_str + '\n')
         )
