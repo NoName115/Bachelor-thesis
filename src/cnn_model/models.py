@@ -13,14 +13,22 @@ class Model():
 
     __metaclass__ = ABCMeta
 
-    def __init__(self, width, height, labels_dict, depth=3,
+    def __init__(self, data_shape, labels_dict,
                  model_name=None, model=None):
-        self.width = width
-        self.height = height
+        """Initalization of CNN model
+
+        data_shape - (n, x, y, 1 or 3), shape of training data
+        lables_dict - dict, lables dictionary
+        model_name - string, if None name is class name
+        model - Sequential, 
+        """
+        self.width = data_shape[1]
+        self.height = data_shape[2]
+        self.depth = data_shape[3]
         self.labels_dict = labels_dict
         self.num_of_classes = len(labels_dict)
-        self.depth = depth
         self.model_name = model_name if (model_name) else self.__class__.__name__
+        self.optimizer = None
 
         # Initialize first layer shape
         self.input_shape = (self.height, self.width, self.depth)
@@ -37,6 +45,30 @@ class Model():
 
     def get_model(self):
         return self.model
+    
+    def set_optimizer(self, optimizer):
+        self.optimizer = optimizer
+
+    def train(self, train_x, train_y, val_x, val_y,
+              datagen, epochs, batch_size):
+        self.__compile()
+
+        return self.model.fit_generator(
+            datagen.flow(train_x, train_y, batch_size=batch_size),
+            steps_per_epoch=len(train_x) // batch_size,
+            epochs=epochs,
+            validation_data=(val_x, val_y),
+            validation_steps=len(val_x) // batch_size
+        )
+
+    @abstractmethod
+    def __compile(self, loss='binary_crossentropy',
+                  optimizer='rmsprop', metrics=['accuracy']):
+        self.model.compile(
+            loss=loss,
+            optimizer=self.optimizer if (self.optimizer) else optimizer,
+            metrics=metrics
+        )
 
     @abstractmethod
     def build(self):
@@ -128,20 +160,13 @@ class MyModel(Model):
         # Input shape 64x64x1
         model = Sequential()
 
-        model.add(
-            Conv2D(
-                16,
-                (2, 2),
-                strides=(1, 1),
-                padding='same',
-                input_shape=self.input_shape,
-                #activation='relu'
+        model.add(Conv2D(
+            16, (2, 2), strides=(1, 1), padding='same',
+            input_shape=self.input_shape, #activation='relu'
             )
         )   # Output 64x64x16
         model.add(Activation('relu'))
-        model.add(
-            MaxPooling2D(pool_size=(2, 2), strides=(2, 2))
-        )   # Output 32x32x16
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))   # Output 32x32x16
 
         model.add(Conv2D(32, (2, 2), strides=(1, 1), padding='same'))   # Output 32x32x32
         model.add(Activation('relu'))

@@ -101,6 +101,7 @@ def test_training(test_x, test_y, test_p, model, labels_dict):
             1
         )
         # Invalid predicted images
-        print_info('Invalid images:', 2)
-        for image_path in value_list[2]:
-            print_info(image_path, 3)
+        if (value_list[2]):
+            print_info('Invalid images:', 2)
+            for image_path in value_list[2]:
+                print_info(image_path, 3)

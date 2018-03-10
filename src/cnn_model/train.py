@@ -1,70 +1,60 @@
-from keras.optimizers import Adam
+from preprocessing import Preprocessor, Preprocessing
 from base import parse_arguments_training, test_training
 from loader import DataLoader, DataSaver
 from models import LeNet, KerasBlog
-from preprocessing import Preprocessor, Preprocessing
+from keras.optimizers import Adam
 
 
 EPOCHS = 1
-INIT_LR = 1e-3
 BS = 16
-IMAGE_WIDTH = 50
-IMAGE_HEIGHT = 50
+IMAGE_WIDTH = 60
+IMAGE_HEIGHT = 60
 
-# --model, --image
+# --model, --dataset
 args = parse_arguments_training()
 
 # Load input images & split it
-images, labels, labels_dict = DataLoader.load_scaled_data_with_labels(
+images, labels, labels_dict, path_list = DataLoader.load_scaled_data_with_labels(
      'dataset/training_data/',
      IMAGE_WIDTH,
-     IMAGE_HEIGHT
+     IMAGE_HEIGHT,
+     correct_dataset_size=True
 )
-
-splited_data = DataLoader.split_data(images, labels)
-train_x, train_y = splited_data[0:2]
-val_x, val_y = splited_data[2:4]
-test_x, test_y = splited_data[4:6]
 
 # Preprocessing
 prepro = Preprocessor()
 prepro.add_func(Preprocessing.normalize)
 prepro.add_func(Preprocessing.grayscale)
 prepro.add_func(Preprocessing.reshape)
-train_x = prepro.apply(train_x)
-val_x = prepro.apply(val_x)
+images = prepro.apply(images)
 
+# Datagen
 prepro.set_datagen()
 
+# Spliting data to training, validation & test
+splited_data = DataLoader.split_data(images, labels, path_list)
+train_x, train_y, train_p = splited_data[0:3]
+val_x, val_y, val_p = splited_data[3:6]
+test_x, test_y, test_p = splited_data[6:9]
 
 # Building model
-#model = LeNet(IMAGE_WIDTH, IMAGE_HEIGHT, labels_dict)
-model = KerasBlog(IMAGE_WIDTH, IMAGE_HEIGHT, labels_dict, depth=1)
-'''
-opt = Adam(
-    lr=INIT_LR,
-    decay=INIT_LR / EPOCHS
-)
-model.model.compile(
-    loss='binary_crossentropy',
-    optimizer=opt,
-    metrics=['accuracy']
-)
-'''
-model.model.compile(
-    loss='binary_crossentropy',
-    optimizer='rmsprop',
-    metrics=['accuracy']
+#model_class = LeNet(train_x.shape, labels_dict)
+model_class = KerasBlog(train_x.shape, labels_dict)
+
+# Optimizer
+INIT_LR = 1e-3
+model_class.set_optimizer(
+    Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
 )
 
-results = model.model.fit_generator(
-    prepro.get_datagen().flow(train_x, train_y, batch_size=BS),
-    steps_per_epoch=len(train_x) // BS,
+# Training model
+result = model_class.train(
+    train_x, train_y,
+    val_x, val_y,
+    datagen=prepro.get_datagen(),
     epochs=EPOCHS,
-    validation_data=(val_x, val_y),
-    validation_steps=len(val_x) // BS
+    batch_size=BS,
 )
 
-#DataSaver.save_model(args["model"], model, prepro)
-
-test_training(test_x, test_y, model.model, labels_dict)
+DataSaver.save_model(args["model"], model_class, prepro)
+test_training(test_x, test_y, test_p, model_class.get_model(), labels_dict)

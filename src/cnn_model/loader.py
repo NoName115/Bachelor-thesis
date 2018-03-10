@@ -70,8 +70,8 @@ class DataSaver():
                 break
 
     @staticmethod
-    def save_model(save_to_folder, model, preprocesor, with_datetime=False):
-        model_name = model.get_name()
+    def save_model(save_to_folder, model_class, preprocesor, with_datetime=False):
+        model_name = model_class.get_name()
 
         # Model folder path
         model_folder_path = save_to_folder + model_name
@@ -92,10 +92,10 @@ class DataSaver():
             json.dumps(
                 {
                     'model_name': model_name,
-                    'width': model.width,
-                    'height': model.height,
-                    'labels': model.labels_dict,
-                    'depth': model.depth,
+                    'width': model_class.width,
+                    'height': model_class.height,
+                    'labels': model_class.labels_dict,
+                    'depth': model_class.depth,
                     'preprocessing': preprocesor.get_json(),
                 },
                 sort_keys=False,
@@ -106,12 +106,12 @@ class DataSaver():
         json_file.close()
 
         # Save model as h5
-        model.model.save(model_file + '.h5')
+        model_class.model.save(model_file + '.h5')
 
         # Save model summary info
         summary_file = open(model_file + '.summary', 'w')
         print_summary(
-            model.model,
+            model_class.model,
             line_length=79,
             positions=None,
             print_fn=lambda in_str: summary_file.write(in_str + '\n')
@@ -122,7 +122,7 @@ class DataSaver():
         arch_file = open(model_folder_path + '/architecture.json', 'w')
         arch_file.write(
             json.dumps(
-                json.loads(model.model.to_json()),
+                json.loads(model_class.model.to_json()),
                 sort_keys=False,
                 indent=4,
                 separators=(',', ':')
@@ -182,8 +182,6 @@ class DataLoader():
 
         # Grab the image paths and randomly shuffle them
         image_paths = list(paths.list_images(root_path))
-        #random.seed(42)
-        #random.shuffle(image_paths)
 
         for path in image_paths:
             # Load image label
@@ -359,7 +357,7 @@ class DataLoader():
         else:
             # Debug
             print_warning(
-                'Loading only model architecture(untrained model) from json',
+                'Loading only model architecture(untrained model)',
                 1
             )
 
@@ -371,10 +369,13 @@ class DataLoader():
 
         # Model class
         model_class = Model(
-            model_data['width'],
-            model_data['height'],
+            (
+                1,
+                model_data['width'],
+                model_data['height'],
+                model_data['depth']
+            ),
             model_data['labels'],
-            depth=model_data['depth'],
             model_name=model_name,
             model=loaded_model
         )
