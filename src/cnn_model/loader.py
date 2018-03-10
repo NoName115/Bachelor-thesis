@@ -3,7 +3,7 @@ from keras.utils import to_categorical, print_summary
 from keras.models import load_model, model_from_json
 from sklearn.model_selection import train_test_split
 from imutils import paths
-from printer import print_info, print_warning, print_error
+from printer import print_info, print_warning, print_error, print_blank
 from preprocessing import Preprocessor, Preprocessing
 from models import Model
 from datetime import datetime
@@ -163,7 +163,7 @@ class DataLoader():
             labels_counter += 1
 
         # DEBUG
-        print_info("Category dictionary: " + str(labels_dict), 1)
+        print_info(str(labels_dict), 1)
         print_info("Loading input dataset...")
 
         # Correct dataset size
@@ -176,8 +176,9 @@ class DataLoader():
                 )
             max_images = min(category_counter)
 
-        # Image hash table
+        # Image hash table & path lisl
         image_hash_table = {}
+        path_list = []
 
         # Grab the image paths and randomly shuffle them
         image_paths = list(paths.list_images(root_path))
@@ -207,14 +208,16 @@ class DataLoader():
             image_labels.append(labels_dict[label])
             num_of_images_per_category[label] += 1
 
+            # Add path of loaded image
+            path_list.append(path)
+
             # Add image to image hash table
             image_hash = sha1(image).hexdigest()
 
             if (image_hash in image_hash_table):
-                print_warning(
-                    'Duplicite image: ' + path + " & " + image_hash_table[image_hash],
-                    2
-                )
+                print_warning('Duplicite image: ', 2)
+                print_blank(path, 4)
+                print_blank(image_hash_table[image_hash], 4)
                 continue
 
             image_hash_table.update({
@@ -225,6 +228,7 @@ class DataLoader():
         # Conver arrays to numpy arrays and convert to float32 type
         image_data = np.array(image_data, dtype="float32")
         image_labels = np.array(image_labels)
+        path_list = np.array(path_list)
 
         # Debug
         print_info(
@@ -234,36 +238,41 @@ class DataLoader():
         )
         for key, value in num_of_images_per_category.items():
             print_info(
-                "Category: " + key + " - " + str(value) + " images",
+                'Category: {0:13} - {1:4d} images'.format(key, value),
+                #"Category: " + key + " - " + str(value) + " images",
                 2
             )
 
+        '''
         # Check number of loaded images with image hash table
         if (len(image_data) != len(image_hash_table)):
             print_warning(
                 "Different length of image_data (" + str(len(image_data)) + ") & " +
                 "image_hash_table (" + str(len(image_hash_table)) + ")"
             )
+        '''
 
-        return (image_data, image_labels, labels_dict, image_hash_table)
+        return (image_data, image_labels, labels_dict, path_list)
 
     @staticmethod
-    def split_data(training_data, labels, split_size=0.20):
+    def split_data(training_data, labels, paths, split_size=0.20):
         if (not 0 <= split_size <= 0.5):
             print_error("Invalid split size: " + str(split_size))
 
         # Debug
         print_info("Spliting input data...")
 
-        train_x, val_x, train_y, val_y = train_test_split(
+        train_x, val_x, train_y, val_y, train_p, val_p = train_test_split(
             training_data,
             labels,
+            paths,
             test_size=split_size,
             random_state=42
         )
-        val_x, test_x, val_y, test_y = train_test_split(
+        val_x, test_x, val_y, test_y, val_p, test_p = train_test_split(
             val_x,
             val_y,
+            val_p,
             test_size=0.5,
             random_state=42
         )
@@ -295,12 +304,9 @@ class DataLoader():
         )
 
         return (
-            train_x,
-            to_categorical(train_y, num_classes=2),
-            val_x,
-            to_categorical(val_y, num_classes=2),
-            test_x,
-            test_y
+            train_x, to_categorical(train_y, num_classes=2), train_p,
+            val_x, to_categorical(val_y, num_classes=2), val_p,
+            test_x, test_y, test_p
         )
 
     @staticmethod

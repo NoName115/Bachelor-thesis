@@ -36,7 +36,7 @@ if (args['image']):
 # Predict more images
 if (args['dataset']):
     print_info('Dataset prediction...')
-    image_data, image_labels, labels_dict = DataLoader.load_scaled_data_with_labels(
+    image_data, image_labels, labels_dict, path_list = DataLoader.load_scaled_data_with_labels(
         args['dataset'],
         image_width,
         image_height,
@@ -44,4 +44,4 @@ if (args['dataset']):
     )
     image_data = preproc.apply(image_data)
 
-    test_training(image_data, image_labels, model, labels)
+    test_training(image_data, image_labels, path_list, model, labels)

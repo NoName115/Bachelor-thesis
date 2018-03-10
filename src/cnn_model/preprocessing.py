@@ -18,10 +18,11 @@ class Preprocessor():
     def apply(self, image_data):
         # DEBUG
         print_info('Applying preprocessing...')
+
+        # Image preprocessing
         for func in self.func_list:
             # DEBUG
             print_info(func.__name__, 1)
-            # Image preprocessing
             image_data = func(image_data)
 
         return image_data
