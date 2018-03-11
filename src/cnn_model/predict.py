@@ -44,4 +44,7 @@ if (args['dataset']):
     )
     image_data = preproc.apply(image_data)
 
-    test_training(image_data, image_labels, path_list, model, labels)
+    test_training(
+        image_data, image_labels, path_list,
+        args['model'], preprocessed=True
+    )

@@ -80,8 +80,9 @@ def test_training(test_x, test_y, test_p, model_folder_path, preprocessed=False)
     if (not preprocessed):
         test_x = preproc.apply(test_x)
 
+    labels_dict = model_class.labels_dict
     testing_score = dict(
-        (key, {'correct': [], 'wrong': []}), for key in labels_dict
+        (key, {'correct': [], 'wrong': []}) for key in labels_dict
     )
     switched_labels = __switch_dict(labels_dict)
 
@@ -94,7 +95,7 @@ def test_training(test_x, test_y, test_p, model_folder_path, preprocessed=False)
             get_max=True
         )   # result - ['weapon-type', change]
 
-        if (labels_dict[result[0]] == label_idx)    # Correct prediction
+        if (labels_dict[result[0]] == label_idx):    # Correct prediction
             testing_score[result[0]]['correct'].append(path)
         else:
             testing_score[switched_labels[label_idx]]['wrong'].append(path)
@@ -104,22 +105,27 @@ def test_training(test_x, test_y, test_p, model_folder_path, preprocessed=False)
 
 def __save_testing_results(model_folder_path, testing_score):
     now_str = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-    logs_folder = model_folder_path + "logs/" + now_str + "/"
+
+    logs_folder = model_folder_path + "logs/"
     if (not os.path.exists(logs_folder)):
         os.mkdir(logs_folder)
 
-    summary = ""
+    logs_folder += now_str + "/"
+    if (not os.path.exists(logs_folder)):
+        os.mkdir(logs_folder)
+
+    summary = []
     for key, value_list in testing_score.items():
-        summary += key + '\t' + str(
-            round(
-                len(value_list['correct']) / len(value_list['wrong']) * 100
-            )
-        ) + '%' + '\t(' +
-        str(len(value_list['correct'])) + "/" +
-        str(len(value_list['wrong'])) + ')'
+        path_sum = len(value_list['correct']) + len(value_list['wrong'])
+        summary.append(
+            key + '\t' +
+            str(round(len(value_list['correct']) / path_sum * 100)) + '%' +
+            '\t(' + str(len(value_list['correct'])) + "/" + str(path_sum) + ')'
+        )
 
     # Print short summary to stdout
-    print_info(summary)
+    for message in summary:
+        print_info(message, 1)
 
     # Save summary to file
     summary_file = open(logs_folder + 'summary.json', 'w')
