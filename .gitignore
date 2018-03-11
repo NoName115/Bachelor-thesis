@@ -11,7 +11,7 @@
 *.gif
 
 # Models
-models/
+/models/
 
 # MEGA
 *.debris
