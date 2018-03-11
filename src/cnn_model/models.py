@@ -3,7 +3,7 @@ from keras.layers.core import Activation, Flatten, Dense, Dropout
 from keras.models import Sequential
 from keras import backend as K
 from abc import ABCMeta, abstractmethod
-from preprocessing import Preprocessor
+from .preprocessing import Preprocessor
 
 import json
 import os

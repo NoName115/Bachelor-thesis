@@ -1,8 +1,8 @@
-from preprocessing import Preprocessor, Preprocessing
-from base import parse_arguments_training, test_training
-from loader import DataLoader, DataSaver
-from models import LeNet, KerasBlog
 from keras.optimizers import Adam
+from .preprocessing import Preprocessor, Preprocessing
+from .base import parse_arguments_training, test_training
+from .loader import DataLoader, DataSaver
+from .models import LeNet, KerasBlog
 
 
 EPOCHS = 1
@@ -41,11 +41,13 @@ test_x, test_y, test_p = splited_data[6:9]
 #model_class = LeNet(train_x.shape, labels_dict)
 model_class = KerasBlog(train_x.shape, labels_dict)
 
+'''
 # Optimizer
 INIT_LR = 1e-3
 model_class.set_optimizer(
     Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
 )
+'''
 
 # Training model
 result = model_class.train(
@@ -56,5 +58,5 @@ result = model_class.train(
     batch_size=BS,
 )
 
-DataSaver.save_model(args["model"], model_class, prepro)
-test_training(test_x, test_y, test_p, model_class.get_model(), labels_dict)
+DataSaver.save_model(args["model"], model_class, prepro, with_datetime=True)
+test_training(test_x, test_y, test_p, model_class, labels_dict)

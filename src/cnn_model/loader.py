@@ -3,11 +3,11 @@ from keras.utils import to_categorical, print_summary
 from keras.models import load_model, model_from_json
 from sklearn.model_selection import train_test_split
 from imutils import paths
-from printer import print_info, print_warning, print_error, print_blank
-from preprocessing import Preprocessor, Preprocessing
-from models import Model
 from datetime import datetime
 from hashlib import sha1
+from .printer import print_info, print_warning, print_error, print_blank
+from .preprocessing import Preprocessor, Preprocessing
+from .models import Model
 
 import numpy as np
 import random
@@ -16,6 +16,11 @@ import glob
 import cv2
 import os
 
+
+MODEL_SETTINGS_FILE = 'settings.json'
+MODEL_BINARY_FILE = 'model.h5'
+MODEL_ARCHITECTURE_FILE = 'architecture.json'
+MODEL_SUMMARY_FILE = 'summary.txt'
 
 class DataSaver():
 
@@ -77,17 +82,23 @@ class DataSaver():
         model_folder_path = save_to_folder + model_name
         if (with_datetime):
             model_folder_path += '_' + datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+        model_folder_path += "/"
 
+        # Create model folder & log folder
         if (not os.path.exists(model_folder_path)):
             os.mkdir(model_folder_path)
 
-        # Debug info
-        print_info("Saving model to: " + model_folder_path)
+        log_folder_path = model_folder_path + '/logs'
+        if (not os.path.exists(log_folder_path)):
+            os.mkdir(log_folder_path)
 
-        model_file = model_folder_path + '/' + model_name
+        # Debug info
+        print_info(
+            "Saving model - " + model_name + " to: " + model_folder_path
+        )
 
         # Save model info
-        json_file = open(model_file + '.json', 'w')
+        json_file = open(model_folder_path + MODEL_SETTINGS_FILE, 'w')
         json_file.write(
             json.dumps(
                 {
@@ -106,10 +117,10 @@ class DataSaver():
         json_file.close()
 
         # Save model as h5
-        model_class.model.save(model_file + '.h5')
+        model_class.model.save(model_folder_path + MODEL_BINARY_FILE)
 
         # Save model summary info
-        summary_file = open(model_file + '.summary', 'w')
+        summary_file = open(model_folder_path + MODEL_SUMMARY_FILE, 'w')
         print_summary(
             model_class.model,
             line_length=79,
@@ -119,7 +130,7 @@ class DataSaver():
         summary_file.close()
 
         # Save model architecture as json
-        arch_file = open(model_folder_path + '/architecture.json', 'w')
+        arch_file = open(model_folder_path + MODEL_ARCHITECTURE_FILE, 'w')
         arch_file.write(
             json.dumps(
                 json.loads(model_class.model.to_json()),
@@ -333,11 +344,8 @@ class DataLoader():
         # Debug
         print_info('Loading model from: ' + model_path)
 
-        # Get model name
-        model_name = model_path.split(os.path.sep)[-2]
-
-        # Read data from json file
-        json_file = open(model_path + model_name + '.json')
+        # Read model settings file
+        json_file = open(model_path + MODEL_SETTINGS_FILE)
         model_data = json.load(json_file)
 
         # Preprocessor class
@@ -353,7 +361,7 @@ class DataLoader():
 
         # Load (un)trained model
         if (not from_json):
-            loaded_model = load_model(model_path + model_name + '.h5')
+            loaded_model = load_model(model_path + MODEL_BINARY_FILE)
         else:
             # Debug
             print_warning(
@@ -363,7 +371,7 @@ class DataLoader():
 
             # TODO
             # error dajaky
-            with open(model_path + 'architecture.json') as jsonfile:
+            with open(model_path + MODEL_ARCHITECTURE_FILE) as jsonfile:
                 #loaded_model = model_from_json(str(json.load(jsonfile)))
                 pass
 
@@ -376,7 +384,7 @@ class DataLoader():
                 model_data['depth']
             ),
             model_data['labels'],
-            model_name=model_name,
+            model_name=model_data['model_name'],
             model=loaded_model
         )
 

@@ -1,6 +1,6 @@
 # Other
 .vscode/
-virenv/
+*test.py
 
 # All images
 *.jpg

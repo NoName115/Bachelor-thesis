@@ -1,6 +1,6 @@
 from keras.preprocessing.image import ImageDataGenerator
 from skimage.color import rgb2grey
-from printer import print_warning, print_info
+from .printer import print_warning, print_info
 
 import numpy as np
 

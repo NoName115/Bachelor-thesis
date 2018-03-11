@@ -1,7 +1,7 @@
 from keras.models import load_model
-from base import parse_arguments_prediction, translate_prediction, test_training
-from loader import DataLoader
-from printer import print_info, print_error
+from .base import parse_arguments_prediction, translate_prediction, test_training
+from .loader import DataLoader
+from .printer import print_info, print_error
 
 
 # Parse and check input arguments

@@ -1,4 +1,4 @@
-from printer import print_info, print_warning
+from .printer import print_info, print_warning
 
 import argparse
 
@@ -58,7 +58,7 @@ def translate_prediction(prediction, labels_dict, get_max=False):
         max_key = max(result_dict, key=result_dict.get)
         return [max_key, result_dict[max_key]]
 
-def test_training(test_x, test_y, test_p, model, labels_dict):
+def test_training(test_x, test_y, test_p, model_class, labels_dict):
     # Debug
     print_info('Final validation score...')
 
@@ -79,7 +79,7 @@ def test_training(test_x, test_y, test_p, model, labels_dict):
         # Change shape to (1, x, y, depth)
         image = image.reshape((1,) + image.shape)
         result = translate_prediction(
-            model.predict(image)[0],
+            model_class.model.predict(image)[0],
             labels_dict,
             get_max=True
         )   # result - ['weapon-type', change]
