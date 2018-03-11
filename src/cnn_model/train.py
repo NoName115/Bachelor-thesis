@@ -6,7 +6,7 @@ from models import LeNet, KerasBlog, MyModel
 
 
 EPOCHS = 30
-BS = 16
+BS = 20
 IMAGE_WIDTH = 128
 IMAGE_HEIGHT = 128
 
@@ -32,7 +32,7 @@ images = prepro.apply(images)
 prepro.set_datagen()
 
 # Spliting data to training, validation & test
-splited_data = DataLoader.split_data(images, labels, path_list)
+splited_data = DataLoader.split_data(images, labels, path_list, split_size=0.3)
 train_x, train_y, train_p = splited_data[0:3]
 val_x, val_y, val_p = splited_data[3:6]
 test_x, test_y, test_p = splited_data[6:9]

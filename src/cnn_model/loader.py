@@ -207,10 +207,13 @@ class DataLoader():
             if (correct_dataset_size and num_of_images_per_category[label] >= max_images):
                 continue
 
-            # Load and rescale images
-            image = cv2.resize(cv2.imread(path), (width, height))
-            image = img_to_array(image)
-            image_data.append(image)
+            try:
+                # Load and rescale images
+                image = cv2.resize(cv2.imread(path), (width, height))
+                image = img_to_array(image)
+                image_data.append(image)
+            except:
+                print_error('Invalid image: ' + path)
 
             # Labels operations
             image_labels.append(labels_dict[label])
