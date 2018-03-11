@@ -4,6 +4,7 @@ from keras.models import Sequential
 from keras import backend as K
 from abc import ABCMeta, abstractmethod
 from preprocessing import Preprocessor
+from printer import print_info
 
 import json
 import os
@@ -28,6 +29,7 @@ class Model():
         self.labels_dict = labels_dict
         self.num_of_classes = len(labels_dict)
         self.model_name = model_name if (model_name) else self.__class__.__name__
+
         self.optimizer = None
 
         # Initialize first layer shape
@@ -51,6 +53,7 @@ class Model():
 
     def train(self, train_x, train_y, val_x, val_y,
               datagen, epochs, batch_size):
+        print_info('\nTraining model...')
         self.__compile()
 
         return self.model.fit_generator(
@@ -101,8 +104,7 @@ class KerasBlog(Model):
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
-        # the model so far outputs 3D feature maps (height, width, features)
-        model.add(Flatten())  # this converts our 3D feature maps to 1D feature vectors
+        model.add(Flatten())
         model.add(Dense(64))
         model.add(Activation('relu'))
 

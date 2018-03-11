@@ -82,7 +82,7 @@ def test_training(test_x, test_y, test_p, model_folder_path, preprocessed=False)
 
     labels_dict = model_class.labels_dict
     testing_score = dict(
-        (key, {'correct': [], 'wrong': []}) for key in labels_dict
+        (key, {'correct': [], 'wrong': [], 'score': -1}) for key in labels_dict
     )
     switched_labels = __switch_dict(labels_dict)
 
@@ -117,12 +117,14 @@ def __save_testing_results(model_folder_path, testing_score):
     # Debug
     print_info('Testing details in folder: ' + logs_folder, 1)
 
+    # Stdout summary & calculate final score
     summary = []
     for key, value_list in testing_score.items():
         path_sum = len(value_list['correct']) + len(value_list['wrong'])
+        score = round(len(value_list['correct']) / path_sum * 100)
+        testing_score[key]['score'] = score
         summary.append(
-            key + '\t' +
-            str(round(len(value_list['correct']) / path_sum * 100)) + '%' +
+            key + '\t' + str(score) + '%' +
             '\t(' + str(len(value_list['correct'])) + "/" + str(path_sum) + ')'
         )
 
