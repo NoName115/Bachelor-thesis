@@ -1,8 +1,8 @@
 from keras.optimizers import Adam
-from .preprocessing import Preprocessor, Preprocessing
-from .base import parse_arguments_training, test_training
-from .loader import DataLoader, DataSaver
-from .models import LeNet, KerasBlog
+from preprocessing import Preprocessor, Preprocessing
+from base import parse_arguments_training, test_training
+from loader import DataLoader, DataSaver
+from models import LeNet, KerasBlog
 
 
 EPOCHS = 1
@@ -59,4 +59,4 @@ result = model_class.train(
 )
 
 DataSaver.save_model(args["model"], model_class, prepro, with_datetime=True)
-test_training(test_x, test_y, test_p, model_class, labels_dict)
+test_training(test_x, test_y, test_p, args["model"], preprocessed=True)

@@ -1,7 +1,10 @@
-from ..cnn_model.printer import print_info, print_warning, print_error
-from ..cnn_model.loader import DataLoader, DataSaver
-
 import pytest
+import sys
+sys.path.insert(0, '/home/rkolcun/BP/src/cnn_model')
+
+from printer import print_info, print_warning, print_error
+from loader import DataLoader, DataSaver
+
 
 # -------------------
 # ----- PRINTER -----
@@ -21,7 +24,10 @@ def test_print_error():
 # -- LOADER/SAVER --
 def test_load_save_model():
     model_class, preproc = DataLoader.load_model_data(
-        'src/tests/models/KerasBlog_2018-03-11_12:03:41/'
+        'src/tests/models/KerasBlog/'
     )
-    DataSaver.save_model('src/tests/models/', model_class, preproc)
+    DataSaver.save_model(
+        'src/tests/models/',
+        model_class, preproc
+    )
     assert 1

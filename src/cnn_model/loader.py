@@ -5,9 +5,9 @@ from sklearn.model_selection import train_test_split
 from imutils import paths
 from datetime import datetime
 from hashlib import sha1
-from .printer import print_info, print_warning, print_error, print_blank
-from .preprocessing import Preprocessor, Preprocessing
-from .models import Model
+from printer import print_info, print_warning, print_error, print_blank
+from preprocessing import Preprocessor, Preprocessing
+from models import Model
 
 import numpy as np
 import random
