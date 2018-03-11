@@ -88,10 +88,6 @@ class DataSaver():
         if (not os.path.exists(model_folder_path)):
             os.mkdir(model_folder_path)
 
-        log_folder_path = model_folder_path + '/logs'
-        if (not os.path.exists(log_folder_path)):
-            os.mkdir(log_folder_path)
-
         # Debug info
         print_info(
             "Saving model - " + model_name + " to: " + model_folder_path
@@ -140,6 +136,9 @@ class DataSaver():
             )
         )
         arch_file.close()
+
+        # Return path where model was saved
+        return model_folder_path
 
 
 class DataLoader():

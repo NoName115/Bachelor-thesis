@@ -2,20 +2,20 @@ from keras.optimizers import Adam
 from preprocessing import Preprocessor, Preprocessing
 from base import parse_arguments_training, test_training
 from loader import DataLoader, DataSaver
-from models import LeNet, KerasBlog
+from models import LeNet, KerasBlog, MyModel
 
 
-EPOCHS = 1
+EPOCHS = 30
 BS = 16
-IMAGE_WIDTH = 60
-IMAGE_HEIGHT = 60
+IMAGE_WIDTH = 128
+IMAGE_HEIGHT = 128
 
 # --model, --dataset
 args = parse_arguments_training()
 
 # Load input images & split it
 images, labels, labels_dict, path_list = DataLoader.load_scaled_data_with_labels(
-     'dataset/training_data/',
+     args['dataset'],
      IMAGE_WIDTH,
      IMAGE_HEIGHT,
      correct_dataset_size=True
@@ -39,7 +39,8 @@ test_x, test_y, test_p = splited_data[6:9]
 
 # Building model
 #model_class = LeNet(train_x.shape, labels_dict)
-model_class = KerasBlog(train_x.shape, labels_dict)
+#model_class = KerasBlog(train_x.shape, labels_dict)
+model_class = MyModel(train_x.shape, labels_dict)
 
 '''
 # Optimizer
@@ -58,5 +59,5 @@ result = model_class.train(
     batch_size=BS,
 )
 
-DataSaver.save_model(args["model"], model_class, prepro, with_datetime=True)
-test_training(test_x, test_y, test_p, args["model"], preprocessed=True)
+model_path = DataSaver.save_model(args["model"], model_class, prepro, with_datetime=False)
+test_training(test_x, test_y, test_p, model_path, preprocessed=True)

@@ -114,6 +114,9 @@ def __save_testing_results(model_folder_path, testing_score):
     if (not os.path.exists(logs_folder)):
         os.mkdir(logs_folder)
 
+    # Debug
+    print_info('Testing details in folder: ' + logs_folder, 1)
+
     summary = []
     for key, value_list in testing_score.items():
         path_sum = len(value_list['correct']) + len(value_list['wrong'])

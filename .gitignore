@@ -1,6 +1,7 @@
 # Other
 .vscode/
 *test.py
+.pytest_cache
 
 # All images
 *.jpg
