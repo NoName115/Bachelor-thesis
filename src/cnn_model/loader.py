@@ -84,9 +84,12 @@ class DataSaver():
             model_folder_path += '_' + datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
         model_folder_path += "/"
 
-        # Create model folder & log folder
+        # Create model folder
         if (not os.path.exists(model_folder_path)):
             os.mkdir(model_folder_path)
+
+        # Add model folder path to model_class
+        model_class.set_model_folder(model_folder_path)
 
         # Debug info
         print_info(
@@ -250,7 +253,6 @@ class DataLoader():
         for key, value in num_of_images_per_category.items():
             print_info(
                 'Category: {0:13} - {1:4d} images'.format(key, value),
-                #"Category: " + key + " - " + str(value) + " images",
                 2
             )
 
@@ -386,6 +388,7 @@ class DataLoader():
                 model_data['depth']
             ),
             model_data['labels'],
+            model_folder=model_path,
             model_name=model_data['model_name'],
             model=loaded_model
         )

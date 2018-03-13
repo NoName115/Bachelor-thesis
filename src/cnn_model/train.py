@@ -1,11 +1,11 @@
 from keras.optimizers import Adam
 from preprocessing import Preprocessor, Preprocessing
-from base import parse_arguments_training, test_training
+from base import parse_arguments_training
 from loader import DataLoader, DataSaver
 from models import LeNet, KerasBlog, MyModel
 
 
-EPOCHS = 30
+EPOCHS = 1#30
 BS = 20
 IMAGE_WIDTH = 128
 IMAGE_HEIGHT = 128
@@ -18,14 +18,14 @@ images, labels, labels_dict, path_list = DataLoader.load_scaled_data_with_labels
      args['dataset'],
      IMAGE_WIDTH,
      IMAGE_HEIGHT,
-     correct_dataset_size=True
+     correct_dataset_size=True,
 )
 
 # Preprocessing
 prepro = Preprocessor()
 prepro.add_func(Preprocessing.normalize)
-prepro.add_func(Preprocessing.grayscale)
-prepro.add_func(Preprocessing.reshape)
+#prepro.add_func(Preprocessing.grayscale)
+#prepro.add_func(Preprocessing.reshape)
 images = prepro.apply(images)
 
 # Datagen
@@ -40,7 +40,7 @@ test_x, test_y, test_p = splited_data[6:9]
 # Building model
 #model_class = LeNet(train_x.shape, labels_dict)
 #model_class = KerasBlog(train_x.shape, labels_dict)
-model_class = MyModel(train_x.shape, labels_dict)
+model_class = MyModel(train_x.shape, labels_dict, model_name='MyModel_RGB')
 
 '''
 # Optimizer
@@ -59,5 +59,5 @@ result = model_class.train(
     batch_size=BS,
 )
 
-model_path = DataSaver.save_model(args["model"], model_class, prepro, with_datetime=False)
-test_training(test_x, test_y, test_p, model_path, preprocessed=True)
+DataSaver.save_model(args["model"], model_class, prepro, with_datetime=False)
+model_class.evaluate(test_x, test_y, test_p)
