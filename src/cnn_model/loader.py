@@ -64,6 +64,10 @@ class DataSaver():
         '''
         # Debug
         print_info("Saving image batch to: " + folder_path)
+
+        if (len(img_data.shape) == 3):
+            img_data = img_data.reshape((1,) + img_data.shape)
+
         i = 0
         for batch in datagen.flow(img_data, batch_size=batch_size,
              save_to_dir=folder_path, save_prefix='weapon', save_format='jpg'):
@@ -333,7 +337,10 @@ class DataLoader():
             (width, height)
         )
         image = img_to_array(image.astype("float"))
-        image = preproc.apply(image)
+
+        if (preproc):
+            image = preproc.apply(image)
+
         return image
 
     @staticmethod

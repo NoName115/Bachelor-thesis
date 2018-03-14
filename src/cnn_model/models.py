@@ -75,7 +75,7 @@ class Model():
             steps_per_epoch=len(train_x) // batch_size,
             epochs=epochs,
             validation_data=(val_x, val_y),
-            validation_steps=len(val_x) // batch_size
+            #validation_steps=len(val_x) // batch_size
         )
 
     def __get_prediction(self, image):
