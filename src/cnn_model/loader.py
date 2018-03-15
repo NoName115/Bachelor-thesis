@@ -110,6 +110,8 @@ class DataSaver():
                     'height': model_class.height,
                     'labels': model_class.labels_dict,
                     'depth': model_class.depth,
+                    'batch_size': model_class.batch_size,
+                    'epochs': model_class.epochs,
                     'preprocessing': preprocesor.get_json(),
                 },
                 sort_keys=False,
@@ -417,6 +419,9 @@ class DataLoader():
             model_name=model_data['model_name'],
             model=loaded_model
         )
+
+        model_class.batch_size = model_data['batch_size']
+        model_class.epochs = model_data['epochs']
 
         return (
             model_class,

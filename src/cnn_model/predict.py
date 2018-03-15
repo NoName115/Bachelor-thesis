@@ -53,8 +53,7 @@ if (args['file']):
         args['file'],
         image_width,
         image_height,
-        labels_dict=model_class.labels_dict,
-        #correct_dataset_size=False
+        labels_dict=model_class.labels_dict
     )
     model_class.evaluate(
         preproc.apply(image_data),

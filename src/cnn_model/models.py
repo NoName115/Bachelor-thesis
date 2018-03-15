@@ -34,6 +34,8 @@ class Model():
         self.model_folder = model_folder
 
         self.optimizer = None
+        self.batch_size = -1
+        self.epochs = -1
 
         # Initialize first layer shape
         self.input_shape = (self.height, self.width, self.depth)
@@ -67,9 +69,15 @@ class Model():
 
     def train(self, train_x, train_y, val_x, val_y,
               datagen, epochs, batch_size):
-        print_info('\nTraining model...')
-        self.__compile()
+        # Debug
+        print_info('Training model...')
 
+        # Save training parameters
+        self.batch_size = batch_size
+        self.epochs = epochs
+
+        # Compile & train model
+        self.__compile()
         return self.model.fit_generator(
             datagen.flow(train_x, train_y, batch_size=batch_size),
             steps_per_epoch=len(train_x) // batch_size,
