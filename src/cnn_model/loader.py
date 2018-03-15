@@ -160,32 +160,48 @@ class DataLoader():
         )
 
     @staticmethod
-    def load_scaled_data_with_labels(
-        root_path, width, height, correct_dataset_size=True
+    def load_scaled_data_from_file(
+        file_path, width, height, labels_dict
     ):
-        image_data = []
-        image_labels = []
-        labels_dict = {}
+        path_list = []
+
+        with open(file_path, 'r') as image_file:
+            path_list = [line.rstrip('\n') for line in image_file]
+
+        return DataLoader.__load_images_by_path(
+            path_list, labels_dict, width, height
+        )
+
+    @staticmethod
+    def load_scaled_data_with_labels(
+        root_path, width, height,
+        labels_dict={}, correct_dataset_size=True,
+    ):
         labels_counter = 0
         num_of_images_per_category = {}
 
-        # DEBUG
-        print_info("Creating category dictionary...")
 
         # Create labels_dict
-        for category in os.listdir(root_path):
-            labels_dict.update({
-                category: labels_counter
-            })
-            labels_counter += 1
+        labels_dict_in = {}
+        if (not labels_dict):
+            # DEBUG
+            print_info("Creating category dictionary...")
+
+            for category in os.listdir(root_path):
+                labels_dict_in.update({
+                    category: labels_counter
+                })
+                labels_counter += 1
+        else:
+            labels_dict_in = labels_dict
 
         # DEBUG
-        print_info(str(labels_dict), 1)
+        print_info("Categories: " + str(labels_dict_in), 1)
         print_info("Loading input dataset...")
 
         # Correct dataset size
         category_counter = []
-        max_images = None
+        max_images = 0
         if (correct_dataset_size):
             for cat_path in glob.glob(root_path + '/*'):
                 category_counter.append(
@@ -193,34 +209,45 @@ class DataLoader():
                 )
             max_images = min(category_counter)
 
-        # Image hash table & path lisl
-        image_hash_table = {}
-        path_list = []
-
         # Grab the image paths and randomly shuffle them
         image_paths = list(paths.list_images(root_path))
+
+        return DataLoader.__load_images_by_path(
+            image_paths, labels_dict_in, width, height,
+            correct_dataset_size=correct_dataset_size,
+            max_images=max_images
+        )
+
+    @staticmethod
+    def __load_images_by_path(
+        image_paths, labels_dict, width, height,
+        correct_dataset_size=False, max_images=0
+    ):
+        # Initialize data variables
+        num_of_images_per_category = dict(
+            (label, 0) for label in labels_dict
+        )
+        image_data = []
+        image_labels = []
+        image_hash_table = {}
+        path_list = []
 
         for path in image_paths:
             # Load image label
             label = path.split(os.path.sep)[-2]
 
-            # Check number of images per category
-            if (not label in num_of_images_per_category):
-                num_of_images_per_category.update({
-                    label: 0
-                })
-
             # Correct dataset size
             if (correct_dataset_size and num_of_images_per_category[label] >= max_images):
                 continue
 
+            # Load and rescale images
             try:
-                # Load and rescale images
                 image = cv2.resize(cv2.imread(path), (width, height))
                 image = img_to_array(image)
                 image_data.append(image)
             except:
-                print_error('Invalid image: ' + path)
+                print_error('Invalid image: ' + image_path)
+                continue
 
             # Labels operations
             image_labels.append(labels_dict[label])
@@ -259,15 +286,6 @@ class DataLoader():
                 'Category: {0:13} - {1:4d} images'.format(key, value),
                 2
             )
-
-        '''
-        # Check number of loaded images with image hash table
-        if (len(image_data) != len(image_hash_table)):
-            print_warning(
-                "Different length of image_data (" + str(len(image_data)) + ") & " +
-                "image_hash_table (" + str(len(image_hash_table)) + ")"
-            )
-        '''
 
         return (image_data, image_labels, labels_dict, path_list)
 

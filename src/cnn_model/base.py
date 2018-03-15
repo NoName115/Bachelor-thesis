@@ -38,4 +38,9 @@ def parse_arguments_prediction():
         required=False,
         help="path to input images"
     )
+    ap.add_argument(
+        "--file",
+        required=False,
+        help="path to file with paths to images"
+    )
     return vars(ap.parse_args())
