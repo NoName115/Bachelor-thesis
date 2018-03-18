@@ -2,7 +2,7 @@ from keras.preprocessing.image import img_to_array
 from keras.utils import to_categorical, print_summary
 from keras.models import load_model, model_from_json
 from sklearn.model_selection import train_test_split
-from imutils import paths
+from imutils import paths, rotate_bound, rotate
 from datetime import datetime
 from hashlib import sha1
 from printer import print_info, print_warning, print_error, print_blank
@@ -290,6 +290,63 @@ class DataLoader():
             )
 
         return (image_data, image_labels, labels_dict, path_list)
+
+    @staticmethod
+    def load_normalized_images(root_path, width, height):
+        # Debug
+        print_info("Loading input dataset...")
+
+        image_data = []
+        image_paths = glob.glob(root_path + "*")
+
+        for path in image_paths:
+            # Load and rescale images
+            try:
+                image = cv2.resize(cv2.imread(path), (width, height))
+                image = img_to_array(image)
+                image_data.append(image)
+            except:
+                print_error('Invalid image: ' + image_path)
+                continue
+
+        image_data = np.array(image_data, dtype="float32")
+        image_paths = np.array(image_paths)
+
+        # Debug
+        print_info("Loaded " + str(len(image_data)) + " images", 1)
+
+        return (image_data, image_paths)
+
+    def generate_angle_images(image_data, angle_range):
+        # Debug
+        print_info("Generating angle images...")
+
+        angle_images = []
+        image_labels = []
+        labels_dict = dict(
+            (i, angle) for i, angle in enumerate(angle_range)
+        )
+
+        for image in image_data:
+            for angle in angle_range:
+                rotated = rotate(image / 255.0, angle)
+                angle_images.append(rotated) # * 255.0)
+                image_labels.append(angle)
+
+                cv2.imshow("Rotated (Problematic)", rotated)
+                cv2.waitKey(0)
+
+        angle_images = np.array(angle_images, dtype="float32")
+        image_labels = np.array(image_labels)
+
+        # Debug
+        print_info(
+            "Generated " + str(len(angle_images)) + " images" +
+            " with angles: " + ', '.join(str(angle) for angle in angle_range),
+            1
+        )
+
+        return (angle_images, image_labels, labels_dict)
 
     @staticmethod
     def split_data(training_data, labels, paths, split_size=0.20):
