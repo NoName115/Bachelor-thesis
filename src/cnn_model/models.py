@@ -53,6 +53,12 @@ class Model():
     def get_model(self):
         return self.model
     
+    def get_optimizer_as_string(self):
+        if (type(self.optimizer) is str):
+            return self.optimizer
+        else:
+            return self.optimizer.__class__.__name__.lower()
+    
     def set_optimizer(self, optimizer):
         self.optimizer = optimizer
 
@@ -61,9 +67,12 @@ class Model():
 
     def __compile(self, loss='binary_crossentropy',
                   optimizer='rmsprop', metrics=['accuracy']):
+        if (not self.optimizer):
+            self.optimizer = optimizer
+
         self.model.compile(
             loss=loss,
-            optimizer=self.optimizer if (self.optimizer) else optimizer,
+            optimizer=self.optimizer,
             metrics=metrics
         )
 
@@ -255,28 +264,20 @@ class KerasBlog(Model):
 class LeNet(Model):
 
     def build(self):
+        """Dlho to trva a bez znacnych vysledok
+        """
         # Initialize the model
         model = Sequential()
 
         # first set of CONV => RELU => POOL layers
         model.add(
-            Conv2D(
-                20,
-                (5, 5),
-                padding='same',
-                input_shape=self.input_shape
+            Conv2D(20, (5, 5), padding='same', input_shape=self.input_shape
         ))
         model.add(Activation("relu"))
         model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
         # second set of CONV => RELU => POOL layers
-        model.add(
-            Conv2D(
-                50,
-                (5, 5),
-                padding='same'
-            )
-        )
+        model.add(Conv2D(50, (5, 5), padding='same'))
         model.add(Activation("relu"))
         model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
@@ -296,36 +297,65 @@ class LeNet(Model):
 class MyModel(Model):
 
     def build(self):
-        # Input shape 64x64x1
         model = Sequential()
 
         model.add(Conv2D(
-            16, (2, 2), strides=(1, 1), padding='same',
-            input_shape=self.input_shape, #activation='relu'
+            16, (2, 2), padding='same',
+            input_shape=self.input_shape, activation='relu'
             )
         )   # Output 64x64x16
-        model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))   # Output 32x32x16
+        #model.add(Dropout(0.20))
 
-        model.add(Conv2D(32, (2, 2), strides=(1, 1), padding='same'))   # Output 32x32x32
-        model.add(Activation('relu'))
+        model.add(Conv2D(32, (2, 2), padding='same', activation='relu'))   # Output 32x32x32
         model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))   # Output 16x16x32
+        #model.add(Dropout(0.20))
 
-        model.add(Conv2D(64, (2, 2), strides=(1, 1), padding='same'))   # Output 16x16x64
-        model.add(Activation('relu'))
+        model.add(Conv2D(64, (2, 2), padding='same', activation='relu'))   # Output 16x16x64
         model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))   # Output 8x8x64
+        #model.add(Dropout(0.20))
 
-        model.add(Conv2D(128, (2, 2), strides=(1, 1), padding='same'))   # Output 8x8x128
-        model.add(Activation('relu'))
+        model.add(Conv2D(128, (2, 2), padding='same', activation='relu'))   # Output 8x8x128
         model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))   # Output 4x4x128
+        #model.add(Dropout(0.20))
 
         model.add(Flatten())
-        model.add(Dense(1024))
-        model.add(Activation('relu'))
-
+        model.add(Dense(1024, activation='relu'))
         #model.add(Dropout(0.5))
-        model.add(Dense(self.num_of_classes))
-        model.add(Activation('softmax'))
+
+        model.add(Dense(self.num_of_classes, activation='softmax'))
 
         return model
 
+
+class VGG16(Model):
+
+    def build(self):
+        """Architecture inspired by VGG16
+        """
+        # Input shape 224x224x3
+        model = Sequential()
+
+        model.add(Conv2D(
+            32, (2, 2), padding='same', input_shape=self.input_shape, activation='relu'
+        ))
+        model.add(Conv2D(32, (2, 2), padding='same'))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+        model.add(Conv2D(64, (2, 2), padding='same'))
+        model.add(Conv2D(64, (2, 2), padding='same'))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+        model.add(Conv2D(128, (2, 2), padding='same'))
+        model.add(Conv2D(128, (2, 2), padding='same'))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+        model.add(Flatten())
+        #model.add(Dense(1024, activation='relu'))
+        #model.add(Dropout(0.5))
+        model.add(Dense(1024, activation='relu'))
+        #model.add(Dropout(0.5))
+
+        model.add(Dense(self.num_of_classes, activation='softmax'))
+
+        return model

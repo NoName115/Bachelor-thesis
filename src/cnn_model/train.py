@@ -1,12 +1,12 @@
-from keras.optimizers import Adam
+from keras.optimizers import Adam, SGD
 from preprocessing import Preprocessor, Preprocessing
 from base import parse_arguments_training
 from loader import DataLoader, DataSaver
-from models import LeNet, KerasBlog, MyModel
+from models import LeNet, KerasBlog, MyModel, VGG16
 
 
-EPOCHS = 1#30
-BS = 20
+EPOCHS = 35#45
+BS = 16
 IMAGE_WIDTH = 128
 IMAGE_HEIGHT = 128
 
@@ -38,17 +38,19 @@ val_x, val_y, val_p = splited_data[3:6]
 test_x, test_y, test_p = splited_data[6:9]
 
 # Building model
-#model_class = LeNet(train_x.shape, labels_dict)
 #model_class = KerasBlog(train_x.shape, labels_dict)
-model_class = MyModel(train_x.shape, labels_dict, model_name='MyModel_RGB')
+#model_class = LeNet(train_x.shape, labels_dict)
+#model_class = MyModel(train_x.shape, labels_dict, model_name='MyModel_RGB')
+model_class = VGG16(train_x.shape, labels_dict)
 
 '''
-# Optimizer
-INIT_LR = 1e-3
-model_class.set_optimizer(
-    Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
-)
+# Best options
+    - no dropout
+    - dropout with more epochs >40
+    - rmsprop/adam optimizer
 '''
+
+model_class.set_optimizer('sgd')
 
 # Training model
 result = model_class.train(
@@ -59,5 +61,5 @@ result = model_class.train(
     batch_size=BS,
 )
 
-DataSaver.save_model(args["model"], model_class, prepro, with_datetime=False)
+DataSaver.save_model(args["model"], model_class, prepro, with_datetime=True)
 model_class.evaluate(test_x, test_y, test_p)
