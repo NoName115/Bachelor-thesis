@@ -77,7 +77,7 @@ class Model():
         )
 
     def train(self, train_x, train_y, val_x, val_y,
-              datagen, epochs, batch_size):
+              epochs=30, batch_size=16, datagen=None):
         # Debug
         print_info('Training model...')
 
@@ -87,13 +87,22 @@ class Model():
 
         # Compile & train model
         self.__compile()
-        return self.model.fit_generator(
-            datagen.flow(train_x, train_y, batch_size=batch_size),
-            steps_per_epoch=len(train_x) // batch_size,
-            epochs=epochs,
-            validation_data=(val_x, val_y),
-            #validation_steps=len(val_x) // batch_size
-        )
+
+        if (datagen):
+            return self.model.fit_generator(
+                datagen.flow(train_x, train_y, batch_size=batch_size),
+                steps_per_epoch=len(train_x) // batch_size,
+                epochs=epochs,
+                validation_data=(val_x, val_y),
+                #validation_steps=len(val_x) // batch_size
+            )
+        else:
+            return self.model.fit(
+                train_x, train_y,
+                batch_size=batch_size,
+                epochs=epochs,
+                validation_data=(val_x, val_y)
+            )
 
     def __get_prediction(self, image):
         switched_labels = dict((y,x) for x,y in self.labels_dict.items())
@@ -166,7 +175,7 @@ class Model():
             correct_img += len(value_list['correct'])
 
             summary.append(
-                key + '\t' + str(score) + '%' +
+                str(key) + '\t' + str(score) + '%' +
                 '\t(' + str(len(value_list['correct'])) + "/" + str(path_sum) + ')'
             )
 

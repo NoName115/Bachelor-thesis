@@ -2,7 +2,7 @@ from keras.preprocessing.image import img_to_array
 from keras.utils import to_categorical, print_summary
 from keras.models import load_model, model_from_json
 from sklearn.model_selection import train_test_split
-from imutils import paths, rotate_bound, rotate
+from imutils import paths, rotate
 from datetime import datetime
 from hashlib import sha1
 from printer import print_info, print_warning, print_error, print_blank
@@ -163,7 +163,7 @@ class DataLoader():
         )
 
     @staticmethod
-    def load_scaled_data_from_file(
+    def load_images_from_file(
         file_path, width, height, labels_dict
     ):
         path_list = []
@@ -172,76 +172,75 @@ class DataLoader():
             path_list = [line.rstrip('\n') for line in image_file]
 
         return DataLoader.__load_images_by_path(
-            path_list, labels_dict, width, height
+            path_list, width, height, labels_dict=labels_dict
         )
 
     @staticmethod
-    def load_scaled_data_with_labels(
-        root_path, width, height,
-        labels_dict={}, correct_dataset_size=True,
+    def load_images_from_folder(
+        folder_path, width, height, labels_dict={},
+        create_labels=True, correct_dataset_size=True
     ):
-        labels_counter = 0
-        num_of_images_per_category = {}
-
+        # Correction cant be done with no labels
+        if (correct_dataset_size and not create_labels):
+            correct_dataset_size = False
 
         # Create labels_dict
-        labels_dict_in = {}
-        if (not labels_dict):
-            # DEBUG
-            print_info("Creating category dictionary...")
-
-            for category in os.listdir(root_path):
-                labels_dict_in.update({
-                    category: labels_counter
-                })
-                labels_counter += 1
-        else:
-            labels_dict_in = labels_dict
-
-        # DEBUG
-        print_info("Categories: " + str(labels_dict_in), 1)
-        print_info("Loading input dataset...")
+        labels_dict_out = None
+        if (create_labels or labels_dict):
+            print_info("Creating category dictionary...")                
+            labels_dict_out = dict(
+                (i, category) for i, category in enumerate(
+                    os.listdir(folder_path)
+                )
+            ) if (not labels_dict) else labels_dict
+            print_info("Categories: " + str(labels_dict_out), 1)
 
         # Correct dataset size
-        category_counter = []
         max_images = 0
-        if (correct_dataset_size):
-            for cat_path in glob.glob(root_path + '/*'):
-                category_counter.append(
-                    len(os.listdir(cat_path))
-                )
+        if (create_labels and correct_dataset_size):
+            category_counter = [
+                len(os.listdir(cat_path))
+                    for cat_path in glob.glob(folder_path + '/*')
+            ]
             max_images = min(category_counter)
 
         # Grab the image paths and randomly shuffle them
-        image_paths = list(paths.list_images(root_path))
+        image_paths = list(paths.list_images(folder_path))
 
         return DataLoader.__load_images_by_path(
-            image_paths, labels_dict_in, width, height,
+            image_paths, width, height,
+            labels_dict=labels_dict_out,
             correct_dataset_size=correct_dataset_size,
             max_images=max_images
         )
 
     @staticmethod
     def __load_images_by_path(
-        image_paths, labels_dict, width, height,
+        image_paths, width, height, labels_dict=None,
         correct_dataset_size=False, max_images=0
     ):
+        print_info("Loading input dataset...")
+
         # Initialize data variables
-        num_of_images_per_category = dict(
-            (label, 0) for label in labels_dict
-        )
+        if (labels_dict):
+            num_of_images_per_category = dict(
+                (label, 0) for label in labels_dict
+            )
+            image_labels = []
+
         image_data = []
-        image_labels = []
-        image_hash_table = {}
         path_list = []
+        image_hash_table = {}
 
         for path in image_paths:
             # Load image label
-            label = path.split(os.path.sep)[-2]
+            if (labels_dict):
+                label = path.split(os.path.sep)[-2]
 
-            # Correct dataset size
-            if (correct_dataset_size and num_of_images_per_category[label] >= max_images):
-                continue
+                # Correct dataset size
+                if (correct_dataset_size and
+                   num_of_images_per_category[label] >= max_images):
+                    continue
 
             # Load and rescale images
             try:
@@ -253,15 +252,15 @@ class DataLoader():
                 continue
 
             # Labels operations
-            image_labels.append(labels_dict[label])
-            num_of_images_per_category[label] += 1
+            if (labels_dict):
+                image_labels.append(labels_dict[label])
+                num_of_images_per_category[label] += 1
 
             # Add path of loaded image
             path_list.append(path)
 
-            # Add image to image hash table
+            # Image duplice detection
             image_hash = sha1(image).hexdigest()
-
             if (image_hash in image_hash_table):
                 print_warning('Duplicite image: ', 2)
                 print_blank(path, 4)
@@ -275,67 +274,71 @@ class DataLoader():
 
         # Conver arrays to numpy arrays and convert to float32 type
         image_data = np.array(image_data, dtype="float32")
-        image_labels = np.array(image_labels)
         path_list = np.array(path_list)
 
-        # Debug
-        print_info(
-            "Loaded " + str(len(image_data)) + " images in " +
-            str(len(labels_dict)) + " categories",
-            1
-        )
-        for key, value in num_of_images_per_category.items():
+        if (labels_dict):
+            image_labels = np.array(image_labels)
+
+            # Debug
             print_info(
-                'Category: {0:13} - {1:4d} images'.format(key, value),
-                2
+                "Loaded " + str(len(image_data)) + " images in " +
+                str(len(labels_dict)) + " categories",
+                1
+            )
+            for key, value in num_of_images_per_category.items():
+                print_info(
+                    'Category: {0:13} - {1:4d} images'.format(key, value),
+                    2
+                )
+
+            return (image_data, image_labels, labels_dict, path_list)
+        else:
+            print_info(
+                "Loaded " + str(len(image_data)) + " images",
+                1
             )
 
-        return (image_data, image_labels, labels_dict, path_list)
+            return (image_data, path_list)
 
-    @staticmethod
-    def load_normalized_images(root_path, width, height):
-        # Debug
-        print_info("Loading input dataset...")
+    def generate_angle_images(
+        folder_path, width, height, angle_range,
+        labels_dict={}, show_images=False
+    ):
+        # Load images & paths
+        image_data, image_paths = DataLoader.load_images_from_folder(
+            folder_path, width, height,
+            create_labels=False
+        )
 
-        image_data = []
-        image_paths = glob.glob(root_path + "*")
-
-        for path in image_paths:
-            # Load and rescale images
-            try:
-                image = cv2.resize(cv2.imread(path), (width, height))
-                image = img_to_array(image)
-                image_data.append(image)
-            except:
-                print_error('Invalid image: ' + image_path)
-                continue
-
-        image_data = np.array(image_data, dtype="float32")
-        image_paths = np.array(image_paths)
-
-        # Debug
-        print_info("Loaded " + str(len(image_data)) + " images", 1)
-
-        return (image_data, image_paths)
-
-    def generate_angle_images(image_data, angle_range):
         # Debug
         print_info("Generating angle images...")
 
         angle_images = []
         image_labels = []
-        labels_dict = dict(
-            (i, angle) for i, angle in enumerate(angle_range)
-        )
+        path_list = []
 
-        for image in image_data:
+        if (not labels_dict):
+            labels_dict_out = dict(
+                (angle, i) for i, angle in enumerate(angle_range)
+            )
+        else:
+            labels_dict_out = labels_dict
+            angle_range = [
+                angle for angle, i in labels_dict_out.items()
+            ]
+
+        for image, path in zip(image_data, image_paths):
+            # Add path + None * number of rotations
+            path_list += [path] + [None] * (len(angle_range) - 1)
+            # Rotate image
             for angle in angle_range:
-                rotated = rotate(image / 255.0, angle)
-                angle_images.append(rotated) # * 255.0)
-                image_labels.append(angle)
+                image_rotated = rotate(image, angle)
+                angle_images.append(image_rotated)
+                image_labels.append(labels_dict_out[angle])
 
-                cv2.imshow("Rotated (Problematic)", rotated)
-                cv2.waitKey(0)
+                if (show_images):
+                    cv2.imshow("Rotated (Problematic)", image_rotated / 255.0)
+                    cv2.waitKey(0)
 
         angle_images = np.array(angle_images, dtype="float32")
         image_labels = np.array(image_labels)
@@ -347,10 +350,10 @@ class DataLoader():
             1
         )
 
-        return (angle_images, image_labels, labels_dict)
+        return (angle_images, image_labels, labels_dict_out, path_list)
 
     @staticmethod
-    def split_data(training_data, labels, paths, split_size=0.20):
+    def split_data(training_data, labels, paths, num_classes, split_size=0.20):
         if (not 0 <= split_size <= 0.5):
             print_error("Invalid split size: " + str(split_size))
 
@@ -399,13 +402,13 @@ class DataLoader():
         )
 
         return (
-            train_x, to_categorical(train_y, num_classes=2), train_p,
-            val_x, to_categorical(val_y, num_classes=2), val_p,
+            train_x, to_categorical(train_y, num_classes=num_classes), train_p,
+            val_x, to_categorical(val_y, num_classes=num_classes), val_p,
             test_x, test_y, test_p
         )
 
     @staticmethod
-    def load_and_preprocess_image(image_path, width, height, preproc):
+    def load_and_preprocess_image(image_path, width, height, preproc=None):
         # Debug
         print_info("Loading image from: " + image_path)
 

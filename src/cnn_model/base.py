@@ -14,6 +14,11 @@ def parse_arguments_training():
         help="path where model will be saved",
     )
     ap.add_argument(
+        "--type",
+        required=True,
+        help="train classificator(class) or angle detector(angle)",
+    )
+    ap.add_argument(
         "--graph",
         required=False,
         help="path to output graph about learning",
