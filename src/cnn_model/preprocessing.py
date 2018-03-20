@@ -1,12 +1,12 @@
 from keras.preprocessing.image import ImageDataGenerator
-from skimage.color import rgb2grey
-from skimage.io import imread
-from skimage.transform import resize
-from printer import print_warning, print_info
-from imutils import rotate
 from keras.utils import Sequence, to_categorical
+from skimage.color import rgb2grey
+from imutils import rotate_bound, rotate
+from printer import print_info
+from cv2 import resize
 
 import numpy as np
+import math
 
 
 class Preprocessor():
@@ -108,6 +108,73 @@ class Preprocessing():
         else:
             return rgb2grey(image_data)
 
+    @staticmethod
+    def crop_rotated_image(image, angle, height, width):
+        return resize(
+            Preprocessing.__crop_around_center(
+                image,
+                *Preprocessing.__largest_rotated_rect(
+                    width,
+                    height,
+                    math.radians(angle)
+                )
+            ),
+            (width, height)
+        )
+
+    @staticmethod
+    def __crop_around_center(image, width, height):
+        """
+        Crops it to the given width and height, around it's centre point
+        Source: http://stackoverflow.com/questions/16702966/rotate-image-and-crop-out-black-borders
+        """
+        image_size = (image.shape[1], image.shape[0])
+        image_center = (int(image_size[0] * 0.5), int(image_size[1] * 0.5))
+
+        if(width > image_size[0]):
+            width = image_size[0]
+
+        if(height > image_size[1]):
+            height = image_size[1]
+
+        x1 = int(image_center[0] - width * 0.5)
+        x2 = int(image_center[0] + width * 0.5)
+        y1 = int(image_center[1] - height * 0.5)
+        y2 = int(image_center[1] + height * 0.5)
+
+        return image[y1:y2, x1:x2]
+
+    @staticmethod
+    def __largest_rotated_rect(w, h, angle):
+        """
+        Given a rectangle of size w x h that has been rotated by 'angle' (in
+        radians), computes the width and height of the largest possible
+        axis-aligned rectangle within the rotated rectangle.
+        Source: http://stackoverflow.com/questions/16702966/rotate-image-and-crop-out-black-borders
+        """
+        quadrant = int(math.floor(angle / (math.pi / 2))) & 3
+        sign_alpha = angle if ((quadrant & 1) == 0) else math.pi - angle
+        alpha = (sign_alpha % math.pi + math.pi) % math.pi
+
+        bb_w = w * math.cos(alpha) + h * math.sin(alpha)
+        bb_h = w * math.sin(alpha) + h * math.cos(alpha)
+
+        gamma = math.atan2(bb_w, bb_w) if (w < h) else math.atan2(bb_w, bb_w)
+        delta = math.pi - alpha - gamma
+
+        length = h if (w < h) else w
+
+        d = length * math.cos(alpha)
+        a = d * math.sin(alpha) / math.sin(delta)
+
+        y = a * math.cos(gamma)
+        x = y * math.tan(gamma)
+
+        return (
+            bb_w - 2 * x,
+            bb_h - 2 * y
+        )
+
 
 class AngleGenerator(Sequence):
 
@@ -127,7 +194,13 @@ class AngleGenerator(Sequence):
 
         for i in range(0, self.batch_size):
             angle = np.random.randint(360)
-            batch_x.append(rotate(image, angle))
+            rotated = Preprocessing.crop_rotated_image(
+                rotate_bound(image, angle),
+                angle,
+                image.shape[0],
+                image.shape[1]
+            )
+            batch_x.append(rotated)
             batch_y.append(self.labels_dict[angle])
 
         batch_x = np.array(batch_x, dtype='float32')

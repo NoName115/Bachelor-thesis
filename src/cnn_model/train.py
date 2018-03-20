@@ -1,5 +1,5 @@
 from keras.optimizers import Adam, SGD
-from preprocessing import Preprocessor, Preprocessing
+from preprocessing import Preprocessor, Preprocessing, AngleGenerator
 from base import parse_arguments_training
 from printer import print_error
 from loader import DataLoader, DataSaver
@@ -24,11 +24,11 @@ if (args['type'] == "class"):
         correct_dataset_size=True,
     )
 elif (args['type'] == "angle"):
-    images, labels, labels_dict, path_list = DataLoader.generate_angle_images(
+    images, labels, labels_dict, path_list = DataLoader.load_angle_images(
         args['dataset'],
         IMAGE_WIDTH,
         IMAGE_HEIGHT,
-        range(0, 360, 10),
+        range(0, 360),
     )
 else:
     print_error("Invalid input argument - 'type'")
@@ -77,12 +77,25 @@ if (args['type'] == "class"):
         batch_size=BS,
     )
 else:
-    model_class.train(
-        train_x, train_y,
-        val_x, val_y,
+    model_class.model.compile(
+        loss='binary_crossentropy',
+        optimizer='adam',
+        #optimizer='rmsprop',
+        metrics=['accuracy']
+    )
+    model_class.model.fit_generator(
+        AngleGenerator(
+            train_x,
+            labels_dict,
+            BS
+        ),
         epochs=EPOCHS,
-        batch_size=BS
+        validation_data=AngleGenerator(
+            val_x,
+            labels_dict,
+            BS
+        )
     )
 
 DataSaver.save_model(args["model"], model_class, prepro, with_datetime=True)
-model_class.evaluate(test_x, test_y, test_p)
+#model_class.evaluate(test_x, test_y, test_p)

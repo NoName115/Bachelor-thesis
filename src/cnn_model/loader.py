@@ -315,60 +315,6 @@ class DataLoader():
 
         return (image_data, [0] * len(image_data), labels_dict, image_paths)
 
-    '''
-    def generate_angle_images(
-        folder_path, width, height, angle_range,
-        labels_dict={}, show_images=False
-    ):
-        # Load images & paths
-        image_data, image_paths = DataLoader.load_images_from_folder(
-            folder_path, width, height,
-            create_labels=False
-        )
-
-        # Debug
-        print_info("Generating angle images...")
-
-        angle_images = []
-        image_labels = []
-        path_list = []
-
-        if (not labels_dict):
-            labels_dict_out = dict(
-                (angle, i) for i, angle in enumerate(angle_range)
-            )
-        else:
-            labels_dict_out = labels_dict
-            angle_range = [
-                angle for angle, i in labels_dict_out.items()
-            ]
-
-        for image, path in zip(image_data, image_paths):
-            # Add path + None * number of rotations
-            path_list += [path] + [None] * (len(angle_range) - 1)
-            # Rotate image
-            for angle in angle_range:
-                image_rotated = rotate(image, angle)
-                angle_images.append(image_rotated)
-                image_labels.append(labels_dict_out[angle])
-
-                if (show_images):
-                    cv2.imshow("Rotated (Problematic)", image_rotated / 255.0)
-                    cv2.waitKey(0)
-
-        angle_images = np.array(angle_images, dtype="float32")
-        image_labels = np.array(image_labels)
-
-        # Debug
-        print_info(
-            "Generated " + str(len(angle_images)) + " images" +
-            " with angles: " + ', '.join(str(angle) for angle in angle_range),
-            1
-        )
-
-        return (angle_images, image_labels, labels_dict_out, path_list)
-    '''
-
     @staticmethod
     def split_data(training_data, labels, paths, num_classes, split_size=0.20):
         if (not 0 <= split_size <= 0.5):
