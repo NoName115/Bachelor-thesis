@@ -300,6 +300,22 @@ class DataLoader():
 
             return (image_data, path_list)
 
+    @staticmethod
+    def load_angle_images(
+        folder_path, width, height, angle_range
+    ):
+        image_data, image_paths = DataLoader.load_images_from_folder(
+            folder_path, width, height,
+            create_labels=False
+        )
+
+        labels_dict = dict(
+            (angle, i) for i, angle in enumerate(angle_range)
+        )
+
+        return (image_data, [0] * len(image_data), labels_dict, image_paths)
+
+    '''
     def generate_angle_images(
         folder_path, width, height, angle_range,
         labels_dict={}, show_images=False
@@ -351,6 +367,7 @@ class DataLoader():
         )
 
         return (angle_images, image_labels, labels_dict_out, path_list)
+    '''
 
     @staticmethod
     def split_data(training_data, labels, paths, num_classes, split_size=0.20):

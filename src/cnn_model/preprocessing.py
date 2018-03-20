@@ -1,6 +1,10 @@
 from keras.preprocessing.image import ImageDataGenerator
 from skimage.color import rgb2grey
+from skimage.io import imread
+from skimage.transform import resize
 from printer import print_warning, print_info
+from imutils import rotate
+from keras.utils import Sequence, to_categorical
 
 import numpy as np
 
@@ -103,3 +107,33 @@ class Preprocessing():
             return np.array([rgb2grey(image) for image in image_data])
         else:
             return rgb2grey(image_data)
+
+
+class AngleGenerator(Sequence):
+
+    def __init__(self, input_x, labels_dict, batch_size):
+        self.x = input_x
+        self.labels_dict = labels_dict
+        self.batch_size = batch_size
+
+    def __len__(self):
+        return int(np.ceil(len(self.x) / float(self.batch_size)))
+        #return np.ceil(len(self.x) / float(self.batch_size))
+
+    def __getitem__(self, idx):
+        batch_x = []
+        batch_y = []
+        image = self.x[idx]
+
+        for i in range(0, self.batch_size):
+            angle = np.random.randint(360)
+            batch_x.append(rotate(image, angle))
+            batch_y.append(self.labels_dict[angle])
+
+        batch_x = np.array(batch_x, dtype='float32')
+        batch_y = to_categorical(
+            np.array(batch_y),
+            num_classes=len(self.labels_dict)
+        )
+
+        return batch_x, batch_y
