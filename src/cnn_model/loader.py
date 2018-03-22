@@ -105,7 +105,8 @@ class DataSaver():
         json_file.write(
             json.dumps(
                 {
-                    'model_name': model_name,
+                    'name': model_name,
+                    'type': model_class.model_type,
                     'width': model_class.width,
                     'height': model_class.height,
                     'labels': model_class.labels_dict,
@@ -301,9 +302,7 @@ class DataLoader():
             return (image_data, path_list)
 
     @staticmethod
-    def load_angle_images(
-        folder_path, width, height, angle_range
-    ):
+    def load_angle_images(folder_path, width, height, angle_range):
         image_data, image_paths = DataLoader.load_images_from_folder(
             folder_path, width, height,
             create_labels=False
@@ -371,7 +370,7 @@ class DataLoader():
         )
 
     @staticmethod
-    def load_and_preprocess_image(image_path, width, height, preproc=None):
+    def load_image(image_path, width, height):
         # Debug
         print_info("Loading image from: " + image_path)
 
@@ -380,12 +379,7 @@ class DataLoader():
             cv2.imread(image_path),
             (width, height)
         )
-        image = img_to_array(image.astype("float"))
-
-        if (preproc):
-            image = preproc.apply(image)
-
-        return image
+        return img_to_array(image.astype("float"))
 
     @staticmethod
     def load_model_data(model_path, from_json=False):
@@ -439,8 +433,9 @@ class DataLoader():
                 model_data['depth']
             ),
             model_data['labels'],
+            model_data['type'],
+            model_name=model_data['name'],
             model_folder=model_path,
-            model_name=model_data['model_name'],
             model=loaded_model
         )
 

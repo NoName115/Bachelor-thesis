@@ -1,7 +1,7 @@
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import Sequence, to_categorical
 from skimage.color import rgb2grey
-from imutils import rotate_bound, rotate
+from imutils import rotate_bound
 from printer import print_info
 from cv2 import resize
 
@@ -109,7 +109,16 @@ class Preprocessing():
             return rgb2grey(image_data)
 
     @staticmethod
-    def crop_rotated_image(image, angle, height, width):
+    def rotate_and_crop_image(image, angle):
+        return Preprocessing.__crop_rotated_image(
+            rotate_bound(image, angle),
+            angle,
+            image.shape[0],
+            image.shape[1]
+        )
+
+    @staticmethod
+    def __crop_rotated_image(image, angle, height, width):
         return resize(
             Preprocessing.__crop_around_center(
                 image,
@@ -176,7 +185,7 @@ class Preprocessing():
         )
 
 
-class AngleGenerator_rebuild():
+class AngleGenerator():
 
     def __init__(self, labels_dict):
         self.angle_range = list(labels_dict.keys())
@@ -194,13 +203,8 @@ class AngleGenerator_rebuild():
                 image = set_x[
                     np.random.randint(0, len(set_x))
                 ]
-                rotated = Preprocessing.crop_rotated_image(
-                    rotate_bound(image, angle),
-                    angle,
-                    image.shape[0],
-                    image.shape[1]
-                )
-                batch_x.append(image)
+                rotated = rotate_and_crop_image(image, angle)
+                batch_x.append(rotated)
                 batch_y.append(self.labels_dict[angle])
 
             batch_x = np.array(batch_x, dtype='float32')
@@ -210,39 +214,3 @@ class AngleGenerator_rebuild():
             )
 
             yield batch_x, batch_y
-
-
-class AngleGenerator(Sequence):
-
-    def __init__(self, input_x, labels_dict, batch_size):
-        self.x = input_x
-        self.labels_dict = labels_dict
-        self.batch_size = batch_size
-
-    def __len__(self):
-        return int(np.ceil(len(self.x) / float(self.batch_size)))
-        #return np.ceil(len(self.x) / float(self.batch_size))
-
-    def __getitem__(self, idx):
-        batch_x = []
-        batch_y = []
-        image = self.x[idx]
-
-        for i in range(0, self.batch_size):
-            angle = np.random.randint(360)
-            rotated = Preprocessing.crop_rotated_image(
-                rotate_bound(image, angle),
-                angle,
-                image.shape[0],
-                image.shape[1]
-            )
-            batch_x.append(rotated)
-            batch_y.append(self.labels_dict[angle])
-
-        batch_x = np.array(batch_x, dtype='float32')
-        batch_y = to_categorical(
-            np.array(batch_y),
-            num_classes=len(self.labels_dict)
-        )
-
-        return batch_x, batch_y

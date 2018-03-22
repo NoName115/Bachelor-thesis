@@ -1,8 +1,10 @@
 from keras.models import load_model
-from base import parse_arguments_prediction
-from loader import DataLoader
+from base import parse_arguments_prediction, evaluate_model
 from printer import print_info, print_error
-from imutils import rotate
+from preprocessing import Preprocessing
+from loader import DataLoader
+
+import numpy as np
 import cv2
 
 
@@ -18,6 +20,8 @@ model_class, preproc = DataLoader.load_model_data(
 )
 image_width = model_class.width
 image_height = model_class.height
+model_type = model_class.model_type
+print_info("Model type - " + model_type)
 
 # Predict one image
 if (args['image']):
@@ -25,55 +29,47 @@ if (args['image']):
     image = DataLoader.load_and_preprocess_image(
         args['image'],
         image_width,
-        image_height,
-        None #preproc
+        image_height
     )
 
-    image_rotated = rotate(image, angle)
+    if (model_type == "angle"):
+        angle_range = list(model_class.labels_dict.keys())
+        angle = angle_range[np.random.randint(0, len(angle_range))]
+        image = Preprocessing.rotate_and_crop_image(image, angle)
 
-    model_class.evaluate(
-        image, None, None
-    )
+    image = preproc.apply(image)
+
+    evaluate_model(model_class, image, None, None)
 
 # Predict more images
 if (args['dataset']):
     print_info('Dataset prediction...')
-    '''
-    image_data, image_labels, _, path_list = DataLoader.load_images_from_folder(
-        args['dataset'],
-        image_width,
-        image_height,
-        labels_dict=model_class.labels_dict,
-        correct_dataset_size=False
-    )
-    model_class.evaluate(
-        preproc.apply(image_data),
-        image_labels,
-        path_list
-    )
-    '''
-    image_data, _ = DataLoader.load_normalized_images(
-        args['dataset'],
-        image_width,
-        image_height
-    )
-    image_data, image_labels, _ = DataLoader.generate_angle_images(
-        image_data,
-        None,
-        labels_dict=model_class.labels_dict
-    )
+    if (model_type == "class"):
+        image_data, image_labels, _, path_list = DataLoader.load_images_from_folder(
+            args['dataset'],
+            image_width,
+            image_height,
+            labels_dict=model_class.labels_dict,
+            correct_dataset_size=False
+        )
+    elif (model_type == "angle"):
+        image_data, image_labels, _, path_list = DataLoader.load_angle_images(
+            args['dataset'],
+            image_width,
+            image_height,
+            range(0, 360, 180)  # Not important
+        )
+    else:
+        print_error("Invalid model type")
 
-    print(model_class.labels_dict)
+    image_data = preproc.apply(image_data)
 
-    for image in image_data:
-        image = image.reshape((1,) + image.shape)
-        print(model_class.model.predict(image)[0])
-        image = image.reshape((image.shape[1], image.shape[2], image.shape[3]))
-        cv2.imshow("Loaded", image)
-        cv2.waitKey(0)
+    evaluate_model(model_class, image_data, image_labels, path_list)
 
 # Predict images from file
 if (args['file']):
+    # TODO
+    # for angle prediction - load_images_....
     print_info('File prediction...')
     image_data, image_labels, _, path_list = DataLoader.load_images_from_file(
         args['file'],
@@ -81,8 +77,4 @@ if (args['file']):
         image_height,
         labels_dict=model_class.labels_dict
     )
-    model_class.evaluate(
-        preproc.apply(image_data),
-        image_labels,
-        path_list
-    )
+    evaluate_model(model_class, image_data, image_labels, path_list)
