@@ -1,11 +1,9 @@
 from keras.models import load_model
+from numpy.random import randint
 from base import parse_arguments_prediction, evaluate_model
 from printer import print_info, print_error
 from preprocessing import Preprocessing
 from loader import DataLoader
-
-import numpy as np
-import cv2
 
 
 # Parse and check input arguments
@@ -34,7 +32,7 @@ if (args['image']):
 
     if (model_type == "angle"):
         angle_range = list(model_class.labels_dict.keys())
-        angle = angle_range[np.random.randint(0, len(angle_range))]
+        angle = angle_range[randint(0, len(angle_range))]
         image = Preprocessing.rotate_and_crop_image(image, angle)
 
     image = preproc.apply(image)
