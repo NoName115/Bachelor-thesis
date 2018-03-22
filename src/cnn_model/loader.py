@@ -190,7 +190,7 @@ class DataLoader():
         if (create_labels or labels_dict):
             print_info("Creating category dictionary...")                
             labels_dict_out = dict(
-                (i, category) for i, category in enumerate(
+                (category, i) for i, category in enumerate(
                     os.listdir(folder_path)
                 )
             ) if (not labels_dict) else labels_dict

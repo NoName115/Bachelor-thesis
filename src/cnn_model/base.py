@@ -107,7 +107,7 @@ def __evalute_classification(model_class, test_x, test_y, test_p):
         # Change shape to (1, x, y, depth)
         image = image.reshape((1,) + image.shape)
         # Image prediction - {'weapon-type': change, ...}
-        result_all = __get_prediction(image)
+        result_all = __get_prediction(model_class, image)
         max_key = max(result_all, key=result_all.get)
 
         # Create dict for summary json file
