@@ -1,15 +1,15 @@
 from keras.optimizers import Adam, SGD
-from preprocessing import Preprocessor, Preprocessing, AngleGenerator
-from base import parse_arguments_training
+from preprocessing import Preprocessor, Preprocessing, AngleGenerator_rebuild
+from base import parse_arguments_training, evaluate_angle
 from printer import print_error
 from loader import DataLoader, DataSaver
 from models import LeNet, KerasBlog, MyModel, VGG16
 
 
-EPOCHS = 5#45
-BS = 16
-IMAGE_WIDTH = 16
-IMAGE_HEIGHT = 16
+EPOCHS = 25 #35 #45
+BS = 64
+IMAGE_WIDTH = 128
+IMAGE_HEIGHT = 128
 MODEL_NAME = 'MyModel_Angle'
 
 # --model, --dataset
@@ -28,7 +28,7 @@ elif (args['type'] == "angle"):
         args['dataset'],
         IMAGE_WIDTH,
         IMAGE_HEIGHT,
-        range(0, 360),
+        range(0, 360, 36),
     )
 else:
     print_error("Invalid input argument - 'type'")
@@ -77,25 +77,23 @@ if (args['type'] == "class"):
         batch_size=BS,
     )
 else:
+    #sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
     model_class.model.compile(
-        loss='binary_crossentropy',
+        loss='binary_crossentropy', #'binary_crossentropy',
         optimizer='adam',
         #optimizer='rmsprop',
-        metrics=['accuracy']
+        #optimizer=sgd,
+        #metrics=['categorical_accuracy']
     )
     model_class.model.fit_generator(
-        AngleGenerator(
-            train_x,
-            labels_dict,
-            BS
-        ),
+        AngleGenerator_rebuild(labels_dict).flow(train_x, BS),
+        steps_per_epoch=len(train_x) // BS,
         epochs=EPOCHS,
-        validation_data=AngleGenerator(
-            val_x,
-            labels_dict,
-            BS
-        )
+        #validation_data=AngleGenerator_rebuild(labels_dict).flow(val_x, BS),
+        #validation_steps=len(val_x) // BS
     )
 
-DataSaver.save_model(args["model"], model_class, prepro, with_datetime=True)
+#DataSaver.save_model(args["model"], model_class, prepro, with_datetime=True)
 #model_class.evaluate(test_x, test_y, test_p)
+
+evaluate_angle(model_class, test_x)

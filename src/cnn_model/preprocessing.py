@@ -176,6 +176,42 @@ class Preprocessing():
         )
 
 
+class AngleGenerator_rebuild():
+
+    def __init__(self, labels_dict):
+        self.angle_range = list(labels_dict.keys())
+        self.labels_dict = labels_dict
+
+    def flow(self, set_x, batch_size):
+        while True:
+            batch_x = []
+            batch_y = []
+            np.random.shuffle(set_x)
+            for i in range(0, batch_size):
+                angle = self.angle_range[
+                    np.random.randint(0, len(self.angle_range))
+                ]
+                image = set_x[
+                    np.random.randint(0, len(set_x))
+                ]
+                rotated = Preprocessing.crop_rotated_image(
+                    rotate_bound(image, angle),
+                    angle,
+                    image.shape[0],
+                    image.shape[1]
+                )
+                batch_x.append(image)
+                batch_y.append(self.labels_dict[angle])
+
+            batch_x = np.array(batch_x, dtype='float32')
+            batch_y = to_categorical(
+                np.array(batch_y),
+                num_classes=len(self.labels_dict)
+            )
+
+            yield batch_x, batch_y
+
+
 class AngleGenerator(Sequence):
 
     def __init__(self, input_x, labels_dict, batch_size):
