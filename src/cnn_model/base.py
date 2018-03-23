@@ -7,6 +7,7 @@ import numpy as np
 import argparse
 import json
 import os
+import cv2
 
 
 def parse_arguments_training():
@@ -60,10 +61,8 @@ def parse_arguments_prediction():
 
 def evaluate_model(model_class, test_x, test_y, test_p):
     if (model_class.model_type == "class"):
-        # TODO for image
         __evalute_classification(model_class, test_x, test_y, test_p)
     elif (model_class.model_type == "angle"):
-        # TODO for image
         __evaluate_angle(model_class, test_x, test_p)
     else:
         print_error("Invalid model type")
@@ -77,26 +76,24 @@ def __get_prediction(model_class, image):
         })
     return result_dict
 
-'''
 def __evalute_classification(model_class, test_x, test_y, test_p):
     # Debug
     print_info('Model classification evaluation...')
 
     if (len(test_x.shape) == 3):    # Image evaluation
-        __image_evaluation(test_x)
+        __evalute_classification_image(model_class, test_x)
     else:                           # Dataset evaluation
-        __dataset_evaluation(test_x, test_y, test_p)
+        __evalute_classification_dataset(model_class, test_x, test_y, test_p)
 
-
-def __image_evaluation(input_image):
+def __evalute_classification_image(model_class, input_image):
     input_image = input_image.reshape((1,) + input_image.shape)
-    print_info(__get_prediction(input_image), 1)
-'''
+    print_info(__get_prediction(model_class, input_image), 1)
 
-def __evalute_classification(model_class, test_x, test_y, test_p):
-    # Debug
-    print_info('Model classification evaluation...')
+    cv2.imshow('Classification image', input_image[0])
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
+def __evalute_classification_dataset(model_class, test_x, test_y, test_p):
     testing_score = dict(
         (key, {'correct': [], 'wrong': []})
             for key in model_class.labels_dict
@@ -159,6 +156,42 @@ def __evaluate_angle(model_class, test_x, test_p, threshold=10):
     print_info('Model angle evaluation...')
     print_info('Threshold: ' + str(threshold), 1)
 
+    if (len(test_x.shape) == 3):    # Image evaluation
+        __evaluate_angle_image(model_class, test_x, threshold)
+    else:                           # Dataset evaluation
+        __evaluate_angle_dataset(model_class, test_x, test_p, threshold)
+
+def __evaluate_angle_image(model_class, image, threshold):
+    # Get random angle
+    angle_range = list(model_class.labels_dict.keys())
+    angle = int(angle_range[np.random.randint(0, len(angle_range))])
+
+    # Rotate image & change shape to (1, x, y, depth)
+    rotated = Preprocessing.rotate_and_crop_image(image, angle)
+    rotated = rotated.reshape((1,) + rotated.shape)
+
+    # Image prediction - {angle: change, ...}
+    result_all = __get_prediction(model_class, rotated)
+    max_key = max(result_all, key=result_all.get)
+
+    # Calculate diff. angle
+    pred_angle = int(max_key)
+    diff_angle = abs(angle - pred_angle)
+    if (diff_angle > 180):
+        diff_angle = abs(diff_angle - 360)
+
+    output_dict = {
+        'correct': angle,
+        'predict': pred_angle,
+        'diff': diff_angle
+    }
+    print_info(output_dict, 1)
+
+    cv2.imshow('Angle image', rotated[0])
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+def __evaluate_angle_dataset(model_class, test_x, test_p, threshold):
     testing_score = {'correct': [], 'wrong': []}
     angle_range = list(model_class.labels_dict.keys())
 

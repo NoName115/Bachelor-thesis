@@ -24,7 +24,7 @@ print_info("Model type - " + model_type)
 # Predict one image
 if (args['image']):
     print_info('Image prediction...')
-    image = DataLoader.load_and_preprocess_image(
+    image = DataLoader.load_image(
         args['image'],
         image_width,
         image_height
@@ -32,13 +32,11 @@ if (args['image']):
 
     if (model_type == "angle"):
         angle_range = list(model_class.labels_dict.keys())
-        angle = angle_range[randint(0, len(angle_range))]
+        angle = int(angle_range[randint(0, len(angle_range))])
         image = Preprocessing.rotate_and_crop_image(image, angle)
 
     image = preproc.apply(image)
 
-    # TODO
-    # in base.py evaluation function
     evaluate_model(model_class, image, None, None)
 
 # Predict more images
