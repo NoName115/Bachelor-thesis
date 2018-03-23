@@ -154,9 +154,10 @@ def __save_evalution_class_results(model_folder_path, testing_score):
 
     __save_log_files(model_folder_path, testing_score, path_list)
 
-def __evaluate_angle(model_class, test_x, test_p, threshold=18):
+def __evaluate_angle(model_class, test_x, test_p, threshold=10):
     # Debug
     print_info('Model angle evaluation...')
+    print_info('Threshold: ' + str(threshold), 1)
 
     testing_score = {'correct': [], 'wrong': []}
     angle_range = list(model_class.labels_dict.keys())

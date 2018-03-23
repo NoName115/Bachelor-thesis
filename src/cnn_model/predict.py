@@ -37,6 +37,8 @@ if (args['image']):
 
     image = preproc.apply(image)
 
+    # TODO
+    # in base.py evaluation function
     evaluate_model(model_class, image, None, None)
 
 # Predict more images
@@ -66,13 +68,24 @@ if (args['dataset']):
 
 # Predict images from file
 if (args['file']):
-    # TODO
-    # for angle prediction - load_images_....
     print_info('File prediction...')
-    image_data, image_labels, _, path_list = DataLoader.load_images_from_file(
-        args['file'],
-        image_width,
-        image_height,
-        labels_dict=model_class.labels_dict
-    )
+    if (model_type == "class"):
+        image_data, image_labels, _, path_list = DataLoader.load_images_from_file(
+            args['file'],
+            image_width,
+            image_height,
+            labels_dict=model_class.labels_dict
+        )
+    elif (model_type == "angle"):
+        image_data, image_labels, path_list = DataLoader.load_images_from_file(
+            args['file'],
+            image_width,
+            image_height,
+            labels_dict=None
+        )
+    else:
+        print_error("Invalid model type")
+
+    image_data = preproc.apply(image_data)
+
     evaluate_model(model_class, image_data, image_labels, path_list)

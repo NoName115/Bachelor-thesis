@@ -203,7 +203,7 @@ class AngleGenerator():
                 image = set_x[
                     np.random.randint(0, len(set_x))
                 ]
-                rotated = rotate_and_crop_image(image, angle)
+                rotated = Preprocessing.rotate_and_crop_image(image, angle)
                 batch_x.append(rotated)
                 batch_y.append(self.labels_dict[angle])
 

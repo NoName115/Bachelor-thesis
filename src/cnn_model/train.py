@@ -6,12 +6,12 @@ from loader import DataLoader, DataSaver
 from models import LeNet, KerasBlog, MyModel, VGG16
 
 
-EPOCHS = 35 #45
-BS = 32
+EPOCHS = 70
+BS = 64
 IMAGE_WIDTH = 128
 IMAGE_HEIGHT = 128
 MODEL_NAME = 'MyModel_Angle'
-ROTATE_ANGLE = 18
+ROTATE_ANGLE = 5
 
 # --model, --dataset
 args = parse_arguments_training()
@@ -81,6 +81,9 @@ if (args['type'] == "class"):
         batch_size=BS,
     )
 else:
+    model_class.batch_size = BS
+    model_class.epochs = EPOCHS
+
     model_class.model.compile(
         loss='categorical_crossentropy', #'binary_crossentropy',
         optimizer='adam',
