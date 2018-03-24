@@ -109,13 +109,22 @@ class Preprocessing():
             return rgb2grey(image_data)
 
     @staticmethod
-    def rotate_and_crop_image(image, angle):
-        return Preprocessing.__crop_rotated_image(
-            rotate_bound(image, angle),
-            angle,
+    def rotate_and_crop_image(image, labels_dict):
+        """Rotate input image by random range & crop black egdes
+
+        Return rotated_image, angle, label
+        """
+        rand_angle = np.random.randint(0, 360)
+        label_indx = round(rand_angle / (360 / len(labels_dict)))
+        label = list(labels_dict.keys())[label_indx]
+
+        rotated = Preprocessing.__crop_rotated_image(
+            rotate_bound(image, rand_angle),
+            rand_angle,
             image.shape[0],
             image.shape[1]
         )
+        return rotated, rand_angle, label
 
     @staticmethod
     def __crop_rotated_image(image, angle, height, width):
@@ -197,15 +206,13 @@ class AngleGenerator():
             batch_y = []
             np.random.shuffle(set_x)
             for i in range(0, batch_size):
-                angle = self.angle_range[
-                    np.random.randint(0, len(self.angle_range))
-                ]
-                image = set_x[
-                    np.random.randint(0, len(set_x))
-                ]
-                rotated = Preprocessing.rotate_and_crop_image(image, angle)
+                image = set_x[np.random.randint(0, len(set_x))]
+                rotated, angle, label = Preprocessing.rotate_and_crop_image(
+                    image, self.labels_dict
+                )
+
                 batch_x.append(rotated)
-                batch_y.append(self.labels_dict[angle])
+                batch_y.append(label)
 
             batch_x = np.array(batch_x, dtype='float32')
             batch_y = to_categorical(

@@ -30,11 +30,6 @@ if (args['image']):
         image_height
     )
 
-    if (model_type == "angle"):
-        angle_range = list(model_class.labels_dict.keys())
-        angle = int(angle_range[randint(0, len(angle_range))])
-        image = Preprocessing.rotate_and_crop_image(image, angle)
-
     image = preproc.apply(image)
 
     evaluate_model(model_class, image, None, None)

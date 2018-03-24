@@ -59,13 +59,12 @@ def parse_arguments_prediction():
     )
     return vars(ap.parse_args())
 
-def evaluate_model(model_class, test_x, test_y, test_p):
-    if (model_class.model_type == "class"):
-        __evalute_classification(model_class, test_x, test_y, test_p)
-    elif (model_class.model_type == "angle"):
-        __evaluate_angle(model_class, test_x, test_p)
-    else:
-        print_error("Invalid model type")
+def __calculate_diff_angle(correct_angle, predicted_angle):
+    # Calculate diff. angle
+    diff_angle = abs(correct_angle - predicted_angle)
+    if (diff_angle > 180):
+        diff_angle = abs(diff_angle - 360)
+    return diff_angle
 
 def __get_prediction(model_class, image):
     switched_labels = dict((y,x) for x,y in model_class.labels_dict.items())
@@ -75,6 +74,14 @@ def __get_prediction(model_class, image):
             switched_labels[i]: round(float(value), 6)
         })
     return result_dict
+
+def evaluate_model(model_class, test_x, test_y, test_p):
+    if (model_class.model_type == "class"):
+        __evalute_classification(model_class, test_x, test_y, test_p)
+    elif (model_class.model_type == "angle"):
+        __evaluate_angle(model_class, test_x, test_p)
+    else:
+        print_error("Invalid model type")
 
 def __evalute_classification(model_class, test_x, test_y, test_p):
     # Debug
@@ -162,12 +169,10 @@ def __evaluate_angle(model_class, test_x, test_p, threshold=10):
         __evaluate_angle_dataset(model_class, test_x, test_p, threshold)
 
 def __evaluate_angle_image(model_class, image, threshold):
-    # Get random angle
-    angle_range = list(model_class.labels_dict.keys())
-    angle = int(angle_range[np.random.randint(0, len(angle_range))])
-
     # Rotate image & change shape to (1, x, y, depth)
-    rotated = Preprocessing.rotate_and_crop_image(image, angle)
+    rotated, angle, _ = Preprocessing.rotate_and_crop_image(
+        image, model_class.labels_dict
+    )
     rotated = rotated.reshape((1,) + rotated.shape)
 
     # Image prediction - {angle: change, ...}
@@ -175,10 +180,7 @@ def __evaluate_angle_image(model_class, image, threshold):
     max_key = max(result_all, key=result_all.get)
 
     # Calculate diff. angle
-    pred_angle = int(max_key)
-    diff_angle = abs(angle - pred_angle)
-    if (diff_angle > 180):
-        diff_angle = abs(diff_angle - 360)
+    diff_angle = __calculate_diff_angle(angle, int(max_key))
 
     output_dict = {
         'correct': angle,
@@ -196,10 +198,10 @@ def __evaluate_angle_dataset(model_class, test_x, test_p, threshold):
     angle_range = list(model_class.labels_dict.keys())
 
     for image, path in zip(test_x, test_p):
-        # Get random angle
-        angle = int(angle_range[np.random.randint(0, len(angle_range))])
         # Rotate image & change shape to (1, x, y, depth)
-        rotated = Preprocessing.rotate_and_crop_image(image, angle)
+        rotated, angle, _ = Preprocessing.rotate_and_crop_image(
+            image, model_class.labels_dict
+        )
         rotated = rotated.reshape((1,) + rotated.shape)
 
         # Image prediction - {angle: change, ...}
@@ -207,10 +209,7 @@ def __evaluate_angle_dataset(model_class, test_x, test_p, threshold):
         max_key = max(result_all, key=result_all.get)
 
         # Calculate diff. angle
-        pred_angle = int(max_key)
-        diff_angle = abs(angle - pred_angle)
-        if (diff_angle > 180):
-            diff_angle = abs(diff_angle - 360)
+        diff_angle = __calculate_diff_angle(angle, int(max_key))
 
         output_dict = {
             'path': path,
