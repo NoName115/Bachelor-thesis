@@ -191,7 +191,7 @@ class AngleGenerator():
         self.angle_range = list(labels_dict.keys())
         self.labels_dict = labels_dict
 
-    def flow(self, set_x, batch_size):
+    def flow(self, set_x, _, batch_size):
         while True:
             batch_x = []
             batch_y = []

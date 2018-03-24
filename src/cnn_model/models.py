@@ -5,6 +5,8 @@ from keras import backend as K
 from abc import ABCMeta, abstractmethod
 from printer import print_info
 
+import numpy as np
+
 
 class Model():
 
@@ -29,7 +31,6 @@ class Model():
         self.model_folder = model_folder
         self.model_type = model_type
 
-        self.optimizer = None
         self.batch_size = -1
         self.epochs = -1
 
@@ -46,34 +47,13 @@ class Model():
     def get_name(self):
         return self.model_name
 
-    def get_model(self):
-        return self.model
-    
-    def get_optimizer_as_string(self):
-        if (type(self.optimizer) is str):
-            return self.optimizer
-        else:
-            return self.optimizer.__class__.__name__.lower()
-    
-    def set_optimizer(self, optimizer):
-        self.optimizer = optimizer
-
     def set_model_folder(self, model_folder_path):
         self.model_folder = model_folder_path
 
-    def __compile(self, loss='binary_crossentropy',
-                  optimizer='rmsprop', metrics=['accuracy']):
-        if (not self.optimizer):
-            self.optimizer = optimizer
-
-        self.model.compile(
-            loss=loss,
-            optimizer=self.optimizer,
-            metrics=metrics
-        )
-
     def train(self, train_x, train_y, val_x, val_y,
-              epochs=30, batch_size=16, datagen=None):
+              datagen=None, epochs=40, batch_size=16,
+              loss='binary_crossentropy', optimizer='rmsprop',
+              metrics=['accuracy']):
         # Debug
         print_info('Training model...')
 
@@ -81,19 +61,24 @@ class Model():
         self.batch_size = batch_size
         self.epochs = epochs
 
-        # Compile & train model
-        self.__compile()
+        # Compile model
+        self.model.compile(
+            loss=loss,
+            optimizer=optimizer,
+            metrics=metrics
+        )
 
+        # Train model
         if (datagen):
-            return self.model.fit_generator(
+            self.model.fit_generator(
                 datagen.flow(train_x, train_y, batch_size=batch_size),
-                steps_per_epoch=len(train_x) // batch_size,
+                steps_per_epoch=int(np.ceil(len(train_x) / batch_size)),
                 epochs=epochs,
-                validation_data=(val_x, val_y),
-                #validation_steps=len(val_x) // batch_size
+                validation_data=datagen.flow(val_x, val_y, batch_size=batch_size),
+                validation_steps=int(np.ceil(len(val_x) / batch_size))
             )
         else:
-            return self.model.fit(
+            self.model.fit(
                 train_x, train_y,
                 batch_size=batch_size,
                 epochs=epochs,

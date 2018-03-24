@@ -69,8 +69,6 @@ model_class = MyModel(
     - rmsprop/adam optimizer
 '''
 
-#model_class.set_optimizer('sgd')
-
 # Training model
 if (args['type'] == "class"):
     model_class.train(
@@ -81,22 +79,15 @@ if (args['type'] == "class"):
         batch_size=BS,
     )
 else:
-    model_class.batch_size = BS
-    model_class.epochs = EPOCHS
-
-    model_class.model.compile(
-        loss='categorical_crossentropy', #'binary_crossentropy',
-        optimizer='adam',
-        #optimizer='rmsprop',
-        #optimizer=sgd,
-        metrics=['categorical_accuracy']
-    )
-    model_class.model.fit_generator(
-        AngleGenerator(labels_dict).flow(train_x, BS),
-        steps_per_epoch=len(train_x) // BS,
+    model_class.train(
+        train_x, train_y,
+        val_x, val_y,
+        datagen=AngleGenerator(labels_dict),
         epochs=EPOCHS,
-        validation_data=AngleGenerator(labels_dict).flow(val_x, BS),
-        validation_steps=len(val_x) // BS
+        batch_size=BS,
+        loss='categorical_crossentropy',
+        optimizer='adam',
+        metrics=['categorical_accuracy']
     )
 
 DataSaver.save_model(

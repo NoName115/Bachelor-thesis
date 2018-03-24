@@ -114,7 +114,6 @@ class DataSaver():
                     'batch_size': model_class.batch_size,
                     'epochs': model_class.epochs,
                     'preprocessing': preprocesor.get_json(),
-                    'optimizer': model_class.get_optimizer_as_string()
                 },
                 sort_keys=False,
                 indent=4,
@@ -441,7 +440,6 @@ class DataLoader():
 
         model_class.batch_size = model_data['batch_size']
         model_class.epochs = model_data['epochs']
-        model_class.set_optimizer(model_data['optimizer'])
 
         return (
             model_class,
