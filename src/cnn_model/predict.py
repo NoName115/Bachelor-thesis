@@ -1,6 +1,7 @@
-from base import parse_arguments_prediction, evaluate_model
+from base import parse_arguments_prediction
 from printer import print_info, print_error
 from loader import DataLoader
+from evaluation import evaluate_model
 
 
 # Parse and check input arguments
@@ -16,6 +17,7 @@ model_class, preproc = DataLoader.load_model_data(
 image_width = model_class.width
 image_height = model_class.height
 model_type = model_class.model_type
+threshold = int(args['th']) if (args['th']) else 5
 print_info("Model type - " + model_type)
 
 # Predict one image
@@ -29,7 +31,7 @@ if (args['image']):
 
     image = preproc.apply(image)
 
-    evaluate_model(model_class, image, None, None)
+    evaluate_model(model_class, image, None, None, threshold)
 
 # Predict more images
 if (args['dataset']):
@@ -54,7 +56,7 @@ if (args['dataset']):
 
     image_data = preproc.apply(image_data)
 
-    evaluate_model(model_class, image_data, image_labels, path_list)
+    evaluate_model(model_class, image_data, image_labels, path_list, threshold)
 
 # Predict images from file
 if (args['file']):
@@ -78,4 +80,4 @@ if (args['file']):
 
     image_data = preproc.apply(image_data)
 
-    evaluate_model(model_class, image_data, image_labels, path_list)
+    evaluate_model(model_class, image_data, image_labels, path_list, threshold)

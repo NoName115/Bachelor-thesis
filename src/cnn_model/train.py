@@ -1,9 +1,10 @@
 from keras.optimizers import Adam, SGD
 from preprocessing import Preprocessor, Preprocessing, AngleGenerator
-from base import parse_arguments_training, evaluate_model, angle_error
+from base import parse_arguments_training, angle_error
 from printer import print_error
 from loader import DataLoader, DataSaver
 from models import LeNet, KerasBlog, MyModel, VGG16
+from evaluation import evaluate_model
 
 
 EPOCHS = 70

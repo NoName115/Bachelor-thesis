@@ -8,6 +8,7 @@ from hashlib import sha1
 from printer import print_info, print_warning, print_error, print_blank
 from preprocessing import Preprocessor, Preprocessing
 from models import Model
+from base import angle_error
 
 import numpy as np
 import json
@@ -408,7 +409,10 @@ class DataLoader():
 
         # Load (un)trained model
         if (not from_json):
-            loaded_model = load_model(model_path + MODEL_BINARY_FILE)
+            loaded_model = load_model(
+                model_path + MODEL_BINARY_FILE,
+                custom_objects={'angle_error': angle_error}
+            )
         else:
             # Debug
             print_warning(

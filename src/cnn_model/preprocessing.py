@@ -120,6 +120,10 @@ class Preprocessing():
         if (label == len(labels_dict)):
             label = 0
 
+        # Vertical flip
+        if (np.random.random() < 0.5):
+            image = np.flip(image, 0)
+
         rotated = Preprocessing.__crop_rotated_image(
             rotate_bound(image, rand_angle),
             rand_angle,
@@ -212,10 +216,6 @@ class AngleGenerator():
                 rotated, angle, label = Preprocessing.rotate_and_crop_image(
                     image, self.labels_dict
                 )
-
-                # Vertical flip
-                if (np.random.random() < 0.5):
-                    rotated = np.flip(rotated, 0)
 
                 batch_x.append(rotated)
                 batch_y.append(label)
