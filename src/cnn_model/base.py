@@ -1,9 +1,8 @@
 from printer import print_info, print_error
 from preprocessing import Preprocessing
-from imutils import rotate_bound
 from datetime import datetime
 
-import numpy as np
+import keras.backend as K
 import argparse
 import json
 import os
@@ -59,12 +58,13 @@ def parse_arguments_prediction():
     )
     return vars(ap.parse_args())
 
+def angle_error(true_y, pred_y):
+    diff = __calculate_diff_angle(K.argmax(true_y), K.argmax(pred_y))
+    return K.mean(K.cast(K.abs(diff), K.floatx()))
+
 def __calculate_diff_angle(correct_angle, predicted_angle):
     # Calculate diff. angle
-    diff_angle = abs(correct_angle - predicted_angle)
-    if (diff_angle > 180):
-        diff_angle = abs(diff_angle - 360)
-    return diff_angle
+    return 180 - abs(abs(correct_angle - predicted_angle) - 180)
 
 def __get_prediction(model_class, image):
     switched_labels = dict((y,x) for x,y in model_class.labels_dict.items())

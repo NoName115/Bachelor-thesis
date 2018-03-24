@@ -1,5 +1,5 @@
 from keras.preprocessing.image import ImageDataGenerator
-from keras.utils import Sequence, to_categorical
+from keras.utils import to_categorical
 from skimage.color import rgb2grey
 from imutils import rotate_bound
 from printer import print_info
@@ -115,8 +115,10 @@ class Preprocessing():
         Return rotated_image, angle, label
         """
         rand_angle = np.random.randint(0, 360)
-        label_indx = round(rand_angle / (360 / len(labels_dict)))
-        label = list(labels_dict.keys())[label_indx]
+        label = round(rand_angle / (360 / len(labels_dict)))
+        # Case when 359 / 5 = 72, array max indx is 71
+        if (label == len(labels_dict)):
+            label = 0
 
         rotated = Preprocessing.__crop_rotated_image(
             rotate_bound(image, rand_angle),
@@ -210,6 +212,10 @@ class AngleGenerator():
                 rotated, angle, label = Preprocessing.rotate_and_crop_image(
                     image, self.labels_dict
                 )
+
+                # Vertical flip
+                if (np.random.random() < 0.5):
+                    rotated = np.flip(rotated, 0)
 
                 batch_x.append(rotated)
                 batch_y.append(label)

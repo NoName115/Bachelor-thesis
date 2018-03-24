@@ -2,7 +2,7 @@ from keras.preprocessing.image import img_to_array
 from keras.utils import to_categorical, print_summary
 from keras.models import load_model, model_from_json
 from sklearn.model_selection import train_test_split
-from imutils import paths, rotate
+from imutils import paths
 from datetime import datetime
 from hashlib import sha1
 from printer import print_info, print_warning, print_error, print_blank
@@ -10,7 +10,6 @@ from preprocessing import Preprocessor, Preprocessing
 from models import Model
 
 import numpy as np
-import random
 import json
 import glob
 import cv2

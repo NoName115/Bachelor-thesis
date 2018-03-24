@@ -1,8 +1,5 @@
-from keras.models import load_model
-from numpy.random import randint
 from base import parse_arguments_prediction, evaluate_model
 from printer import print_info, print_error
-from preprocessing import Preprocessing
 from loader import DataLoader
 
 

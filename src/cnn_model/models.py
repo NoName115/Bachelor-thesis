@@ -3,9 +3,8 @@ from keras.layers.core import Activation, Flatten, Dense, Dropout
 from keras.models import Sequential
 from keras import backend as K
 from abc import ABCMeta, abstractmethod
+from numpy import ceil
 from printer import print_info
-
-import numpy as np
 
 
 class Model():
@@ -72,10 +71,10 @@ class Model():
         if (datagen):
             self.model.fit_generator(
                 datagen.flow(train_x, train_y, batch_size=batch_size),
-                steps_per_epoch=int(np.ceil(len(train_x) / batch_size)),
+                steps_per_epoch=int(ceil(len(train_x) / batch_size)),
                 epochs=epochs,
                 validation_data=datagen.flow(val_x, val_y, batch_size=batch_size),
-                validation_steps=int(np.ceil(len(val_x) / batch_size))
+                validation_steps=int(ceil(len(val_x) / batch_size))
             )
         else:
             self.model.fit(

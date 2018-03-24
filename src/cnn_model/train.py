@@ -1,6 +1,6 @@
 from keras.optimizers import Adam, SGD
 from preprocessing import Preprocessor, Preprocessing, AngleGenerator
-from base import parse_arguments_training, evaluate_model
+from base import parse_arguments_training, evaluate_model, angle_error
 from printer import print_error
 from loader import DataLoader, DataSaver
 from models import LeNet, KerasBlog, MyModel, VGG16
@@ -87,7 +87,7 @@ else:
         batch_size=BS,
         loss='categorical_crossentropy',
         optimizer='adam',
-        metrics=['categorical_accuracy']
+        metrics=[angle_error]#['categorical_accuracy']
     )
 
 DataSaver.save_model(
