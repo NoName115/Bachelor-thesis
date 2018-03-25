@@ -59,6 +59,7 @@ class Model():
         # Save training parameters
         self.batch_size = batch_size
         self.epochs = epochs
+        self.metrics = metrics[0] if (type(metrics[0]) is str) else metrics[0].__name__.lower()
 
         # Compile model
         self.model.compile(
@@ -69,7 +70,7 @@ class Model():
 
         # Train model
         if (datagen):
-            self.model.fit_generator(
+            return self.model.fit_generator(
                 datagen.flow(train_x, train_y, batch_size=batch_size),
                 steps_per_epoch=int(ceil(len(train_x) / batch_size)),
                 epochs=epochs,
@@ -77,7 +78,7 @@ class Model():
                 validation_steps=int(ceil(len(val_x) / batch_size))
             )
         else:
-            self.model.fit(
+            return self.model.fit(
                 train_x, train_y,
                 batch_size=batch_size,
                 epochs=epochs,

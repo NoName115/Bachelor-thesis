@@ -10,6 +10,7 @@ from preprocessing import Preprocessor, Preprocessing
 from models import Model
 from base import angle_error
 
+import matplotlib.pyplot as plt
 import numpy as np
 import json
 import glob
@@ -21,6 +22,7 @@ MODEL_SETTINGS_FILE = 'settings.json'
 MODEL_BINARY_FILE = 'model.h5'
 MODEL_ARCHITECTURE_FILE = 'architecture.json'
 MODEL_SUMMARY_FILE = 'summary.txt'
+MODEL_TRAINING_PLOT = 'history.png'
 
 class DataSaver():
 
@@ -79,7 +81,8 @@ class DataSaver():
                 break
 
     @staticmethod
-    def save_model(save_to_folder, model_class, preprocesor, with_datetime=False):
+    def save_model(save_to_folder, model_class, preprocesor,
+                   training_history=None, with_datetime=False):
         model_name = model_class.get_name()
 
         # Model folder path
@@ -146,6 +149,38 @@ class DataSaver():
             )
         )
         arch_file.close()
+
+        # Save training history
+        plt.style.use("ggplot")
+        plt.figure()
+        N = model_class.epochs
+
+        plt.plot(
+            np.arange(0, N),
+            training_history.history["loss"],
+            label="train_loss"
+        )
+        plt.plot(
+            np.arange(0, N),
+            training_history.history["val_loss"],
+            label="val_loss"
+        )
+        plt.plot(
+            np.arange(0, N),
+            training_history.history[model_class.metrics],
+            label="train_" + model_class.metrics
+        )
+        plt.plot(
+            np.arange(0, N),
+            training_history.history["val_" + model_class.metrics],
+            label="val_" + model_class.metrics
+        )
+
+        plt.title("Training history")
+        plt.xlabel("Epoch #")
+        plt.ylabel("Loss/Accuracy")
+        plt.legend(loc="lower left")
+        plt.savefig(model_folder_path + MODEL_TRAINING_PLOT)
 
         # Return path where model was saved
         return model_folder_path

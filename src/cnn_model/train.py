@@ -7,17 +7,15 @@ from models import LeNet, KerasBlog, MyModel, VGG16
 from evaluation import evaluate_model
 
 
-EPOCHS = 70
-BS = 16
-IMAGE_WIDTH = 128
-IMAGE_HEIGHT = 128
-MODEL_NAME = 'MyModel'
-ROTATE_ANGLE = 5
-
 # --model, --dataset
 args = parse_arguments_training()
 
-MODEL_NAME += '_' + args['type']
+EPOCHS = 45 if (not args['ep']) else int(args['ep'])
+BS = 16 if (not args['bs']) else int(args['bs'])
+IMAGE_WIDTH = 128
+IMAGE_HEIGHT = 128
+MODEL_NAME = 'MyModel_' + args['type']
+ROTATE_ANGLE = 5
 
 # Load input images & split it
 if (args['type'] == "class"):
@@ -75,7 +73,7 @@ model_class = MyModel(
 
 # Training model
 if (args['type'] == "class"):
-    model_class.train(
+    history = model_class.train(
         train_x, train_y,
         val_x, val_y,
         datagen=prepro.get_datagen(),
@@ -83,7 +81,7 @@ if (args['type'] == "class"):
         batch_size=BS,
     )
 else:
-    model_class.train(
+    history = model_class.train(
         train_x, train_y,
         val_x, val_y,
         datagen=AngleGenerator(labels_dict),
@@ -97,8 +95,8 @@ else:
 DataSaver.save_model(
     args["model"],
     model_class, prepro,
+    training_history=history,
     with_datetime=True
 )
-#model_class.evaluate(test_x, test_y, test_p)
 
 evaluate_model(model_class, test_x, test_y, test_p)

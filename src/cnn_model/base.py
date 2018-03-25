@@ -20,10 +20,14 @@ def parse_arguments_training():
         help="train classificator(class) or angle detector(angle)",
     )
     ap.add_argument(
-        "--graph",
+        "--ep",
         required=False,
-        help="path to output graph about learning",
-        default='learning.png'
+        help="number of epochs"
+        )
+    ap.add_argument(
+        "--bs",
+        required=False,
+        help="batch size"
         )
     return vars(ap.parse_args())
 
