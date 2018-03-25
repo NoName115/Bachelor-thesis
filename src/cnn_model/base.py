@@ -65,6 +65,9 @@ def calculate_diff_angle(correct_angle, predicted_angle):
     return 180 - abs(abs(correct_angle - predicted_angle) - 180)
 
 def get_prediction(model_class, image):
+    if (len(image.shape) == 3):
+        image = image.reshape(image.shape + (1,))
+
     switched_labels = dict((y,x) for x,y in model_class.labels_dict.items())
     result_dict = {}
     for i, value in enumerate(model_class.model.predict(image)[0]):

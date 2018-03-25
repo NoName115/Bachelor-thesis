@@ -226,4 +226,7 @@ class AngleGenerator():
                 num_classes=len(self.labels_dict)
             )
 
+            if (len(batch_x.shape) == 3):   # Grayscale data
+                batch_x = batch_x.reshape(batch_x.shape + (1,))
+
             yield batch_x, batch_y

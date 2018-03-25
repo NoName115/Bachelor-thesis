@@ -248,7 +248,7 @@ class DataLoader():
                 image = img_to_array(image)
                 image_data.append(image)
             except:
-                print_error('Invalid image: ' + image_path)
+                print_error('Invalid image: ' + path)
                 continue
 
             # Labels operations

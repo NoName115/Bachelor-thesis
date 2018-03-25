@@ -8,14 +8,16 @@ from evaluation import evaluate_model
 
 
 EPOCHS = 70
-BS = 64
+BS = 16
 IMAGE_WIDTH = 128
 IMAGE_HEIGHT = 128
-MODEL_NAME = 'MyModel_Angle'
+MODEL_NAME = 'MyModel'
 ROTATE_ANGLE = 5
 
 # --model, --dataset
 args = parse_arguments_training()
+
+MODEL_NAME += '_' + args['type']
 
 # Load input images & split it
 if (args['type'] == "class"):
@@ -32,6 +34,7 @@ elif (args['type'] == "angle"):
         IMAGE_HEIGHT,
         range(0, 360, ROTATE_ANGLE),
     )
+    MODEL_NAME += '_' + str(ROTATE_ANGLE)
 else:
     print_error("Invalid input argument - 'type'")
 
@@ -87,7 +90,7 @@ else:
         epochs=EPOCHS,
         batch_size=BS,
         loss='categorical_crossentropy',
-        optimizer='adam',
+        optimizer='rmsprop',
         metrics=[angle_error]#['categorical_accuracy']
     )
 
