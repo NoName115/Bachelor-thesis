@@ -349,7 +349,8 @@ class DataLoader():
         return (image_data, image_labels, labels_dict, image_paths)
 
     @staticmethod
-    def split_data(training_data, labels, paths, num_classes, split_size=0.20):
+    def split_data(training_data, labels, paths, num_classes,
+                   split_size=0.20, use_to_categorical=True):
         if (not 0 <= split_size <= 0.5):
             print_error("Invalid split size: " + str(split_size))
 
@@ -397,9 +398,13 @@ class DataLoader():
             1
         )
 
+        if (use_to_categorical):
+            train_y = to_categorical(train_y, num_classes=num_classes)
+            val_y = to_categorical(val_y, num_classes=num_classes)
+
         return (
-            train_x, to_categorical(train_y, num_classes=num_classes), train_p,
-            val_x, to_categorical(val_y, num_classes=num_classes), val_p,
+            train_x, train_y, train_p,
+            val_x, val_y, val_p,
             test_x, test_y, test_p
         )
 
