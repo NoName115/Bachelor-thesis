@@ -7,7 +7,7 @@ from models import LeNet, KerasBlog, MyModel, VGG16
 from evaluation import evaluate_model
 
 
-# --model, --dataset
+#  --dataset --model --type [--ep] [--bs]
 args = parse_arguments_training()
 
 EPOCHS = 45 if (not args['ep']) else int(args['ep'])
@@ -41,6 +41,7 @@ prepro = Preprocessor()
 prepro.add_func(Preprocessing.normalize)
 #prepro.add_func(Preprocessing.grayscale)
 #prepro.add_func(Preprocessing.reshape)
+#prepro.add_func(Preprocessing.flat)
 images = prepro.apply(images)
 
 # Datagen
@@ -79,6 +80,9 @@ if (args['type'] == "class"):
         datagen=prepro.get_datagen(),
         epochs=EPOCHS,
         batch_size=BS,
+        loss='binary_crossentropy',
+        optimizer='rmsprop',
+        metrics=['accuracy']
     )
 else:
     history = model_class.train(
@@ -89,7 +93,7 @@ else:
         batch_size=BS,
         loss='categorical_crossentropy',
         optimizer='rmsprop',
-        metrics=[angle_error]#['categorical_accuracy']
+        metrics=[angle_error]   #['categorical_accuracy']
     )
 
 DataSaver.save_model(

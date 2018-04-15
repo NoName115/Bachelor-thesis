@@ -79,3 +79,10 @@ def get_prediction(model_class, image):
             switched_labels[i]: round(float(value), 6)
         })
     return result_dict
+
+class Algorithm():
+
+    CNN = 'Convolutial Neural Network'
+    MLP = 'Multi Layer Perceptron'
+    SVM = 'Super Vector Machine'
+    KMEANS = 'K-means'

@@ -4,7 +4,9 @@ from keras.models import Sequential
 from keras import backend as K
 from abc import ABCMeta, abstractmethod
 from numpy import ceil
+from sklearn import svm
 from printer import print_info
+from base import Algorithm
 
 
 class Model():
@@ -32,6 +34,7 @@ class Model():
 
         self.batch_size = -1
         self.epochs = -1
+        self.algorithm = ''
 
         # Initialize first layer shape
         self.input_shape = (self.height, self.width, self.depth)
@@ -43,29 +46,40 @@ class Model():
         else:
             self.model = model
 
-    def get_name(self):
-        return self.model_name
-
     def set_model_folder(self, model_folder_path):
         self.model_folder = model_folder_path
 
-    def train(self, train_x, train_y, val_x, val_y,
-              datagen=None, epochs=40, batch_size=16,
-              loss='binary_crossentropy', optimizer='rmsprop',
-              metrics=['accuracy']):
+    def train(self, train_x, train_y, val_x=None, val_y=None,
+              batch_size=16, epochs=40, **kwargs):
         # Debug
-        print_info('Training model...')
+        print_info('Training model... ' + self.algorithm)
 
-        # Save training parameters
         self.batch_size = batch_size
         self.epochs = epochs
-        self.metrics = metrics[0] if (type(metrics[0]) is str) else metrics[0].__name__.lower()
+
+        if (self.algorithm == Algorithm.CNN):
+            self.__train_CNN(
+                train_x, train_y, val_x, val_y,
+                batch_size, epochs,
+                **kwargs
+            )
+        elif (self.algorithm == Algorithm.SVM):
+            self.__train_SVM(train_x, train_y)
+        else:
+            print_error("Unkown algorithm")
+
+    def __train_SVM(self, train_x, train_y):
+        self.model.fit(train_x, train_y)
+
+    def __train_CNN(self, train_x, train_y, val_x, val_y,
+                    batch_size=16, epochs=40, **kwargs):
+        self.metrics = kwargs['metrics']
 
         # Compile model
         self.model.compile(
-            loss=loss,
-            optimizer=optimizer,
-            metrics=metrics
+            loss=kwargs['loss'],
+            optimizer=kwargs['optimizer'],
+            metrics=kwargs['metrics']
         )
 
         # Train model
@@ -99,70 +113,10 @@ class Model():
         pass
 
 
-class KerasBlog(Model):
-
-    def build(self):
-        model = Sequential()
-
-        model.add(Conv2D(32, (3, 3), input_shape=self.input_shape))
-        model.add(Activation('relu'))
-        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-        model.add(Conv2D(32, (3, 3)))
-        model.add(Activation('relu'))
-        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-        model.add(Conv2D(64, (3, 3)))
-        model.add(Activation('relu'))
-        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-        model.add(Flatten())
-        model.add(Dense(64))
-        model.add(Activation('relu'))
-
-        model.add(Dropout(0.5))
-        model.add(Dense(self.num_of_classes))
-        model.add(Activation('sigmoid'))
-
-        return model
-
-
-class LeNet(Model):
-
-    def build(self):
-        """Dlho to trva a bez znacnych vysledok
-        """
-        # Initialize the model
-        model = Sequential()
-
-        # first set of CONV => RELU => POOL layers
-        model.add(
-            Conv2D(20, (5, 5), padding='same', input_shape=self.input_shape
-        ))
-        model.add(Activation("relu"))
-        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-        # second set of CONV => RELU => POOL layers
-        model.add(Conv2D(50, (5, 5), padding='same'))
-        model.add(Activation("relu"))
-        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-        # first (and only) set of FC => RELU layers
-        model.add(Flatten())
-        model.add(Dense(500))
-        model.add(Activation("relu"))
-
-        # softmax classifier
-        model.add(Dense(self.num_of_classes))
-        model.add(Activation("softmax"))
-
-        # return the network architecture
-        return model
-
-
 class MyModel(Model):
 
     def build(self):
+        self.algorithm = Algorithm.CNN
         model = Sequential()
 
         model.add(Conv2D(
@@ -194,12 +148,83 @@ class MyModel(Model):
         return model
 
 
+class SVM(Model):
+
+    def build(self):
+        self.algorithm = Algorithm.SVM
+        return svm.SVC(gamma=0.001) # Test default options
+
+
+class KerasBlog(Model):
+
+    def build(self):
+        self.algorithm = Algorithm.CNN
+        model = Sequential()
+
+        model.add(Conv2D(32, (3, 3), input_shape=self.input_shape))
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+        model.add(Conv2D(32, (3, 3)))
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+        model.add(Conv2D(64, (3, 3)))
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+        model.add(Flatten())
+        model.add(Dense(64))
+        model.add(Activation('relu'))
+
+        model.add(Dropout(0.5))
+        model.add(Dense(self.num_of_classes))
+        model.add(Activation('sigmoid'))
+
+        return model
+
+
+class LeNet(Model):
+
+    def build(self):
+        """Dlho to trva a bez znacnych vysledok
+        """
+        # Initialize the model
+        self.algorithm = Algorithm.CNN
+        model = Sequential()
+
+        # first set of CONV => RELU => POOL layers
+        model.add(
+            Conv2D(20, (5, 5), padding='same', input_shape=self.input_shape
+        ))
+        model.add(Activation("relu"))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+        # second set of CONV => RELU => POOL layers
+        model.add(Conv2D(50, (5, 5), padding='same'))
+        model.add(Activation("relu"))
+        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+        # first (and only) set of FC => RELU layers
+        model.add(Flatten())
+        model.add(Dense(500))
+        model.add(Activation("relu"))
+
+        # softmax classifier
+        model.add(Dense(self.num_of_classes))
+        model.add(Activation("softmax"))
+
+        # return the network architecture
+        return model
+
+
 class VGG16(Model):
 
     def build(self):
         """Architecture inspired by VGG16
         """
         # Input shape 224x224x3
+        self.algorithm = Algorithm.CNN
         model = Sequential()
 
         model.add(Conv2D(

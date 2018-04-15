@@ -2,13 +2,14 @@ from keras.preprocessing.image import img_to_array
 from keras.utils import to_categorical, print_summary
 from keras.models import load_model, model_from_json
 from sklearn.model_selection import train_test_split
+from sklearn.externals import joblib
 from imutils import paths
 from datetime import datetime
 from hashlib import sha1
 from printer import print_info, print_warning, print_error, print_blank
 from preprocessing import Preprocessor, Preprocessing
 from models import Model
-from base import angle_error
+from base import angle_error, Algorithm
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -22,7 +23,7 @@ MODEL_SETTINGS_FILE = 'settings.json'
 MODEL_BINARY_FILE = 'model.h5'
 MODEL_ARCHITECTURE_FILE = 'architecture.json'
 MODEL_SUMMARY_FILE = 'summary.txt'
-MODEL_TRAINING_PLOT = 'history.png'
+MODEL_TRAINING_PLOT = 'training_history.png'
 
 class DataSaver():
 
@@ -83,7 +84,7 @@ class DataSaver():
     @staticmethod
     def save_model(save_to_folder, model_class, preprocesor,
                    training_history=None, with_datetime=False):
-        model_name = model_class.get_name()
+        model_name = model_class.model_name
 
         # Model folder path
         model_folder_path = save_to_folder + model_name
@@ -110,6 +111,7 @@ class DataSaver():
                 {
                     'name': model_name,
                     'type': model_class.model_type,
+                    'algorithm': model_class.algorithm,
                     'width': model_class.width,
                     'height': model_class.height,
                     'labels': model_class.labels_dict,
@@ -125,9 +127,30 @@ class DataSaver():
         )
         json_file.close()
 
-        # Save model as h5
-        model_class.model.save(model_folder_path + MODEL_BINARY_FILE)
+        # Save binary model
+        if (model_class.algorithm == Algorithm.CNN):
+            model_class.model.save(
+                model_folder_path + MODEL_BINARY_FILE
+            )
+            DataSaver.__save_addional_info_CNN(
+                model_class,
+                model_folder_path,
+                training_history
+            )
+        elif (model_class.algorithm == Algorithm.SVM):
+            joblib.dump(
+                model_class.model,
+                model_folder_path + MODEL_BINARY_FILE
+            )
+        else:
+            print_error("Unkown learning algorithm")
 
+        # Return path where model was saved
+        return model_folder_path
+
+    @staticmethod
+    def __save_addional_info_CNN(model_class, model_folder_path,
+                                 training_history):
         # Save model summary info
         summary_file = open(model_folder_path + MODEL_SUMMARY_FILE, 'w')
         print_summary(
@@ -150,7 +173,7 @@ class DataSaver():
         )
         arch_file.close()
 
-        # Save training history
+        # Save training history to PNG
         plt.style.use("ggplot")
         plt.figure()
         N = model_class.epochs
@@ -182,9 +205,6 @@ class DataSaver():
         plt.legend(loc="lower left")
         plt.savefig(model_folder_path + MODEL_TRAINING_PLOT)
 
-        # Return path where model was saved
-        return model_folder_path
-
 
 class DataLoader():
 
@@ -198,9 +218,7 @@ class DataLoader():
         )
 
     @staticmethod
-    def load_images_from_file(
-        file_path, width, height, labels_dict
-    ):
+    def load_images_from_file(file_path, width, height, labels_dict):
         path_list = []
 
         with open(file_path, 'r') as image_file:
@@ -211,10 +229,8 @@ class DataLoader():
         )
 
     @staticmethod
-    def load_images_from_folder(
-        folder_path, width, height, labels_dict={},
-        create_labels=True, correct_dataset_size=True
-    ):
+    def load_images_from_folder(folder_path, width, height, labels_dict={},
+                                create_labels=True, correct_dataset_size=True):
         # Correction cant be done with no labels
         if (correct_dataset_size and not create_labels):
             correct_dataset_size = False
@@ -250,10 +266,8 @@ class DataLoader():
         )
 
     @staticmethod
-    def __load_images_by_path(
-        image_paths, width, height, labels_dict=None,
-        correct_dataset_size=False, max_images=0
-    ):
+    def __load_images_by_path(image_paths, width, height, labels_dict=None,
+                              correct_dataset_size=False, max_images=0):
         print_info("Loading input dataset...")
 
         # Initialize data variables
@@ -350,7 +364,8 @@ class DataLoader():
 
     @staticmethod
     def split_data(training_data, labels, paths, num_classes,
-                   split_size=0.20, use_to_categorical=True):
+                   split_size=0.20, use_to_categorical=True,
+                   get_test=True):
         if (not 0 <= split_size <= 0.5):
             print_error("Invalid split size: " + str(split_size))
 
@@ -364,13 +379,14 @@ class DataLoader():
             test_size=split_size,
             random_state=42
         )
-        val_x, test_x, val_y, test_y, val_p, test_p = train_test_split(
-            val_x,
-            val_y,
-            val_p,
-            test_size=0.5,
-            random_state=42
-        )
+        if (get_test):
+            val_x, test_x, val_y, test_y, val_p, test_p = train_test_split(
+                val_x,
+                val_y,
+                val_p,
+                test_size=0.5,
+                random_state=42
+            )
 
         # Debug
         print_info(
@@ -389,24 +405,28 @@ class DataLoader():
             ),
             1
         )
-        print_info(
-            '{0:20} {1:4d} ({2:2d}%) images'.format(
-                "Test dataset:",
-                len(test_x),
-                int((split_size * 0.5) * 100)
-            ),
-            1
-        )
+        if (get_test):
+            print_info(
+                '{0:20} {1:4d} ({2:2d}%) images'.format(
+                    "Test dataset:",
+                    len(test_x),
+                    int((split_size * 0.5) * 100)
+                ),
+                1
+            )
 
         if (use_to_categorical):
             train_y = to_categorical(train_y, num_classes=num_classes)
             val_y = to_categorical(val_y, num_classes=num_classes)
 
-        return (
+        result = (
             train_x, train_y, train_p,
-            val_x, val_y, val_p,
-            test_x, test_y, test_p
+            val_x, val_y, val_p
         )
+        if (get_test):
+            result += (test_x, test_y, test_p)
+
+        return result
 
     @staticmethod
     def load_image(image_path, width, height):

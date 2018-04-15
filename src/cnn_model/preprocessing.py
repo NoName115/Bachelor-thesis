@@ -1,6 +1,7 @@
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import to_categorical
 from skimage.color import rgb2grey
+from sklearn.utils import shuffle
 from imutils import rotate_bound
 from printer import print_info
 from cv2 import resize
@@ -109,6 +110,12 @@ class Preprocessing():
             return rgb2grey(image_data)
 
     @staticmethod
+    def flat(image_data):
+        """Flat input data into shape (num_of_samples, num_of_features)
+        """
+        return image_data.reshape((len(image_data), -1))
+
+    @staticmethod
     def rotate_and_crop_image(image, labels_dict):
         """Rotate input image by random range & crop black egdes
 
@@ -210,7 +217,7 @@ class AngleGenerator():
         while True:
             batch_x = []
             batch_y = []
-            np.random.shuffle(set_x)
+            np.random.shufflepass(set_x)
             for i in range(0, batch_size):
                 image = set_x[np.random.randint(0, len(set_x))]
                 rotated, angle, label = Preprocessing.rotate_and_crop_image(
@@ -230,3 +237,49 @@ class AngleGenerator():
                 batch_x = batch_x.reshape(batch_x.shape + (1,))
 
             yield batch_x, batch_y
+
+
+class ClassificationGenerator():
+
+    def __init__(self, data_x, data_y, data_p, batch_size, datagen):
+        self.data_x = data_x
+        self.data_y = data_y
+        self.data_p = data_p
+        self.batch_size = batch_size
+        self.datagen = datagen
+
+    def flow(self):
+        print_info('Image augmentation...')
+
+        self.data_x, self.data_y, self.data_p = shuffle(
+            self.data_x, self.data_y, self.data_p,
+            random_state=42
+        )
+
+        batch_x = []
+        batch_y = []
+        batch_p = []
+
+        for image, label, path in zip(self.data_x, self.data_y, self.data_p):
+            image = image.reshape((1,) + image.shape)
+            for i in range(0, self.batch_size):
+                batch = self.datagen.flow(image, batch_size=1)[0]
+                batch_x.append(batch.reshape((
+                    batch.shape[1],
+                    batch.shape[2],
+                    batch.shape[3]
+                )))
+                batch_y.append(label)
+                batch_p.append(path)
+
+        batch_x = np.array(batch_x)
+        batch_y = np.array(batch_y)
+        batch_p = np.array(batch_p)
+
+        print_info(
+            'Input: ' + str(self.data_x.shape) +
+            ' Output: ' + str(batch_x.shape),
+            1
+        )
+
+        return batch_x, batch_y, batch_p
