@@ -1,7 +1,8 @@
 from printer import print_info, print_error
 from preprocessing import Preprocessing
-from base import calculate_diff_angle, get_prediction
+from base import calculate_diff_angle, get_prediction, Algorithm
 from datetime import datetime
+from sklearn import metrics
 
 import json
 import os
@@ -9,12 +10,44 @@ import cv2
 
 
 def evaluate_model(model_class, test_x, test_y, test_p, threshold=5):
-    if (model_class.model_type == "class"):
-        __evalute_classification(model_class, test_x, test_y, test_p)
-    elif (model_class.model_type == "angle"):
-        __evaluate_angle(model_class, test_x, test_p, threshold)
+    if (model_class.algorithm == Algorithm.SVM):
+        __evaluate_SVM(model_class, test_x, test_y, test_p)
+    elif (model_class.algorithm == Algorithm.CNN):
+        if (model_class.model_type == "class"):
+            __evalute_classification(model_class, test_x, test_y, test_p)
+        elif (model_class.model_type == "angle"):
+            __evaluate_angle(model_class, test_x, test_p, threshold)
+        else:
+            print_error("Invalid model type")
     else:
-        print_error("Invalid model type")
+        print_error("Unknown learning algorithm")
+
+def __evaluate_SVM(model_class, test_x, test_y, test_p):
+    print_info("Model SVM evaluation...")
+
+    testing_score = dict(
+        (key, {'correct': [], 'wrong': []})
+            for key in model_class.labels_dict
+    )
+    switched_labels = dict((y,x) for x,y in model_class.labels_dict.items())
+
+    prediction = list(model_class.model.predict(test_x))
+    expectation = list(test_y)
+
+    for predict, expect, path in zip(prediction, expectation, test_p):
+        # Create dict for summary json file
+        output_dict = {'path': path, 'result': switched_labels[predict]}
+
+        if (predict == expect): # Correct prediction
+            testing_score[switched_labels[predict]]['correct'].append(
+                output_dict
+            )
+        else:                   # Wrong prediciton
+            testing_score[switched_labels[expect]]['wrong'].append(
+                output_dict
+            )
+
+    __save_evalution_class_results(model_class.model_folder, testing_score)
 
 def __evalute_classification(model_class, test_x, test_y, test_p):
     # Debug
@@ -181,37 +214,38 @@ def __save_evalution_angle_results(model_folder_path, testing_score):
     __save_log_files(model_folder_path, testing_score, path_list)
 
 def __save_log_files(model_folder_path, testing_score, path_list):
-    # Save summary to files
-    if (model_folder_path):
-        now_str = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-
-        logs_folder = model_folder_path + "logs/"
-        if (not os.path.exists(logs_folder)):
-            os.mkdir(logs_folder)
-
-        logs_folder += now_str + "/"
-        if (not os.path.exists(logs_folder)):
-            os.mkdir(logs_folder)
-
-        # Debug
-        print_info('Testing details in folder: ' + logs_folder, 1)
-
-        summary_file = open(logs_folder + 'summary.json', 'w')
-        summary_file.write(
-            json.dumps(
-                testing_score,
-                sort_keys=False,
-                indent=4,
-                separators=(',', ':')
-            )
-        )
-        summary_file.close()
-
-        # Save paths to testing data
-        testing_data_file = open(logs_folder + 'testing_data.txt', 'w')
-        testing_data_file.write('\n'.join(path_list))
-    else:
-        # Debug
+    # Check input path
+    if (not model_folder_path):
         print_warning(
             'No model folder, evaluation details were not saved'
         )
+        return
+
+    # Save summary to files
+    now_str = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+
+    logs_folder = model_folder_path + "logs/"
+    if (not os.path.exists(logs_folder)):
+        os.mkdir(logs_folder)
+
+    logs_folder += now_str + "/"
+    if (not os.path.exists(logs_folder)):
+        os.mkdir(logs_folder)
+
+    # Debug
+    print_info('Testing details in folder: ' + logs_folder, 1)
+
+    summary_file = open(logs_folder + 'summary.json', 'w')
+    summary_file.write(
+        json.dumps(
+            testing_score,
+            sort_keys=False,
+            indent=4,
+            separators=(',', ':')
+        )
+    )
+    summary_file.close()
+
+    # Save paths to testing data
+    testing_data_file = open(logs_folder + 'testing_data.txt', 'w')
+    testing_data_file.write('\n'.join(set(path_list)))

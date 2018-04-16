@@ -441,7 +441,7 @@ class DataLoader():
         return img_to_array(image.astype("float"))
 
     @staticmethod
-    def load_model_data(model_path, from_json=False):
+    def load_model_data(model_path):
         '''Load model data as width, height, depth, labels_dict
         Model can be loaded from .h5 file as trained model or
         from json file as model architecture - model is not trained
@@ -467,24 +467,17 @@ class DataLoader():
             **dict(model_data['preprocessing']['datagen_args'])
         )
 
-        # Load (un)trained model
-        if (not from_json):
+        if (model_data['algorithm'] == Algorithm.CNN):
             loaded_model = load_model(
                 model_path + MODEL_BINARY_FILE,
                 custom_objects={'angle_error': angle_error}
             )
-        else:
-            # Debug
-            print_warning(
-                'Loading only model architecture(untrained model)',
-                1
+        elif (model_data['algorithm'] == Algorithm.SVM):
+            loaded_model = joblib.load(
+                model_path + MODEL_BINARY_FILE
             )
-
-            # TODO
-            # error dajaky
-            with open(model_path + MODEL_ARCHITECTURE_FILE) as jsonfile:
-                #loaded_model = model_from_json(str(json.load(jsonfile)))
-                pass
+        else:
+            print_error('Unknown algorithm')
 
         # Model class
         model_class = Model(
@@ -503,6 +496,7 @@ class DataLoader():
 
         model_class.batch_size = model_data['batch_size']
         model_class.epochs = model_data['epochs']
+        model_class.algorithm = model_data['algorithm']
 
         return (
             model_class,
