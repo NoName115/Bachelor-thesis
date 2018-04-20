@@ -4,7 +4,7 @@ from keras.models import Sequential
 from keras import backend as K
 from abc import ABCMeta, abstractmethod
 from numpy import ceil
-from sklearn import svm
+from sklearn import svm, cluster, neural_network
 from printer import print_info
 from base import Algorithm
 
@@ -65,11 +65,12 @@ class Model():
             )
         elif (self.algorithm == Algorithm.SVM):
             self.__train_SVM(train_x, train_y)
+        elif (self.algorithm == Algorithm.KMEANS):
+            self.__train_KMeans(train_x, train_y)
+        elif (self.algorithm == Algorithm.MLP):
+            self.__train_MLP(train_x, train_y)
         else:
             print_error("Unkown algorithm")
-
-    def __train_SVM(self, train_x, train_y):
-        self.model.fit(train_x, train_y)
 
     def __train_CNN(self, train_x, train_y, val_x, val_y,
                     batch_size=16, epochs=40, **kwargs):
@@ -98,6 +99,15 @@ class Model():
                 epochs=epochs,
                 validation_data=(val_x, val_y)
             )
+
+    def __train_SVM(self, train_x, train_y):
+        self.model.fit(train_x, train_y)
+
+    def __train_KMeans(self, train_x, train_y):
+        self.model.fit(train_x, train_y)
+
+    def __train_MLP(self, train_x, train_y):
+        self.model.fit(train_x, train_y)
 
     @abstractmethod
     def build(self):
@@ -153,6 +163,23 @@ class SVM(Model):
     def build(self):
         self.algorithm = Algorithm.SVM
         return svm.SVC(gamma=0.001) # Test default options
+
+
+class KMeans(Model):
+
+    def build(self):
+        self.algorithm = Algorithm.KMEANS
+        return cluster.KMeans(n_clusters=len(self.labels_dict))
+
+
+class MLPerceptron(Model):
+
+    def build(self):
+        self.algorithm = Algorithm.MLP
+        return neural_network.MLPClassifier(
+            solver='lbfgs', alpha=1e-5,
+            hidden_layer_sizes=(150,), random_state=1
+        )
 
 
 class KerasBlog(Model):

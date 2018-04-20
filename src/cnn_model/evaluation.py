@@ -12,6 +12,10 @@ import cv2
 def evaluate_model(model_class, test_x, test_y, test_p, threshold=5):
     if (model_class.algorithm == Algorithm.SVM):
         __evaluate_SVM(model_class, test_x, test_y, test_p)
+    elif (model_class.algorithm == Algorithm.KMEANS):
+        __evalute_KMeans(model_class, test_x, test_y, test_p)
+    elif (model_class.algorithm == Algorithm.MLP):
+        __evaluate_MLP(model_class, test_x, test_y, test_p)
     elif (model_class.algorithm == Algorithm.CNN):
         if (model_class.model_type == "class"):
             __evalute_classification(model_class, test_x, test_y, test_p)
@@ -24,6 +28,60 @@ def evaluate_model(model_class, test_x, test_y, test_p, threshold=5):
 
 def __evaluate_SVM(model_class, test_x, test_y, test_p):
     print_info("Model SVM evaluation...")
+
+    testing_score = dict(
+        (key, {'correct': [], 'wrong': []})
+            for key in model_class.labels_dict
+    )
+    switched_labels = dict((y,x) for x,y in model_class.labels_dict.items())
+
+    prediction = list(model_class.model.predict(test_x))
+    expectation = list(test_y)
+
+    for predict, expect, path in zip(prediction, expectation, test_p):
+        # Create dict for summary json file
+        output_dict = {'path': path, 'result': switched_labels[predict]}
+
+        if (predict == expect): # Correct prediction
+            testing_score[switched_labels[predict]]['correct'].append(
+                output_dict
+            )
+        else:                   # Wrong prediciton
+            testing_score[switched_labels[expect]]['wrong'].append(
+                output_dict
+            )
+
+    __save_evalution_class_results(model_class.model_folder, testing_score)
+
+def __evalute_KMeans(model_class, test_x, test_y, test_p):
+    print_info("Model KMeans evaluation...")
+
+    testing_score = dict(
+        (key, {'correct': [], 'wrong': []})
+            for key in model_class.labels_dict
+    )
+    switched_labels = dict((y,x) for x,y in model_class.labels_dict.items())
+
+    prediction = list(model_class.model.predict(test_x))
+    expectation = list(test_y)
+
+    for predict, expect, path in zip(prediction, expectation, test_p):
+        # Create dict for summary json file
+        output_dict = {'path': path, 'result': switched_labels[predict]}
+
+        if (predict == expect): # Correct prediction
+            testing_score[switched_labels[predict]]['correct'].append(
+                output_dict
+            )
+        else:                   # Wrong prediciton
+            testing_score[switched_labels[expect]]['wrong'].append(
+                output_dict
+            )
+
+    __save_evalution_class_results(model_class.model_folder, testing_score)
+
+def __evaluate_MLP(model_class, test_x, test_y, test_p):
+    print_info("Model MLPerceptron evaluation...")
 
     testing_score = dict(
         (key, {'correct': [], 'wrong': []})

@@ -137,7 +137,9 @@ class DataSaver():
                 model_folder_path,
                 training_history
             )
-        elif (model_class.algorithm == Algorithm.SVM):
+        elif (model_class.algorithm == Algorithm.SVM or
+              model_class.algorithm == Algorithm.KMEANS or
+              model_class.algorithm == Algorithm.MLP):
             joblib.dump(
                 model_class.model,
                 model_folder_path + MODEL_BINARY_FILE
@@ -472,7 +474,9 @@ class DataLoader():
                 model_path + MODEL_BINARY_FILE,
                 custom_objects={'angle_error': angle_error}
             )
-        elif (model_data['algorithm'] == Algorithm.SVM):
+        elif (model_data['algorithm'] == Algorithm.SVM or
+              model_data['algorithm'] == Algorithm.KMEANS or
+              model_data['algorithm'] == Algorithm.MLP):
             loaded_model = joblib.load(
                 model_path + MODEL_BINARY_FILE
             )
