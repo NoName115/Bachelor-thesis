@@ -21,13 +21,6 @@ def parse_arguments_training():
         required=True,
         help="type of algorithm for image classification",
     )
-    '''
-    ap.add_argument(
-        "--type",
-        required=True,
-        help="train classificator(class) or angle detector(angle)",
-    )
-    '''
     ap.add_argument(
         "--ep",
         required=False,
@@ -41,6 +34,40 @@ def parse_arguments_training():
     return vars(ap.parse_args())
 
 def parse_arguments_prediction():
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--class",
+        "--c",
+        required=True,
+        help="path to model for weapon classification"
+    )
+    ap.add_argument(
+        "--anglex",
+        "--x",
+        required=True,
+        help="path to model prediction X axis of weapon angle"
+    )
+    ap.add_argument(
+        "--angley",
+        "--y",
+        required=True,
+        help="path to model prediction Y axis of weapon angle"
+    )
+    ap.add_argument(
+        "--anglez",
+        "--z",
+        required=True,
+        help="path to model prediction Z axis of weapon angle"
+    )
+    ap.add_argument(
+        "--image",
+        "--i",
+        required=True,
+        help="path to model prediction Z axis of weapon angle"
+    )
+    return vars(ap.parse_args())
+
+def parse_arguments_evaluation():
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--model",
