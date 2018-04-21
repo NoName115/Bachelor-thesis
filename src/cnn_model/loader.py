@@ -180,6 +180,8 @@ class DataSaver():
         plt.figure()
         N = model_class.epochs
 
+        history_keys = list(training_history.history.keys())
+
         plt.plot(
             np.arange(0, N),
             training_history.history["loss"],
@@ -192,13 +194,13 @@ class DataSaver():
         )
         plt.plot(
             np.arange(0, N),
-            training_history.history[model_class.metrics],
-            label="train_" + model_class.metrics
+            training_history.history[history_keys[3]],
+            label=history_keys[3]
         )
         plt.plot(
             np.arange(0, N),
-            training_history.history["val_" + model_class.metrics],
-            label="val_" + model_class.metrics
+            training_history.history[history_keys[1]],
+            label=history_keys[1]
         )
 
         plt.title("Training history")
@@ -494,10 +496,10 @@ class DataLoader():
             model_data['labels'],
             model_data['type'],
             model_name=model_data['name'],
-            model_folder=model_path,
-            model=loaded_model
+            model_folder=model_path
         )
 
+        model_class.model = loaded_model
         model_class.batch_size = model_data['batch_size']
         model_class.epochs = model_data['epochs']
         model_class.algorithm = model_data['algorithm']

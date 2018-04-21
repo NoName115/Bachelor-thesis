@@ -217,7 +217,7 @@ class AngleGenerator():
         while True:
             batch_x = []
             batch_y = []
-            np.random.shufflepass(set_x)
+            np.random.shuffle(set_x)
             for i in range(0, batch_size):
                 image = set_x[np.random.randint(0, len(set_x))]
                 rotated, angle, label = Preprocessing.rotate_and_crop_image(

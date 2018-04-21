@@ -1,31 +1,29 @@
 from keras.optimizers import Adam, SGD
-from preprocessing import Preprocessor, Preprocessing, AngleGenerator
-from base import parse_arguments_training, angle_error
+from preprocessing import Preprocessor, Preprocessing, AngleGenerator, \
+                          ClassificationGenerator
+from base import parse_arguments_training, angle_error, Algorithm
 from printer import print_error
 from loader import DataLoader, DataSaver
-from models import LeNet, KerasBlog, MyModel, VGG16
+from models import *
 from evaluation import evaluate_model
 
 
-#  --dataset --model --type [--ep] [--bs]
+#  --dataset --model --alg [--ep] [--bs]
 args = parse_arguments_training()
 
-EPOCHS = 45 if (not args['ep']) else int(args['ep'])
-BS = 16 if (not args['bs']) else int(args['bs'])
 IMAGE_WIDTH = 128
 IMAGE_HEIGHT = 128
-MODEL_NAME = 'MyModel_' + args['type']
-ROTATE_ANGLE = 5
+MODEL_NAME = args['alg']
 
-# Load input images & split it
-if (args['type'] == "class"):
-    images, labels, labels_dict, path_list = DataLoader.load_images_from_folder(
-        args['dataset'],
-        IMAGE_WIDTH,
-        IMAGE_HEIGHT,
-        correct_dataset_size=True,
-    )
-elif (args['type'] == "angle"):
+ROTATE_ANGLE = 5
+EPOCHS = 45 if (not args['ep']) else int(args['ep'])
+BS = 16 if (not args['bs']) else int(args['bs'])
+
+alg = Algorithm.translate(args['alg'])
+
+
+# Load input data
+if (alg == Algorithm.CNN_A):
     images, labels, labels_dict, path_list = DataLoader.load_angle_images(
         args['dataset'],
         IMAGE_WIDTH,
@@ -34,36 +32,54 @@ elif (args['type'] == "angle"):
     )
     MODEL_NAME += '_' + str(ROTATE_ANGLE)
 else:
-    print_error("Invalid input argument - 'type'")
+    images, labels, labels_dict, path_list = DataLoader.load_images_from_folder(
+        args['dataset'],
+        IMAGE_WIDTH,
+        IMAGE_HEIGHT,
+        correct_dataset_size=True,
+    )
+
+# Using keras or scikit-learn
+using_keras = False
+if (alg == Algorithm.CNN_A or alg == Algorithm.CNN_C):
+    using_keras = True
 
 # Preprocessing
-prepro = Preprocessor()
-prepro.add_func(Preprocessing.normalize)
-#prepro.add_func(Preprocessing.grayscale)
-#prepro.add_func(Preprocessing.reshape)
-#prepro.add_func(Preprocessing.flat)
-images = prepro.apply(images)
+preproc = Preprocessor()
+preproc.set_datagen()
 
-# Datagen
-prepro.set_datagen()
+if (using_keras):
+    preproc.add_func(Preprocessing.normalize)
+    images = preproc.apply(images)
+else:
+    preproc.add_func(Preprocessing.normalize)
+    preproc.add_func(Preprocessing.flat)
 
-# Spliting data to training, validation & test
+# Split data only into training & test
 splited_data = DataLoader.split_data(
     images, labels, path_list,
-    num_classes=len(labels_dict), split_size=0.3
+    num_classes=len(labels_dict),
+    split_size=0.3,
+    use_to_categorical=True if (using_keras) else False,
+    get_test=True if (using_keras) else False,
 )
-train_x, train_y, train_p = splited_data[0:3]
-val_x, val_y, val_p = splited_data[3:6]
-test_x, test_y, test_p = splited_data[6:9]
 
-# Building model
-#model_class = KerasBlog(train_x.shape, labels_dict)
-#model_class = LeNet(train_x.shape, labels_dict)
-model_class = MyModel(
-    train_x.shape, labels_dict, args['type'],
-    model_name=MODEL_NAME
-)
-#model_class = VGG16(train_x.shape, labels_dict)
+train_x, train_y, train_p = splited_data[0:3]
+if (using_keras):
+    val_x, val_y, val_p = splited_data[3:6]
+    test_x, test_y, test_p = splited_data[6:9]
+else:
+    test_x, test_y, test_p = splited_data[3:6]
+
+# Data augmentation
+if (not using_keras):
+    train_x, train_y, train_p = ClassificationGenerator(
+        train_x, train_y, train_p,
+        1, preproc.get_datagen()
+    ).flow()
+    train_x = preproc.apply(train_x)
+
+# Build & train model
 
 '''
 # Best options
@@ -72,19 +88,27 @@ model_class = MyModel(
     - rmsprop/adam optimizer
 '''
 
-# Training model
-if (args['type'] == "class"):
+history = None
+if (alg == Algorithm.CNN_C):
+    model_class = MyModel(
+        train_x.shape, labels_dict, 'class',
+        model_name=MODEL_NAME
+    ).build()
     history = model_class.train(
         train_x, train_y,
         val_x, val_y,
-        datagen=prepro.get_datagen(),
+        datagen=preproc.get_datagen(),
         epochs=EPOCHS,
         batch_size=BS,
         loss='binary_crossentropy',
         optimizer='rmsprop',
         metrics=['accuracy']
     )
-else:
+elif (alg == Algorithm.CNN_A):
+    model_class = MyModel(
+        train_x.shape, labels_dict, 'angle',
+        model_name=MODEL_NAME
+    ).build()
     history = model_class.train(
         train_x, train_y,
         val_x, val_y,
@@ -93,14 +117,52 @@ else:
         batch_size=BS,
         loss='categorical_crossentropy',
         optimizer='rmsprop',
-        metrics=[angle_error]   #['categorical_accuracy']
+        metrics=[angle_error]
     )
+elif (alg == Algorithm.SVM):
+    model_class = SVM(
+        [None, IMAGE_WIDTH, IMAGE_HEIGHT, 3], labels_dict, 'class',
+        model_name=MODEL_NAME
+    ).build()
+    model_class.train(
+        train_x, train_y
+    )
+elif (alg == Algorithm.KMEANS):
+    model_class = KMeans(
+        [None, IMAGE_WIDTH, IMAGE_HEIGHT, 3], labels_dict, 'class',
+        model_name=MODEL_NAME
+    ).build()
+    model_class.train(
+        train_x, train_y
+    )
+elif (alg == Algorithm.MLP):
+    model_class = MLPerceptron(
+        [None, IMAGE_WIDTH, IMAGE_HEIGHT, 3], labels_dict, 'class',
+        model_name=MODEL_NAME
+    ).build(
+        solver='lbfgs', alpha=1e-5,
+        hidden_layer_sizes=(50,), random_state=1
+    )
+    model_class.train(
+        train_x, train_y
+    )
+else:
+    print_error("Unknown algorithm")
 
+# Save trained model
 DataSaver.save_model(
-    args["model"],
-    model_class, prepro,
+    args['model'],
+    model_class, preproc,
     training_history=history,
     with_datetime=True
 )
+
+# Evaluate trained model
+if (not using_keras):
+    test_x, test_y, test_p = ClassificationGenerator(
+        test_x, test_y, test_p,
+        1, preproc.get_datagen()
+    ).flow()
+    test_x = preproc.apply(test_x)
 
 evaluate_model(model_class, test_x, test_y, test_p)

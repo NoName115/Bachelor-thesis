@@ -1,3 +1,5 @@
+from printer import print_error
+
 import keras.backend as K
 import argparse
 
@@ -15,10 +17,17 @@ def parse_arguments_training():
         help="path where model will be saved",
     )
     ap.add_argument(
+        "--alg",
+        required=True,
+        help="type of algorithm for image classification",
+    )
+    '''
+    ap.add_argument(
         "--type",
         required=True,
         help="train classificator(class) or angle detector(angle)",
     )
+    '''
     ap.add_argument(
         "--ep",
         required=False,
@@ -83,6 +92,23 @@ def get_prediction(model_class, image):
 class Algorithm():
 
     CNN = 'Convolutial Neural Network'
+    CNN_C = CNN + ' Class'
+    CNN_A = CNN + ' Angle'
     MLP = 'Multi Layer Perceptron'
     SVM = 'Super Vector Machine'
-    KMEANS = 'K-means'
+    KMEANS = 'K-means Clusterring'
+
+    translate_dict = {
+        'cnnc': CNN_C,
+        'cnna': CNN_A,
+        'mlp': MLP,
+        'svm': SVM,
+        'kmeans': KMEANS,
+    }
+
+    @classmethod
+    def translate(self, in_type):
+        try:
+            return self.translate_dict[in_type]
+        except KeyError:
+            print_error('Invalid algorithm type')

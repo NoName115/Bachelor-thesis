@@ -14,7 +14,7 @@ class Model():
     __metaclass__ = ABCMeta
 
     def __init__(self, data_shape, labels_dict, model_type,
-                 model_name=None, model_folder='', model=None):
+                 model_name=None, model_folder=''):
         """Initalization of CNN model
 
         data_shape - (n, x, y, 1 or 3), shape of training data
@@ -41,73 +41,13 @@ class Model():
         if (K.image_data_format() == "channels_first"):
             self.input_shape = (self.depth, self.height, self.width)
 
-        if (not model):
-            self.model = self.build()
-        else:
-            self.model = model
-
     def set_model_folder(self, model_folder_path):
         self.model_folder = model_folder_path
 
-    def train(self, train_x, train_y, val_x=None, val_y=None,
-              batch_size=16, epochs=40, **kwargs):
+    @abstractmethod
+    def train(self, train_x, train_y):
         # Debug
-        print_info('Training model... ' + self.algorithm)
-
-        self.batch_size = batch_size
-        self.epochs = epochs
-
-        if (self.algorithm == Algorithm.CNN):
-            self.__train_CNN(
-                train_x, train_y, val_x, val_y,
-                batch_size, epochs,
-                **kwargs
-            )
-        elif (self.algorithm == Algorithm.SVM):
-            self.__train_SVM(train_x, train_y)
-        elif (self.algorithm == Algorithm.KMEANS):
-            self.__train_KMeans(train_x, train_y)
-        elif (self.algorithm == Algorithm.MLP):
-            self.__train_MLP(train_x, train_y)
-        else:
-            print_error("Unkown algorithm")
-
-    def __train_CNN(self, train_x, train_y, val_x, val_y,
-                    batch_size=16, epochs=40, **kwargs):
-        self.metrics = kwargs['metrics']
-
-        # Compile model
-        self.model.compile(
-            loss=kwargs['loss'],
-            optimizer=kwargs['optimizer'],
-            metrics=kwargs['metrics']
-        )
-
-        # Train model
-        if (datagen):
-            return self.model.fit_generator(
-                datagen.flow(train_x, train_y, batch_size=batch_size),
-                steps_per_epoch=int(ceil(len(train_x) / batch_size)),
-                epochs=epochs,
-                validation_data=datagen.flow(val_x, val_y, batch_size=batch_size),
-                validation_steps=int(ceil(len(val_x) / batch_size))
-            )
-        else:
-            return self.model.fit(
-                train_x, train_y,
-                batch_size=batch_size,
-                epochs=epochs,
-                validation_data=(val_x, val_y)
-            )
-
-    def __train_SVM(self, train_x, train_y):
-        self.model.fit(train_x, train_y)
-
-    def __train_KMeans(self, train_x, train_y):
-        self.model.fit(train_x, train_y)
-
-    def __train_MLP(self, train_x, train_y):
-        self.model.fit(train_x, train_y)
+        print_info("Training model... " + self.algorithm)
 
     @abstractmethod
     def build(self):
@@ -155,33 +95,86 @@ class MyModel(Model):
 
         model.add(Dense(self.num_of_classes, activation='softmax'))
 
-        return model
+        self.model = model
+        return self
+
+    def train(self, train_x, train_y, val_x, val_y, datagen,
+              loss, optimizer, metrics, batch_size=16, epochs=40):
+        super(MyModel, self).train(train_x, train_y)
+
+        self.batch_size = batch_size
+        self.epochs = epochs
+        self.metrics = metrics[0] if (type(metrics[0]) is str) else metrics[0].__name__.lower()
+
+        # Compile model
+        self.model.compile(
+            loss=loss,
+            optimizer=optimizer,
+            metrics=metrics
+        )
+
+        # Train model
+        if (datagen):
+            return self.model.fit_generator(
+                datagen.flow(train_x, train_y, batch_size=batch_size),
+                steps_per_epoch=int(ceil(len(train_x) / batch_size)),
+                epochs=epochs,
+                validation_data=datagen.flow(val_x, val_y, batch_size=batch_size),
+                validation_steps=int(ceil(len(val_x) / batch_size))
+            )
+        else:
+            return self.model.fit(
+                train_x, train_y,
+                batch_size=batch_size,
+                epochs=epochs,
+                validation_data=(val_x, val_y)
+            )
 
 
 class SVM(Model):
 
-    def build(self):
+    def build(self, **kwargs):
         self.algorithm = Algorithm.SVM
-        return svm.SVC(gamma=0.001) # Test default options
+        self.model = svm.SVC(**kwargs)
+        return self
 
+    def train(self, train_x, train_y, **kwargs):
+        super(SVM, self).train(train_x, train_y)
+        self.model.fit(
+            train_x, train_y, **kwargs
+        )
 
 class KMeans(Model):
 
-    def build(self):
+    def build(self, **kwargs):
         self.algorithm = Algorithm.KMEANS
-        return cluster.KMeans(n_clusters=len(self.labels_dict))
+        self.model = cluster.KMeans(
+            n_clusters=len(self.labels_dict),
+            **kwargs
+        )
+        return self
 
+    def train(self, train_x, train_y, **kwargs):
+        super(KMeans, self).train(train_x, train_y)
+        self.model.fit(
+            train_x, train_y, **kwargs
+        )
 
 class MLPerceptron(Model):
 
-    def build(self):
+    def build(self, **kwargs):
         self.algorithm = Algorithm.MLP
-        return neural_network.MLPClassifier(
-            solver='lbfgs', alpha=1e-5,
-            hidden_layer_sizes=(150,), random_state=1
+        self.model = neural_network.MLPClassifier(**kwargs)
+        return self
+
+    def train(self, train_x, train_y, **kwargs):
+        super(MLPerceptron, self).train(train_x, train_y)
+        self.model.fit(
+            train_x, train_y, **kwargs
         )
 
 
+'''
 class KerasBlog(Model):
 
     def build(self):
@@ -277,3 +270,4 @@ class VGG16(Model):
         model.add(Dense(self.num_of_classes, activation='softmax'))
 
         return model
+'''
