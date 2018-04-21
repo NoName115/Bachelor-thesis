@@ -1,4 +1,4 @@
-from base import parse_arguments_prediction
+from base import parse_arguments_prediction, Algorithm
 from printer import print_info, print_error
 from loader import DataLoader
 from evaluation import evaluate_model
@@ -16,9 +16,13 @@ model_class, preproc = DataLoader.load_model_data(
 )
 image_width = model_class.width
 image_height = model_class.height
-model_type = model_class.model_type
 threshold = int(args['th']) if (args['th']) else 5
-print_info("Model type - " + model_type)
+
+alg = model_class.algorithm
+if (alg == Algorithm.CNN):
+    alg += model_class.model_type
+
+print_info("Model algorithm - " + alg)
 
 # Predict one image
 if (args['image']):
@@ -29,6 +33,7 @@ if (args['image']):
         image_height
     )
 
+    image = image.reshape((1,) + image.shape)
     image = preproc.apply(image)
 
     evaluate_model(model_class, image, None, None, threshold)
@@ -36,15 +41,7 @@ if (args['image']):
 # Predict more images
 if (args['dataset']):
     print_info('Dataset prediction...')
-    if (model_type == "class"):
-        image_data, image_labels, _, path_list = DataLoader.load_images_from_folder(
-            args['dataset'],
-            image_width,
-            image_height,
-            labels_dict=model_class.labels_dict,
-            correct_dataset_size=False
-        )
-    elif (model_type == "angle"):
+    if (alg == Algorithm.CNN_A):
         image_data, image_labels, _, path_list = DataLoader.load_angle_images(
             args['dataset'],
             image_width,
@@ -52,7 +49,13 @@ if (args['dataset']):
             range(0, 360, 180)  # Not important
         )
     else:
-        print_error("Invalid model type")
+        image_data, image_labels, _, path_list = DataLoader.load_images_from_folder(
+            args['dataset'],
+            image_width,
+            image_height,
+            labels_dict=model_class.labels_dict,
+            correct_dataset_size=False
+        )
 
     image_data = preproc.apply(image_data)
 
@@ -61,14 +64,7 @@ if (args['dataset']):
 # Predict images from file
 if (args['file']):
     print_info('File prediction...')
-    if (model_type == "class"):
-        image_data, image_labels, _, path_list = DataLoader.load_images_from_file(
-            args['file'],
-            image_width,
-            image_height,
-            labels_dict=model_class.labels_dict
-        )
-    elif (model_type == "angle"):
+    if (alg == Algorithm.CNN_A):
         image_data, image_labels, path_list = DataLoader.load_images_from_file(
             args['file'],
             image_width,
@@ -76,7 +72,12 @@ if (args['file']):
             labels_dict=None
         )
     else:
-        print_error("Invalid model type")
+        image_data, image_labels, _, path_list = DataLoader.load_images_from_file(
+            args['file'],
+            image_width,
+            image_height,
+            labels_dict=model_class.labels_dict
+        )
 
     image_data = preproc.apply(image_data)
 

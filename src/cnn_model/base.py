@@ -92,8 +92,8 @@ def get_prediction(model_class, image):
 class Algorithm():
 
     CNN = 'Convolutial Neural Network'
-    CNN_C = CNN + ' Class'
-    CNN_A = CNN + ' Angle'
+    CNN_C = CNN + ' class'
+    CNN_A = CNN + ' angle'
     MLP = 'Multi Layer Perceptron'
     SVM = 'Super Vector Machine'
     KMEANS = 'K-means Clusterring'

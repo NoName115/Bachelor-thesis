@@ -13,12 +13,12 @@ def evaluate_model(model_class, test_x, test_y, test_p, threshold=5):
     if (model_class.algorithm == Algorithm.SVM):
         __evaluate_SVM(model_class, test_x, test_y, test_p)
     elif (model_class.algorithm == Algorithm.KMEANS):
-        __evalute_KMeans(model_class, test_x, test_y, test_p)
+        __evaluate_KMeans(model_class, test_x, test_y, test_p)
     elif (model_class.algorithm == Algorithm.MLP):
         __evaluate_MLP(model_class, test_x, test_y, test_p)
     elif (model_class.algorithm == Algorithm.CNN):
         if (model_class.model_type == "class"):
-            __evalute_classification(model_class, test_x, test_y, test_p)
+            __evaluate_classification(model_class, test_x, test_y, test_p)
         elif (model_class.model_type == "angle"):
             __evaluate_angle(model_class, test_x, test_p, threshold)
         else:
@@ -29,6 +29,10 @@ def evaluate_model(model_class, test_x, test_y, test_p, threshold=5):
 def __evaluate_SVM(model_class, test_x, test_y, test_p):
     print_info("Model SVM evaluation...")
 
+    if (test_x.shape[0] == 1):
+        __evaluate_image(model_class, test_x)
+        return
+
     testing_score = dict(
         (key, {'correct': [], 'wrong': []})
             for key in model_class.labels_dict
@@ -51,11 +55,15 @@ def __evaluate_SVM(model_class, test_x, test_y, test_p):
                 output_dict
             )
 
-    __save_evalution_class_results(model_class.model_folder, testing_score)
+    __save_evaluation_class_results(model_class.model_folder, testing_score)
 
-def __evalute_KMeans(model_class, test_x, test_y, test_p):
+def __evaluate_KMeans(model_class, test_x, test_y, test_p):
     print_info("Model KMeans evaluation...")
 
+    if (test_x.shape[0] == 1):
+        __evaluate_image(model_class, test_x)
+        return
+
     testing_score = dict(
         (key, {'correct': [], 'wrong': []})
             for key in model_class.labels_dict
@@ -78,11 +86,15 @@ def __evalute_KMeans(model_class, test_x, test_y, test_p):
                 output_dict
             )
 
-    __save_evalution_class_results(model_class.model_folder, testing_score)
+    __save_evaluation_class_results(model_class.model_folder, testing_score)
 
 def __evaluate_MLP(model_class, test_x, test_y, test_p):
     print_info("Model MLPerceptron evaluation...")
 
+    if (test_x.shape[0] == 1):
+        __evaluate_image(model_class, test_x)
+        return
+
     testing_score = dict(
         (key, {'correct': [], 'wrong': []})
             for key in model_class.labels_dict
@@ -105,26 +117,16 @@ def __evaluate_MLP(model_class, test_x, test_y, test_p):
                 output_dict
             )
 
-    __save_evalution_class_results(model_class.model_folder, testing_score)
+    __save_evaluation_class_results(model_class.model_folder, testing_score)
 
-def __evalute_classification(model_class, test_x, test_y, test_p):
+def __evaluate_classification(model_class, test_x, test_y, test_p):
     # Debug
     print_info('Model classification evaluation...')
 
-    if (len(test_x.shape) == 3):    # Image evaluation
-        __evalute_classification_image(model_class, test_x)
-    else:                           # Dataset evaluation
-        __evalute_classification_dataset(model_class, test_x, test_y, test_p)
+    if (test_x.shape[0] == 1):    # Image evaluation
+        __evaluate_image(model_class, test_x)
+        return
 
-def __evalute_classification_image(model_class, input_image):
-    input_image = input_image.reshape((1,) + input_image.shape)
-    print_info(get_prediction(model_class, input_image), 1)
-
-    cv2.imshow('Classification image', input_image[0])
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-def __evalute_classification_dataset(model_class, test_x, test_y, test_p):
     testing_score = dict(
         (key, {'correct': [], 'wrong': []})
             for key in model_class.labels_dict
@@ -146,9 +148,9 @@ def __evalute_classification_dataset(model_class, test_x, test_y, test_p):
         else:
             testing_score[switched_labels[label_idx]]['wrong'].append(output_dict)
 
-    __save_evalution_class_results(model_class.model_folder, testing_score)
+    __save_evaluation_class_results(model_class.model_folder, testing_score)
 
-def __save_evalution_class_results(model_folder_path, testing_score):
+def __save_evaluation_class_results(model_folder_path, testing_score):
     total_img = 0
     correct_img = 0
 
@@ -187,39 +189,10 @@ def __evaluate_angle(model_class, test_x, test_p, threshold):
     print_info('Model angle evaluation...')
     print_info('Threshold: ' + str(threshold), 1)
 
-    if (len(test_x.shape) == 3):    # Image evaluation
-        __evaluate_angle_image(model_class, test_x, threshold)
-    else:                           # Dataset evaluation
-        __evaluate_angle_dataset(model_class, test_x, test_p, threshold)
+    if (test_x.shape[0] == 1):    # Image evaluation
+        __evaluate_image(model_class, test_x, threshold)
+        return
 
-def __evaluate_angle_image(model_class, image, threshold):
-    # Rotate image & change shape to (1, x, y, depth)
-    rotated, angle, _ = Preprocessing.rotate_and_crop_image(
-        image, model_class.labels_dict
-    )
-    rotated = rotated.reshape((1,) + rotated.shape)
-
-    # Image prediction - {angle: change, ...}
-    result_all = get_prediction(model_class, rotated)
-    max_key = max(result_all, key=result_all.get)
-
-    # Calculate diff. angle
-    pred_angle = int(max_key)
-    diff_angle = calculate_diff_angle(angle, pred_angle)
-
-    output_dict = {
-        'correct': angle,
-        'predict': pred_angle,
-        'diff': diff_angle
-    }
-    print_info(output_dict, 1)
-    print_info("Threshold: " + str(threshold), 1)
-
-    cv2.imshow('Angle image', rotated[0])
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-def __evaluate_angle_dataset(model_class, test_x, test_p, threshold):
     testing_score = {'correct': [], 'wrong': []}
     angle_range = list(model_class.labels_dict.keys())
 
@@ -250,9 +223,28 @@ def __evaluate_angle_dataset(model_class, test_x, test_p, threshold):
         else:                           # Wrong prediction
             testing_score['wrong'].append(output_dict)
 
-    __save_evalution_angle_results(model_class.model_folder, testing_score)
+    __save_evaluation_angle_results(model_class.model_folder, testing_score)
 
-def __save_evalution_angle_results(model_folder_path, testing_score):
+def __evaluate_image(model_class, image, threshold=None):
+    # Prediction
+    if (model_class.algorithm == Algorithm.CNN):
+        result_all = get_prediction(model_class, image)
+        prediction = max(result_all, key=result_all.get)
+        prediction = model_class.labels_dict[prediction]
+    else:
+        prediction = list(model_class.model.predict(image))[0]
+
+    switched_labels = dict((y,x) for x,y in model_class.labels_dict.items())
+
+    print_info("Labels: " + str(switched_labels), 1)
+
+    if (model_class.algorithm == Algorithm.CNN and
+       model_class.model_type == 'angle'):
+        print_info("Threshold: " + str(threshold), 1)
+
+    print_info("Prediction:\t" + str(switched_labels[prediction]) + '\n', 1)
+
+def __save_evaluation_angle_results(model_folder_path, testing_score):
     # Print short summary to stdout
     path_sum = len(testing_score['correct']) + len(testing_score['wrong'])
     print_info(
@@ -291,7 +283,7 @@ def __save_log_files(model_folder_path, testing_score, path_list):
         os.mkdir(logs_folder)
 
     # Debug
-    print_info('Testing details in folder: ' + logs_folder, 1)
+    print_info('Testing details in folder: ' + logs_folder + '\n', 1)
 
     summary_file = open(logs_folder + 'summary.json', 'w')
     summary_file.write(
