@@ -32,7 +32,7 @@ if (alg == Algorithm.CNN_A):
         range(0, 360, ROTATE_ANGLE),
         angle_type=[ROTATION_TYPE]
     )
-    MODEL_NAME += '_' + str(ROTATE_ANGLE)
+    MODEL_NAME += '_' + ROTATION_TYPE + "-" + str(ROTATE_ANGLE)
 else:
     images, labels, labels_dict, path_list = DataLoader.load_images_from_folder(
         args['dataset'],
@@ -109,7 +109,7 @@ if (alg == Algorithm.CNN_C):
 elif (alg == Algorithm.CNN_A):
     model_class = MyModel(
         train_x.shape, labels_dict, 'angle',
-        model_name=MODEL_NAME
+        model_name=MODEL_NAME, rotation_type=ROTATION_TYPE
     ).build()
     history = model_class.train(
         train_x, train_y,
@@ -167,4 +167,4 @@ if (not using_keras):
     ).flow()
     test_x = preproc.apply(test_x)
 
-evaluate_model(model_class, test_x, test_y, test_p)
+evaluate_model(model_class, test_x, test_y, test_p, rotation_type=ROTATION_TYPE)
