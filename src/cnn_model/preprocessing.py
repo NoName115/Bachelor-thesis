@@ -3,7 +3,7 @@ from keras.utils import to_categorical
 from skimage.color import rgb2grey
 from sklearn.utils import shuffle
 from imutils import rotate_bound
-from printer import print_info
+from printer import print_info, print_warning, print_error
 from cv2 import resize
 
 import numpy as np
@@ -124,6 +124,48 @@ class Preprocessing():
         return label
 
     @staticmethod
+    def rotate_yaw_image(image, label, labels_dict):
+        angle = label * (360 / len(labels_dict))
+
+        # Horizontal flip, no effect on angle
+        if (np.random.random() < 0.5):
+            image = np.flip(image, 0)
+
+        # Vertical flip
+        if (np.random.random() < 0.5):
+            image = np.flip(image, 1)
+            if (270 <= angle <= 359):
+                angle = abs(angle - 540)
+            elif (0 <= angle <= 90):
+                angle = abs(angle - 180)
+            else:
+                print_warning("Invalid angle " + str(angle))
+
+        new_label = Preprocessing.get_correct_angle_label(angle, labels_dict)
+        return image, angle, new_label
+
+    @staticmethod
+    def rotate_pitch_image(image, label, labels_dict):
+        angle = label * (360 / len(labels_dict))
+
+        # Horizontal flip
+        if (np.random.random() < 0.5):
+            image = np.flip(image, 0)
+            if (270 <= angle <= 359):
+                angle = 270 - angle + 270
+            elif (0 <= angle <= 90):
+                angle = abs(angle - 180)
+            else:
+                print_warning("Invalid angle " + str(angle))
+
+        # Vertical flip, no effect on angle
+        if (np.random.random() < 0.5):
+            image = np.flip(image, 1)
+
+        new_label = Preprocessing.get_correct_angle_label(angle, labels_dict)
+        return image, angle, new_label
+
+    @staticmethod
     def rotate_and_crop_image(image, labels_dict):
         """Rotate input image by random range & crop black egdes
 
@@ -218,24 +260,41 @@ class Preprocessing():
             bb_h - 2 * y
         )
 
-import cv2
 
 class AngleGenerator():
 
-    def __init__(self, labels_dict):
+    def __init__(self, labels_dict, rotation_type):
         self.angle_range = list(labels_dict.keys())
         self.labels_dict = labels_dict
+        self.rotation_type = rotation_type
 
-    def flow(self, set_x, _, batch_size):
+    def flow(self, set_x, set_y, batch_size):
         while True:
             batch_x = []
             batch_y = []
-            np.random.shuffle(set_x)
+            set_x, set_y = shuffle(set_x, set_y, random_state=42)
+
+            #np.random.shuffle(set_x)
             for i in range(0, batch_size):
-                image = set_x[np.random.randint(0, len(set_x))]
-                rotated, angle, label = Preprocessing.rotate_and_crop_image(
-                    image, self.labels_dict
-                )
+                random_indx = np.random.randint(0, len(set_x))
+                image = set_x[random_indx]
+                label = np.argmax(set_y[random_indx])
+
+                if (self.rotation_type == 'roll'):
+                    rotated, angle, label = Preprocessing.rotate_and_crop_image(
+                        image, self.labels_dict
+                    )
+                elif (self.rotation_type == 'pitch'):
+                    rotated, angle, label = Preprocessing.rotate_pitch_image(
+                        image, label, self.labels_dict
+                    )
+                elif (self.rotation_type == 'yaw'):
+                    rotated, angle, lable = Preprocessing.rotate_yaw_image(
+                        image, label, self.labels_dict
+                    )
+                else:
+                    print_error("Invalid rotation type " + str(rotation_type))
+
                 batch_x.append(rotated)
                 batch_y.append(label)
 

@@ -15,7 +15,7 @@ IMAGE_WIDTH = 128
 IMAGE_HEIGHT = 128
 MODEL_NAME = args['alg']
 
-ANGLE_TYPE = 'roll'
+ROTATION_TYPE = 'yaw'
 ROTATE_ANGLE = 5
 EPOCHS = 45 if (not args['ep']) else int(args['ep'])
 BS = 16 if (not args['bs']) else int(args['bs'])
@@ -30,7 +30,7 @@ if (alg == Algorithm.CNN_A):
         IMAGE_WIDTH,
         IMAGE_HEIGHT,
         range(0, 360, ROTATE_ANGLE),
-        angle_type=[ANGLE_TYPE]
+        angle_type=[ROTATION_TYPE]
     )
     MODEL_NAME += '_' + str(ROTATE_ANGLE)
 else:
@@ -114,7 +114,7 @@ elif (alg == Algorithm.CNN_A):
     history = model_class.train(
         train_x, train_y,
         val_x, val_y,
-        datagen=AngleGenerator(labels_dict),
+        datagen=AngleGenerator(labels_dict, ROTATION_TYPE),
         epochs=EPOCHS,
         batch_size=BS,
         loss='categorical_crossentropy',
