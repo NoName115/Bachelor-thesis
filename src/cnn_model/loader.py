@@ -17,6 +17,7 @@ import json
 import glob
 import cv2
 import os
+import re
 
 
 MODEL_SETTINGS_FILE = 'settings.json'
@@ -234,14 +235,15 @@ class DataLoader():
 
     @staticmethod
     def load_images_from_folder(folder_path, width, height, labels_dict={},
-                                create_labels=True, correct_dataset_size=True):
+                                create_labels=True, correct_dataset_size=True,
+                                angle_images=False):
         # Correction cant be done with no labels
         if (correct_dataset_size and not create_labels):
             correct_dataset_size = False
 
         # Create labels_dict
         labels_dict_out = None
-        if (create_labels or labels_dict):
+        if (create_labels or labels_dict) and (not angle_images):
             print_info("Creating category dictionary...")                
             labels_dict_out = dict(
                 (category, i) for i, category in enumerate(
@@ -249,6 +251,9 @@ class DataLoader():
                 )
             ) if (not labels_dict) else labels_dict
             print_info("Categories: " + str(labels_dict_out), 1)
+
+        if (angle_images):
+            labels_dict_out = labels_dict
 
         # Correct dataset size
         max_images = 0
@@ -266,20 +271,22 @@ class DataLoader():
             image_paths, width, height,
             labels_dict=labels_dict_out,
             correct_dataset_size=correct_dataset_size,
-            max_images=max_images
+            max_images=max_images,
+            angle_images=angle_images,
         )
 
     @staticmethod
     def __load_images_by_path(image_paths, width, height, labels_dict=None,
-                              correct_dataset_size=False, max_images=0):
+                              correct_dataset_size=False, max_images=0,
+                              angle_images=False):
         print_info("Loading input dataset...")
 
         # Initialize data variables
-        if (labels_dict):
+        image_labels = []
+        if (labels_dict and not angle_images):
             num_of_images_per_category = dict(
                 (label, 0) for label in labels_dict
             )
-            image_labels = []
 
         image_data = []
         path_list = []
@@ -287,7 +294,7 @@ class DataLoader():
 
         for path in image_paths:
             # Load image label
-            if (labels_dict):
+            if (labels_dict and not angle_images):
                 label = path.split(os.path.sep)[-2]
 
                 # Correct dataset size
@@ -305,9 +312,19 @@ class DataLoader():
                 continue
 
             # Labels operations
-            if (labels_dict):
+            if (labels_dict and not angle_images):
                 image_labels.append(labels_dict[label])
                 num_of_images_per_category[label] += 1
+
+            # Load label from path
+            if (labels_dict and angle_images):
+                angle_type, image_name = path.split(os.path.sep)[-2:]
+                angle_char = angle_type[0]
+                axis = re.search(angle_char + '(\d+\.\d+)', image_name)
+                angle = int(axis_p.groups()[0])
+                image_labels.append(
+                    Preprocessing.get_correct_angle_label(angle, labels_dict)
+                )
 
             # Add path of loaded image
             path_list.append(path)
@@ -329,7 +346,7 @@ class DataLoader():
         image_data = np.array(image_data, dtype="float32")
         path_list = np.array(path_list)
 
-        if (labels_dict):
+        if (labels_dict and not angle_images):
             image_labels = np.array(image_labels)
 
             # Debug
@@ -346,23 +363,43 @@ class DataLoader():
 
             return (image_data, image_labels, labels_dict, path_list)
         else:
+            image_labels = np.array(image_labels)
+
             print_info(
                 "Loaded " + str(len(image_data)) + " images",
                 1
             )
 
-            return (image_data, [0] * len(image_data), path_list)
+            return (image_data, image_labels, path_list)
+            #return (image_data, [0] * len(image_data), path_list)
 
     @staticmethod
-    def load_angle_images(folder_path, width, height, angle_range):
-        image_data, image_labels, image_paths = DataLoader.load_images_from_folder(
-            folder_path, width, height,
-            create_labels=False
-        )
-
+    def load_angle_images(folder_path, width, height, angle_range, angle_type=[]):
         labels_dict = dict(
             (angle, i) for i, angle in enumerate(angle_range)
         )
+
+        if ('pitch' in angle_type):
+            image_data, image_labels, image_paths = DataLoader.load_images_from_folder(
+                folder_path + "pitch/", width, height,
+                labels_dict=labels_dict
+                create_labels=False,
+                angle_images=True
+            )
+        if ('roll' in angle_type):
+            image_data, image_labels, image_paths = DataLoader.load_images_from_folder(
+                folder_path + "roll/", width, height,
+                labels_dict=labels_dict
+                create_labels=False,
+                angle_images=True
+            )
+        if ('yaw' in angle_type):
+            image_data, image_labels, image_paths = DataLoader.load_images_from_folder(
+                folder_path + "yaw/", width, height,
+                labels_dict=labels_dict
+                create_labels=False,
+                angle_images=True
+            )
 
         return (image_data, image_labels, labels_dict, image_paths)
 

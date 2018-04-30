@@ -3,6 +3,15 @@
 *test.py
 .pytest_cache
 
+# 3D models
+3d_models/
+*.g3db
+*.zip
+*.obj
+*.mtl
+*.blend*
+*.dae
+
 # All images
 *.jpg
 *.JPG
@@ -10,6 +19,7 @@
 *.JPEG
 *.png
 *.gif
+*.tga
 
 # Models
 /models/
