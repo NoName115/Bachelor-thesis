@@ -3,23 +3,9 @@
 *test.py
 .pytest_cache
 
-# 3D models
-3d_models/
-*.g3db
-*.zip
-*.obj
-*.mtl
-*.blend*
-*.dae
-
 # All images
-*.jpg
-*.JPG
-*.jpeg
-*.JPEG
-*.png
-*.gif
-*.tga
+dataset/
+unsorted_dataset/
 
 # Models
 /models/
