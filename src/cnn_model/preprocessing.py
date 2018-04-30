@@ -117,7 +117,11 @@ class Preprocessing():
 
     @staticmethod
     def get_correct_angle_label(rand_angle, labels_dict):
-        return round(rand_angle / (360 / len(labels_dict)))
+        label = round(rand_angle / (360 / len(labels_dict)))
+        # Case when 359 / 5 = 72, array max indx is 71
+        if (label == len(labels_dict)):
+            label = 0
+        return label
 
     @staticmethod
     def rotate_and_crop_image(image, labels_dict):
@@ -126,13 +130,9 @@ class Preprocessing():
         Return rotated_image, angle, label
         """
         rand_angle = np.random.randint(0, 360)
-        #label = round(rand_angle / (360 / len(labels_dict)))
         label = Preprocessing.get_correct_angle_label(
             rand_angle, labels_dict
         )
-        # Case when 359 / 5 = 72, array max indx is 71
-        if (label == len(labels_dict)):
-            label = 0
 
         # Vertical flip
         if (np.random.random() < 0.5):

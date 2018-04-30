@@ -456,6 +456,8 @@ class DataLoader():
                 1
             )
 
+        print(train_y)
+
         if (use_to_categorical):
             train_y = to_categorical(train_y, num_classes=num_classes)
             val_y = to_categorical(val_y, num_classes=num_classes)
