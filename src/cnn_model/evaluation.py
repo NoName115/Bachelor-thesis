@@ -320,7 +320,7 @@ if (__name__ == "__main__"):
 
     alg = model_class.algorithm
     if (alg == Algorithm.CNN):
-        alg += model_class.model_type
+        alg += ' ' + model_class.model_type
 
     print_info("Model algorithm - " + alg)
 
@@ -364,6 +364,7 @@ if (__name__ == "__main__"):
     # Predict images from file
     if (args['file']):
         print_info('File prediction...')
+        print("ALG: " + alg)
         if (alg == Algorithm.CNN_A):
             image_data, image_labels, path_list = DataLoader.load_images_from_file(
                 args['file'],
