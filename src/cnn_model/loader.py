@@ -19,6 +19,10 @@ import cv2
 import os
 import re
 
+a = {
+    'a': 2,
+    'b': 3
+}
 
 MODEL_SETTINGS_FILE = 'settings.json'
 MODEL_BINARY_FILE = 'model.h5'
