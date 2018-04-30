@@ -130,20 +130,25 @@ class Preprocessing():
         Return rotated_image, angle, label
         """
         rand_angle = np.random.randint(0, 360)
-        label = Preprocessing.get_correct_angle_label(
-            rand_angle, labels_dict
-        )
 
-        # Vertical flip
+        # Horizonal flip
         if (np.random.random() < 0.5):
             image = np.flip(image, 0)
 
+        # WARNING
+        # Image is rotated to minus angle
         rotated = Preprocessing.__crop_rotated_image(
             rotate_bound(image, rand_angle),
             rand_angle,
             image.shape[0],
             image.shape[1]
         )
+
+        rand_angle = 360 - rand_angle
+        label = Preprocessing.get_correct_angle_label(
+            rand_angle, labels_dict
+        )
+
         return rotated, rand_angle, label
 
     @staticmethod
@@ -213,6 +218,7 @@ class Preprocessing():
             bb_h - 2 * y
         )
 
+import cv2
 
 class AngleGenerator():
 
@@ -230,7 +236,6 @@ class AngleGenerator():
                 rotated, angle, label = Preprocessing.rotate_and_crop_image(
                     image, self.labels_dict
                 )
-
                 batch_x.append(rotated)
                 batch_y.append(label)
 
