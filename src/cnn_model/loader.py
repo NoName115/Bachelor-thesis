@@ -321,7 +321,7 @@ class DataLoader():
                 angle_type, image_name = path.split(os.path.sep)[-2:]
                 angle_char = angle_type[0]
                 axis = re.search(angle_char + '(\d+\.\d+)', image_name)
-                angle = int(axis_p.groups()[0])
+                angle = int(float(axis.groups()[0]))
                 image_labels.append(
                     Preprocessing.get_correct_angle_label(angle, labels_dict)
                 )
@@ -382,21 +382,21 @@ class DataLoader():
         if ('pitch' in angle_type):
             image_data, image_labels, image_paths = DataLoader.load_images_from_folder(
                 folder_path + "pitch/", width, height,
-                labels_dict=labels_dict
+                labels_dict=labels_dict,
                 create_labels=False,
                 angle_images=True
             )
         if ('roll' in angle_type):
             image_data, image_labels, image_paths = DataLoader.load_images_from_folder(
                 folder_path + "roll/", width, height,
-                labels_dict=labels_dict
+                labels_dict=labels_dict,
                 create_labels=False,
                 angle_images=True
             )
         if ('yaw' in angle_type):
             image_data, image_labels, image_paths = DataLoader.load_images_from_folder(
                 folder_path + "yaw/", width, height,
-                labels_dict=labels_dict
+                labels_dict=labels_dict,
                 create_labels=False,
                 angle_images=True
             )

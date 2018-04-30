@@ -29,6 +29,7 @@ if (alg == Algorithm.CNN_A):
         IMAGE_WIDTH,
         IMAGE_HEIGHT,
         range(0, 360, ROTATE_ANGLE),
+        angle_type=['pitch']
     )
     MODEL_NAME += '_' + str(ROTATE_ANGLE)
 else:
