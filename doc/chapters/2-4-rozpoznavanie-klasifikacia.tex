@@ -2,7 +2,10 @@
 \section{Rozpoznávanie a klasifikácia}
 \label{sec:klasifikacia}
 
-%\# TODO - dopisať čo je to Klasifikácia
+Ako bolo spomenuté v úvode v kapitole \ref{sec:detekcia}, klasifikácie je jeden z aspektov pri detekcií a rozpoznávani objektov v obraze.
+V tejto podkapitole bude podrobne popísaných niekoľko algoritmou pomocou ktorých je možné objekty z obrazu klasifikovať do kategórií.
+
+
 
 \subsection{K-Nearest-Neighbor}
 \textit{k}-Nearest Neighbor je algoritmus, ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácií,
@@ -11,7 +14,7 @@ Algoritmus je pamäťovo náročný [eng. memory-based] a nepotrebuje žiaden tr
 Pre jeho fungovanie nie je potrebný žiaden explicitný postup trénovania, okrem zberu vektorov príznakov s označeniami tried do ktorých patria.
 
 Klasifikácia dát prebieha v 2 krokoch: nájdenie \textit{k} najbližších susedov spomedzi trénovaných dát a
-vykonanie ''väčšinové hlasovanie'' medzi nájdenými susedmi pre priradenie najčastejšie sa vykytovaného označenia triedy.
+vykonanie ''väčšinového hlasovania'' medzi nájdenými susedmi pre priradenie najčastejšie sa vykytovaného označenia triedy.
 
 Nech $\{ (x_i, y_i); i = 1, 2, \dots, n \}$ je množína trénovacích dát, kde $x_i$ je vektor príznakov a $y_i$ je názov triedy do ktorej patrí vektor $x_i$.
 Predpokladáme že každé $x_i$ je v určitom multidimenzionálnom priestore príznakov s metrikov $P$ a $y_i \in \{ 1, 2, \dots, l \}$, kde $y_i$ je číslo odpovedajúcej triedy.
@@ -51,6 +54,7 @@ V ukážke je vidno že v prípade 1-NN klasifikátora, niektré body vytváraj�
 \end{figure}
 
 
+
 \subsection{Support Vector Machines}
 Support Vector Machines (SVM's) sú metódy učenia používané pre binárnu klasifikáciu.
 Základnou myšlienkou je nájdenie hyper--roviny, ktorá perfektne oddelí \textit{d}--dimenzionálne dáta do dvoch tried\cite{prop:IntroductionToSVM}.
@@ -86,7 +90,7 @@ Ostatné body sú ignorované\cite{prop:SupervisedMachineLearning}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{SVM_max_margin}
+	\includegraphics[width=0.8\textwidth]{SVM_max_margin}
 	\caption{Maximálne rozpätie\cite{prop:SupervisedMachineLearning}}
 	\label{pic:SVMMAxMargin}
 \end{figure}
@@ -128,6 +132,8 @@ Zoznam populárnych jadier\cite{prop:SupervisedMachineLearning}:
 \end{figure}
 
 
+
+\begin{comment}
 \subsection{Stochastic Gradient Descent}
 Výpočtova zložitosť algoritmov učenia sa stáva kritickým obmedzujúcim faktorom, pri používaní veľmi rozsiahlých množín vstupným dát.
 Preto sa pre veľké množiny dát začal používať Stochastic Gradient Descent\cite{prop:StochasticGradientDescent}, ktorý tieto výpočty dokáže optimalizovať.
@@ -154,16 +160,18 @@ Namiesto počítania gradientu pre $E_n(f_n)$, každá iterácia odhadne tento g
 \begin{equation}
     w_{t+1} = w_t - \gamma \bigtriangledown_w Q(z_t, w_t)
 \end{equation}
+\end{comment}
+
 
 
 \subsection{Neurónové siete}
-Neurónová sieť (NN) je masívne paralelný procesor, ktorý má sklon k uchovávaniu experimentálnych znalostí a ich ďalšieho využívania.
+Neurónová sieť [eng. neural network] (NN) je masívne paralelný procesor, ktorý má sklon k uchovávaniu experimentálnych znalostí a ich ďalšieho využívania.
 Napodobňuje ľudský mozog v dvoch aspektoch \cite{odkaz:NNIntroduction}:
 \begin{enumerate}
-	\item[$\bullet$] poznatky sú zbierané v NN počas učenia
+	\item[$\bullet$] poznatky sú zbierané v neurónovej sieti počas učenia
 	\item[$\bullet$] medzineurónové spojenia (synaptické váhy - SV) sú využívané na ukladanie znalostí
 \end{enumerate}
-Toto je jedna z definícii NN, akceptovaná NN komunitou.
+Toto je jedna z definícii neurónových sieti, akceptovaná komunitou.
 Je zrejmé, že inšpirácia ku vzniku NN prišla z biologických systémov.
 Na prvý dojem vysoko abstraktná disciplína nachádza množstvo aplikácii v praxi a stáva sa prostriedkom pre riešenie problémou v širokom spektre odborných oblastí\cite{odkaz:NNIntroduction}.
 
@@ -246,8 +254,8 @@ Funkcia sigmoid sa historicky často používala pretože má peknú interpretá
 V praxi, sa sigmoid používa už len zriedka.
 Pretože ma 2 hlavné nevýhody\cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
 \begin{enumerate}
-    \item[$\bullet$] \textbf{Zabíjanie gradientov} - keď sa aktivácia neurónu nasýti na obidvoch koncoch 0 alebo 1, gradient v týchto oblastiach je takmer nulový.
-    Tento gradient sa používa pri spätnej propagácií[eng. backpropagation] v neurónových sietach. Preto ak je miestny gradient veľmi malý, takmer žiaden signál
+    \item[$\bullet$] \textbf{Zabíjanie prechodov [eng. gradients]} - keď sa aktivácia neurónu nasýti na obidvoch koncoch 0 alebo 1, gradient v týchto oblastiach je takmer nulový.
+    Tento gradient sa používa pri spätnej propagácií [eng. backpropagation] v neurónových sietach. Preto ak je miestny gradient veľmi malý, takmer žiaden signál
     neurónom nepreteká k jeho váham a rekurzívne k jeho dátam. Rovnako ak pri inicializácií sú váhy príliš veľké, väčsina neurónov by bola nasýtených a sieť by sa sotva niečo učila.
     \item[$\bullet$] \textbf{Výstupy nie sú centrované na nulu} - to má dôsledky na dynamiku pri klesaní gradient-u, pretože ak sú údaje prichádzajúce do neurónu vždy kladné,
     potom gradient na váhach $w$ nadobudne, počas spätnej propagáciie, všetky hodnoty pozitívne alebo negatívne (v závisloti na gradient-e celého výrazu).
@@ -309,11 +317,11 @@ Na obrázku \ref{pic:NeuralNetworkArchitecture} nižšie sú uvedené dve topol�
 \end{figure}
 
 Vačšie neurónové sieťe dokážu reprezentovať komplikovanejšie funkcie.
-Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2 tried (červená, zelená) použitím rôznych veľkostí neurónových sieti.
+Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2 tried (červená, zelená) použitím rôzneho počtu vrstiev v neurónovej sieti.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{layer_sizes}
-	\caption{Zobrazenie klasifikácie dát rôznymi veľkostami NN \cite{odkaz:ConvolutionalNeuralNetworkCS231n}}
+	\caption{Zobrazenie klasifikácie dát rôzne veľkými neurónovými sieťami \cite{odkaz:ConvolutionalNeuralNetworkCS231n}}
 	\label{pic:XNNLayerExample}
 \end{figure}
 
@@ -321,7 +329,7 @@ Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2
 Konvolučné neurónové siete [eng. convolutional neural networks] (CNNs), sú špeciálnym prípadom neurónových sieti pre spracovanie
     dát, ktoré majú známu topológiu podobnú mriežke.
 Pre príklad je možné uviesť 2-dimenzionálne dáta ako sieť pixelov pri spracovaní obrázkov.
-Názov týchto sieti \textit{konvolučné} indikuje používanie matematickej operácie zvanej konvolúcia[eng. convolution]\cite{book:Goodfellow-et-al-2016}.
+Názov týchto sieti \textit{konvolučné} indikuje používanie matematickej operácie zvanej konvolúcia [eng. convolution]\cite{book:Goodfellow-et-al-2016}.
 
 \subsubsection{Konvolúcia}
 Vo svojej najvšeobecnejšej podobe, konvolúcia je operácia dvoch funkcií s reálnymi hodnotami argumentov.
@@ -329,8 +337,8 @@ Operácia konvolúcie je typicky označovaná hviezdičkou:
 \begin{equation}
     s(t) = (x * w)(t)
 \end{equation}
-V terminilógií konvolučnej siete je prvý argument (v tomto príklade funkcie $x$) sa často označuje ako vstup a druhý
-    argument (v tomto príklade funkcia $w$) ako jadro[eng. kernel]. Výstup je niekedy označovaný ako mapa príznakov.
+V terminilógií konvolučnej siete sa prvý argument (v tomto príklade funkcie $x$) často označuje ako vstup a druhý
+    argument (v tomto príklade funkcia $w$) ako jadro [eng. kernel]. Výstup je niekedy označovaný ako mapa príznakov.
 
 Bežne konvolúciu používame na viac ako jednej osy súčasne.
 Pri použítí 2-dimenzionálneho obrázku $I$ ako náš vstup, budeme chcieť použiť aj 2-dimenzionálne jadro $K$\cite{book:Goodfellow-et-al-2016}:
@@ -345,8 +353,8 @@ Avšak množstvo knižníc, ktoré implementujú neurónové siete, používajú
 
 \subsubsection{Architektúra}
 CNN využívajú skutočnosti, že vstup pozostáva z obrázkov.
-Na rozdiel od obyčajnej neurónovej siete majú vrstvy CNN neuróny usporiadané v troch rozmeroch: šírka, výška, hĺbka[eng. width, height, depth].
-Hĺbka odkazuje na 3.dimenziu aktivačného zväzku[eng. activation volume], nie na celkovú hĺbku neurónovej siete.
+Na rozdiel od obyčajnej neurónovej siete majú vrstvy CNN neuróny usporiadané v troch rozmeroch: šírka, výška, hĺbka [eng. width, height, depth].
+Hĺbka odkazuje na 3.dimenziu aktivačného zväzku [eng. activation volume], nie na celkovú hĺbku neurónovej siete.
 Neuróny vo vrtsve budú prepojené iba k malej oblasti vrstvy pred ňou, namiesto plného prepojenia \cite{odkaz:CNNArchitecture}.
 
 Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
@@ -357,6 +365,7 @@ Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
     \item[$\bullet$] \textbf{Pooling layer} - táto vrstva je obvykle vkladaná ako spojenie medzi dvoma konvolučnímy vrstvami.
     Jej funkciou je postupné znižovanie priestorovej veľkosti reprezentovaného vstupu, pre zníženie množstva parametrov a výpočtov v sieti, a teda aj kontroly pretrénovania.
     \item[$\bullet$] \textbf{Fully-Connected layer} - rovnako ako v obvyklých neurónových sietach, je to vrstva kde všetky neuróny sú prepojené s predchádzajucou vrstvou.
+    \item[$\bullet$] \textbf{Dropout layer} - % TODO
 \end{enumerate}
 
 \begin{figure}[H]
@@ -365,3 +374,14 @@ Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
 	\caption{Príklad architektúry konvolučnej neurónovej siete \cite{odkaz:CNNArchitecture}}
 	\label{pic:CNNExample}
 \end{figure}
+
+\subsection{Populárne architektúry}
+Kedže konvolučné neurónove siete už existujú niekoľko rokov a komunita sa snaží o ich neustále zlepšovanie, tak sú organizované
+    celosvetové súťaže na ktorých sa objaví architektúra siete ktorá dosahuje veľmi dobré výsledky a tak ju je možné považovať ako
+    odporúčanie pre voľbu vhodnej architektúry.
+
+\textbf{AlexNet} (2012) Je jedna z prvých CNN. Táto sieť dala základ pre stavbu budúcich architektúr, zároveň bola použitá
+    pre výhru v súťaži 2012 ILSVRC (ImageNet Large-Scale Visual Recognition Challenge).
+V porovnaní s modernými architekturámi bola táto veľmi jednoduchá, tvorilo ju 5 konvolučných vrstiev, pooling vrstviev, dropout vrstiev a 3 plne prepojených vrstiev.
+Siet bola použitá pre klasifikáciu objektov do 1000 kategórií.
+
