@@ -167,4 +167,4 @@ if (not using_keras):
     ).flow()
     test_x = preproc.apply(test_x)
 
-evaluate_model(model_class, test_x, test_y, test_p, rotation_type=ROTATION_TYPE)
+evaluate_model(model_class, test_x, test_y, test_p)

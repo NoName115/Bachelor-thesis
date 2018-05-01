@@ -5,6 +5,7 @@ from keras import backend as K
 from abc import ABCMeta, abstractmethod
 from numpy import ceil
 from sklearn import svm, cluster, neural_network
+from sklearn.neighbors import KNeighborsClassifier
 from printer import print_info
 from base import Algorithm
 
@@ -149,9 +150,14 @@ class KMeans(Model):
 
     def build(self, **kwargs):
         self.algorithm = Algorithm.KMEANS
+        '''
         self.model = cluster.KMeans(
             n_clusters=len(self.labels_dict),
             **kwargs
+        )
+        '''
+        self.model = KNeighborsClassifier(
+            n_neighbors=5,
         )
         return self
 

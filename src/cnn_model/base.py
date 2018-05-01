@@ -123,7 +123,7 @@ class Algorithm():
     CNN_A = CNN + ' angle'
     MLP = 'Multi Layer Perceptron'
     SVM = 'Super Vector Machine'
-    KMEANS = 'K-means Clusterring'
+    KMEANS = 'K-means Classification'
 
     translate_dict = {
         'cnnc': CNN_C,
