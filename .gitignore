@@ -145,8 +145,7 @@ ENV/
 
 # these rules might exclude image files for figures etc.
 *.ps
-*.eps
-*.pdf
+xkolcu00*.pdf
 
 ## Build tool auxiliary files:
 *.fdb_latexmk
