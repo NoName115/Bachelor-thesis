@@ -117,6 +117,7 @@ class DataSaver():
                     'name': model_name,
                     'type': model_class.model_type,
                     'algorithm': model_class.algorithm,
+                    'rotation_type': model_class.rotation_type,
                     'width': model_class.width,
                     'height': model_class.height,
                     'labels': model_class.labels_dict,
@@ -227,14 +228,16 @@ class DataLoader():
         )
 
     @staticmethod
-    def load_images_from_file(file_path, width, height, labels_dict):
+    def load_images_from_file(file_path, width, height,
+                              labels_dict, angle_images):
         path_list = []
 
         with open(file_path, 'r') as image_file:
             path_list = [line.rstrip('\n') for line in image_file]
 
         return DataLoader.__load_images_by_path(
-            path_list, width, height, labels_dict=labels_dict
+            path_list, width, height, labels_dict=labels_dict,
+            angle_images=angle_images
         )
 
     @staticmethod
@@ -544,6 +547,7 @@ class DataLoader():
         model_class.batch_size = model_data['batch_size']
         model_class.epochs = model_data['epochs']
         model_class.algorithm = model_data['algorithm']
+        model_class.rotation_type = model_data['rotation_type']
 
         return (
             model_class,

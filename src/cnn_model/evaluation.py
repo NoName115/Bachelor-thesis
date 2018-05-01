@@ -13,16 +13,32 @@ import cv2
 
 def evaluate_model(model_class, test_x, test_y, test_p, threshold=5):
     if (model_class.algorithm == Algorithm.SVM):
-        __evaluate_SVM(model_class, test_x, test_y, test_p)
+        __evaluate_SVM(
+            model_class,
+            test_x, test_y, test_p
+        )
     elif (model_class.algorithm == Algorithm.KMEANS):
-        __evaluate_KMeans(model_class, test_x, test_y, test_p)
+        __evaluate_KMeans(
+            model_class,
+            test_x, test_y, test_p
+        )
     elif (model_class.algorithm == Algorithm.MLP):
-        __evaluate_MLP(model_class, test_x, test_y, test_p)
+        __evaluate_MLP(
+            model_class,
+            test_x, test_y, test_p
+        )
     elif (model_class.algorithm == Algorithm.CNN):
         if (model_class.model_type == "class"):
-            __evaluate_classification(model_class, test_x, test_y, test_p)
+            __evaluate_classification(
+                model_class,
+                test_x, test_y, test_p
+            )
         elif (model_class.model_type == "angle"):
-            __evaluate_angle(model_class, test_x, test_p, threshold)
+            __evaluate_angle(
+                model_class,
+                test_x, test_y, test_p,
+                threshold
+            )
         else:
             print_error("Invalid model type")
     else:
@@ -186,7 +202,7 @@ def __save_evaluation_class_results(model_folder_path, testing_score):
 
     __save_log_files(model_folder_path, testing_score, path_list)
 
-def __evaluate_angle(model_class, test_x, test_p, threshold):
+def __evaluate_angle(model_class, test_x, test_y, test_p, threshold):
     # Debug
     print_info('Model angle evaluation...')
     print_info('Threshold: ' + str(threshold), 1)
@@ -198,11 +214,23 @@ def __evaluate_angle(model_class, test_x, test_p, threshold):
     testing_score = {'correct': [], 'wrong': []}
     angle_range = list(model_class.labels_dict.keys())
 
-    for image, path in zip(test_x, test_p):
+    for image, label, path in zip(test_x, test_y, test_p):
         # Rotate image & change shape to (1, x, y, depth)
-        rotated, angle, _ = Preprocessing.rotate_and_crop_image(
-            image, model_class.labels_dict
-        )
+        if (model_class.rotation_type == 'roll'):
+            rotated, angle, _ = Preprocessing.rotate_and_crop_image(
+                image, model_class.labels_dict
+            )
+        elif (model_class.rotation_type == 'pitch'):
+            rotated, angle, _ = Preprocessing.rotate_pitch_image(
+                image, label, model_class.labels_dict
+            )
+        elif (model_class.rotation_type == 'yaw'):
+            rotated, angle, _ = Preprocessing.rotate_yaw_image(
+                image, label, model_class.labels_dict
+            )
+        else:
+            print_error("Invalid rotation type " + str(rotation_type))
+
         rotated = rotated.reshape((1,) + rotated.shape)
 
         # Image prediction - {angle: change, ...}
@@ -346,7 +374,8 @@ if (__name__ == "__main__"):
                 args['dataset'],
                 image_width,
                 image_height,
-                range(0, 360, 180)  # Not important
+                range(0, 360, 180),  # Not important
+                angle_type=[model_class.rotation_type]
             )
         else:
             image_data, image_labels, _, path_list = DataLoader.load_images_from_folder(
@@ -370,7 +399,8 @@ if (__name__ == "__main__"):
                 args['file'],
                 image_width,
                 image_height,
-                labels_dict=None
+                labels_dict=model_class.labels_dict,
+                angle_images=True
             )
         else:
             image_data, image_labels, _, path_list = DataLoader.load_images_from_file(

@@ -14,7 +14,7 @@ class Model():
     __metaclass__ = ABCMeta
 
     def __init__(self, data_shape, labels_dict, model_type,
-                 model_name=None, model_folder=''):
+                 model_name=None, model_folder='', rotation_type=''):
         """Initalization of CNN model
 
         data_shape - (n, x, y, 1 or 3), shape of training data
@@ -35,6 +35,7 @@ class Model():
         self.batch_size = -1
         self.epochs = -1
         self.algorithm = ''
+        self.rotation_type = rotation_type
 
         # Initialize first layer shape
         self.input_shape = (self.height, self.width, self.depth)
