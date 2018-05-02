@@ -357,7 +357,7 @@ Na rozdiel od obyčajnej neurónovej siete majú vrstvy CNN neuróny usporiadan�
 Hĺbka odkazuje na 3.dimenziu aktivačného zväzku [eng. activation volume], nie na celkovú hĺbku neurónovej siete.
 Neuróny vo vrtsve budú prepojené iba k malej oblasti vrstvy pred ňou, namiesto plného prepojenia \cite{odkaz:CNNArchitecture}.
 
-Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
+Pre stavbu CNN sa využívajú 3 základne typy vrstiev a 1 podporná vrstva:
 \begin{enumerate}
     \item[$\bullet$] \textbf{Convolutional layer} - konvolučná vrstva je hlavný stavebný blok CNN, ktorá vykonáva väčšinu výpočtov.
     Parametre tejto vrstvy pozostávajú zo súboru filtrov, ktoré sa dokážu učiť.
@@ -365,7 +365,9 @@ Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
     \item[$\bullet$] \textbf{Pooling layer} - táto vrstva je obvykle vkladaná ako spojenie medzi dvoma konvolučnímy vrstvami.
     Jej funkciou je postupné znižovanie priestorovej veľkosti reprezentovaného vstupu, pre zníženie množstva parametrov a výpočtov v sieti, a teda aj kontroly pretrénovania.
     \item[$\bullet$] \textbf{Fully-Connected layer} - rovnako ako v obvyklých neurónových sietach, je to vrstva kde všetky neuróny sú prepojené s predchádzajucou vrstvou.
-    \item[$\bullet$] \textbf{Dropout layer} - % TODO
+    \item[$\bullet$] \textbf{Dropout layer} - cieľom tejto vrstvy je prevencia k pretrenovaniu siete, podľa nastavenia sa určité percento neurónov počas trénovanie zahadzuje.
+    Táto vrstva tlačí neúronovu sieť aby sa učila na komplexnejších príznakoch, implementovaním tejto vrstvy do siete sa približne zdvojnásoby počet interácií trénovania.
+    Avšak trénovaci čas pre každú iteráciu je kratší.
 \end{enumerate}
 
 \begin{figure}[H]
@@ -377,11 +379,33 @@ Pre stavbu CNN sa využívajú 3 základne typy vrstiev:
 
 \subsection{Populárne architektúry}
 Kedže konvolučné neurónove siete už existujú niekoľko rokov a komunita sa snaží o ich neustále zlepšovanie, tak sú organizované
-    celosvetové súťaže na ktorých sa objaví architektúra siete ktorá dosahuje veľmi dobré výsledky a tak ju je možné považovať ako
-    odporúčanie pre voľbu vhodnej architektúry.
+    celosvetové súťaže na ktorých sa niekedy objaví architektúra siete ktorá dosahuje veľmi dobré výsledky a tak je možné ju použiť ako odporúčania a
+    vychádzať z nej pri tvorbe vlastnej architektúry.
 
-\textbf{AlexNet} (2012) Je jedna z prvých CNN. Táto sieť dala základ pre stavbu budúcich architektúr, zároveň bola použitá
+\textbf{AlexNet} (2012) je jedna z prvých hlbokých CNN. Táto sieť dala základ pre stavbu budúcich architektúr, zároveň bola použitá
     pre výhru v súťaži 2012 ILSVRC (ImageNet Large-Scale Visual Recognition Challenge).
 V porovnaní s modernými architekturámi bola táto veľmi jednoduchá, tvorilo ju 5 konvolučných vrstiev, pooling vrstviev, dropout vrstiev a 3 plne prepojených vrstiev.
 Siet bola použitá pre klasifikáciu objektov do 1000 kategórií.
+Výchadzala z niekoľkých hlavných princípov\cite{odkaz:PopularCNN}:
+\begin{enumerate}
+    \item[$\bullet$] Bola trénovaná na ImageNet\footnote{\url{http://www.image-net.org/}} databázovej sade, ktorá obsahuje cez 15 miliónov obrázkov vo viac ako 22000 kategóriách.
+    \item[$\bullet$] Použila ReLU nelineárnu aktivačnú funkciu (Objavil sa krátší čas trénovania, kedže výpočet ReLU je niekoľko krát rýchlejši ako v tej dobe bežné používana Tanh).
+    \item[$\bullet$] Bola použítá technika augmentácie dát, ktorá pozostávala z rôznych transformácií obrázkov ako npr. horizontálny odraz.
+    \item[$\bullet$] Implementovala Dropout vrstvy pre zníženie problému spojeným s pretrénovaním neúronovej siete.
+    \item[$\bullet$] Trénovanie prebiehalo na dvoch GTX 580 grafických kartách, počas 5 až 6 dní.
+\end{enumerate}
 
+\textbf{VGG Net} (2014) je možné nájsť v niekoľkých variáciach, ako VGG16 alebo VGG19, čislo v názve udáva súčet konvolučným a plne prepojených vrstiev.
+Veľkosti filtrov v konvolučným vrstvách sú o rozmeroch 3x3 oproti AlexNet kde ich veľkosť bola 11x11.
+Avšak základna myšlienka tejto architektúry je v hĺbke a jednoduchosti, kedže zakladá na veľkom množstve konvolučným vrstiev z čoho vyplíva
+    veľke množstvo filtrov a tým pádom zväčšuje svoj výstup do hĺbky.
+Aj keď táto architektúra nebola výťaznou v roku 2014 na ILSVRC, ukázala základnu myšlienku že sieť môže byť jednoduchá ale musí byť hlboká\cite{odkaz:PopularCNN}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{alexnet}
+    \qquad
+    \includegraphics[width=0.8\textwidth]{vgg}
+    \caption{Porovnanie architektúr AlexNet(hore)\cite{odkaz:AlexNet} a VGG16(dole)\cite{odkaz:VGG16}}
+    \label{pic:ActivationFunctions}
+\end{figure}
