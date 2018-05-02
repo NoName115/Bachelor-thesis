@@ -331,7 +331,7 @@ Konvolučné neurónové siete [eng. convolutional neural networks] (CNNs), sú 
 Pre príklad je možné uviesť 2-dimenzionálne dáta ako sieť pixelov pri spracovaní obrázkov.
 Názov týchto sieti \textit{konvolučné} indikuje používanie matematickej operácie zvanej konvolúcia [eng. convolution]\cite{book:Goodfellow-et-al-2016}.
 
-\subsubsection{Filter a konvolúcia}
+\subsubsection{Konvolúcia}
 Vo svojej najvšeobecnejšej podobe, konvolúcia je operácia dvoch funkcií s reálnymi hodnotami argumentov.
 Operácia konvolúcie je typicky označovaná hviezdičkou:
 \begin{equation}
@@ -354,15 +354,39 @@ Avšak množstvo knižníc, ktoré implementujú neurónové siete, používajú
 Kde hlavným cieľom konvolúcie v konvolučných neurónových sietach je extrakcia príznakov zo vstupného obrázku.
 V jednoduchosti je možné si predstaviť 2-dimenzionálne dáta (obrázok) o rozmeroch 5x5 pixelov, ktorých hodnoty sú 0 alebo 1.
 Jadro alebo môžeme nazvať aj filter o veľkosti npr. 3x3, prechádza postupne celý vstupný obrázok s krokom 1 a ráta hodnotu výstupneho pixelu na základe svojich hodnôt ktoré obsahuje.
-Výsledokom je potom matica príznakov o veľkosti 3x3 pixeli\cite{odkaz:CNNArticle}.
+Výsledokom je potom mapa príznakov [eng. Feature map] označovaná aj ako aktivačná mapa [eng. Activation map] o veľkosti 3x3 pixeli\cite{odkaz:CNNArticle}.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{convolution}
+    \includegraphics[width=0.4\textwidth]{convolution}
     \caption{Konvolúcie v CNN, vstupný obrázok(vľavo), extrahované príznaky(vpravo)\cite{odkaz:CNNArticle}}
     \label{pic:Convolution}
 \end{figure}
 
-% TODO https://www.apsl.net/blog/2017/11/20/use-convolutional-neural-network-image-classification/ Depth, Stride, Zero-padding opisat pri konvolucii
+Veľkosť aktivačnej mapy je možné nastaviť pomocou 3 parametrov:
+\begin{enumerate}
+    \item[$\bullet$] \textbf{Hĺbka} [eng. Depth] - veľkosť hĺbky zodpovedá počtu filtrov použitých v konvolučnej vrstve siete.
+    \item[$\bullet$] \textbf{Krok} [eng. Stride] - počet pixelov o ktorý sa filter posúva počas výpočtu aktivačnej mapy.
+    Použitím väčších skokou bude výsledna aktivačná mapa menšia.
+    \item[$\bullet$] \textbf{Nulový doplnok} [eng. Zero-padding] - občas je vhodné vložiť nulový doplnok okolo vstupného obrázku.
+    Tento spôsob nám umožnuje ovládať veľkosť výstupej aktivačnej mapy.
+\end{enumerate}
+
+
+\subsubsection{Zlučovanie}
+Zlučovanie [eng. Pooling] je další krok ktorý sa vykonáva v CNN, tento krok je vykonaný v Pooling vrstvách siete.
+Jeho funkciou je znižovanie dimenzionality vstupnej aktivačnej mapy ale so snahou zachovať dôležitú informáciu ktorá táto mapa obsahuje.
+Existuje niekoľko rôznych typov zlučovania npr. maximum, priemer alebo suma.
+
+Pre tento krok je potrebné definovať veľkost okna (npr. 2x2 pixely) a krok o ktorý sa bude toto okno posúvať.
+V prípade typu Max Pooling s veľkosťou 2x2 sa zoberú 4 hodnoty z aktivačnej mapy a vyberie sa z nich maximálna, podobným spôsobom
+    fungujú aj ostatné typy zlučovania, ale výsledna hodnota je npr. priemer alebo suma týchto 4 hodnôt.
+V praxi sa ukázalo že najvýhodnejší je výber maxima\cite{odkaz:CNNArticle}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{pooling_original}
+    \caption{Príklad použitia Max Pooling kroku\cite{odkaz:CNNArticle}}
+    \label{pic:Convolution}
+\end{figure}
 
 
 \subsubsection{Architektúra}
