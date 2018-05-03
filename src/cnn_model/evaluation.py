@@ -407,7 +407,8 @@ if (__name__ == "__main__"):
                 args['file'],
                 image_width,
                 image_height,
-                labels_dict=model_class.labels_dict
+                labels_dict=model_class.labels_dict,
+                angle_images=False,
             )
 
         image_data = preproc.apply(image_data)
