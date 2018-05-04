@@ -8,34 +8,47 @@
 %\subsection{Detekcia hran}
 %- Sobelov filter - podľa knižky patri medzi najpopulárnejšie hranové filter. Urobiť z neho magnitúdu obrazu potom.
 
-% Nieco na sposob ze, kedze riesenie bude obsahovat aj klasicke pristupy nie len riesenie s pouzitim
-% neurovnovych sieti, je dolezite obrazky pred klasifikaciou vhodne upravit resp. extrahovat z obrazku vhodne priznaky na zaklade
-% ktorych sa klasifikator bude ucit.
+Kedže riešenie bude obsahovať aj klasické prístupy pre klasifikáciu nie len riešenie pomocou konvolučných neurovnových sieti.
+Tak je dôležité pred klasifikáciou vhodne upraviť resp. extrahovať z obrázka vhodné príznaky pre ich lepšiu klasifikáciu.
 
 \subsubsection{Rovnomerný pomer strán}
 Pre spracovanie obrázkov pomocou neurónových sieti je potrebné zabezpečiť, aby každý obrázok mal rovnakú veľkosť a rovnaký pomer strán.
-Väčšina modelov neurónovej siete predpokladá štvorcový vstupný obraz \cite{odkaz:NNPreprocessing}.
-
-\subsubsection{Priemerna štandartná odchylka vstupných údajov}
-Je užitočné vytvoriť si tzv. ''stredný obraz'' získaný priemernými hodnotami pre každý pixel zo všetkých trénovacích dát.
-Timto spôsobom je možné vytvoriť si základny prehľad o štruktúre vstupných dát.
-Na základe toho môžeme potom do vstupným dát pridať rôzne dalšie variácie klasifikovaných objektov pre lepšie generalizovanie klasifikátora \cite{odkaz:NNPreprocessing}.
+Pretože väčšina modelov neurónovej siete predpokladá štvorcový vstupný obraz \cite{odkaz:NNPreprocessing}.
 
 \subsubsection{Šedotónový obraz}
-Ďalšou možnou technikou je vytvorenie šedotónového obrazu, kde všetky 3 zložky farby (RGB) zlúčime do jednej, šedotónovéj.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.4\textwidth]{grayscale}
-	\caption{Prevod do šedotónového obrazu[eng. grayscaling]\cite{odkaz:NNPreprocessing}}
-	\label{pic:GrayScaling}
-\end{figure}
+Ďalšou možnou technikou je vytvorenie šedotónového obrazu, kde všetky 3 zložky farby (RGB) zlúčime do jednej, šedotónovej.
+Tento prevod sa vykoná výpočtom podľa vzorca:
+\begin{equation}
+    \label{eq:rgbtogray}
+    Y = 0.2125*R + 0.7154*G + 0.0721*B\cite{prop:scikit-image}
+\end{equation}
+,kde $Y$ je výsledna hodnota sivého pixela, $R$ je hodnota červenej zložky pixela,
+$G$ je zelená zložka pixela a $B$ je modrá zložka pixela v RGB \cite{odkaz:NNPreprocessing}.
 
 \subsubsection{Rožšírenie vstupných dát}
 Ďalšou bežnou technickou predspracovanie dát je rožšírenie existujúceho súboru dát s rôznymi variáciami existujúcich obrázkov.
 Tieto variácie môžu zahŕňať zväčšovanie, zmenšovanie, rotačné zmeny a iné transformácie obrázkov.
-Tento postup znižuje šancu, že neurónová sieť rozpozná nežiadúce charakteristiky v množine vstupných dát \cite{odkaz:NNPreprocessing}.
+Tento postup znižuje šancu, že neurónová sieť rozpozná nežiadúce charakteristiky v množine vstupných dát
+	a taktiež sa zabezpečí zovšeobecnenie klasifikácie resp. rozpoznávania objektu \cite{odkaz:NNPreprocessing}.
 
-\subsubsection{Histogram of oriented gradients}
+\subsubsection{Normalizacia}
+Hodnoty pixelov su väčšinou v rozpätí 0-255. Použivať tieto hodnoty na vstupe priemo do siete môže viesť k pretečeniu číselných premenných.
+Taktiež sa ukázalo že výber niektorých aktivačných funkcií nieje kompatibilné s takýmito vstupmi.
+Nevhodný vstup môže viesť z nesprávnemu učeniu siete, preto je vhodné tieto dáta normalizovať do rozpätia 0-1 \cite{odkaz:PreprocessingNormalization}.
 
-% TODO
-% http://scikit-image.org/docs/stable/auto_examples/features_detection/plot_hog.html#sphx-glr-auto-examples-features-detection-plot-hog-py
+\subsubsection{Histogram orientovaných prechodov}
+Základnou myšlienkou za dekriptorom histogramom orientovaných prechodov [eng. Histogram of oriented gradients descriptor] je to, že lokálny vzhľad objektu a tvar v obraze môžu byť popísané
+	distribúciou intenzity gradientov alebo smerov hrán.
+
+Obraz je rozdelený na malé spojené oblasti nazývane bunky [eng. cells], a pre pixely v každej bunke sa vytvára histogram orientovaných prechodov.
+Deskriptor je spojenie týchto histogramov.
+Pre zvýšenie presnosti môžu byť lokálne histogramy kontrastovo-normalizované výpočtom miery intenzity vo väčšej oblasti obrazu nazývanej blok a potom
+	pomocou tejto hodnoty normalizovať všetky bunky v rámci bloku.
+Táto normalizácia má za následok lepšiu invariáciu voči zmenám v osvetlení a tieňovaní v obraze \cite{prop:HOG}.
+
+\begin{comment}
+	\subsubsection{Priemerna štandartná odchylka vstupných údajov}
+	Je užitočné vytvoriť si tzv. ''stredný obraz'' získaný priemernými hodnotami pre každý pixel zo všetkých trénovacích dát.
+	Timto spôsobom je možné vytvoriť si základny prehľad o štruktúre vstupných dát.
+	Na základe toho môžeme potom do vstupným dát pridať rôzne dalšie variácie klasifikovaných objektov pre lepšie generalizovanie klasifikátora \cite{odkaz:NNPreprocessing}.
+\end{comment}

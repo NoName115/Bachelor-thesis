@@ -9,7 +9,7 @@ V tejto podkapitole bude podrobne popísaných niekoľko algoritmou pomocou ktor
 
 \subsection{K-Nearest-Neighbor}
 \textit{k}-Nearest Neighbor je algoritmus, ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácií,
-avšak je možné ho použiť aj pre odhad a predikciu\cite{book:DataMining}.
+avšak je možné ho použiť aj pre odhad a predikciu \cite{book:DataMining}.
 Algoritmus je pamäťovo náročný [eng. memory-based] a nepotrebuje žiaden trénovací model.
 Pre jeho fungovanie nie je potrebný žiaden explicitný postup trénovania, okrem zberu vektorov príznakov s označeniami tried do ktorých patria.
 
@@ -49,7 +49,7 @@ V ukážke je vidno že v prípade 1-NN klasifikátora, niektré body vytváraj�
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{knn}
-	\caption{Porovnanie k-NN klasifikátorov\cite{odkaz:KnnImage}.}
+	\caption{Porovnanie k-NN klasifikátorov \cite{odkaz:KnnImage}.}
 	\label{pic:kNN}
 \end{figure}
 
@@ -57,13 +57,13 @@ V ukážke je vidno že v prípade 1-NN klasifikátora, niektré body vytváraj�
 
 \subsection{Support Vector Machines}
 Support Vector Machines (SVM's) sú metódy učenia používané pre binárnu klasifikáciu.
-Základnou myšlienkou je nájdenie hyper--roviny, ktorá perfektne oddelí \textit{d}--dimenzionálne dáta do dvoch tried\cite{prop:IntroductionToSVM}.
-SVM sa snaží maximalizovať vzdialenosť medzi rozdeľujúcou rovinou a dátami nachádzajúcimi sa v každej z 2 polrovín\cite{prop:SupervisedMachineLearning}.
+Základnou myšlienkou je nájdenie hyper--roviny, ktorá perfektne oddelí \textit{d}--dimenzionálne dáta do dvoch tried \cite{prop:IntroductionToSVM}.
+SVM sa snaží maximalizovať vzdialenosť medzi rozdeľujúcou rovinou a dátami nachádzajúcimi sa v každej z 2 polrovín \cite{prop:SupervisedMachineLearning}.
 Avšak kedže vstupné dáta väčšinou nie su lineárne separovatelné, SVM's predstavujú pojem “kernel induced feature space”,
-    ktorý prevádza dáta do vyššieho dimenzionálneho priestoru, kde sú dáta oddeliteľné.\cite{prop:IntroductionToSVM}
+    ktorý prevádza dáta do vyššieho dimenzionálneho priestoru, kde sú dáta oddeliteľné.\cite{prop:IntroductionToSVM}.
 
 Ak trénovacie dáta sú lineárne separovatelné, tak dvojica $(w, b)$, kde $w$ je váhový vektor a $b$ je predpoveď
-    (alebo $-b$ je prahová hodnota) existuje ako\cite{prop:SupervisedMachineLearning}:
+    (alebo $-b$ je prahová hodnota) existuje ako \cite{prop:SupervisedMachineLearning}:
 \begin{equation}
     \label{eq:SVMPair1}
     w^T * x_i + b \geq 1, \; pre \; x_i \in P
@@ -86,12 +86,12 @@ V tomto prípade keď je možné lineárne rozdeliť dve triedy, tak optimálna 
 
 V tomto prípade lineárneho rozdelenia dát, pri nájdení optimálnej rozdeľujúcej hyper--roviny, dátove body, ktoré ležia na jej okraji
     sa nazývajú podporné vektorové body[eng. support vector points] a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodov (vid. obrázok \ref{pic:SVMMAxMargin} ).
-Ostatné body sú ignorované\cite{prop:SupervisedMachineLearning}.
+Ostatné body sú ignorované \cite{prop:SupervisedMachineLearning}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{SVM_max_margin}
-	\caption{Maximálne rozpätie\cite{prop:SupervisedMachineLearning}.}
+	\caption{Maximálne rozpätie \cite{prop:SupervisedMachineLearning}.}
 	\label{pic:SVMMAxMargin}
 \end{figure}
 
@@ -105,10 +105,10 @@ Lineárne rozdelenie v tomto priestore zodpovedá nelineárnemu rozdeleniu v pô
 Pri mapovaní dát do určitého Hilbertovho priestora \cite{prop:HilbertSpace} $H$ ako $\Phi:R^d \rightarrow H$.
 Potom trénovací algoritmus závisý len na údajoch zo skalárneho súčinu[eng. dot products] v priestore $H$, t.j na funkciách v tvare $\Phi(x_i) * \Phi(x_j)$.
 Ak bude existovať ''funkcia jadra''[eng. kernel function] $K$ ako $K(x_i, x_j) = \Phi(x_i)*\Phi(x_j)$, tak budeme musieť použiť iba funkciu $K$ v trénovacom algoritme
-    a nikdy nebudeme potrebovať explicitne definovať $\Phi$\cite{prop:SupervisedMachineLearning}.
+    a nikdy nebudeme potrebovať explicitne definovať $\Phi$ \cite{prop:SupervisedMachineLearning}.
 
 Takže jadrá[eng. kernels] sú špeciálnou triedou funkcií, ktoré dovoľujú, aby sa vnútorné produkty vypočítali priamo vo funkčnom priestore[eng. feature space] bez toho, aby sa vykonalo vyššie popísané mapovanie.
-Po vytvorení hyper--roviny sa funkcia jadra použije na mapovanie nových bodov do funkčného priestoru pre klasifikáciu\cite{prop:SupervisedMachineLearning}.
+Po vytvorení hyper--roviny sa funkcia jadra použije na mapovanie nových bodov do funkčného priestoru pre klasifikáciu \cite{prop:SupervisedMachineLearning}.
 
 Voľba správnej funkcie jadra je veľmi dôležitá, kedže definujú transformovaný priestor príznakov v ktorom budú trénovacie dáta klasifikované.
 Genton \cite{prop:KernelClasses} popísal niekoľko tried jadier, avšak, neadresoval otázku, ktorá trieda je najvhodnejšie pre daný problém.
@@ -130,7 +130,7 @@ Genton \cite{prop:KernelClasses} popísal niekoľko tried jadier, avšak, neadre
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{sphx_glr_plot_iris_0012}
-	\caption{Porovnanie SVM klasifikátora s použitím rôznym jadier\cite{odkaz:SVMImage}.}
+	\caption{Porovnanie SVM klasifikátora s použitím rôznym jadier \cite{odkaz:SVMImage}.}
 	\label{pic:SVMComparison}
 \end{figure}
 
@@ -176,12 +176,12 @@ Napodobňuje ľudský mozog v dvoch aspektoch \cite{odkaz:NNIntroduction}:
 \end{enumerate}
 Toto je jedna z definícii neurónových sieti, akceptovaná komunitou.
 Je zrejmé, že inšpirácia ku vzniku NN prišla z biologických systémov.
-Na prvý dojem vysoko abstraktná disciplína nachádza množstvo aplikácii v praxi a stáva sa prostriedkom pre riešenie problémou v širokom spektre odborných oblastí\cite{odkaz:NNIntroduction}.
+Na prvý dojem vysoko abstraktná disciplína nachádza množstvo aplikácii v praxi a stáva sa prostriedkom pre riešenie problémou v širokom spektre odborných oblastí \cite{odkaz:NNIntroduction}.
 
 Rôzne architektúry umelých neurónových sieti[eng. artificial neural network] sa používajú pre riešenie rôznych úloh.
-Konvolučné a rekurentné NN sú dve z najúspešnejších a sú z veľkej časti zodpovedné za nedávnu revolúciu umelej inteligencie\cite{odkaz:CorrectionOfImageOrentation}.
+Konvolučné a rekurentné NN sú dve z najúspešnejších a sú z veľkej časti zodpovedné za nedávnu revolúciu umelej inteligencie \cite{odkaz:CorrectionOfImageOrentation}.
 
-Vo všeobecnosti môžeme vymenovať nasledovné oblasti využitia neurónových sieti\cite{odkaz:NNIntroduction}:
+Vo všeobecnosti môžeme vymenovať nasledovné oblasti využitia neurónových sieti \cite{odkaz:NNIntroduction}:
 \begin{enumerate}
     \item[$\bullet$] klasifikácie do tried, klasifikácia situácií,
     \item[$\bullet$] riešenie predikčných problémou,
@@ -195,27 +195,27 @@ Prvá vrstva vstupov je prepojená na vstupné dáta, ktoré sa majú spracovať
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{nn}
-	\caption{Jednoduchá architektúra NN s 1 vstupnou, 3 skrytími a 1 výstupou vrstvou\cite{odkaz:CorrectionOfImageOrentation}.}
+	\caption{Jednoduchá architektúra NN s 1 vstupnou, 3 skrytími a 1 výstupou vrstvou \cite{odkaz:CorrectionOfImageOrentation}.}
 	\label{pic:NNExample}
 \end{figure}
 
 \subsubsection{Perceptron}
 Pre pochopenie fungovania neurónovej siete je potrebné najprv pochopiť umelý neurón, zvaný perceptron.
 Perceptron vynašiel vedec Frank Rosenblatt v 1950 až 1960 roku, inšpirovaný predchádzajucov prácov Warren McCulloch a Walter Pitts.
-Dnes sa bežné používa iný model umelého neurónu tzv. sigmoid neurón\cite{odkaz:HandwrittenDigitRecognision}.
+Dnes sa bežné používa iný model umelého neurónu tzv. sigmoid neurón \cite{odkaz:HandwrittenDigitRecognision}.
 
 V jednoduchosti, perceptron zoberie niekoľko vstupov, $x_1, x_2, \dots$ a reprodukuje ich na jediný binárny výstup.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth]{tikz0}
-	\caption{Jednoduchý príklad perceptronu\cite{odkaz:HandwrittenDigitRecognision}.}
+	\caption{Jednoduchý príklad perceptronu \cite{odkaz:HandwrittenDigitRecognision}.}
 	\label{pic:Perceptron}
 \end{figure}
 Rosenblatt navrhol jednoduché pravidlo pre výpočet výstupu.
 Zaviedol váhy[eng. weights], $w_1, w_2, \dots$,
     reálne čisla ktoré vyjadrujú dôležitosť príslušných vstupov vzhľadom na výstupy.
 Výstup neurónu, 0 alebo 1, sa určuje podľa toho či vážena suma $\sum_j w_j x_j$ je menšia alebo väčsia ako určitá prahová hodnota.
-Matematické vyjadrenie aktivačnej funkcie perceptronu by potom bolo\cite{odkaz:HandwrittenDigitRecognision}:
+Matematické vyjadrenie aktivačnej funkcie perceptronu by potom bolo \cite{odkaz:HandwrittenDigitRecognision}:
 \begin{equation}
     output = 0, \; ak \; \sum_j w_j x_j \leq threshold
 \end{equation}
@@ -226,7 +226,7 @@ Matematické vyjadrenie aktivačnej funkcie perceptronu by potom bolo\cite{odkaz
 Matematický model perceptronu je možné zjednodušiť a to prepísaním formuly $\sum_j w_j x_j$ na skalárny súčin[eng. dot product],
     $w*x \equiv \sum_j w_j x_j$, kde $w$ a $x$ sú vektory váh a vstupov.
 Druhá zmena je presun prahovej hodnoty na opačnú stranu nerovnice, a nahradiť ju tzv. perceptron bias, $b \equiv -threshold$.
-Použitím týchto úprav bude model vyzerať nasledovne\cite{odkaz:HandwrittenDigitRecognision}:
+Použitím týchto úprav bude model vyzerať nasledovne \cite{odkaz:HandwrittenDigitRecognision}:
 \begin{equation}
     output = 0, \; ak \; w*x + b \leq 0
 \end{equation}
@@ -239,7 +239,7 @@ Použitím týchto úprav bude model vyzerať nasledovne\cite{odkaz:HandwrittenD
     \includegraphics[width=0.5\textwidth]{neuron}
     \qquad
     \includegraphics[width=0.4\textwidth]{neuron_model}
-    \caption{biologický neurón(vľavo) a jeho matematický model(vpravo)\cite{odkaz:ConvolutionalNeuralNetworkCS231n}.}
+    \caption{biologický neurón(vľavo) a jeho matematický model(vpravo) \cite{odkaz:ConvolutionalNeuralNetworkCS231n}.}
     \label{pic:Neuron}
 \end{figure}
 
@@ -255,7 +255,7 @@ Kde veľké záporne čísla nadobudnú hodnotu 0 a veľke kladné čísla hodno
 Funkcia sigmoid sa historicky často používala pretože má peknú interpretáciu pre spúštanie ''výstrelu'' neurónu,
     od nevýpalanie (0) až po úplne nasýtenie strely pri predpokladanej maximálnej frekvancií (1).
 V praxi, sa sigmoid používa už len zriedka.
-Pretože ma 2 hlavné nevýhody\cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
+Pretože ma 2 hlavné nevýhody \cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
 \begin{enumerate}
     \item[$\bullet$] \textbf{Zabíjanie prechodov [eng. gradients]} - keď sa aktivácia neurónu nasýti na obidvoch koncoch 0 alebo 1, gradient v týchto oblastiach je takmer nulový.
     Tento gradient sa používa pri spätnej propagácií [eng. backpropagation] v neurónových sietach. Preto ak je miestny gradient veľmi malý, takmer žiaden signál
@@ -269,7 +269,7 @@ Pretože ma 2 hlavné nevýhody\cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
 \subsubsection{Tanh}
 Funkcia tanh je dalšou z aktivačných funkcií neurónu je zobrazená na obrázku \ref{pic:ActivationFunctions} vpravo.
 Tanh zoberie skutočné čislo a stlačí ho do rozmedzia -1 až 1. Pracuje podobne ako sigmoid.
-Matematický zápis je\cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
+Matematický zápis je \cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
 \begin{equation}
     tanh(x) = 2\sigma(2x) - 1
 \end{equation}
@@ -309,7 +309,7 @@ Ako bolo spomínane už vyššie, neurónová sieť je modelovaná ako kolekcia 
 Modely neurónových sieti sú často organizované do odlišných vrstiev neurónov.
 Pre bežné neurónové siete je najbežnejšou vrstvou tzv. plne-prepojená vrstva [eng. fully-connected layer],
     v ktorej sú neuróny medzi dvoma priľahlými vrstvami plne párovo prepojené, ale neuróny v jeden vrstve nemajú medzi sebou žiadne spojenia.
-Na obrázku \ref{pic:NeuralNetworkArchitecture} nižšie sú uvedené dve topológie ktoré využívajú plne-prepojené vrstvy\cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
+Na obrázku \ref{pic:NeuralNetworkArchitecture} nižšie sú uvedené dve topológie ktoré využívajú plne-prepojené vrstvy \cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.38\textwidth]{neural_net}
@@ -332,7 +332,7 @@ Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2
 Konvolučné neurónové siete [eng. convolutional neural networks] (CNNs), sú špeciálnym prípadom neurónových sieti pre spracovanie
     dát, ktoré majú známu topológiu podobnú mriežke.
 Pre príklad je možné uviesť 2-dimenzionálne dáta ako sieť pixelov pri spracovaní obrázkov.
-Názov týchto sieti \textit{konvolučné} indikuje používanie matematickej operácie zvanej konvolúcia [eng. convolution]\cite{book:Goodfellow-et-al-2016}.
+Názov týchto sieti \textit{konvolučné} indikuje používanie matematickej operácie zvanej konvolúcia [eng. convolution] \cite{book:Goodfellow-et-al-2016}.
 
 \subsubsection{Konvolúcia}
 Vo svojej najvšeobecnejšej podobe, konvolúcia je operácia dvoch funkcií s reálnymi hodnotami argumentov.
@@ -344,12 +344,12 @@ V terminilógií konvolučnej siete sa prvý argument (v tomto príklade funkcie
     argument (v tomto príklade funkcia $w$) ako jadro [eng. kernel]. Výstup je niekedy označovaný ako mapa príznakov.
 
 Bežne konvolúciu používame na viac ako jednej osy súčasne.
-Pri použítí 2-dimenzionálneho obrázku $I$ ako náš vstup, budeme chcieť použiť aj 2-dimenzionálne jadro $K$\cite{book:Goodfellow-et-al-2016}:
+Pri použítí 2-dimenzionálneho obrázku $I$ ako náš vstup, budeme chcieť použiť aj 2-dimenzionálne jadro $K$ \cite{book:Goodfellow-et-al-2016}:
 \begin{equation}
     S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(m,n) K(i - m, j - n)
 \end{equation}
 
-Avšak množstvo knižníc, ktoré implementujú neurónové siete, používajú tzv. cross-correlation funkciu\cite{book:Goodfellow-et-al-2016}:
+Avšak množstvo knižníc, ktoré implementujú neurónové siete, používajú tzv. cross-correlation funkciu \cite{book:Goodfellow-et-al-2016}:
 \begin{equation}
     S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(i + m, i + n) K(m, n)
 \end{equation}
@@ -357,11 +357,11 @@ Avšak množstvo knižníc, ktoré implementujú neurónové siete, používajú
 Kde hlavným cieľom konvolúcie v konvolučných neurónových sietach je extrakcia príznakov zo vstupného obrázku.
 V jednoduchosti je možné si predstaviť 2-dimenzionálne dáta (obrázok) o rozmeroch 5x5 pixelov, ktorých hodnoty sú 0 alebo 1.
 Jadro alebo môžeme nazvať aj filter o veľkosti npr. 3x3, prechádza postupne celý vstupný obrázok s krokom 1 a ráta hodnotu výstupneho pixelu na základe svojich hodnôt ktoré obsahuje.
-Výsledokom je potom mapa príznakov [eng. Feature map] označovaná aj ako aktivačná mapa [eng. Activation map] o veľkosti 3x3 pixeli\cite{odkaz:CNNArticle}.
+Výsledokom je potom mapa príznakov [eng. Feature map] označovaná aj ako aktivačná mapa [eng. Activation map] o veľkosti 3x3 pixeli \cite{odkaz:CNNArticle}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.4\textwidth]{convolution}
-    \caption{Konvolúcie v CNN, vstupný obrázok(vľavo), extrahované príznaky(vpravo)\cite{odkaz:CNNArticle}.}
+    \caption{Konvolúcie v CNN, vstupný obrázok(vľavo), extrahované príznaky(vpravo) \cite{odkaz:CNNArticle}.}
     \label{pic:Convolution}
 \end{figure}
 
@@ -383,11 +383,11 @@ Existuje niekoľko rôznych typov zlučovania npr. maximum, priemer alebo suma.
 Pre tento krok je potrebné definovať veľkost okna (npr. 2x2 pixely) a krok o ktorý sa bude toto okno posúvať.
 V prípade typu Max Pooling s veľkosťou 2x2 sa zoberú 4 hodnoty z aktivačnej mapy a vyberie sa z nich maximálna, podobným spôsobom
     fungujú aj ostatné typy zlučovania, ale výsledna hodnota je npr. priemer alebo suma týchto 4 hodnôt.
-V praxi sa ukázalo že najvýhodnejší je výber maxima\cite{odkaz:CNNArticle}.
+V praxi sa ukázalo že najvýhodnejší je výber maxima \cite{odkaz:CNNArticle}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{pooling_original}
-    \caption{Príklad použitia Max Pooling kroku\cite{odkaz:CNNArticle}.}
+    \caption{Príklad použitia Max Pooling kroku \cite{odkaz:CNNArticle}.}
     \label{pic:Convolution}
 \end{figure}
 
@@ -427,7 +427,7 @@ Kedže konvolučné neurónove siete už existujú niekoľko rokov a komunita sa
     pre výhru v súťaži 2012 ILSVRC (ImageNet Large-Scale Visual Recognition Challenge).
 V porovnaní s modernými architekturámi bola táto veľmi jednoduchá, tvorilo ju 5 konvolučných vrstiev, pooling vrstviev, dropout vrstiev a 3 plne prepojených vrstiev.
 Siet bola použitá pre klasifikáciu objektov do 1000 kategórií.
-Výchadzala z niekoľkých hlavných princípov\cite{odkaz:PopularCNN}:
+Výchadzala z niekoľkých hlavných princípov \cite{odkaz:PopularCNN}:
 \begin{enumerate}
     \item[$\bullet$] bola trénovaná na ImageNet\footnote{\url{http://www.image-net.org/}} databázovej sade, ktorá obsahuje cez 15 miliónov obrázkov vo viac ako 22000 kategóriách.
     \item[$\bullet$] Použila ReLU nelineárnu aktivačnú funkciu (Objavil sa krátší čas trénovania, kedže výpočet ReLU je niekoľko krát rýchlejši ako v tej dobe bežné používana Tanh).
@@ -440,13 +440,13 @@ Výchadzala z niekoľkých hlavných princípov\cite{odkaz:PopularCNN}:
 Veľkosti filtrov v konvolučným vrstvách sú o rozmeroch 3x3 oproti AlexNet kde ich veľkosť bola 11x11.
 Avšak základna myšlienka tejto architektúry je v hĺbke a jednoduchosti, kedže zakladá na veľkom množstve konvolučným vrstiev z čoho vyplíva
     veľke množstvo filtrov a tým pádom zväčšuje svoj výstup do hĺbky.
-Aj keď táto architektúra nebola výťaznou v roku 2014 na ILSVRC, ukázala základnu myšlienku že sieť môže byť jednoduchá ale musí byť hlboká\cite{odkaz:PopularCNN}.
+Aj keď táto architektúra nebola výťaznou v roku 2014 na ILSVRC, ukázala základnu myšlienku že sieť môže byť jednoduchá ale musí byť hlboká \cite{odkaz:PopularCNN}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{alexnet}
     \qquad
     \includegraphics[width=0.8\textwidth]{vgg}
-    \caption{Porovnanie architektúr AlexNet(hore)\cite{odkaz:AlexNet} a VGG16(dole)\cite{odkaz:VGG16}.}
+    \caption{Porovnanie architektúr AlexNet(hore) \cite{odkaz:AlexNet} a VGG16(dole) \cite{odkaz:VGG16}.}
     \label{pic:PopularCNN}
 \end{figure}
