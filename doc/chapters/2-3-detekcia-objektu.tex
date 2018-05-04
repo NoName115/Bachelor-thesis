@@ -70,6 +70,7 @@ Týmto spôsobom YOLO dokáže dosiahnuť 63.4\% mAP na 22 ms oneskorení \cite{
 \end{comment}
 
 \subsection{Kĺzajúce okno}
+\label{subsec:slidingwindow}
 Kĺzajúce okno [eng. Sliding window] je jedná z metód pre detekciu objektov v obraze.
 Táto metóda je veľmi vyčerpávajúca pretože zakladá na veľkom počte kandidátnych okien, až $10^4$, vo vstupnom obrázku.
 Metóda prechádza vstupný obrázok na všetkých lokáciách s rôznou veľkosťou okna, následne na každom "okne" spúšta klasifikátor.
@@ -77,6 +78,7 @@ Nevýhodou tohto prístupu je jeho časová nárocnosť, preto sa tento spôsob 
 Ale na druhú stranu metóda poskytuje dobrú presnosť pri kvalitnom klasifikátore \cite{prop:AutomaticHandgunDetection}.
 
 \subsection{Regionálne návrhy}
+\label{subsec:regionproposal}
 Metóda regionálych návrhov [eng. Region proposal] na rozdiel od metódy kĺzajuceho okna, nepredpokladá za kandidátne okná všetky možnosti.
 Tieto kandidátne okná su vybrané pomocou metód návrhu detekcie [eng. detecion proposel methods], konkrétne metódy
     a ich porovnanie je môžné nájsť v članku \textit{What makes for effective detection proposals?} \cite{prop:ProposalMethods}.
