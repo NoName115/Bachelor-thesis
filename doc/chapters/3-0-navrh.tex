@@ -5,44 +5,70 @@ V tejto kapitole si priblížime navrhované technológie pre riešienie problé
 Kapitola zahŕňa popis knižníc pre strojové učenie ako je Tensorflow a Keras, ktorý zovšeobecňuje a používa Tensorflow pre svoju prácu.
 Následne nástroj scikit-learn, ktorý budeme používať pre jednoduchú klasifikáciu pomocou postupov, ktoré boli vysvetlené v kapitole \ref{chap:technologie}.
 
-\section{Tensorflow a Keras}
-\label{sec:TensorflowKeras}
 
-\subsubsection{Tensorflow}
-TensorFlow je softvérová knižnica s otvoreným zdrojovým kódom[eng. open source library] pre numerické výpočty pomocou dátových vývojových diagramov[eng. data flow graphs].
-Uzly v grafe reprezentujú matematické operácie, zatiaľ čo hrany grafu reprezentujú multidimenzionálne dátové polia (tensors), ktoré medzi sebou kominukujú.
-Flexibilná architektúra umožňuje nasadenie na viacerých CPU alebo GPU, serveroch alebo aj mobilných zariadeniach.
-TensorFlow bol pôvodne vyvinutý na účely výskumu strojového učenia a výskumu hlbokých neurónových sieti.
-Systém je dostatočne všeobecný aby bol aplikovaný v mnohých iných oblastiach \cite{odkaz:TensorFlow}.
 
-\subsubsection{Keras}
-Vysoká všeobecnosť knižice TensorFlow pre jej širokú aplikáciu, robí jej použitie pre tvorbu neurónových sieti komplikovanejšiu.
-Kde Keras, ktorý využíva TensorFlow ako svoj backend túto tvorbu neurónových sieti zjednodušil.
-Za jeho backend je možné použiť aj CNTK alebo Theano.
-Táto implementácia knižnice Keras robí experimentovanie s NN jednoduchšiu a rýchlejšiu.
-Aj keď sa snaží implementáciu zjednodušiť, tak stále si zachováva modularitu a preto je možné dostatočne dobre modely NN upravovať a prisposobovať pre riešienie rôznych problémov \cite{odkaz:Keras}.
 
-\section{scikit-learn}
-\label{sec:scikitlearn}
 
-Scikit-learn je softvérová knižica pre strojové učenie pre programovací jazyk Python.
-Obsahuje množstvo algoritmov pre klasifikáciu, regresiu alebo zhlukovanie dát \cite{odkaz:scikitlearn}.
-Pre riešenie tejto práce obsahuje vhodné triedy, ktoré implementujú spomínané postupy zo sekcie \ref{sec:klasifikacia}.
-Príklady tried pre jednotlivé algoritmy:
+\begin{comment}
+
+    \section{scikit-learn}
+    \label{sec:scikitlearn}
+
+    Scikit-learn je softvérová knižica pre strojové učenie pre programovací jazyk Python.
+    Obsahuje množstvo algoritmov pre klasifikáciu, regresiu alebo zhlukovanie dát \cite{odkaz:scikitlearn}.
+    Pre riešenie tejto práce obsahuje vhodné triedy, ktoré implementujú spomínané postupy zo sekcie \ref{sec:klasifikacia}.
+    Príklady tried pre jednotlivé algoritmy:
+    \begin{enumerate}
+        \item[$\bullet$] \textbf{Nearest Neighbors} - scikit-learn poskytuje 2 rôzne klasifikátory pre algoritmus najbližsieho suseda.
+        Trieda \textit{KNeighborsClassifier} klasifikuje na základe $k$ najbližšich susedov, kde $k$ je celé číslo špecifikované užívateľom.
+        Druhá trieda \textit{RadiusNeighborsClassifier} implementuje klasifikáciu na základe počtu susedov v rámci pevného polomeru $r$ každého trénovacieho bodu,
+        kde $r$ je hodnota s pohyblivou desatinou čiarkou určená užívateľom\footnote{\url{http://scikit-learn.org/stable/modules/neighbors.html\#nearest-neighbors-classification}}.
+        \item[$\bullet$] \textbf{Support Vector Machines} - \textit{SVC}, \textit{NuSVC} a \textit{LinearSVC} sú triedy pre viac-triednu klasifikáciu.
+        Pre ktoré je možné použit rôzne typy jadier[eng. kernels] \footnote{\url{http://scikit-learn.org/stable/modules/svm.html\#custom-kernels}}.
+        \item[$\bullet$] \textbf{Stochastic Gradient Descent} - \textit{SGDClassifier} podporuje viac-triednu klasifikáciu pomocou kombinácie viacerých binárnych klasifikátorov v tzv.“one versus all” (OVA) schéme \footnote{\url{http://scikit-learn.org/stable/modules/sgd.html\#stochastic-gradient-descent}}.
+    \end{enumerate}
+
+
+    \section{Klasifikácia typu a určenie náklonu zbrane}
+    Prvým bodom pri návrhu riešenia je výber programovacie jazyka a nástrojov, ktoré sú prispôsobné pre riešenie daného problému a tak uľahčujú výslednú implementáciu.
+    Pre riešenie tejto práce bol vybraný programovací jazyk Python spolu s nástrojmi ktoré boli spomenúte už vyššie vid. sekcia \ref{sec:TensorflowKeras} a \ref{sec:scikitlearn}.
+    Výsledny program bude mať za úlohu klasifikovať typ zbrane (krátka, dlhá) zo vstupného obrázku a následne určiť jej náklon.
+    Pre klasifikáciu zbrane do daných kategórií sa ponúka niekoľko postupov klasifikácie, ktoré sú podrobne opísane v sekcíí \ref{sec:klasifikacia},
+        pri určovaní náklonu zbrane v obraze môžeme použiť konvolučné neurónové siete.
+
+\end{comment}
+
+\subsection{navrh - poznamky}
+
 \begin{enumerate}
-    \item[$\bullet$] \textbf{Nearest Neighbors} - scikit-learn poskytuje 2 rôzne klasifikátory pre algoritmus najbližsieho suseda.
-    Trieda \textit{KNeighborsClassifier} klasifikuje na základe $k$ najbližšich susedov, kde $k$ je celé číslo špecifikované užívateľom.
-    Druhá trieda \textit{RadiusNeighborsClassifier} implementuje klasifikáciu na základe počtu susedov v rámci pevného polomeru $r$ každého trénovacieho bodu,
-    kde $r$ je hodnota s pohyblivou desatinou čiarkou určená užívateľom\footnote{\url{http://scikit-learn.org/stable/modules/neighbors.html\#nearest-neighbors-classification}}.
-    \item[$\bullet$] \textbf{Support Vector Machines} - \textit{SVC}, \textit{NuSVC} a \textit{LinearSVC} sú triedy pre viac-triednu klasifikáciu.
-    Pre ktoré je možné použit rôzne typy jadier[eng. kernels] \footnote{\url{http://scikit-learn.org/stable/modules/svm.html\#custom-kernels}}.
-    \item[$\bullet$] \textbf{Stochastic Gradient Descent} - \textit{SGDClassifier} podporuje viac-triednu klasifikáciu pomocou kombinácie viacerých binárnych klasifikátorov v tzv.“one versus all” (OVA) schéme \footnote{\url{http://scikit-learn.org/stable/modules/sgd.html\#stochastic-gradient-descent}}.
+    \item[$\bullet$] navrh pre 2 konvolucne neuronove siete, jedna inspirovane AlexNet druha VGG16,
+    Zdovodnovat preco prave taketo nastavenie konvolucnej siete.
+    Pridat ake optimalizatory a celkovo s akymi arugumetmi spustat trenovanie, kolko epoch a pod...
+    \item[$\bullet$] spomenut ktore triedy zo scikit-learn chcem pouzit pre implementovanie klasifikatorov.
+    Budem pouzivam SVM, Kmenas a Multilayer Perceptron
+    \item[$\bullet$] urobit diagram celkoveho postupu ako to bude fungovat.
+    Urobit 2 diagramy, 1.pre klasicky pristup, preprocessing --> Kmeans/SVM --> trenovanie --> vysledok 2.asi bude vyzerat rovnako.
+    \item[$\bullet$] Opisat postup toho ako to budem robit, chcem vyskusat klasicky pristup HOG + SVM/KMeans
+    \item[$\bullet$] Nasledne urobit len zakladny preprocessing pre NN a urobit 2 architektury CNN ktore porovnam
+    \item[$\bullet$] napisat ktore trieda implementuje augmentaciu dat, ktore funkcie z akej veci chcem na co pouzit.
+    Grayscale, HOG, zo scikit-image. CNN z Keras. Normalizacia NumPy. Augmentacia dat, 
+    \item[$\bullet$] chcem vytvorit vlastnu funkciu pre kontrolu chyby pocas trenovanie - errorAngle
+    \item[$\bullet$] Z kade navrhujem cerpat data pre zbrane, IMDB pre zbrane a ImageNet.
+    Dalej od Tomasa nastroj chcem pouzit, ako sa tam generuju data, dat do navrhu screen-shot z toho.
+    Opisat argumenty datagen v Keras ktore chcem pouzivat.
+    \item[$\bullet$] Ktory programovaci jazyk chcem pouzit a k tomu aj frameworky, kde sa nasledne odvolat ktore triedy u nich co implementuju
+    \item[$\bullet$] Z
 \end{enumerate}
 
+\subsection{implementacia - poznamky}
+\begin{enumerate}
+    \item[$\bullet$] Z kade som realne cerpal data nakoniec
+    \item[$\bullet$] Ako prebiehala augmentacia dat, opisat funkcie ktore sa pouzivaju pre dogenerovanie obrazkov a nazov tried ktore to implementuju.
+    \item[$\bullet$] 
+\end{enumerate}
 
-\section{Klasifikácia typu a určenie náklonu zbrane}
-Prvým bodom pri návrhu riešenia je výber programovacie jazyka a nástrojov, ktoré sú prispôsobné pre riešenie daného problému a tak uľahčujú výslednú implementáciu.
-Pre riešenie tejto práce bol vybraný programovací jazyk Python spolu s nástrojmi ktoré boli spomenúte už vyššie vid. sekcia \ref{sec:TensorflowKeras} a \ref{sec:scikitlearn}.
-Výsledny program bude mať za úlohu klasifikovať typ zbrane (krátka, dlhá) zo vstupného obrázku a následne určiť jej náklon.
-Pre klasifikáciu zbrane do daných kategórií sa ponúka niekoľko postupov klasifikácie, ktoré sú podrobne opísane v sekcíí \ref{sec:klasifikacia},
-    pri určovaní náklonu zbrane v obraze môžeme použiť konvolučné neurónové siete.
+\subsection{vysledky - poznamky}
+
+\begin{enumerate}
+    \item[$\bullet$] vytvorit velku prehladnu tabulku pre budu kompletne vysledky, tak ako to je na git-e opisane
+\end{enumerate}
