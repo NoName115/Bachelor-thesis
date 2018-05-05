@@ -1,11 +1,47 @@
 
 \section{Trénovacia databáza zbraní}
-- Z kade navrhujem cerpat data pre zbrane, IMDB pre zbrane a ImageNet.
-- Dalej od Tomasa nastroj chcem pouzit, ako sa tam generuju data, dat do navrhu screen-shot z toho.
+Pre správne trénovanie klasifikátorov a neurónových sieti je dôležité mať dáta v dostatočnom počte a správne označené.
+Trénovacia databáza je získana z niekoľkých zdrojov.
+\begin{enumerate}
+    \item[$\bullet$] \textbf{IMFDB}\footnote{\url{http://www.imfdb.org/wiki/Main_Page}} - je databáza záberov z filmov v ktorých sa nachádzajú zbrane.
+    Obsahuje nie len celkové scény ale aj samostatné obrázky zbraní ktoré sa v danej scéne nachádzajú.
+    Pre túto prácu je potrebné aby daný obrázok obsahoval iba zbraň, preto je potrebné obrázky z tejto databázy ručne odfiltrovať na samotné zbrane a scény so zbranami.
+    Následne ich potom zaradiť do správnej kategórie na krátke a dlhé.
+    \item[$\bullet$] \textbf{ImageNet}\footnote{\url{http://www.image-net.org/}} - je databáza obrázkov ktorá obsahuje viac ako 14 miliónov obrázkov vo viac ako 21000 kategóriach.
+    Výhodou tejto databázy je že obrázku už patria do určenej kategórie a tak nieje potrebné ich ručné prechádzať a kategorizovať.
+    \item[$\bullet$] \textbf{Google}\footnote{\url{http://www.google.com}} - pre doplnanie a zväčšenie počtu obrázkou je môžné použiť google vyhľadávanie.
+    Tak ako v prípade IMFDB bude potrebné obrázky ručne kategorizovať.
+    \item[$\bullet$] \textbf{Free3D}\footnote{\url{https://free3d.com/3d-models/weapons}} - databáza voľne dostupných 3D modelov zbraní s textúrami v rôzných formátoch.
+\end{enumerate}
+
+Databáza zbraní z prvých 3 zdrojov je možné použit na klasficikáciu zbraní do 2 kategórií na krátke a dlhé zbrane.
+Pre trénovanie neurónových sieti na určenie náklonu zbrane v obraze bude potrebné použiť 3D modely zbraní a následne z nich vygenerovať
+    obrázky zbraní v požadovaných natočeniach zbrane v obraze.
 
 \subsection{Generovanie dát z 3D modelov}
-- Pouzitie tomasovho softwaru
-- Program pre konvertovanie modelov do spravneho formatu
+Generovanie obrázkov pre určenie náklonu zbrane v scéne bude prebiehať pomocou databázy 3D modelov z posledného zdroja ktorý bol uvedení.
+Následne sa použije software od Ing. Tomáša Goldmanna do ktorého je potrebné vložiť 3D model vo formáte g3db a pozadie scény.
+
+Kedže 3D modely ktoré budú použité zo zdroja Free3D niesu v požadovanom formáte, je potrebné ich prekonvertovať, to je môžné urobiť
+    pomocou nástroja \textbf{fbx-conv}\footnote{\url{https://github.com/libgdx/fbx-conv}}.
+Tento nástroj podporuje konvertovanie 3D modelov z formátu fbx alebo obj to požadovaného formátu g3db.
 
 \subsection{Augmentácia obrázkov}
-- Opisat argumenty datagen v Keras ktore chcem pouzivat.
+Ako bolo opísane v kapitole \ref{sec:preprocessing} jedna z možností zväčšenia počtu dát na trénovanie je augmentácia vstupných dát.
+V tejto práci môžeme rozdeliť augmentáciu dát do dvoch skupín, prvý druh augmentácie bude prebiehať pre trénovanie klasifikátorov ktoré
+    určuju typ zbrane, druhý druh augmentácie bude prebiehať pri obrázkov určených na náklon zbrane.
+
+Pri augmentácií dát pre klasifikovanie dvoch tried, na krátke a dlhé zbrane, prebehne niekoľko transfomácií obrázka.
+\begin{enumerate}
+    %\item[$\bullet$] \textbf{priblíženie} - priblíženie alebo oddialenie vstupného obrázku
+    \item[$\bullet$] \textbf{Rotácia} - obrázky budú rotované o náhodny uhol v rozmedzí 0-180 stupňov.
+    \item[$\bullet$] \textbf{Preklopenie} - vertikálne alebo horizonálne preklopenie obrázka.
+    \item[$\bullet$] \textbf{Posun} - posun obrázka po x-ovej a y-ovej osi.
+    \item[$\bullet$] \textbf{Výplň} - pri rotácií alebo posunu obrázku môže vzniknúť čierna plocha pixelov, tieto čierne pixely je potrbné vyplniť.
+    Tieto čierne pixely budú doplnené hraničným pixelom obrázka ktorý bude nakopírovaný až po nový okraj.
+\end{enumerate}
+
+\begin{comment}
+    - Opisat argumenty datagen v Keras ktore chcem pouzivat.
+\end{comment}
+
