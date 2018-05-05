@@ -1,5 +1,6 @@
 
 \section{Trénovacia databáza zbraní}
+\label{sec:databaza}
 Pre správne trénovanie klasifikátorov a neurónových sieti je dôležité mať dáta v dostatočnom počte a správne označené.
 Trénovacia databáza je získana z niekoľkých zdrojov.
 \begin{enumerate}
@@ -19,6 +20,7 @@ Pre trénovanie neurónových sieti na určenie náklonu zbrane v obraze bude po
     obrázky zbraní v požadovaných natočeniach zbrane v obraze.
 
 \subsection{Generovanie dát z 3D modelov}
+\label{subsec:generovanie3d}
 Generovanie obrázkov pre určenie náklonu zbrane v scéne bude prebiehať pomocou databázy 3D modelov zo zdroja Free3D.
 Následne sa použije software od Ing. Tomáša Goldmanna do ktorého je potrebné vložiť 3D model vo formáte g3db a pozadie scény.
 
@@ -26,15 +28,8 @@ Kedže 3D modely ktoré budú použité niesu v požadovanom formáte, je potreb
     pomocou nástroja \textbf{fbx-conv}\footnote{\url{https://github.com/libgdx/fbx-conv}}.
 Tento nástroj podporuje konvertovanie 3D modelov z formátu fbx alebo obj do požadovaného formátu g3db.
 
-Dôležité je spomenúť že pri generovaní sa používajú názvy ós ktoré používa lietadlová doprava, vid. obrázok \ref{pic:airplaneaxis}.
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{airplane-axis}
-    \caption{Mená ós pre lietadlovu dopravu.}
-    \label{pic:airplaneaxis}
-\end{figure}
-
 \subsection{Augmentácia obrázkov}
+\label{subsec:augmentacia}
 Ako bolo opísane v kapitole \ref{sec:preprocessing} jedna z možností zväčšenia počtu vstupných dát a zlepšenia generalizácie pri klasifikácií je augmentácia vstupných dát.
 V tejto práci môžeme rozdeliť augmentáciu dát do dvoch skupín, prvý druh augmentácie bude prebiehať pre trénovanie klasifikátorov ktoré
     určuju typ zbrane, druhý druh augmentácie bude prebiehať pri obrázkoch určených pre náklon zbrane.

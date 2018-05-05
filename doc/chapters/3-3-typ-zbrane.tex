@@ -1,40 +1,23 @@
 
 \section{Klasifikácia typu zbrane}
-- predspracovanie ake chcem pouzit, cely chain vysvetlit
-- Pridat ake optimalizatory a celkovo s akymi argumetmi spustat trenovanie, kolko epoch a pod...
-- Zdovodnovat preco prave taketo nastavenie konvolucnej siete.
+Jedným z cieľou tejto práce je klasifikovať typy zbraní do 2 kategórií, a to na krátke a dlhé zbrane.
+Táto klasifikácia môže prebiehať niekoľkými spôsobmi, prehľad týchto prístupov bol zhrnutý v kapitolách \ref{sec:detekcia} a \ref{sec:klasifikacia}.
+Pre klasifikáciu v tejto práci bude použitých niekoľko z týchto prístupov a vo výsledku budú porovnané, ktorý dosiahol najlepšie výsledky.
 
-- spomenut ktore triedy zo scikit-learn chcem pouzit pre implementovanie klasifikatorov.
-- Budem pouzivam SVM, Kmenas a Multilayer Perceptron
-- Opisat postup toho ako to budem robit, chcem vyskusat klasicky pristup HOG + SVM/KMeans
-- Nasledne urobit len zakladny preprocessing pre NN a urobit 2 architektury CNN ktore porovnam
-
-- urobit diagram celkoveho postupu ako to bude fungovat (popisat to cele asi radsej ako diagram)
-  preprocessing --> Kmeans/SVM --> trenovanie --> vysledok
-- napisat ktore trieda implementuje augmentaciu dat, ktore funkcie z akej veci chcem na co pouzit.
-  Grayscale, HOG, zo scikit-image. CNN z Keras. Normalizacia NumPy. Augmentacia dat, 
-
-\begin{comment}
-  \section{scikit-learn}
-    \label{sec:scikitlearn}
-
-    Scikit-learn je softvérová knižica pre strojové učenie pre programovací jazyk Python.
-    Obsahuje množstvo algoritmov pre klasifikáciu, regresiu alebo zhlukovanie dát \cite{odkaz:scikitlearn}.
-    Pre riešenie tejto práce obsahuje vhodné triedy, ktoré implementujú spomínané postupy zo sekcie \ref{sec:klasifikacia}.
-    Príklady tried pre jednotlivé algoritmy:
-    \begin{enumerate}
-        \item[$\bullet$] \textbf{Nearest Neighbors} - scikit-learn poskytuje 2 rôzne klasifikátory pre algoritmus najbližsieho suseda.
-        Trieda \textit{KNeighborsClassifier} klasifikuje na základe $k$ najbližšich susedov, kde $k$ je celé číslo špecifikované užívateľom.
-        Druhá trieda \textit{RadiusNeighborsClassifier} implementuje klasifikáciu na základe počtu susedov v rámci pevného polomeru $r$ každého trénovacieho bodu,
+Prvé riešenie bude spočívať v klasickom prístupe, ktoré pozostáva z predspracovania vstupných dát pomocou prekonvertovania dát do šedotónoveho obrazu a histogramu orientovaných prechodov (vid. \ref{sec:preprocessing}).
+Na tieto predspracované dáta bude v jednom z riešení použitý K-Nearest-Neighbor klasfikátor, pre druhé riešenie bude použitý SVM klasifikátor, testovanie
+    a porovnávanie výsledkov môže prebiehať s rôznymi konfiguráciami týchto klasifikátorov.
+\begin{enumerate}
+    \item[$\bullet$] Pre \textbf{K-Nearest-Neighbor}, knižnica scikit-learn poskytuje 2 rôzne implementácie tohto klasifikátora.
+    Trieda \textit{KNeighborsClassifier} klasifikuje na základe $k$ najbližšich susedov, kde $k$ je celé číslo špecifikované užívateľom.
+    
+    Druhá implementácia je trieda \textit{RadiusNeighborsClassifier} ktorá klasifikuje na základe počtu susedov v rámci pevného polomeru $r$ každého trénovacieho bodu,
         kde $r$ je hodnota s pohyblivou desatinou čiarkou určená užívateľom\footnote{\url{http://scikit-learn.org/stable/modules/neighbors.html\#nearest-neighbors-classification}}.
-        \item[$\bullet$] \textbf{Support Vector Machines} - \textit{SVC}, \textit{NuSVC} a \textit{LinearSVC} sú triedy pre viac-triednu klasifikáciu.
-        Pre ktoré je možné použit rôzne typy jadier[eng. kernels] \footnote{\url{http://scikit-learn.org/stable/modules/svm.html\#custom-kernels}}.
-        \item[$\bullet$] \textbf{Stochastic Gradient Descent} - \textit{SGDClassifier} podporuje viac-triednu klasifikáciu pomocou kombinácie viacerých binárnych klasifikátorov v tzv.“one versus all” (OVA) schéme \footnote{\url{http://scikit-learn.org/stable/modules/sgd.html\#stochastic-gradient-descent}}.
-    \end{enumerate}
+    \item[$\bullet$] Pre \textbf{Support Vector Machines}, scikit-learn obsahuje 3 triedy \textit{SVC}, \textit{NuSVC} a \textit{LinearSVC} pre viac-triednu
+        klasifikáciu s možnosťou použitia rôznych typov jadier \footnote{\url{http://scikit-learn.org/stable/modules/svm.html\#custom-kernels}}.
+    %\item[$\bullet$] \textbf{Multi Layer Perceptron}
+\end{enumerate}
 
-\end{comment}
-
-\subsection{Trenovanie klasifikatorov}
-- pocet epoch bude potrebne zistit experimentalnych sposobom, alebo pouzit funkciu na save best of Keras-u
-
-\subsection{Cross-entropy classification}
+Pre dalšie riešenie klasfikácie zbraní budú použité dve konvolučné neurónové siete, ktorých výsledky budú porovnané, podrobná architektúra sieti je opísana v kapitole \ref{sec:architekuraCNN}.
+Predspracovanie vstupných dát bude pozostávať z normalizacie hôdnot RGB zložiek pixelov, nastavenia rovnomernej veľkosti strán obrázka (vid. \ref{sec:preprocessing})
+    a následnej augmentácií dát pre zväčsenie počtu vstupných dát (vid. \ref{subsec:augmentacia}).

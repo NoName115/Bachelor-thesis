@@ -1,9 +1,22 @@
 
 \section{Určenie náklonu zbrane}
-- predspracovanie ake chcem pouzit, cely chain vysvetlit
-- HOG, velkost okna, posun a pod...
-- Opis vypoctu presnosti pre dany klasifikator
-- Nasledne urobit len zakladny preprocessing pre NN a urobit 2 architektury CNN ktore porovnam
+Druhý z cieľou tejto práce je určenie náklonu zbrane v obraze.
+Tento náklon bude určeny v 3 osách.
+Dôležité je spomenúť že názvy ós sú pomenované podľa tých ktoré sa používajú v letectve, vid. obrázok \ref{pic:airplaneaxis}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{airplane-axis}
+    \caption{Mená ós pre letectvo.}
+    \label{pic:airplaneaxis}
+\end{figure}
+
+Tento problém je môžné preniesť do klasifikácie, preto pre riešenie tohto problému budú použité konvolučné neurónové siete, ktorých všeobecná architektúra je popísana v \ref{sec:architekuraCNN}.
+Výsledok poslednej vrtsvy softmax klasfikátora bude 72 výstupov ktoré budú určovať o aký uhol je zbraň natočená.
+Každá zo 72 kategórií bude zastupovať rozpätie 5 stupňov, ciže celkovo sa určí náklon zbrane v celom rozsahu od 0 do 360 stupňov.
+
+Postup predspracovania obrazu bude rovnaký ako pri klasfikácií zbraní pomocou konvolučných neurónových sieti, normalizácia, úprava rozmeru vstupu na štvorec a augmentácia dát (vid. \ref{subsec:augmentacia})
+Pre každú os bude natrénovaná samostatná konvolučná neurónová sieť, výsledok bude teda obsahovať 3 natrénované modely.
+
 
 \subsection{Odchylka chyby}
-- chcem vytvorit vlastnu funkciu pre kontrolu chyby pocas trenovanie - errorAngle
+Kedže knižnica nemá priamu podporu pre určenie
