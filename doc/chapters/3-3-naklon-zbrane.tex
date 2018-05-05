@@ -17,6 +17,7 @@ Každá zo 72 kategórií bude zastupovať rozpätie 5 stupňov, ciže celkovo s
 Postup predspracovania obrazu bude rovnaký ako pri klasfikácií zbraní pomocou konvolučných neurónových sieti, normalizácia, úprava rozmeru vstupu na štvorec a augmentácia dát (vid. \ref{subsec:augmentacia})
 Pre každú os bude natrénovaná samostatná konvolučná neurónová sieť, výsledok bude teda obsahovať 3 natrénované modely.
 
-
 \subsection{Odchylka chyby}
-Kedže knižnica nemá priamu podporu pre určenie
+Knižnica Keras obsahuje funkciu \textit{categorical\_accuracy}\footnote{\url{https://keras.io/metrics/}} pre určenie presnosti siete pri klasfikovaní do viacerých kategórií.
+Čo je možné použiť, avšak pre určenie náklonu by bola vhodná iná metrika určovania presnosti siete.
+Preto bude implementovaná vlastná funkcia \textit{angle\_error} ktorá bude počitať presnosť siete podľa priemerného rozdielu medzi skutočnými a predpovedanými uhlami.
