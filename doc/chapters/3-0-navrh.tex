@@ -1,33 +1,24 @@
 % ------------ NEW CHAPTER ------------
 \chapter{Návrh riešenia}
+Kapitola bude zahŕnať použitý software pre tvorbu klasifikátorov a neurónových sieti, špecifikáciu hardwaru na ktorom bude trénovanie priebiehať.
+Ďalej priblíži zbroje a spôsoby pre získanie, spracovanie a rozdelenie dát zbraní určených pre klasifikáciu typu a určenie náklonu v scéne.
+Následne opíše celkový navrhovaný postup, od predspracovania obrazu až po zber výsledkov a určenie presnosti daných klasifikátorov.
+Celá kapitola bude vychádzať z informácií ktoré boli spomenuté v kapitole \ref{chap:technologie}.
 
-V tejto kapitole si priblížime navrhované technológie pre riešienie problému, tejto práce.
-Kapitola zahŕňa popis knižníc pre strojové učenie ako je Tensorflow a Keras, ktorý zovšeobecňuje a používa Tensorflow pre svoju prácu.
-Následne nástroj scikit-learn, ktorý budeme používať pre jednoduchú klasifikáciu pomocou postupov, ktoré boli vysvetlené v kapitole \ref{chap:technologie}.
 
+\input{chapters/3-1-software-hardware}
 
+\input{chapters/3-2-trenovacia-databaza}
+
+\input{chapters/3-3-typ-zbrane}
+
+\input{chapters/3-4-naklon-zbrane}
+
+\section{Zhrnutie kapitoly}
 
 
 
 \begin{comment}
-
-    \section{scikit-learn}
-    \label{sec:scikitlearn}
-
-    Scikit-learn je softvérová knižica pre strojové učenie pre programovací jazyk Python.
-    Obsahuje množstvo algoritmov pre klasifikáciu, regresiu alebo zhlukovanie dát \cite{odkaz:scikitlearn}.
-    Pre riešenie tejto práce obsahuje vhodné triedy, ktoré implementujú spomínané postupy zo sekcie \ref{sec:klasifikacia}.
-    Príklady tried pre jednotlivé algoritmy:
-    \begin{enumerate}
-        \item[$\bullet$] \textbf{Nearest Neighbors} - scikit-learn poskytuje 2 rôzne klasifikátory pre algoritmus najbližsieho suseda.
-        Trieda \textit{KNeighborsClassifier} klasifikuje na základe $k$ najbližšich susedov, kde $k$ je celé číslo špecifikované užívateľom.
-        Druhá trieda \textit{RadiusNeighborsClassifier} implementuje klasifikáciu na základe počtu susedov v rámci pevného polomeru $r$ každého trénovacieho bodu,
-        kde $r$ je hodnota s pohyblivou desatinou čiarkou určená užívateľom\footnote{\url{http://scikit-learn.org/stable/modules/neighbors.html\#nearest-neighbors-classification}}.
-        \item[$\bullet$] \textbf{Support Vector Machines} - \textit{SVC}, \textit{NuSVC} a \textit{LinearSVC} sú triedy pre viac-triednu klasifikáciu.
-        Pre ktoré je možné použit rôzne typy jadier[eng. kernels] \footnote{\url{http://scikit-learn.org/stable/modules/svm.html\#custom-kernels}}.
-        \item[$\bullet$] \textbf{Stochastic Gradient Descent} - \textit{SGDClassifier} podporuje viac-triednu klasifikáciu pomocou kombinácie viacerých binárnych klasifikátorov v tzv.“one versus all” (OVA) schéme \footnote{\url{http://scikit-learn.org/stable/modules/sgd.html\#stochastic-gradient-descent}}.
-    \end{enumerate}
-
 
     \section{Klasifikácia typu a určenie náklonu zbrane}
     Prvým bodom pri návrhu riešenia je výber programovacie jazyka a nástrojov, ktoré sú prispôsobné pre riešenie daného problému a tak uľahčujú výslednú implementáciu.
@@ -38,37 +29,16 @@ Následne nástroj scikit-learn, ktorý budeme používať pre jednoduchú klasi
 
 \end{comment}
 
-\subsection{navrh - poznamky}
+\begin{comment}
 
-\begin{enumerate}
-    \item[$\bullet$] navrh pre 2 konvolucne neuronove siete, jedna inspirovane AlexNet druha VGG16,
-    Zdovodnovat preco prave taketo nastavenie konvolucnej siete.
-    Pridat ake optimalizatory a celkovo s akymi arugumetmi spustat trenovanie, kolko epoch a pod...
-    \item[$\bullet$] spomenut ktore triedy zo scikit-learn chcem pouzit pre implementovanie klasifikatorov.
-    Budem pouzivam SVM, Kmenas a Multilayer Perceptron
-    \item[$\bullet$] urobit diagram celkoveho postupu ako to bude fungovat.
-    Urobit 2 diagramy, 1.pre klasicky pristup, preprocessing --> Kmeans/SVM --> trenovanie --> vysledok 2.asi bude vyzerat rovnako.
-    \item[$\bullet$] Opisat postup toho ako to budem robit, chcem vyskusat klasicky pristup HOG + SVM/KMeans
-    \item[$\bullet$] Nasledne urobit len zakladny preprocessing pre NN a urobit 2 architektury CNN ktore porovnam
-    \item[$\bullet$] napisat ktore trieda implementuje augmentaciu dat, ktore funkcie z akej veci chcem na co pouzit.
-    Grayscale, HOG, zo scikit-image. CNN z Keras. Normalizacia NumPy. Augmentacia dat, 
-    \item[$\bullet$] chcem vytvorit vlastnu funkciu pre kontrolu chyby pocas trenovanie - errorAngle
-    \item[$\bullet$] Z kade navrhujem cerpat data pre zbrane, IMDB pre zbrane a ImageNet.
-    Dalej od Tomasa nastroj chcem pouzit, ako sa tam generuju data, dat do navrhu screen-shot z toho.
-    Opisat argumenty datagen v Keras ktore chcem pouzivat.
-    \item[$\bullet$] Ktory programovaci jazyk chcem pouzit a k tomu aj frameworky, kde sa nasledne odvolat ktore triedy u nich co implementuju
-    \item[$\bullet$] Z
-\end{enumerate}
+    \subsection{implementacia a vysledky- poznamky}
+    \begin{enumerate}
+        \item[$\bullet$] Z kade som realne cerpal data nakoniec
+        \item[$\bullet$] Ako prebiehala augmentacia dat, opisat funkcie ktore sa pouzivaju pre dogenerovanie obrazkov a nazov tried ktore to implementuju.
+        \item[$\bullet$] Obrazok trenovanie neuronovej siete
+        \item[$\bullet$] Dosiahnute vysledky
+        \item[$\bullet$] vytvorit velku prehladnu tabulku pre budu kompletne vysledky, tak ako to je na git-e opisane
+    \end{enumerate}
 
-\subsection{implementacia - poznamky}
-\begin{enumerate}
-    \item[$\bullet$] Z kade som realne cerpal data nakoniec
-    \item[$\bullet$] Ako prebiehala augmentacia dat, opisat funkcie ktore sa pouzivaju pre dogenerovanie obrazkov a nazov tried ktore to implementuju.
-    \item[$\bullet$] 
-\end{enumerate}
+\end{comment}
 
-\subsection{vysledky - poznamky}
-
-\begin{enumerate}
-    \item[$\bullet$] vytvorit velku prehladnu tabulku pre budu kompletne vysledky, tak ako to je na git-e opisane
-\end{enumerate}
