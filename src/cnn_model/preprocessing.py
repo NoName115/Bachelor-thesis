@@ -46,7 +46,6 @@ class Preprocessor():
                 width_shift_range=0.15,   # 6 images - 0.2
                 height_shift_range=0.15,  # 8 images - 0.3
                 #zoom_range=[0.7, 1.3],   # 10 images - [0.6, 1.4]
-                #channel_shift_range=10,  # 10 images - 10
                 fill_mode='nearest',
                 horizontal_flip=True,    # 5 images - True
                 vertical_flip=True,      # 5 images - True

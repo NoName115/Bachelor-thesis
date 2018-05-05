@@ -6,6 +6,7 @@
 # All images
 dataset/
 unsorted_dataset/
+preview/
 
 # Models
 /models/

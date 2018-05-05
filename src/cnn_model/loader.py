@@ -1,4 +1,4 @@
-from keras.preprocessing.image import img_to_array
+from keras.preprocessing.image import load_img, img_to_array
 from keras.utils import to_categorical, print_summary
 from keras.models import load_model, model_from_json
 from sklearn.model_selection import train_test_split
@@ -15,7 +15,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import json
 import glob
-import cv2
 import os
 import re
 
@@ -36,6 +35,7 @@ class DataSaver():
     def save_image(image, path, image_name, rescale=True):
         '''Save input array as image, only for PNG image extention
         '''
+        import cv2
         image = image * 255 if (rescale) else image
         cv2.imwrite(
             path + image_name + ".png",
@@ -78,7 +78,7 @@ class DataSaver():
 
         i = 0
         for batch in datagen.flow(img_data, batch_size=batch_size,
-             save_to_dir=folder_path, save_prefix='weapon', save_format='jpg'):
+             save_to_dir=folder_path, save_prefix='weapon', save_format='jpeg'):
             # Debug
             if (i % print_mod == 0):
                 print_info("Saving loop " + str(i), 1)
@@ -311,7 +311,7 @@ class DataLoader():
 
             # Load and rescale images
             try:
-                image = cv2.resize(cv2.imread(path), (width, height))
+                image = image.load_img(path, target_size=(width, height))
                 image = img_to_array(image)
                 image_data.append(image)
             except:
@@ -482,11 +482,8 @@ class DataLoader():
         print_info("Loading image from: " + image_path)
 
         # Preprocess image
-        image = cv2.resize(
-            cv2.imread(image_path),
-            (width, height)
-        )
-        return img_to_array(image.astype("float"))
+        image = load_img(path, target_size=(width, height))
+        return img_to_array(image)
 
     @staticmethod
     def load_model_data(model_path):
