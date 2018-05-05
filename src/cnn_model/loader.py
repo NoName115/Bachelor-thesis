@@ -477,12 +477,15 @@ class DataLoader():
         return result
 
     @staticmethod
-    def load_image(image_path, width, height):
+    def load_image(image_path, width=None, height=None):
         # Debug
         print_info("Loading image from: " + image_path)
 
         # Preprocess image
-        image = load_img(path, target_size=(width, height))
+        if (not width or not height):
+            image = load_img(image_path)
+        else:
+            image = load_img(image_path, target_size=(width, height))
         return img_to_array(image)
 
     @staticmethod
