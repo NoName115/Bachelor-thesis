@@ -279,11 +279,11 @@ class AngleGenerator():
                 image = set_x[random_indx]
                 label = np.argmax(set_y[random_indx])
 
-                if (self.rotation_type == 'roll'):
+                if (self.rotation_type == 'pitch'):
                     rotated, angle, label = Preprocessing.rotate_and_crop_image(
                         image, self.labels_dict
                     )
-                elif (self.rotation_type == 'pitch'):
+                elif (self.rotation_type == 'roll'):
                     rotated, angle, label = Preprocessing.rotate_pitch_image(
                         image, label, self.labels_dict
                     )
