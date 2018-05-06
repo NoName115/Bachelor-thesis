@@ -1,45 +1,66 @@
 
-\chapter{Implementácia}
+\chapter{Implementácia a testovanie}
 
+% TODO uvod
 
+\section{Trénovacie dáta}
+- loader.py - DataLoader a DataSaver
+- ake realne počty dát mam
+- urobit tabulky ze ake typy obrazkov a pocty su pre ktoru vec
+- ktore triedy implementujú augmentáciu
+- opisat celkovu triedu od Keras-u + Moja vlastne 2 triedy ktore som implementoval
+- ako prebiehala augmentacia dat, opisat funkcie ktore sa pouzivaju pre dogenerovanie obrazkov a nazov tried ktore to implementuju.
+- po vygenerovani obrazkov z Tomasovho nastroja, je potrebne spusti script convert.sh ktory prekonvertuje data do nizsej kvality
+  a upravi pomenovanie obrazkov
+- dat ukazku ako vyzera ten program a ako sa generuju data - stlacenim klavesi G
 
-\section{Databáza zbraní}
+- Uvidim ci toto nedat radsej do navrhu
+    * dat nejake priklady ako vyzeraju data
+    * pozadie, 3D model zbrane, vysledok
+    * ze bolo potrebne orezavat tieto obrazky, pomocou (link na web)
 
-\subsection{Augmentacia obrazkov}
-- ktore triedy som implementoval
+\subsection{Načitavanie dát}
+- triedy ktore implementuju nacitavanie dat
+- ako sa upravuju data pri nacitani
 
+\subsection{Predspracovanie dát}
+- preprocessing.py - Preprocessor, Preprocessing
+
+\section{Modely}
+- models.py - Models
+- trieda ktore implementuje model
+- ake informacie su potrebne pre vytvorenie modelu a ktore funkcie je potrebne definovat
+- ktore triedy z Kerasu som pouzil a ktore triedy implementuju danu vrstvu, argumenty vrstiev ktore su nastavene a ako
+
+\subsection{Ukladanie modelu}
+- loader.py - DataSaver
+- ktore informacie sa ukladaju
+- ake funkcie implementuju ukladanie modelu
+- opisat ukladanie modelu pre scikit-learn, ktora vec je na to pouzita, ze je prisposobene pre ukladanie velych matic
+- opisat ukladanie modelu pre Keras, ktora vec to implementuje
 
 \section{Trénovanie klasifikátorov}
 - rozdelenie dat do 3 skupin - trenovanie data, validacne, testovacie
+- cely postup trenovanie, asi to urobit rozdielne pre kazdy klasifikator osobitne
+- obrazok trenovanie neuronovej siete
+- Pridat ake optimalizatory a celkovo s akymi argumetmi spustat trenovanie, kolko epoch a pod...
+- Zdovodnovat preco prave taketo nastavenie konvolucnej siete.
+- pocet epoch bude potrebne zistit experimentalnych sposobom, alebo pouzit funkciu na save best of Keras-u
 
-\section{Zrhnutie kapitoly}
+\subsection{Error angle funkcia}
+- validacia uhla, vlastna funkcia (zdroj z kade to je)
 
-\begin{comment}
+\subsection{Hodnotenie presnosti klasifikatorov}
+- opisat funkcie podľa ktorých sa ktorý klasifikátor bude hodnotiť
+  mozno zobrat tabľku z druhej bakalarskej prace
+- takisto, ktory script a ktore triedy implementuju evaluaciu modelu
+- ako vyzera vystup po evaluaciu modelu
 
-    \subsection{implementacia a vysledky- poznamky}
-    \begin{enumerate}
-        \item[$\bullet$] Z kade som realne cerpal data nakoniec
-        \item[$\bullet$] Ako prebiehala augmentacia dat, opisat funkcie ktore sa pouzivaju pre dogenerovanie obrazkov a nazov tried ktore to implementuju.
-        \item[$\bullet$] Obrazok trenovanie neuronovej siete
-        \item[$\bullet$] Dosiahnute vysledky
-        \item[$\bullet$] vytvorit velku prehladnu tabulku pre budu kompletne vysledky, tak ako to je na git-e opisane
-    \end{enumerate}
+\section{Testovanie}
+- testovanie siete priebiehalo pocas trenovanie ako validacia
+  + na konci bola urobene evaluaciu modelu kde bol vysledok testovany
 
-\end{comment}
+\section{Zhrnutie kapitoly}
 
-\subsection{Hodnotenie presnosti siete}
+% TODO
 
-\begin{comment}
-
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.32\textwidth]{AlexNet_Like}
-        \caption{.}
-        \label{pic:kNN}
-    \end{figure}
-
-    - Pridat ake optimalizatory a celkovo s akymi argumetmi spustat trenovanie, kolko epoch a pod...
-    - Zdovodnovat preco prave taketo nastavenie konvolucnej siete.
-    - pocet epoch bude potrebne zistit experimentalnych sposobom, alebo pouzit funkciu na save best of Keras-u
-
-\end{comment}
