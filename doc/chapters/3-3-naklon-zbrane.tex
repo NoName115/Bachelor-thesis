@@ -1,5 +1,6 @@
 
 \section{Určenie náklonu zbrane}
+\label{sec:urcenienaklonuzbrane}
 Druhý z cieľou tejto práce je určenie náklonu zbrane v obraze.
 Tento náklon bude určeny v 3 osách.
 Dôležité je spomenúť že názvy ós sú pomenované podľa tých ktoré sa používajú v letectve, vid. obrázok \ref{pic:airplaneaxis}.
@@ -18,6 +19,7 @@ Postup predspracovania obrazu bude rovnaký ako pri klasfikácií zbraní pomoco
 Pre každú os bude natrénovaná samostatná konvolučná neurónová sieť, výsledok bude teda obsahovať 3 natrénované modely.
 
 \subsection{Odchylka chyby}
+\label{subsec:odchylkachyby}
 Knižnica Keras obsahuje funkciu \textit{categorical\_accuracy}\footnote{\url{https://keras.io/metrics/}} pre určenie presnosti siete pri klasfikovaní do viacerých kategórií.
 Čo je možné použiť, avšak pre určenie náklonu by bola vhodná iná metrika určovania presnosti siete.
 Preto bude implementovaná vlastná funkcia \textit{angle\_error} ktorá bude počitať presnosť siete podľa priemerného rozdielu medzi skutočnými a predpovedanými uhlami.

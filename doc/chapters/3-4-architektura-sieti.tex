@@ -3,6 +3,7 @@
 \label{sec:architekuraCNN}
 
 \subsection{Nastavenie parametrov}
+\label{subsec:nastavenieparametrov}
 Ako bolo spomínane v kapitole \ref{subsec:convolutionalneuralnetwork} je niekoľko parametrov ktoré je potrebné
     nastaviť v konvolučných a pooling vrstvách.
 Pre správne fungovanie sietie je potrebné nastaviť aj správne hodnoty týchto parametrov, preto v navrhovaných architektúrach budú
@@ -20,6 +21,7 @@ Funkciou pooling vrstvy je znižovanie dimenzionality a zároveň ponechanie dô
     veľkosť filtra 2x2 s krokom 2 pri použití MaxPooling vrstvy \cite{odkaz:CNNArchitecture}.
 
 \subsection{Návrh architektúr}
+\label{subsec:navrharchitektur}
 Prvý model siete je inšpirovaný architektúrou AlexNet (vid. \ref{subsec:popularCNN}).
 Model obsahuje celkovo 20 vrstiev z ktorých 5 je konvolučných, 5 max pooling, 7 dropout a 3 dense vrstvy.
 Veľkosť vstupných dát do prvej vrstvy je 128x128x3.

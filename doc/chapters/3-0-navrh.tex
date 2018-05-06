@@ -2,7 +2,7 @@
 \chapter{Návrh riešenia}
 Kapitola bude zahŕnať použitý software pre tvorbu klasifikátorov a neurónových sieti, špecifikáciu hardwaru na ktorom bude trénovanie priebiehať.
 Ďalej priblíži zbroje a spôsoby pre získanie, spracovanie a rozdelenie dát zbraní určených pre klasifikáciu typu a určenie náklonu v scéne.
-Následne opíše celkový navrhovaný postup, od predspracovania obrazu až po zber výsledkov a určenie presnosti daných klasifikátorov.
+Následne opíše celkový navrhovaný postup, od predspracovania obrazu až po zber výsledkov.
 Celá kapitola bude vychádzať z informácií ktoré boli spomenuté v kapitole \ref{chap:technologie}.
 
 
@@ -18,4 +18,38 @@ Celá kapitola bude vychádzať z informácií ktoré boli spomenuté v kapitole
 
 \section{Zhrnutie kapitoly}
 
-% TODO
+Kapitola zhrnula software ktorý sa bude používať pre tvorbu a trénovanie klasfikátorov a neurónových sieti.
+Taktiež obsahuje popis parametrov zariadenia na ktorom toto trénovanie bude prebiehať.
+
+Následne v kapitole \ref{sec:klasfikaciatypuzbrane} je opísaný navrhovaný spôsob pre klasifikáciu typu zbrane do 2 tried, na krátku a dlhú, približuje
+    programové triedy ktoré je možné pre tento problém použiť z knižnice scikit-learn.
+A predstavuje celkový postup klasfikácie od predspracovania obrazu až po konečný výsledok.
+
+Kapitola \ref{sec:urcenienaklonuzbrane} opisuje navrhovaný postup riešenia pre určenie typu zbrane pomocou konvolučných neurónových sieti,
+    vysvetľuje terminológiu pre použité názvy ós rotácie a v \ref{subsec:odchylkachyby} približuje navrhovanú funkciu pre lepšie určenie presnosti siete
+    pri určovaní náklonu zbrane.
+
+Celá kapitola \ref{sec:architekuraCNN} je venová podrobnému opisu dvoch navrhovaných architektúr konvolučných neurónových sieti a
+    vysvetleniu všetkých zvolených hodnôt parametrov siete.
+
+V závere su spomenuté zdroje z ktorých je možné čerpať obrázky a 3D modely zbraní, je opísany postup generovanie obrázkov z 3D modelov a ich úprava
+    pre účely tejto práce.
+Posledná podkapitola \ref{subsec:augmentacia} obsahuje zoznam transformácií obrazu pre augmentáciu dát.
+Opisuje 2 druhy augmentácie použitých v tejto práci, kde prvý je zameraný na dáta určené pre klasifikáciu zbraní do 2 tried a druhý pre dáta
+    určené na stanovenie náklonu zbrane v obraze.
+
+\begin{comment}
+    
+- pouzity software a hardware
+- klasifikacia typu zbrane pomocou niekolkych pristupov, od klasickeho az po pouzitie konvolucnych neurónových sieti
+    + upresnenie tried z scikit-learn ktore sa na to pouziju a postup predspracovania obrazu
+- urcenie naklonu zbrane pomocou klasifikacie do 72 tried pouzitim konvolucnych neurónových sieti a predspracovanie obrazu
+    + vytvorenie vlastnej funkcie pre urcenie presnosti siete
+- Navrh architektury pre 2 typy konvolucnych neurónových sieti ktore su inspirovane popularnymi architekturami
+    + nastavenie parametrov pre trenovanie
+
+- Zdroje z kade sa bude cerpat pre zber obrazkov na trenovanie
+    + vysvetlenie generovania obrazkov z 3D modelov
+    + nasledna augmentacia dat pre urcenie typu zbrane a urcenie naklonu zbrane v niekolkych osach.
+
+\end{comment}
