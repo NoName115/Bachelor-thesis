@@ -311,7 +311,7 @@ class DataLoader():
 
             # Load and rescale images
             try:
-                image = image.load_img(path, target_size=(width, height))
+                image = load_img(path, target_size=(width, height))
                 image = img_to_array(image)
                 image_data.append(image)
             except:
