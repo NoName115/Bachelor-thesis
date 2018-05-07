@@ -25,12 +25,17 @@ def parse_arguments_training():
         "--ep",
         required=False,
         help="number of epochs"
-        )
+    )
     ap.add_argument(
         "--bs",
         required=False,
         help="batch size"
-        )
+    )
+    ap.add_argument(
+        "--rt",
+        required=False,
+        help="rotation type"
+    )
     return vars(ap.parse_args())
 
 def parse_arguments_prediction():

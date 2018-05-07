@@ -8,15 +8,17 @@ from models import *
 from evaluation import evaluate_model
 
 
-#  --dataset --model --alg [--ep] [--bs]
+#  --dataset --model --alg [--ep] [--bs] [--rt]
 args = parse_arguments_training()
 
 IMAGE_WIDTH = 128
 IMAGE_HEIGHT = 128
 MODEL_NAME = args['alg']
 
-ROTATION_TYPE = 'yaw'
 ROTATE_ANGLE = 5
+if (MODEL_NAME == Algorithm.CNN_A):
+    ROTATION_TYPE = args['rt']  # yaw, pitch, roll
+
 EPOCHS = 45 if (not args['ep']) else int(args['ep'])
 BS = 16 if (not args['bs']) else int(args['bs'])
 

@@ -1,12 +1,25 @@
 
 \section{Trénovanie klasifikátorov}
 \label{sec:trenovanie}
+Pre trénovanie modelov je implementovaný script train.py ktorý požaduje niekoľko argumentov pre spustenie.
+Zoznam vstupných argumentov a ich význam, argumenty v hranatých zátvorkách su volitelné:
+\begin{enumerate}
+  \item[$\bullet$] \textbf{--model} cesta k priečinku do ktorého budú natrénované modely ukladané.
+  \item[$\bullet$] \textbf{--dataset} cesta k priečinku z ktorého budu načítane všetky vstupné dáta.
+  \item[$\bullet$] \textbf{--alg} voľba modelu ktorý bude trénovaný, tento argument na niekoľko možností.
+  Možnosť ``cnnc'' pre trénovanie konvolučnej neurónovej siete určenej na klasifikáciu zbrane do 2 kategórií,
+  ``cnna'' pre trénovanie konvolucnej neurónovej siete pre určenie náklonu zbrane,
+  ``svm'' alebo ``kmeans'' pre trénovanie SVM alebo K-nearest-neighbor klasifikátora na určenie typu zbrane.
+\end{enumerate}
+
+
 - rozdelenie dat do 3 skupin - trenovanie data, validacne, testovacie
 - cely postup trenovanie, asi to urobit rozdielne pre kazdy klasifikator osobitne
 - obrazok trenovanie neuronovej siete
 - Pridat ake optimalizatory a celkovo s akymi argumetmi spustat trenovanie, kolko epoch a pod...
 - Zdovodnovat preco prave taketo nastavenie konvolucnej siete.
 - pocet epoch bude potrebne zistit experimentalnych sposobom, alebo pouzit funkciu na save best of Keras-u
+- pre zabezpecenie spravneho trenovanie boli pocty obrazkov rovnomerne pri trenovani
 
 \subsection{Error angle funkcia}
 \label{subsec:errorangle}
