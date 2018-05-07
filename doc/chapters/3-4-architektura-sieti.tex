@@ -20,6 +20,12 @@ Najpoužívanejšie hodnoty parametrov sú: $F = 3, S = 1, P = 1$ a vstup $W$ o 
 Funkciou pooling vrstvy je znižovanie dimenzionality a zároveň ponechanie dôležítých informácií, ako najpoužívanejšie hodnoty parametrov sú
     veľkosť filtra 2x2 s krokom 2 pri použití MaxPooling vrstvy \cite{odkaz:CNNArchitecture}.
 
+% TODO batch-size, epochy
+% CNN sa trenuje v cykloch nazyvanych epochy, v kazdej epoche prejdu cez siet vsetky obrazky na ktorych sa siet uci,
+% pre ucenie je potrebne zvolit vhodny pocet tychro epoch aby siet podala najelpsie vysledky a zaroven sa nepretrenovala.
+% Preto je vhodne ukoncit trenovanie v bode kedy klesa presnost siete na validacnych datach, v takom pripade to moze vies k pretrenovaniu siete
+% na trenovacich datach.
+
 \subsection{Návrh architektúr}
 \label{subsec:navrharchitektur}
 Prvý model siete je inšpirovaný architektúrou AlexNet (vid. \ref{subsec:popularCNN}).
