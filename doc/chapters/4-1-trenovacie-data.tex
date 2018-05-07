@@ -64,7 +64,7 @@ Pre zvyšné 2 osi boli obrázky generované, počty sa líša kvôli niektorým
 
 \subsection{Načitavanie dát}
 \label{subsec:nacitaniedat}
-Pre načitavanie dát je implementovaná trieda DataLoader v scripte loader.py.
+Pre načitavanie dát je implementovaná trieda \textit{DataLoader} v scripte \textit{loader.py}.
 Trieda obsahuje niekoľko funkcií pre načitanie týchto dát, tieto funkcie vrátia pole načitaných obrázkov, pole indexov označení [eng. labels] obrázkov a
     štruktúru typu dictionary ktorá obsahuje index a názov označenia, npr. \{0: ``kratka zbran'', 1: ``dlha zbran''\}.
 
@@ -90,7 +90,16 @@ Spôspob označovania obrázkov je rovnaký ako v prvom prípade, preto je takti
 
 \subsection{Predspracovanie dát}
 \label{subsec:predspracovaniedat}
-- preprocessing.py - Preprocessor, Preprocessing
-- ktore triedy implementujú augmentáciu
-- opisat celkovu triedu od Keras-u + Moja vlastne 2 triedy ktore som implementoval
-- ako prebiehala augmentacia dat, opisat funkcie ktore sa pouzivaju pre dogenerovanie obrazkov a nazov tried ktore to implementuju.
+Pre predspracovanie obrazu sú implementované 2 triedy \textit{Preprocessor} a \textit{Preprocessing} v scripte \textit{preprocessing.py}.
+Trieda \textit{Preprocessor} obsahuje list do ktorého je možné pridávať funckíe ktoré su implementované v triede \textit{Preprocessing}.
+Po zavolaní funkcie \textit{apply(input\_data)} z triedy \textit{Preprocessor}, sa tieto
+    funkcie v poradí v akom boli pridané do listu zavolajú a prebehne predspracovanie vstupných dát.
+Každá z možností predspracovanie obrazu ktorá bola uvedená v \ref{sec:preprocessing}, je implementovaná v triede \textit{Preprocessing} pomocou
+    knižnice scikit-image.
+
+Pre augmentáciu dát určených na klasfikáciu typu zbrane je použitá trieda \textit{ImageDataGenerator} z knižnice Keras.
+Parametre tohto generátora su nastavená na: horizonálne a vertikálne preklopenia obrázka, posun obrázka až o 15\% jeho dĺžky alebo šírky,
+    rotácia o náhodny uhol v rozsahu 0 až 180 stupňov a doplnenie čiernych pixelov pomocou nastavenia ``nearest''.
+
+Pre augmentáciu dát pre určenie náklonu zbrane je implementovaná samostatná trieda \textit{AngleGenerator}, ktorá zabezpečuje správne dogenerovanie
+    vstupných dát pomocou horizontálneho alebo vertikálneho preklopenia obrázka a správneho výpočtu uhlu natočenia (vid. \ref{subsec:augmentacia}).
