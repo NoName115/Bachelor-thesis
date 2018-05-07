@@ -1,64 +1,20 @@
 
 \chapter{Implementácia a testovanie}
 
-% TODO uvod
+V kapitole budú opísane podrobné počty dát v daných kategóriach zo zdrojov ktoré boli uvedené v návrhu (vid. \ref{sec:databaza})
+    na ktorých prebieha trénovanie, opíše implementáciu tried ktoré zabezpečujú načítavanie týchto dát a možnosti ich načítania.
+Následne tu budú spomenuté triedy ktoré zabezpečujú predspracovanie obrazu.
+Kapitola ďalej priblíží typy implementovaných modelov, infomácie ktoré sa po trénováni ukladajú, parametre trénovania a spôsob hodnotenia presnosti modelov.
 
-\section{Trénovacie dáta}
-- loader.py - DataLoader a DataSaver
-- ake realne počty dát mam
-- urobit tabulky ze ake typy obrazkov a pocty su pre ktoru vec
-- ktore triedy implementujú augmentáciu
-- opisat celkovu triedu od Keras-u + Moja vlastne 2 triedy ktore som implementoval
-- ako prebiehala augmentacia dat, opisat funkcie ktore sa pouzivaju pre dogenerovanie obrazkov a nazov tried ktore to implementuju.
-- po vygenerovani obrazkov z Tomasovho nastroja, je potrebne spusti script convert.sh ktory prekonvertuje data do nizsej kvality
-  a upravi pomenovanie obrazkov
-- dat ukazku ako vyzera ten program a ako sa generuju data - stlacenim klavesi G
 
-- Uvidim ci toto nedat radsej do navrhu
-    * dat nejake priklady ako vyzeraju data
-    * pozadie, 3D model zbrane, vysledok
-    * ze bolo potrebne orezavat tieto obrazky, pomocou (link na web)
+\input{chapters/4-1-trenovacie-data}
 
-\subsection{Načitavanie dát}
-- triedy ktore implementuju nacitavanie dat
-- ako sa upravuju data pri nacitani
+\input{chapters/4-2-modely}
 
-\subsection{Predspracovanie dát}
-- preprocessing.py - Preprocessor, Preprocessing
+\input{chapters/4-3-trenovanie}
 
-\section{Modely}
-- models.py - Models
-- trieda ktore implementuje model
-- ake informacie su potrebne pre vytvorenie modelu a ktore funkcie je potrebne definovat
-- ktore triedy z Kerasu som pouzil a ktore triedy implementuju danu vrstvu, argumenty vrstiev ktore su nastavene a ako
+\input{chapters/4-4-testovanie}
 
-\subsection{Ukladanie modelu}
-- loader.py - DataSaver
-- ktore informacie sa ukladaju
-- ake funkcie implementuju ukladanie modelu
-- opisat ukladanie modelu pre scikit-learn, ktora vec je na to pouzita, ze je prisposobene pre ukladanie velych matic
-- opisat ukladanie modelu pre Keras, ktora vec to implementuje
-
-\section{Trénovanie klasifikátorov}
-- rozdelenie dat do 3 skupin - trenovanie data, validacne, testovacie
-- cely postup trenovanie, asi to urobit rozdielne pre kazdy klasifikator osobitne
-- obrazok trenovanie neuronovej siete
-- Pridat ake optimalizatory a celkovo s akymi argumetmi spustat trenovanie, kolko epoch a pod...
-- Zdovodnovat preco prave taketo nastavenie konvolucnej siete.
-- pocet epoch bude potrebne zistit experimentalnych sposobom, alebo pouzit funkciu na save best of Keras-u
-
-\subsection{Error angle funkcia}
-- validacia uhla, vlastna funkcia (zdroj z kade to je)
-
-\subsection{Hodnotenie presnosti klasifikatorov}
-- opisat funkcie podľa ktorých sa ktorý klasifikátor bude hodnotiť
-  mozno zobrat tabľku z druhej bakalarskej prace
-- takisto, ktory script a ktore triedy implementuju evaluaciu modelu
-- ako vyzera vystup po evaluaciu modelu
-
-\section{Testovanie}
-- testovanie siete priebiehalo pocas trenovanie ako validacia
-  + na konci bola urobene evaluaciu modelu kde bol vysledok testovany
 
 \section{Zhrnutie kapitoly}
 

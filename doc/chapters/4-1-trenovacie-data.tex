@@ -1,0 +1,33 @@
+
+\section{Trénovacie dáta}
+\label{sec:trenovaciedata}
+- loader.py - DataLoader a DataSaver
+- ake realne počty dát mam
+- urobit tabulky ze ake typy obrazkov a pocty su pre ktoru vec
+- ktore triedy implementujú augmentáciu
+- opisat celkovu triedu od Keras-u + Moja vlastne 2 triedy ktore som implementoval
+- ako prebiehala augmentacia dat, opisat funkcie ktore sa pouzivaju pre dogenerovanie obrazkov a nazov tried ktore to implementuju.
+- po vygenerovani obrazkov z Tomasovho nastroja, je potrebne spusti script convert.sh ktory prekonvertuje data do nizsej kvality
+  a upravi pomenovanie obrazkov
+- dat ukazku ako vyzera ten program a ako sa generuju data - stlacenim klavesi G
+
+- Uvidim ci toto nedat radsej do navrhu
+    * dat nejake priklady ako vyzeraju data
+    * pozadie, 3D model zbrane, vysledok
+    * ze bolo potrebne orezavat tieto obrazky, pomocou (link na web)
+
+- generovanie obrazkov z 3D modelov
+    - Pre generovanie dat z 3D modelov bolo pouzitych 10 pozadi (dat obrazok pozadia) a 5 3D modelov, (obrazok ako cela scene vyzera),
+      Takto bolo vygenerovanych X obrazkov pre otocenie o 2 stupne v kazdom smere.
+
+\subsection{Načitavanie dát}
+\label{subsec:nacitaniedat}
+- triedy ktore implementuju nacitavanie dat
+- ako sa upravuju data pri nacitani
+- Pre nacitanie dat je implemntovane trieda... v scripte ... ktora nacita vstupne obrazky z viacerych moznosti, zo suboru,
+  z priecinka kde pre klasifikaciu su urcene labely podla nazvu subfoldra a pre urcenie uhla sa urcuju z nazvu obrazka (diagram ako vyzera struktura foldrov)
+  Nasledne je mozne este nacitat len jedne obrazok.
+
+\subsection{Predspracovanie dát}
+\label{subsec:predspracovaniedat}
+- preprocessing.py - Preprocessor, Preprocessing
