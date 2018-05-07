@@ -64,12 +64,29 @@ Pre zvyšné 2 osi boli obrázky generované, počty sa líša kvôli niektorým
 
 \subsection{Načitavanie dát}
 \label{subsec:nacitaniedat}
-- loader.py - DataLoader a DataSaver
-- triedy ktore implementuju nacitavanie dat
-- ako sa upravuju data pri nacitani
-- Pre nacitanie dat je implemntovane trieda... v scripte ... ktora nacita vstupne obrazky z viacerych moznosti, zo suboru,
-  z priecinka kde pre klasifikaciu su urcene labely podla nazvu subfoldra a pre urcenie uhla sa urcuju z nazvu obrazka (diagram ako vyzera struktura foldrov)
-  Nasledne je mozne este nacitat len jedne obrazok.
+Pre načitavanie dát je implementovaná trieda DataLoader v scripte loader.py.
+Trieda obsahuje niekoľko funkcií pre načitanie týchto dát, tieto funkcie vrátia pole načitaných obrázkov, pole indexov označení [eng. labels] obrázkov a
+    štruktúru typu dictionary ktorá obsahuje index a názov označenia, npr. \{0: ``kratka zbran'', 1: ``dlha zbran''\}.
+
+Prvá z funkcií načitáva dáta z priečinka kde označenie obrázkou, či je to krátka alebo dlhá zbraň, je zabezpečené podľa názvou podpriečinkou.
+Pre obrázky o náklne zbrane sa označenie osi berie takisto z názvu podpriečinka, avšak presné označenie o koľko stupňov je model v obrázku otočený
+    je získaný z názvu obrázka ktorý musí spĺnať presný formát: \textit{p0.0\_y0.0\_r0.0-typzbrane.jpg}.
+Kde \textit{p0.0} označuje hodnotu náklnu v osi pitch, \textit{y0.0} hodnotu náklnu v osi yaw, \textit{r0.0} v osi roll a \textit{typzbrane} môže byť
+    akýkoľvek reťazec.
+
+Správnu hierarchiu priečinkou je vidieť na obrázoku \ref{pic:folderhierarchy}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.32\textwidth]{class_hierarchy}
+    \qquad
+    \includegraphics[width=0.4\textwidth]{angle_hierarchy}
+    \caption{Hierarchia priečinkou pre správne označenie vstupných obrázkou.}
+    \label{pic:folderhierarchy}
+\end{figure}
+
+Druhá z funkcií umožnuje načítať zoznam obrázkou z textového súboru, kde sa na každom riadku nachádza práve jedna cesta k požadovanému obrázku.
+Spôspob označovania obrázkov je rovnaký ako v prvom prípade, preto je taktiež potrebné dodržat správnu hierachiu priečinkou.
 
 \subsection{Predspracovanie dát}
 \label{subsec:predspracovaniedat}
