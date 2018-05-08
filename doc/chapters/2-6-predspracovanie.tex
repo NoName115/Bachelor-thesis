@@ -26,11 +26,11 @@ Tento postup znižuje šancu, že neurónová sieť rozpozná nežiadúce charak
 
 \subsubsection{Normalizacia}
 Hodnoty pixelov su väčšinou v rozpätí 0-255. Použivať tieto hodnoty na vstupe priemo do siete môže viesť k pretečeniu číselných premenných.
-Taktiež sa ukázalo že výber niektorých aktivačných funkcií nieje kompatibilné s takýmito vstupmi.
+Taktiež sa ukázalo že výber niektorých aktivačných funkcií nieje kompatibilný s takýmito vstupmi.
 Nevhodný vstup môže viesť z nesprávnemu učeniu siete, preto je vhodné tieto dáta normalizovať do rozpätia 0-1 \cite{odkaz:PreprocessingNormalization}.
 
 \subsubsection{Histogram orientovaných prechodov}
-Základnou myšlienkou za dekriptorom histogramom orientovaných prechodov [eng. Histogram of oriented gradients descriptor] je to, že lokálny vzhľad objektu a tvar v obraze môžu byť popísané
+Základnou myšlienkou za dekriptorom histogramu orientovaných prechodov [eng. Histogram of oriented gradients descriptor] je to, že lokálny vzhľad objektu a tvar v obraze môžu byť popísané
 	distribúciou intenzity gradientov alebo smerov hrán.
 
 Obraz je rozdelený na malé spojené oblasti nazývane bunky [eng. cells], a pre pixely v každej bunke sa vytvára histogram orientovaných prechodov.

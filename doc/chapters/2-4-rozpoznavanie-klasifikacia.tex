@@ -363,13 +363,13 @@ Výsledokom je potom mapa príznakov [eng. Feature map] označovaná aj ako akti
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.4\textwidth]{convolution}
-    \caption{Konvolúcie v CNN, vstupný obrázok(vľavo), extrahované príznaky(vpravo) \cite{odkaz:CNNArticle}.}
+    \caption{Konvolúcie v CNN, zelená matica je vstupný obrázok a žltá matic je filter(vľavo), extrahované príznaky(vpravo) \cite{odkaz:CNNArticle}.}
     \label{pic:Convolution}
 \end{figure}
 
 Veľkosť aktivačnej mapy je možné nastaviť pomocou 3 parametrov.
 \begin{enumerate}
-    \item[$\bullet$] \textbf{Hĺbka} [eng. Depth] - veľkosť hĺbky zodpovedá počtu filtrov použitých v konvolučnej vrstve siete.
+    \item[$\bullet$] \textbf{Hĺbka} [eng. Depth] - veľkosť hĺbky zodpovedá počtu použitých filtrov v konvolučnej vrstve siete.
     \item[$\bullet$] \textbf{Krok} [eng. Stride] - počet pixelov o ktorý sa filter posúva počas výpočtu aktivačnej mapy.
     Použitím väčších skokou bude výsledna aktivačná mapa menšia.
     \item[$\bullet$] \textbf{Nulový doplnok} [eng. Zero-padding] - občas je vhodné vložiť nulový doplnok okolo vstupného obrázku.
@@ -383,13 +383,13 @@ Jeho funkciou je znižovanie dimenzionality vstupnej aktivačnej mapy ale so sna
 Existuje niekoľko rôznych typov zlučovania npr. maximum, priemer alebo suma.
 
 Pre tento krok je potrebné definovať veľkost okna (npr. 2x2 pixely) a krok o ktorý sa bude toto okno posúvať.
-V prípade typu Max Pooling s veľkosťou 2x2 sa zoberú 4 hodnoty z aktivačnej mapy a vyberie sa z nich maximálna, podobným spôsobom
+V prípade typu Max Pooling s veľkosťou filtra 2x2 sa zoberú 4 hodnoty z aktivačnej mapy a vyberie sa z nich maximálna, podobným spôsobom
     fungujú aj ostatné typy zlučovania, ale výsledna hodnota je npr. priemer alebo suma týchto 4 hodnôt.
 V praxi sa ukázalo že najvýhodnejší je výber maxima \cite{odkaz:CNNArticle}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{pooling_original}
-    \caption{Príklad použitia Max Pooling kroku \cite{odkaz:CNNArticle}.}
+    \caption{Príklad použitia Max Pooling s filtrom 2x2 a krokom 2 \cite{odkaz:CNNArticle}.}
     \label{pic:Convolution}
 \end{figure}
 
@@ -408,8 +408,8 @@ Pre stavbu CNN sa využívajú 3 základne typy vrstiev a 1 podporná vrstva.
     \item[$\bullet$] \textbf{Pooling layer} - táto vrstva je obvykle vkladaná ako spojenie medzi dvoma konvolučnímy vrstvami.
     Jej funkciou je postupné znižovanie priestorovej veľkosti reprezentovaného vstupu, pre zníženie množstva parametrov a výpočtov v sieti, a teda aj kontroly pretrénovania.
     \item[$\bullet$] \textbf{Fully-Connected layer} - rovnako ako v obvyklých neurónových sietach, je to vrstva kde všetky neuróny sú prepojené s predchádzajucou vrstvou.
-    \item[$\bullet$] \textbf{Dropout layer} - cieľom tejto vrstvy je prevencia k pretrenovaniu siete, podľa nastavenia sa určité percento neurónov počas trénovanie zahadzuje.
-    Táto vrstva tlačí neúronovu sieť k tomu aby sa učila na komplexnejších príznakoch, implementovaním tejto vrstvy do siete sa približne zdvojnásoby počet interácií trénovania.
+    \item[$\bullet$] \textbf{Dropout layer} - cieľom tejto vrstvy je prevencia k pretrenovaniu siete, podľa nastavenia sa určité percento neurónov ktoré sa počas trénovanie zahadzuje.
+    Táto vrstva tlačí neúronovú sieť k tomu aby sa učila na komplexnejších príznakoch, implementovaním tejto vrstvy do siete sa približne zdvojnásoby počet interácií trénovania.
     Avšak trénovaci čas pre každú iteráciu je kratší.
 \end{enumerate}
 
@@ -433,7 +433,7 @@ Siet bola použitá pre klasifikáciu objektov do 1000 kategórií.
 Výchadzala z niekoľkých hlavných princípov \cite{odkaz:PopularCNN}:
 \begin{enumerate}
     \item[$\bullet$] bola trénovaná na ImageNet\footnote{\url{http://www.image-net.org/}} databázovej sade, ktorá obsahuje cez 15 miliónov obrázkov vo viac ako 22000 kategóriách.
-    \item[$\bullet$] Použila ReLU nelineárnu aktivačnú funkciu (Objavil sa krátší čas trénovania, kedže výpočet ReLU je niekoľko krát rýchlejši ako v tej dobe bežné používana Tanh).
+    \item[$\bullet$] Použila ReLU nelineárnu aktivačnú funkciu (objavil sa krátší čas trénovania, kedže výpočet ReLU je niekoľko krát rýchlejši ako oproti v tej dobe bežné používanej Tanh).
     \item[$\bullet$] Bola použítá technika augmentácie dát, ktorá pozostávala z rôznych transformácií obrázkov ako npr. horizontálny odraz.
     \item[$\bullet$] Implementovala Dropout vrstvy pre zníženie problému spojeným s pretrénovaním neúronovej siete.
     \item[$\bullet$] Trénovanie prebiehalo na dvoch GTX 580 grafických kartách, počas 5 až 6 dní.

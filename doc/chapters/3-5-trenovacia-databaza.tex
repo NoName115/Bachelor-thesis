@@ -9,14 +9,14 @@ Trénovacia databáza je získana z niekoľkých zdrojov.
     Pre túto prácu je potrebné aby daný obrázok obsahoval iba zbraň, preto je potrebné obrázky z tejto databázy ručne odfiltrovať na samotné zbrane a scény so zbranami.
     Následne ich potom zaradiť do správnej kategórie na krátke a dlhé.
     \item[$\bullet$] \textbf{ImageNet}\footnote{\url{http://www.image-net.org/}} - je databáza obrázkov ktorá obsahuje viac ako 14 miliónov obrázkov vo viac ako 21000 kategóriach.
-    Výhodou tejto databázy je že obrázku už patria do určenej kategórie a tak nieje potrebné ich ručné prechádzať a kategorizovať.
+    Výhodou tejto databázy je že obrázky už patria do určenej kategórie a tak nieje potrebné ich ručné prechádzať a kategorizovať.
     \item[$\bullet$] \textbf{Google}\footnote{\url{http://www.google.com}} - pre doplnanie a zväčšenie počtu obrázkou je môžné použiť google vyhľadávanie.
     Tak ako v prípade IMFDB bude potrebné obrázky ručne kategorizovať.
     \item[$\bullet$] \textbf{Free3D}\footnote{\url{https://free3d.com/3d-models/weapons}} - databáza voľne dostupných 3D modelov zbraní s textúrami v rôzných formátoch.
 \end{enumerate}
 
 Databáza zbraní z prvých 3 zdrojov je možné použit na klasficikáciu zbraní do 2 kategórií na krátke a dlhé zbrane.
-Pre trénovanie neurónových sieti na určenie náklonu zbrane v obraze bude potrebné použiť 3D modely zbraní a následne z nich vygenerovať
+Pre trénovanie neurónových sieti na určenie náklonu zbrane v obraze bude potrebné použiť 3D modely zbraní a následne pomocou nich vygenerovať
     obrázky zbraní v požadovaných natočeniach zbrane v obraze.
 
 \subsection{Generovanie dát z 3D modelov}
@@ -41,7 +41,7 @@ Pri augmentácií dát pre klasifikovanie dvoch tried, na krátke a dlhé zbrane
     \item[$\bullet$] \textbf{Rotácia} - obrázky budú rotované o náhodny uhol v rozmedzí 0-180 stupňov.
     \item[$\bullet$] \textbf{Preklopenie} - vertikálne alebo horizonálne preklopenie obrázka.
     \item[$\bullet$] \textbf{Posun} - posun obrázka po x-ovej a y-ovej osi.
-    \item[$\bullet$] \textbf{Výplň} - pri rotácií alebo posunu obrázku môže vzniknúť čierna plocha pixelov, tieto čierne pixely je potrbné vyplniť.
+    \item[$\bullet$] \textbf{Výplň} - pri rotácií alebo posunu obrázku môže vzniknúť čierna plocha pixelov, tieto čierne pixely je potrebné vyplniť.
     Tieto čierne pixely budú doplnené hraničným pixelom obrázka ktorý bude nakopírovaný až po nový okraj.
 \end{enumerate}
 
