@@ -1,7 +1,7 @@
 
 \section{Trénovanie modelov}
 \label{sec:trenovanie}
-Pre trénovanie modelov sú v rámci implementácie použité všetky triedy ktoré boli podrobne opísane vyššie.
+Pre trénovanie modelov sú v rámci implementácie použité všetky triedy ktoré boli podrobne opísané vyššie.
 Proces trénovania prebieha v niekoľkých krokoch.
 \begin{enumerate}
     \item[$\bullet$] Načítanie vstupných dát.
@@ -62,7 +62,7 @@ Ako hodnotenie presnosti bude použitá metrika úspešnosť [eng. Accuracy].
 Táto metrika je použitá aj počas trénovania sietí na predbežné určenie presnosti a taktiež pri koncovom testovaní modelu.
 
 Avšak v prípade siete ktorá určuje náklon zbrane je potrebné túto metriku trošku pozmeniť.
-Ako je opísane v \ref{subsec:odchylkachyby}, v scripte \textit{base.py} je implementovaná funkcia \textit{angle\_error} ktorá ráta priemerny rozdiel medzi
+Ako je opísané v \ref{subsec:odchylkachyby}, v scripte \textit{base.py} je implementovaná funkcia \textit{angle\_error} ktorá ráta priemerny rozdiel medzi
     skutočnymi a predpovedanými uhlami siete.
 Táto funkcia je použita ako metrika počas trénovania siete, pri koncovom testovaní presnosti siete je nastavená prahová hodnota uhla podľa ktorej sa určuje,
     či daná predpoveď siete bola správna alebo nie.

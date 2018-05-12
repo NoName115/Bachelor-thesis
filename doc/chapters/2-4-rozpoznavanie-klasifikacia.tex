@@ -8,7 +8,7 @@ V tejto podkapitole bude podrobne popísaných niekoľko algoritmov, pomocou kto
 
 
 \subsection{K-Nearest-Neighbor}
-\textit{k}-Nearest Neighbor je algoritmus, ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácií,
+\textit{k}-Nearest Neighbor je algoritmus, ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácii,
 avšak je možné ho použiť aj pre odhad a predikciu \cite{book:DataMining}.
 Algoritmus je pamäťovo náročný [eng. memory-based] a nepotrebuje žiaden trénovací model.
 Pre jeho fungovanie nie je potrebný žiaden explicitný postup trénovania, okrem zberu vektorov príznakov s označeniami tried do ktorých patria.
@@ -85,7 +85,7 @@ V tomto prípade, keď je možné lineárne rozdeliť dve triedy, tak optimálna
 \end{equation}
 
 V tomto prípade lineárneho rozdelenia dát, pri nájdení optimálnej rozdeľujúcej hyper--roviny, dátove body, ktoré ležia na jej okraji
-    sa nazývajú podporné vektorové body[eng. support vector points] a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodov (vid. obrázok \ref{pic:SVMMAxMargin} ).
+    sa nazývajú podporné vektorové body[eng. support vector points] a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodov (viď. obrázok \ref{pic:SVMMAxMargin} ).
 Ostatné body sú ignorované \cite{prop:SupervisedMachineLearning}.
 
 \begin{figure}[H]
@@ -192,7 +192,7 @@ Vo všeobecnosti môžeme vymenovať nasledovné oblasti využitia neurónových
 
 Neurónové siete sú usporiadané do vnútorne prepojených vrstiev umelých neurónov.
 Jednoducho povedané, každá vrstva berie výstup z prechádzajucej vrstvy, aplikuje transformácie a výsledok pošle na vstup ďalšej vrstve.
-Prvá vrstva vstupov je prepojená na vstupné dáta, ktoré sa majú spracovať a posledná vrstva je akýkoľvek výstup, ktorý chceme predpovedať \cite{odkaz:CorrectionOfImageOrentation} (vid. obrázok \ref{pic:NNExample}).
+Prvá vrstva vstupov je prepojená na vstupné dáta, ktoré sa majú spracovať a posledná vrstva je akýkoľvek výstup, ktorý chceme predpovedať \cite{odkaz:CorrectionOfImageOrentation} (viď. obrázok \ref{pic:NNExample}).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{nn}
@@ -307,7 +307,7 @@ kde $a$ je malá konštanta (napr. 0.01) \cite{odkaz:ConvolutionalNeuralNetworkC
 
 \subsubsection{Architektúra neurónovej siete}
 Ako bolo spomínané už vyššie, neurónová sieť je modelovaná ako kolekcia neurónov, ktoré sú prepojené v acyklickom grafe.
-Modely neurónových sietí sú často organizované do odlišných vrstiev neurónov.
+Modeli neurónových sietí sú často organizované do odlišných vrstiev neurónov.
 Pre bežné neurónové siete je najbežnejšou vrstvou tzv. plne-prepojená vrstva [eng. fully-connected layer],
     v ktorej sú neuróny medzi dvoma priľahlými vrstvami plne párovo prepojené, ale neuróny v jednej vrstve nemajú medzi sebou žiadne spojenia.
 Na obrázku \ref{pic:NeuralNetworkArchitecture} nižšie sú uvedené dve topológie, ktoré využívajú plne-prepojené vrstvy \cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
@@ -346,7 +346,7 @@ V terminilógií konvolučnej siete sa prvý argument (v tomto príklade funkcie
     argument (v tomto príklade funkcia $w$) ako jadro [eng. kernel]. Výstup je niekedy označovaný ako mapa príznakov.
 
 Bežne konvolúciu používame na viac ako jednej osi súčasne.
-Pri použítí 2-dimenzionálneho obrázku $I$ ako náš vstup, budeme chcieť použiť aj 2-dimenzionálne jadro $K$ \cite{book:Goodfellow-et-al-2016}:
+Pri použítí 2-dimenzionálneho obrázka $I$ ako náš vstup, budeme chcieť použiť aj 2-dimenzionálne jadro $K$ \cite{book:Goodfellow-et-al-2016}:
 \begin{equation}
     S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(m,n) K(i - m, j - n)
 \end{equation}
@@ -356,7 +356,7 @@ Avšak množstvo knižníc, ktoré implementujú neurónové siete, používajú
     S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(i + m, i + n) K(m, n)
 \end{equation}
 
-Kde hlavným cieľom konvolúcie v konvolučných neurónových sieťach je extrakcia príznakov zo vstupného obrázku.
+Kde hlavným cieľom konvolúcie v konvolučných neurónových sieťach je extrakcia príznakov zo vstupného obrázka.
 V jednoduchosti je možné si predstaviť 2-dimenzionálne dáta (obrázok) o rozmeroch 5x5 pixelov, ktorých hodnoty sú 0 alebo 1.
 Jadro alebo môžeme nazvať aj filter o veľkosti napr. 3x3, prechádza postupne celý vstupný obrázok s krokom 1 a ráta hodnotu výstupneho pixelu na základe svojich hodnôt, ktoré obsahuje.
 Výsledkom je potom mapa príznakov [eng. Feature map] označovaná aj ako aktivačná mapa [eng. Activation map] o veľkosti 3x3 pixeli \cite{odkaz:CNNArticle}.
@@ -372,7 +372,7 @@ Veľkosť aktivačnej mapy je možné nastaviť pomocou 3 parametrov.
     \item[$\bullet$] \textbf{Hĺbka} [eng. Depth] - veľkosť hĺbky zodpovedá počtu použitých filtrov v konvolučnej vrstve siete.
     \item[$\bullet$] \textbf{Krok} [eng. Stride] - počet pixelov o ktorý sa filter posúva počas výpočtu aktivačnej mapy.
     Použitím väčších skokov bude výsledná aktivačná mapa menšia.
-    \item[$\bullet$] \textbf{Nulový doplnok} [eng. Zero-padding] - občas je vhodné vložiť nulový doplnok okolo vstupného obrázku.
+    \item[$\bullet$] \textbf{Nulový doplnok} [eng. Zero-padding] - občas je vhodné vložiť nulový doplnok okolo vstupného obrázka.
     Tento spôsob nám umožňuje ovládať veľkosť výstupej aktivačnej mapy.
 \end{enumerate}
 
@@ -434,7 +434,7 @@ Výchadzala z niekoľkých hlavných princípov \cite{odkaz:PopularCNN}:
 \begin{enumerate}
     \item[$\bullet$] bola trénovaná na ImageNet\footnote{\url{http://www.image-net.org/}} databázovej sade, ktorá obsahuje cez 15 miliónov obrázkov vo viac ako 22000 kategóriách.
     \item[$\bullet$] Použila ReLU nelineárnu aktivačnú funkciu (objavil sa kratší čas trénovania, keďže výpočet ReLU je niekoľko krát rýchlejši ako oproti v tej dobe bežne používanej Tanh).
-    \item[$\bullet$] Bola použitá technika augmentácie dát, ktorá pozostávala z rôznych transformácií obrázkov ako napr. horizontálny odraz.
+    \item[$\bullet$] Bola použitá technika augmentácie dát, ktorá pozostávala z rôznych transformácii obrázkov ako napr. horizontálny odraz.
     \item[$\bullet$] Implementovala Dropout vrstvy pre zníženie problému spojeným s pretrénovaním neúronovej siete.
     \item[$\bullet$] Trénovanie prebiehalo na dvoch GTX 580 grafických kartách, počas 5 až 6 dní.
 \end{enumerate}

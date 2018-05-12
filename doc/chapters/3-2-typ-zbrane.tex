@@ -1,25 +1,25 @@
 
 \section{Klasifikácia typu zbrane}
 \label{sec:klasfikaciatypuzbrane}
-Jedným z cieľou tejto práce je klasifikovať typy zbraní do 2 kategórií, a to na krátke a dlhé zbrane.
+Jedným z cieľov tejto práce je klasifikovať typy zbraní do 2 kategórií, a to na krátke a dlhé zbrane.
 Táto klasifikácia môže prebiehať niekoľkými spôsobmi, prehľad týchto prístupov bol zhrnutý v kapitolách \ref{sec:detekcia} a \ref{sec:klasifikacia}.
 Pre klasifikáciu v tejto práci bude použitých niekoľko z týchto prístupov a vo výsledku budú porovnané, ktorý dosiahol najlepšie výsledky.
 
-Prvé riešenie bude spočívať v klasickom prístupe, ktoré pozostáva z predspracovania vstupných dát pomocou prekonvertovania dát do šedotónoveho obrazu a histogramu orientovaných prechodov (vid. \ref{sec:preprocessing}).
+Prvé riešenie bude spočívať v klasickom prístupe, ktoré pozostáva z predspracovania vstupných dát pomocou prekonvertovania dát do šedotónového obrazu a histogramu orientovaných prechodov (viď. \ref{sec:preprocessing}).
 Na tieto predspracované dáta bude v jednom z riešení použitý K-Nearest-Neighbor klasfikátor, pre druhé riešenie bude použitý SVM klasifikátor, testovanie
     a porovnávanie výsledkov môže prebiehať s rôznymi konfiguráciami týchto klasifikátorov.
 \begin{enumerate}
     \item[$\bullet$] Pre \textbf{K-Nearest-Neighbor}, knižnica scikit-learn poskytuje 2 rôzne implementácie tohto klasifikátora.
-    Trieda \textit{KNeighborsClassifier} klasifikuje na základe $k$ najbližšich susedov, kde $k$ je celé číslo špecifikované užívateľom.
+    Trieda \textit{KNeighborsClassifier} klasifikuje na základe $k$ najbližších susedov, kde $k$ je celé číslo špecifikované užívateľom.
     
-    Druhá implementácia je trieda \textit{RadiusNeighborsClassifier} ktorá klasifikuje na základe počtu susedov v rámci pevného polomeru $r$ každého trénovacieho bodu,
-        kde $r$ je hodnota s pohyblivou desatinou čiarkou určená užívateľom\footnote{\url{http://scikit-learn.org/stable/modules/neighbors.html\#nearest-neighbors-classification}}.
+    Druhá implementácia je trieda \textit{RadiusNeighborsClassifier}, ktorá klasifikuje na základe počtu susedov v rámci pevného polomeru $r$ každého trénovacieho bodu,
+        kde $r$ je hodnota s pohyblivou desatinnou čiarkou určená užívateľom\footnote{\url{http://scikit-learn.org/stable/modules/neighbors.html\#nearest-neighbors-classification}}.
     \item[$\bullet$] Pre \textbf{Support Vector Machines}, scikit-learn obsahuje 3 triedy \textit{SVC}, \textit{NuSVC} a \textit{LinearSVC} pre viac-triednu
         klasifikáciu s možnosťou použitia rôznych typov jadier \footnote{\url{http://scikit-learn.org/stable/modules/svm.html\#custom-kernels}}.
     %\item[$\bullet$] \textbf{Multi Layer Perceptron}
 \end{enumerate}
 
 Pre dalšie riešenie klasfikácie zbraní budú použité dve konvolučné neurónové siete, ktorých výsledky budú porovnané, všeobecná architektúra sietí je opísana v kapitole \ref{sec:architekuraCNN}.
-Výsledok poslednej vrstvy softmax klasfikatóra budú 2 výstupy, ktoré budú určovat typ zbrane.
-Predspracovanie vstupných dát bude pozostávať z normalizacie hôdnot RGB zložiek pixelov, nastavenia rovnomernej veľkosti strán obrázka (vid. \ref{sec:preprocessing})
-    a následnej augmentácií dát pre zväčsenie počtu vstupných dát (vid. \ref{subsec:augmentacia}).
+Výsledok poslednej vrstvy softmax klasfikatóra budú 2 výstupy, ktoré budú určovať typ zbrane.
+Predspracovanie vstupných dát bude pozostávať z normalizacie hôdnot RGB zložiek pixelov, nastavenia rovnomernej veľkosti strán obrázka (viď. \ref{sec:preprocessing})
+    a následnej augmentácií dát pre zväčsenie počtu vstupných dát (viď. \ref{subsec:augmentacia}).
