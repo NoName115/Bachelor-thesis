@@ -371,7 +371,7 @@ Veľkosť aktivačnej mapy je možné nastaviť pomocou 3 parametrov.
 \begin{enumerate}
     \item[$\bullet$] \textbf{Hĺbka} [eng. Depth] - veľkosť hĺbky zodpovedá počtu použitých filtrov v konvolučnej vrstve siete.
     \item[$\bullet$] \textbf{Krok} [eng. Stride] - počet pixelov o ktorý sa filter posúva počas výpočtu aktivačnej mapy.
-    Použitím väčších skokov bude výsledna aktivačná mapa menšia.
+    Použitím väčších skokov bude výsledná aktivačná mapa menšia.
     \item[$\bullet$] \textbf{Nulový doplnok} [eng. Zero-padding] - občas je vhodné vložiť nulový doplnok okolo vstupného obrázku.
     Tento spôsob nám umožňuje ovládať veľkosť výstupej aktivačnej mapy.
 \end{enumerate}
@@ -384,7 +384,7 @@ Existuje niekoľko rôznych typov zlučovania napr. maximum, priemer alebo suma.
 
 Pre tento krok je potrebné definovať veľkost okna (napr. 2x2 pixely) a krok o, ktorý sa bude toto okno posúvať.
 V prípade typu Max Pooling s veľkosťou filtra 2x2 sa zoberú 4 hodnoty z aktivačnej mapy a vyberie sa z nich maximálna, podobným spôsobom
-    fungujú aj ostatné typy zlučovania, ale výsledna hodnota je napr. priemer alebo suma týchto 4 hodnôt.
+    fungujú aj ostatné typy zlučovania, ale výsledná hodnota je napr. priemer alebo suma týchto 4 hodnôt.
 V praxi sa ukázalo, že najvýhodnejší je výber maxima \cite{odkaz:CNNArticle}.
 \begin{figure}[H]
     \centering
@@ -443,7 +443,7 @@ Výchadzala z niekoľkých hlavných princípov \cite{odkaz:PopularCNN}:
 Veľkosti filtrov v konvolučných vrstvách sú o rozmeroch 3x3 oproti AlexNet kde ich veľkosť bola 11x11.
 Avšak základná myšlienka tejto architektúry je v hĺbke a jednoduchosti, keďže sa zakladá na veľkom množstve konvolučných vrstiev, z čoho vyplýva
     veľké množstvo filtrov a tým pádom zväčšuje svoj výstup do hĺbky.
-Aj keď táto architektúra nebola výťaznou v roku 2014 na ILSVRC, ukázala základnu myšlienku, že sieť môže byť jednoduchá, ale musí byť hlboká \cite{odkaz:PopularCNN}.
+Aj keď táto architektúra nebola výťaznou v roku 2014 na ILSVRC, ukázala základnú myšlienku, že sieť môže byť jednoduchá, ale musí byť hlboká \cite{odkaz:PopularCNN}.
 
 \begin{figure}[H]
     \centering

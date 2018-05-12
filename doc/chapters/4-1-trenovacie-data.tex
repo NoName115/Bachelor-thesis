@@ -92,14 +92,14 @@ Spôspob označovania obrázkov je rovnaký ako v prvom prípade, preto je takti
 \subsection{Predspracovanie dát}
 \label{subsec:predspracovaniedat}
 Pre predspracovanie obrazu sú implementované 2 triedy \textit{Preprocessor} a \textit{Preprocessing} v scripte \textit{preprocessing.py}.
-Trieda \textit{Preprocessor} obsahuje list do ktorého je možné pridávať funckíe ktoré su implementované v triede \textit{Preprocessing}.
+Trieda \textit{Preprocessor} obsahuje list do ktorého je možné pridávať funckíe ktoré sú implementované v triede \textit{Preprocessing}.
 Po zavolaní funkcie \textit{apply(input\_data)} z triedy \textit{Preprocessor}, sa tieto
     funkcie v poradí v akom boli pridané do listu zavolajú a prebehne predspracovanie vstupných dát.
 Každá z možností predspracovanie obrazu ktorá bola uvedená v \ref{sec:preprocessing}, je implementovaná v triede \textit{Preprocessing} pomocou
     knižnice scikit-image.
 
 Pre augmentáciu dát určených na klasfikáciu typu zbrane je použitá trieda \textit{ImageDataGenerator} z knižnice Keras.
-Parametre tohto generátora su nastavená na: horizonálne a vertikálne preklopenia obrázka, posun obrázka až o 15\% jeho dĺžky alebo šírky,
+Parametre tohto generátora sú nastavená na: horizonálne a vertikálne preklopenia obrázka, posun obrázka až o 15\% jeho dĺžky alebo šírky,
     rotácia o náhodny uhol v rozsahu 0 až 180 stupňov a doplnenie čiernych pixelov pomocou nastavenia ``nearest''.
 
 Pre augmentáciu dát pre určenie náklonu zbrane je implementovaná samostatná trieda \textit{AngleGenerator}, ktorá zabezpečuje správne dogenerovanie

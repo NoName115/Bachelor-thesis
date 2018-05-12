@@ -14,7 +14,7 @@ Veľkosť výstupu a správnosť nastavenia parametrov v konvolučnej vrstve je 
     \frac{(W - F + 2*P)}{S} + 1
 \end{equation}
 Kde $W$ je veľkosť vstupných dát, $F$ je veľkosť filtra, $P$ je nastavenie zarovnania, v prípade nulového zarovannie je hodnota 1 a $S$ je veľkosť kroku.
-Pre správne nastavenie musí byť výsledna hodnota celé číslo, kde táto výsledna hodnota udáva aj veľkosť výstupu.
+Pre správne nastavenie musí byť výsledná hodnota celé číslo, kde táto výsledná hodnota udáva aj veľkosť výstupu.
 Najpoužívanejšie hodnoty parametrov sú: $F = 3, S = 1, P = 1$ a vstup $W$ o hodnote ktorá je deliteľná číslom 2 \cite{odkaz:CNNArchitecture}.
 
 Funkciou pooling vrstvy je znižovanie dimenzionality a zároveň ponechanie dôležítých informácií, ako najpoužívanejšie hodnoty parametrov sú
@@ -34,12 +34,12 @@ Veľkosť vstupných dát do prvej vrstvy je 128x128x3.
 Vo všetkých konvolučných vrstvách sú použité filtre o veľkosti 3x3 s krokom 1 a použitím nulové zarovnania.
 
 V modely sa každou konvolučnou vrstvou zdvojnásobuje počet filtrov, s počiatočných 16 až na 256 v poslednej vrstve.
-Pooling vrstvy su typu max, veľkosť filtra je 2x2 s posunom 2 po každej osi.
+Pooling vrstvy sú typu max, veľkosť filtra je 2x2 s posunom 2 po každej osi.
 Za každou pooling vrstvou sa nachádza Droupout vrstva s nastavením 0.2, ciže 20 percent náhodných prepojení sa ignoruje.
 
 Po piatich blokoch konvolučnej, pooling a droupout vrstvy nasledujú 2 dense vrstvy s počtom prepojení 1024 a dropout vrstvou s nastavním 0.5.
 Ako posledná je dense vrstva s 2 alebo 72 prepojeniami a softmax klasifikátorom, počet výstupov záleží či určujeme typ alebo náklon zbrane.
-V celej sietí su použité ReLu aktivačné funkcie.
+V celej sietí sú použité ReLu aktivačné funkcie.
 
 \begin{figure}[H]
     \centering
@@ -58,7 +58,7 @@ Celkovo sieť obsahuje 2 bloky obsahujúce 2 konvolučné vrstvy s počtom filtr
 Ako posledné sú 2 bloky obsahujúce dense vrstvu s počtom prepojení 2048 a dropout vrstvu s ignorovaním nastaveným na 50\%.
 Posledná výstupna vrstva obsahuje 2 alebo 72 prepojení so softmax klasfikátorom.
 Každá konvolučna vrstva obsahuje filtre o veľkosti 3x3, krokom 1 a s použitím nulového doplnku.
-Pooling vrstvy su typu max, veľkosť filtra je 2x2 s posunom 2 po každej osi.
+Pooling vrstvy sú typu max, veľkosť filtra je 2x2 s posunom 2 po každej osi.
 V celej sietí je použitá ReLu aktivačná funkcia.
 
 \begin{figure}[H]

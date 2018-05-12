@@ -1,5 +1,5 @@
-% ------------ NEW CHAPTER ------------
-\chapter{Technológie}   % TODO Zmenit nazov kapitoly, nie Zakladna terminologia
+
+\chapter{Klasfikácia a detekcia zbraní v obraze}
 \label{chap:technologie}
 
 V tejto kapitole sa zoznámime so základnými pojmami, princípmi a spôsobmi, ktoré súvisia s problematikou tejto práce a ktoré budú ďalej využívané.
@@ -22,23 +22,23 @@ A podrobne popisuje rôzne spôsoby pre klasifikáciu objektov do 2 alebo aj via
 \section{Zhrnutie kapitoly}
 
 V úvode kapitola zhrnula základné kategórie do ktorých sa rozdeľujú zbrane podľa toho ako pôsobia na živú silu a podľa ich ovládateľnosti \ref{sec:weapons}.
-Následne bolo priblížene digitalizovanie obrazu, spôsob jeho reprezentácie ako matica pixelov a oblasti v ktorých je spracovanie obrazu často využívané \ref{sec:imageprocessing}.
+Následne bolo priblížene digitalizovanie obrazu, spôsob jeho reprezentácie ako matica pixelov a oblasti, v ktorých je spracovanie obrazu často využívané \ref{sec:imageprocessing}.
 
 V kapitole \ref{sec:detekcia} bolí vysvetlené základné časti z ktorých pozostáva detekcia objektu v obraze a vytvorený prehľad prístupov od
-    klasických až po niekoľko prístupov ktoré využívajú neurónové siete.
-Kapitola taktiež obsahuje krátke vysvetlenie 2 algoritmou ktoré sa používaju pri dektekcií objektu v obraze a to kĺzajuce okno \ref{subsec:slidingwindow} a
+    klasických až po niekoľko prístupov, ktoré využívajú neurónové siete.
+Kapitola taktiež obsahuje krátke vysvetlenie dvoch algoritmov ktoré sa používaju pri dektekcií objektu v obraze a to kĺzajuce okno \ref{subsec:slidingwindow} a
     regionálne návrhy \ref{subsec:regionproposal}.
 
-Ďalšia podkapitola \ref{sec:klasifikacia} približuje a podrobne opisuje 2 algoritmy ktoré možno zaradiť do klasikého prístupu v rámci problematiky klasifikácie objektov,
+Ďalšia podkapitola \ref{sec:klasifikacia} približuje a podrobne opisuje dva algoritmy, ktoré možno zaradiť do klasikého prístupu v rámci problematiky klasifikácie objektov,
     K-Nearest-Neighbour a Support Vector Machine.
-Táto podkapitola postupne vysveľuje základnu myšlienku a funkciu neurónových sietí \ref{subsec:neuralnetworks}, od ich základného stavebného komponentu umelého neurónu resp. perceptronu,
+Táto podkapitola postupne vysveľuje základnú myšlienku a funkciu neurónových sietí \ref{subsec:neuralnetworks}, od ich základného stavebného komponentu umelého neurónu resp. perceptronu,
     cez porovnanie aktivačných funkcií, až po základ architektúry neurónovej siete.
 
-Následne sú spomenuté konvolučné neurónové siete \ref{subsec:convolutionalneuralnetwork} ako špeciálný prípad neurónových sietí a ich základné operácie ako konvolúcia a zlučovanie,
-    vysvetlenie architektúry a význam každej zo 4 vrstiev z ktorých konvolučne neurónové siete pozostávajú.
-V závere tejto podkapitoly sú popísane 2 architektúry ktoré priviedli istú zmenu pri tvorbe sietí a je možné z nich vychádzať pri tvorbe vlastnej architektúry.
+Následne sú spomenuté konvolučné neurónové siete \ref{subsec:convolutionalneuralnetwork} ako špeciálny prípad neurónových sietí a ich základné operácie ako konvolúcia a zlučovanie,
+    vysvetlenie architektúry a význam každej zo štyroch vrstiev z ktorých konvolučne neurónové siete pozostávajú.
+V závere tejto podkapitoly sú popísane dve architektúry, ktoré priviedli istú zmenu pri tvorbe sietí, a je možné z nich vychádzať pri tvorbe vlastnej architektúry.
 
-V kapitole \ref{sec:frameworks} je vytvorený prehľad populárnych knižníc a systémov ktoré je možné použit či už pri tvorbe klasických klasifikátorov alebo
+V kapitole \ref{sec:frameworks} je vytvorený prehľad populárnych knižníc a systémov, ktoré je možné použiť či už pri tvorbe klasických klasifikátorov alebo
     pri tvorbe neurónových sietí pre spracovanie textu, zvuku alebo obrazu.
 
 Záver kapitoly je venovaný niekoľkým základným technikám predspracovanie obrazu \ref{sec:preprocessing}.
