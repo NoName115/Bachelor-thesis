@@ -15,10 +15,10 @@ Tento problém je môžné preniesť do klasifikácie, preto pre riešenie tohto
 Výsledok poslednej vrtsvy softmax klasfikátora bude 72 výstupov ktoré budú určovať o aký uhol je zbraň natočená.
 Každá zo 72 kategórií bude zastupovať rozpätie 5 stupňov, ciže celkovo sa určí náklon zbrane v celom rozsahu od 0 do 360 stupňov.
 
-Postup predspracovania obrazu bude rovnaký ako pri klasfikácií zbraní pomocou konvolučných neurónových sieti, normalizácia, úprava rozmeru vstupu na štvorec a augmentácia dát (vid. \ref{subsec:augmentacia})
+Postup predspracovania obrazu bude rovnaký ako pri klasfikácií zbraní pomocou konvolučných neurónových sietí, normalizácia, úprava rozmeru vstupu na štvorec a augmentácia dát (vid. \ref{subsec:augmentacia})
 Pre každú os bude natrénovaná samostatná konvolučná neurónová sieť, výsledok bude teda obsahovať 3 natrénované modely.
 
-\subsection{Odchylka chyby}
+\subsection{Odchýlka chyby}
 \label{subsec:odchylkachyby}
 Knižnica Keras obsahuje funkciu \textit{categorical\_accuracy}\footnote{\url{https://keras.io/metrics/}} pre určenie presnosti siete pri klasfikovaní do viacerých kategórií.
 Čo je možné použiť, avšak pre určenie náklonu by bola vhodná iná metrika určovania presnosti siete.

@@ -1,7 +1,7 @@
 
 \section{Trénovacia databáza zbraní}
 \label{sec:databaza}
-Pre správne trénovanie klasifikátorov a neurónových sieti je dôležité mať dáta v dostatočnom počte a správne označené.
+Pre správne trénovanie klasifikátorov a neurónových sietí je dôležité mať dáta v dostatočnom počte a správne označené.
 Trénovacia databáza je získana z niekoľkých zdrojov.
 \begin{enumerate}
     \item[$\bullet$] \textbf{IMFDB}\footnote{\url{http://www.imfdb.org/wiki/Main_Page}} - je databáza záberov z filmov v ktorých sa nachádzajú zbrane.
@@ -9,14 +9,14 @@ Trénovacia databáza je získana z niekoľkých zdrojov.
     Pre túto prácu je potrebné aby daný obrázok obsahoval iba zbraň, preto je potrebné obrázky z tejto databázy ručne odfiltrovať na samotné zbrane a scény so zbranami.
     Následne ich potom zaradiť do správnej kategórie na krátke a dlhé.
     \item[$\bullet$] \textbf{ImageNet}\footnote{\url{http://www.image-net.org/}} - je databáza obrázkov ktorá obsahuje viac ako 14 miliónov obrázkov vo viac ako 21000 kategóriach.
-    Výhodou tejto databázy je že obrázky už patria do určenej kategórie a tak nieje potrebné ich ručné prechádzať a kategorizovať.
+    Výhodou tejto databázy je, že obrázky už patria do určenej kategórie a tak nieje potrebné ich ručné prechádzať a kategorizovať.
     \item[$\bullet$] \textbf{Google}\footnote{\url{http://www.google.com}} - pre doplnanie a zväčšenie počtu obrázkou je môžné použiť google vyhľadávanie.
     Tak ako v prípade IMFDB bude potrebné obrázky ručne kategorizovať.
     \item[$\bullet$] \textbf{Free3D}\footnote{\url{https://free3d.com/3d-models/weapons}} - databáza voľne dostupných 3D modelov zbraní s textúrami v rôzných formátoch.
 \end{enumerate}
 
 Databáza zbraní z prvých 3 zdrojov je možné použit na klasficikáciu zbraní do 2 kategórií na krátke a dlhé zbrane.
-Pre trénovanie neurónových sieti na určenie náklonu zbrane v obraze bude potrebné použiť 3D modely zbraní a následne pomocou nich vygenerovať
+Pre trénovanie neurónových sietí na určenie náklonu zbrane v obraze bude potrebné použiť 3D modely zbraní a následne pomocou nich vygenerovať
     obrázky zbraní v požadovaných natočeniach zbrane v obraze.
 
 \subsection{Generovanie dát z 3D modelov}
@@ -25,7 +25,7 @@ Generovanie obrázkov pre určenie náklonu zbrane v scéne bude prebiehať pomo
 Následne sa použije software od Ing. Tomáša Goldmanna na generovanie obrázkov z 3D modelov\footnote{\url{http://www.fit.vutbr.cz/~igoldmann/app/SYDAGenerator}},
     do ktorého je potrebné vložiť 3D model vo formáte g3db a pozadie scény.
 
-Kedže 3D modely ktoré budú použité niesu v požadovanom formáte, je potrebné ich prekonvertovať, to je môžné urobiť
+Keďže 3D modely ktoré budú použité niesu v požadovanom formáte, je potrebné ich prekonvertovať, to je môžné urobiť
     pomocou nástroja \textbf{fbx-conv}\footnote{\url{https://github.com/libgdx/fbx-conv}}.
 Tento nástroj podporuje konvertovanie 3D modelov z formátu fbx alebo obj do požadovaného formátu g3db.
 
@@ -55,7 +55,7 @@ Pri augmentácií dát pre klasifikovanie dvoch tried, na krátke a dlhé zbrane
 \end{figure}
 
 Druhý typ augmentácie dát prebieha pri obrázkoch ktoré boli vygenerované pomocou 3D modelu.
-Kedže nieje potrebné generovať všetky polohy otočenia od 0 po 360 stupňov, stačí vygenerovať dáta v polohách od 0 po 90 stupňov a od 270 do 359 stupňov
+Keďže nieje potrebné generovať všetky polohy otočenia od 0 po 360 stupňov, stačí vygenerovať dáta v polohách od 0 po 90 stupňov a od 270 do 359 stupňov
     zvyšné polohy je možné dogenerovať pomocou transformácie obrázka, pomocou vertikálneho alebo horizonálneho preklopenia.
 Avšak v tomto prípade je potrebné po transformácií obrázka vyrátať novú hodnotu uhla transformovaného obrázka, to je môžené dosiahnuť pomocou niekoľkých
     jednoduchých vzorcov.

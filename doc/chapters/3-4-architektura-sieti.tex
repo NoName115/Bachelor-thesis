@@ -1,12 +1,12 @@
 
-\section{Konvolučné neurónove siete}
+\section{Konvolučné neurónové siete}
 \label{sec:architekuraCNN}
 
 \subsection{Nastavenie parametrov}
 \label{subsec:nastavenieparametrov}
-Ako bolo spomínane v kapitole \ref{subsec:convolutionalneuralnetwork} je niekoľko parametrov ktoré je potrebné
+Ako bolo spomínané v kapitole \ref{subsec:convolutionalneuralnetwork} je niekoľko parametrov ktoré je potrebné
     nastaviť v konvolučných a pooling vrstvách.
-Pre správne fungovanie sietie je potrebné nastaviť aj správne hodnoty týchto parametrov, preto v navrhovaných architektúrach budú
+Pre správne fungovanie sietíe je potrebné nastaviť aj správne hodnoty týchto parametrov, preto v navrhovaných architektúrach budú
     hodnoty parametrov nastavené na tie najpoužívajšie.
 
 Veľkosť výstupu a správnosť nastavenia parametrov v konvolučnej vrstve je možné výpočítať pomocou vzťahu:
@@ -21,9 +21,9 @@ Funkciou pooling vrstvy je znižovanie dimenzionality a zároveň ponechanie dô
     veľkosť filtra 2x2 s krokom 2 pri použití MaxPooling vrstvy \cite{odkaz:CNNArchitecture}.
 
 % TODO batch-size, epochy
-% CNN sa trenuje v cykloch nazyvanych epochy, v kazdej epoche prejdu cez siet vsetky obrazky na ktorych sa siet uci,
-% pre ucenie je potrebne zvolit vhodny pocet tychro epoch aby siet podala najelpsie vysledky a zaroven sa nepretrenovala.
-% Preto je vhodne ukoncit trenovanie v bode kedy klesa presnost siete na validacnych datach, v takom pripade to moze vies k pretrenovaniu siete
+% CNN sa trenuje v cykloch nazyvanych epochy, v kazdej epoche prejdu cez sieť vsetky obrazky na ktorych sa sieť uci,
+% pre ucenie je potrebne zvolit vhodny pocet tychro epoch aby sieť podala najelpsie vysledky a zaroven sa nepretrenovala.
+% Preto je vhodne ukoncit trenovanie v bode kedy klesa presnost siete na validacnych datach, v takom pripade to moze vies k pretrénovaniu siete
 % na trenovacich datach.
 
 \subsection{Návrh architektúr}
@@ -39,7 +39,7 @@ Za každou pooling vrstvou sa nachádza Droupout vrstva s nastavením 0.2, ciže
 
 Po piatich blokoch konvolučnej, pooling a droupout vrstvy nasledujú 2 dense vrstvy s počtom prepojení 1024 a dropout vrstvou s nastavním 0.5.
 Ako posledná je dense vrstva s 2 alebo 72 prepojeniami a softmax klasifikátorom, počet výstupov záleží či určujeme typ alebo náklon zbrane.
-V celej sieti su použité ReLu aktivačné funkcie.
+V celej sietí su použité ReLu aktivačné funkcie.
 
 \begin{figure}[H]
     \centering
@@ -50,7 +50,7 @@ V celej sieti su použité ReLu aktivačné funkcie.
 
 % ----------- DRUHY NAVRH -----------
 
-Druhý navrhovaný model je inšpirovaný architektúrov VGG sieti (vid. \ref{subsec:popularCNN}).
+Druhý navrhovaný model je inšpirovaný architektúrov VGG sietí (vid. \ref{subsec:popularCNN}).
 Vzhľadom na možnosti výkonu na ktorom bude trénovanie prebiehať, je navrhovaná sieť o dva bloky vrstviev menšia a taktiež konvolučne vrstvy obsahujú menej filtrov.
 
 Celkovo sieť obsahuje 2 bloky obsahujúce 2 konvolučné vrstvy s počtom filtrov 32 a 64, pooling a droupout vrstvu s 20\% ignorovaním prepojení.
@@ -59,7 +59,7 @@ Ako posledné sú 2 bloky obsahujúce dense vrstvu s počtom prepojení 2048 a d
 Posledná výstupna vrstva obsahuje 2 alebo 72 prepojení so softmax klasfikátorom.
 Každá konvolučna vrstva obsahuje filtre o veľkosti 3x3, krokom 1 a s použitím nulového doplnku.
 Pooling vrstvy su typu max, veľkosť filtra je 2x2 s posunom 2 po každej osi.
-V celej sieti je použitá ReLu aktivačná funkcia.
+V celej sietí je použitá ReLu aktivačná funkcia.
 
 \begin{figure}[H]
     \centering

@@ -23,7 +23,7 @@ Tabuľka nižšie uvádza podrobné počty obrázkov z daných zdrojov ktoré bo
 Vo všeobecnosti je jednoduchšie nájsť obrázky ktoré obsahujú krátke zbrane (pištole) ako dlhé zbrane.
 Databáza ImageNet obsahovala vyše 3000 odkazov na obrázky, avšak veľká časť z nich bola chybná alebo daný súbor už neexistoval.
 
-Ako bolo spomínane v \ref{subsec:generovanie3d}, obrázky ktoré boli použité na trénovanie modelov pre určenie náklonu zbrane bolo potrebné
+Ako bolo spomínané v \ref{subsec:generovanie3d}, obrázky ktoré boli použité na trénovanie modelov pre určenie náklonu zbrane bolo potrebné
     vygenerovať pomocou 3D modelov.
 Pre toto generovanie bolo použitých 10 pozadí scény a 5 3D modelov z toho 3 modely boli dlhé zbrane a 2 modely krátkych zbraní.
 
@@ -62,11 +62,11 @@ Tabuľka nižsie uvádza presné počty vygenerovaných obrázkov.
 Pre os otáčania pitch boli vybrané obrázky z datasetu určeného pre klasifikáciu typu zbrane.
 Pre zvyšné 2 osi boli obrázky generované, počty sa líša kvôli niektorým chybným obrázkom ktoré museli byť vymazané.
 
-\subsection{Načitavanie dát}
+\subsection{Načítavanie dát}
 \label{subsec:nacitaniedat}
-Pre načitavanie dát je implementovaná trieda \textit{DataLoader} v scripte \textit{loader.py}.
-Trieda obsahuje niekoľko funkcií pre načitanie týchto dát, tieto funkcie vrátia pole načitaných obrázkov, pole indexov označení [eng. labels] obrázkov a
-    štruktúru typu dictionary ktorá obsahuje index a názov označenia, npr. \{0: ``kratka zbran'', 1: ``dlha zbran''\}.
+Pre načítavanie dát je implementovaná trieda \textit{DataLoader} v scripte \textit{loader.py}.
+Trieda obsahuje niekoľko funkcií pre načítanie týchto dát, tieto funkcie vrátia pole načitaných obrázkov, pole indexov označení [eng. labels] obrázkov a
+    štruktúru typu dictionary ktorá obsahuje index a názov označenia, napr. \{0: ``kratka zbran'', 1: ``dlha zbran''\}.
 
 Prvá z funkcií načitáva dáta z priečinka kde označenie obrázkou, či je to krátka alebo dlhá zbraň, je zabezpečené podľa názvou podpriečinkou.
 Pre obrázky o náklne zbrane sa označenie osi berie takisto z názvu podpriečinka, avšak presné označenie o koľko stupňov je model v obrázku otočený
@@ -86,7 +86,7 @@ Správnu hierarchiu priečinkou je vidieť na obrázoku \ref{pic:folderhierarchy
     \label{pic:folderhierarchy}
 \end{figure}
 
-Druhá z funkcií umožnuje načítať zoznam obrázkou z textového súboru, kde sa na každom riadku nachádza práve jedna cesta k požadovanému obrázku.
+Druhá z funkcií umožňuje načítať zoznam obrázkou z textového súboru, kde sa na každom riadku nachádza práve jedna cesta k požadovanému obrázku.
 Spôspob označovania obrázkov je rovnaký ako v prvom prípade, preto je taktiež potrebné dodržat správnu hierachiu priečinkou.
 
 \subsection{Predspracovanie dát}

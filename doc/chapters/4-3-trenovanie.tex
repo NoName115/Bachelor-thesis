@@ -4,9 +4,9 @@
 Pre trénovanie modelov sú v rámci implementácie použité všetky triedy ktoré boli podrobne opísane vyššie.
 Proces trénovania prebieha v niekoľkých krokoch.
 \begin{enumerate}
-    \item[$\bullet$] Načitanie vstupných dát.
+    \item[$\bullet$] Načítanie vstupných dát.
     \item[$\bullet$] Predspracovanie načitaných dát.
-    \item[$\bullet$] Rozdelenie predspracovaných dát na trénovacie, validačné a testovanie v pomere 70\%:15\%:15\% pre konvolučné neurónove siete.
+    \item[$\bullet$] Rozdelenie predspracovaných dát na trénovacie, validačné a testovanie v pomere 70\%:15\%:15\% pre konvolučné neurónové siete.
     A v pomere 70\%:30\% na trénovacie a testovanie pre K-means a SVM klasifikátor.
     \item[$\bullet$] Vytvorenie modelu.
     \item[$\bullet$] Spustenie trénovania vytvoreného modelu.
@@ -23,11 +23,11 @@ Zoznam vstupných argumentov a ich význam, argumenty v hranatých zátvorkách 
   Možnosť ``cnnc'' pre trénovanie konvolučnej neurónovej siete určenej na klasifikáciu zbrane,
   ``cnna'' pre trénovanie konvolucnej neurónovej siete pre určenie náklonu zbrane a
   ``svm'' alebo ``kmeans'' pre trénovanie SVM alebo K-nearest-neighbor klasifikátora na určenie typu zbrane.
-  \item[$\bullet$] \textbf{[--ep]} pri konvolučných neurónových sietach určuje počet epóch, pri jeho nezadaní je použitá
-  základne hodnota 45.
-  \item[$\bullet$] \textbf{[--bs]} určuje veľkosť batch-size pri trénovaní konvolučných neurónových sieti, jeho
-  základna hodnota je 16.
-  \item[$\bullet$] \textbf{[--rt]} je argument ktorý je potrebné zadať pri trénovani sieti na určenie náklonu zbrane,
+  \item[$\bullet$] \textbf{[--ep]} pri konvolučných neurónových sieťach určuje počet epóch, pri jeho nezadaní je použitá
+  základné hodnota 45.
+  \item[$\bullet$] \textbf{[--bs]} určuje veľkosť batch-size pri trénovaní konvolučných neurónových sietí, jeho
+  základná hodnota je 16.
+  \item[$\bullet$] \textbf{[--rt]} je argument ktorý je potrebné zadať pri trénovani sietí na určenie náklonu zbrane,
   jeho hodnota určuje uhol náklonu na ktorý sa sieť bude učiť, možné hodnoty argumentu sú: ``yaw'', ``roll'', ``pitch''.
 \end{enumerate}
 
@@ -40,7 +40,7 @@ V prípade určenia typu zbrane sa používa tzv. chybová alebo tiež kontigen�
 Kde každý stĺpec v matici predstavuje klasifikované triedy a jednotlivé riadky predstavujú správne triedy.
 Tabuľka \ref{tab:chybovamatica} zobrazuje túto maticu.
 Hodnota TP označuje počet správne klasifikovaných obrázkov triedy true, hodnota FP označuje počet nesprávne klasfikovaných obrázkov triedy true.
-Hodnota TN označuje poćet správne klasifikovaných obrázkov triedy false, hodnota FN označuje počet nesprávne klasifikovaných obrazkov triedy false\cite{odkaz:ChybovaMatica}.
+Hodnota TN označuje poćet správne klasifikovaných obrázkov triedy false, hodnota FN označuje počet nesprávne klasifikovaných obrazkov triedy false \cite{odkaz:ChybovaMatica}.
 \begin{table}[H]
     \centering
     \label{tab:chybovamatica}
@@ -59,7 +59,7 @@ Ako hodnotenie presnosti bude použitá metrika úspešnosť [eng. Accuracy].
 \begin{equation}
     Accuracy = \frac{TP + TN}{TP + TN + FP + FN}
 \end{equation}
-Táto metrika je použitá aj počas trénovania sieti na predbežné určenie presnosti a taktiež pri koncovom testovaní modelu.
+Táto metrika je použitá aj počas trénovania sietí na predbežné určenie presnosti a taktiež pri koncovom testovaní modelu.
 
 Avšak v prípade siete ktorá určuje náklon zbrane je potrebné túto metriku trošku pozmeniť.
 Ako je opísane v \ref{subsec:odchylkachyby}, v scripte \textit{base.py} je implementovaná funkcia \textit{angle\_error} ktorá ráta priemerny rozdiel medzi
