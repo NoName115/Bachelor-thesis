@@ -94,7 +94,13 @@ if (not using_keras):
 
 history = None
 if (alg == Algorithm.CNN_C):
+    '''
     model_class = MyModel(
+        train_x.shape, labels_dict, 'class',
+        model_name=MODEL_NAME
+    ).build()
+    '''
+    model_class = AlexNetLike(
         train_x.shape, labels_dict, 'class',
         model_name=MODEL_NAME
     ).build()
@@ -109,7 +115,13 @@ if (alg == Algorithm.CNN_C):
         metrics=['accuracy']
     )
 elif (alg == Algorithm.CNN_A):
+    '''
     model_class = MyModel(
+        train_x.shape, labels_dict, 'angle',
+        model_name=MODEL_NAME, rotation_type=ROTATION_TYPE
+    ).build()
+    '''
+    model_class = AlexNetLike(
         train_x.shape, labels_dict, 'angle',
         model_name=MODEL_NAME, rotation_type=ROTATION_TYPE
     ).build()

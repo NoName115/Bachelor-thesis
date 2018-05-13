@@ -168,7 +168,6 @@ class AlexNetLike(MyModel):
         model.add(Dense(1024, activation='relu'))
         model.add(Dropout(0.5))
 
-        model.add(Flatten())
         model.add(Dense(1024, activation='relu'))
         model.add(Dropout(0.5))
 
@@ -179,7 +178,7 @@ class AlexNetLike(MyModel):
 
     def train(self, train_x, train_y, val_x, val_y, datagen,
             loss, optimizer, metrics, batch_size=16, epochs=40):
-        super(AlexNetLike, self).train(train_x, train_y, val_x, val_y, datagen,
+        return super(AlexNetLike, self).train(train_x, train_y, val_x, val_y, datagen,
                                        loss, optimizer, metrics,
                                        batch_size, epochs)
 
@@ -223,11 +222,12 @@ class VGGLike(MyModel):
 
         model.add(Dense(self.num_of_classes, activation='softmax'))
 
-        return model
+        self.model = model
+        return self
 
     def train(self, train_x, train_y, val_x, val_y, datagen,
             loss, optimizer, metrics, batch_size=16, epochs=40):
-        super(AlexNetLike, self).train(train_x, train_y, val_x, val_y, datagen,
+        return super(AlexNetLike, self).train(train_x, train_y, val_x, val_y, datagen,
                                        loss, optimizer, metrics,
                                        batch_size, epochs)
 
