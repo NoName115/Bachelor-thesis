@@ -15,10 +15,10 @@ Priebeh trénovania obydvoch sieti pre os Pitch je vidieť na obrázku \ref{pic:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{alexnet-training_history} %alexnet-pitch-training_history
+    \includegraphics[width=0.7\textwidth]{alexnet-training_history} %alexnet-pitch-training_history
     \quad
-	\includegraphics[width=0.75\textwidth]{alexnet-training_history} %vgglike-pitch-training_history
-	\caption{Priebeh trénovania sieti AlexNetLike(vľavo) a VGGLike(vpravo).}
+	\includegraphics[width=0.7\textwidth]{alexnet-training_history} %vgglike-pitch-training_history
+	\caption{Priebeh trénovania sieti AlexNetLike(hore) a VGGLike(dole).}
 	\label{pic:pitchaxis}
 \end{figure}
 
@@ -50,5 +50,74 @@ Výsledna presnosť sieti je uvedená v tabuľkách \ref{tab:alexnetpitchresults
 
 
 \subsubsection{Roll}
+Trénovanie prebiehalo rovnako ako v Pitch uhle.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{alexnet-training_history} %alexnet-roll-training_history
+    \quad
+	\includegraphics[width=0.7\textwidth]{alexnet-training_history} %vgglike-roll-training_history
+	\caption{Priebeh trénovania sieti AlexNetLike(hore) a VGGLike(dole).}
+	\label{pic:rollaxis}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+                                                                &                                    & \multicolumn{2}{c}{Klasifikované hodnoty}                                                         &                                    \\ \cline{3-5} 
+                                                                & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{Dlhé zbrane}                & \multicolumn{1}{c|}{Krátke zbrane}              & \multicolumn{1}{c|}{Úspešnosť}     \\ \cline{2-5} 
+        \multicolumn{1}{c|}{}                                  & \multicolumn{1}{c|}{Dlhé zbrane}   & \multicolumn{1}{c|}{{\color[HTML]{009901} -}} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} -}}  & \multicolumn{1}{c|}{\textbf{-\%}} \\ \cline{2-5} 
+        \multicolumn{1}{c|}{\multirow{-2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Krátke zbrane} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} -}}  & \multicolumn{1}{c|}{{\color[HTML]{009901} -}} & \multicolumn{1}{c|}{\textbf{-\%}} \\ \cline{2-5} 
+    \end{tabular}
+    \caption{Výsledky natrénovanej siete AlexNetLike pre os Roll.}
+    \label{tab:alexnetrollresults}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+                                                                &                                    & \multicolumn{2}{c}{Klasifikované hodnoty}                                                         &                                    \\ \cline{3-5} 
+                                                                & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{Dlhé zbrane}                & \multicolumn{1}{c|}{Krátke zbrane}              & \multicolumn{1}{c|}{Úspešnosť}     \\ \cline{2-5} 
+        \multicolumn{1}{c|}{}                                  & \multicolumn{1}{c|}{Dlhé zbrane}   & \multicolumn{1}{c|}{{\color[HTML]{009901} -}} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} -}}  & \multicolumn{1}{c|}{\textbf{-\%}} \\ \cline{2-5} 
+        \multicolumn{1}{c|}{\multirow{-2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Krátke zbrane} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} -}}  & \multicolumn{1}{c|}{{\color[HTML]{009901} -}} & \multicolumn{1}{c|}{\textbf{-\%}} \\ \cline{2-5} 
+    \end{tabular}
+    \caption{Výsledky natrénovanej siete VGGLike pre os Roll.}
+    \label{tab:vgglikerollresults}
+\end{table}
 
 \subsubsection{Yaw}
+
+Priebeh trénovania a výsledky pre uhol Yaw.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{alexnet-training_history} %alexnet-yaw-training_history
+    \quad
+	\includegraphics[width=0.7\textwidth]{alexnet-training_history} %vgglike-yaw-training_history
+	\caption{Priebeh trénovania sieti AlexNetLike(hore) a VGGLike(dole).}
+	\label{pic:yawaxis}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+                                                                &                                    & \multicolumn{2}{c}{Klasifikované hodnoty}                                                         &                                    \\ \cline{3-5} 
+                                                                & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{Dlhé zbrane}                & \multicolumn{1}{c|}{Krátke zbrane}              & \multicolumn{1}{c|}{Úspešnosť}     \\ \cline{2-5} 
+        \multicolumn{1}{c|}{}                                  & \multicolumn{1}{c|}{Dlhé zbrane}   & \multicolumn{1}{c|}{{\color[HTML]{009901} -}} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} -}}  & \multicolumn{1}{c|}{\textbf{-\%}} \\ \cline{2-5} 
+        \multicolumn{1}{c|}{\multirow{-2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Krátke zbrane} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} -}}  & \multicolumn{1}{c|}{{\color[HTML]{009901} -}} & \multicolumn{1}{c|}{\textbf{-\%}} \\ \cline{2-5} 
+    \end{tabular}
+    \caption{Výsledky natrénovanej siete AlexNetLike pre os Yaw.}
+    \label{tab:alexnetyawresults}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+                                                                &                                    & \multicolumn{2}{c}{Klasifikované hodnoty}                                                         &                                    \\ \cline{3-5} 
+                                                                & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{Dlhé zbrane}                & \multicolumn{1}{c|}{Krátke zbrane}              & \multicolumn{1}{c|}{Úspešnosť}     \\ \cline{2-5} 
+        \multicolumn{1}{c|}{}                                  & \multicolumn{1}{c|}{Dlhé zbrane}   & \multicolumn{1}{c|}{{\color[HTML]{009901} -}} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} -}}  & \multicolumn{1}{c|}{\textbf{-\%}} \\ \cline{2-5} 
+        \multicolumn{1}{c|}{\multirow{-2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Krátke zbrane} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} -}}  & \multicolumn{1}{c|}{{\color[HTML]{009901} -}} & \multicolumn{1}{c|}{\textbf{-\%}} \\ \cline{2-5} 
+    \end{tabular}
+    \caption{Výsledky natrénovanej siete VGGLike pre os Yaw.}
+    \label{tab:vgglikeyawresults}
+\end{table}
