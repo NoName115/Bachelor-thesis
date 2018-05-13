@@ -249,15 +249,7 @@ class KMeans(Model):
 
     def build(self, **kwargs):
         self.algorithm = Algorithm.KMEANS
-        '''
-        self.model = cluster.KMeans(
-            n_clusters=len(self.labels_dict),
-            **kwargs
-        )
-        '''
-        self.model = KNeighborsClassifier(
-            n_neighbors=5,
-        )
+        self.model = KNeighborsClassifier(**kwargs)
         return self
 
     def train(self, train_x, train_y, **kwargs):
