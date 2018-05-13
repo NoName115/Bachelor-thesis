@@ -194,13 +194,18 @@ def __save_evaluation_class_results(model_folder_path, testing_score):
     for message in summary:
         print_info(message, 2)
 
+    # Save short summary to stdout
+    short_summary = 'Accuracy: ' + str(round(correct_img / total_img * 100, 2)) + '%\n'
+    for message in summary:
+        short_summary += '\t' + str(message) + '\n'
+
     # Concatenate all paths
     path_list = []
     for key, value_list in testing_score.items():
         path_list += [res_dict['path'] for res_dict in value_list['correct']]
         path_list += [res_dict['path'] for res_dict in value_list['wrong']]
 
-    __save_log_files(model_folder_path, testing_score, path_list)
+    __save_log_files(model_folder_path, testing_score, path_list, short_summary)
 
 def __evaluate_angle(model_class, test_x, test_y, test_p, threshold):
     # Debug
@@ -253,7 +258,7 @@ def __evaluate_angle(model_class, test_x, test_y, test_p, threshold):
         else:                           # Wrong prediction
             testing_score['wrong'].append(output_dict)
 
-    __save_evaluation_angle_results(model_class.model_folder, testing_score)
+    __save_evaluation_angle_results(model_class.model_folder, testing_score, threshold)
 
 def __evaluate_image(model_class, image, threshold=None):
     # Prediction
@@ -274,26 +279,33 @@ def __evaluate_image(model_class, image, threshold=None):
 
     print_info("Prediction:\t" + str(switched_labels[prediction]) + '\n', 1)
 
-def __save_evaluation_angle_results(model_folder_path, testing_score):
+def __save_evaluation_angle_results(model_folder_path, testing_score, threshold):
     # Print short summary to stdout
     path_sum = len(testing_score['correct']) + len(testing_score['wrong'])
     print_info(
         "Accuracy: " + str(
             round(len(testing_score['correct']) / path_sum * 100, 2)
-        ) + '%',
+        ) + '% Threshold:' + str(threshold),
         1
     )
     print_info("Correct: " + str(len(testing_score['correct'])), 2)
     print_info("Wrong: " + str(len(testing_score['wrong'])), 2)
+
+    # Save short summary to stdout
+    short_summary = "Accuracy: " + str(
+        round(len(testing_score['correct']) / path_sum * 100, 2)
+    ) + '%\n'
+    short_summary += "\tCorrect: " + str(len(testing_score['correct'])) + "\n"
+    short_summary += "\tWrong: " + str(len(testing_score['wrong'])) + "\n"
 
     # Concatenate all paths
     path_list = []
     path_list += [record['path'] for record in testing_score['correct']]
     path_list += [record['path'] for record in testing_score['wrong']]
 
-    __save_log_files(model_folder_path, testing_score, path_list)
+    __save_log_files(model_folder_path, testing_score, path_list, short_summary)
 
-def __save_log_files(model_folder_path, testing_score, path_list):
+def __save_log_files(model_folder_path, testing_score, path_list, short_summary=''):
     # Check input path
     if (not model_folder_path):
         print_warning(
@@ -311,6 +323,11 @@ def __save_log_files(model_folder_path, testing_score, path_list):
     logs_folder += now_str + "/"
     if (not os.path.exists(logs_folder)):
         os.mkdir(logs_folder)
+
+    # Save short summary to file
+    short_summary_file = open(logs_folder + 'short_summary.txt', 'w')
+    short_summary_file.write(short_summary)
+    short_summary_file.close()
 
     # Debug
     print_info('Testing details in folder: ' + logs_folder + '\n', 1)
