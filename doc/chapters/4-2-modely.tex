@@ -3,7 +3,7 @@
 \label{sec:modely}
 Všetky modely pre trénovanie sú implementované v scripte \textit{models.py}.
 Existuje jedna hlavná trieda \textit{class Model}, ktorá obsahuje všetky základné atributy potrebné pre modely, ako napr.
-    meno modelu, vstupný rozmer dát, zvolený algoritmus trénovania a štruktúru typu dictionary ktorá obsahuje indexi a názvi označení obrázkov.
+    meno modelu, vstupný rozmer dát, zvolený algoritmus trénovania a štruktúru typu dictionary, ktorá obsahuje indexi a názvy označení obrázkov.
 
 Každý model následne dedí z tejto hlavnej triedy a implementuje v sebe 2 funkcie \textit{build} ktorá zabezpečuje vytvorenie modelu a
     funkciu \textit{train} ktorá sa volá pri spustení trénovania daného modelu.
@@ -23,10 +23,10 @@ Pre klasifikátor K-Nearest-Neighbor je použitá trieda \textit{KNeighborsClass
 \subsection{Ukladanie a načítanie modelu}
 \label{subsec:ukladaniemodelu}
 Pre ukladanie natrénovaných modelov je implemtovaná funkcia \textit{save\_model()} v triede \textit{DataSaver} v scripte \textit{loader.py}.
-Pri ukladaní modelu sa ukladá model v binárnej forme, ukladá sa konfiguračný súbor \textit{settings.json} ktorý obsahuje informácie ako veľkosť
+Pri ukladaní modelu sa ukladá model v binárnej forme, ukladá sa konfiguračný súbor \textit{settings.json}, ktorý obsahuje informácie ako veľkosť
     vstupných dát, použité funkcie na predspracovanie dát, meno modelu, typ algoritmu učenia, zoznam indexov označenia dát a dalšie informácie
     špecifické pre daný typ modelu.
-Uložením konvolučnéj neurónovej siete sa ukladá graf priebehu trénovanie.
+Uložením konvolučnej neurónovej siete sa ukladá graf priebehu trénovanie.
 
 Naopak pre načítanie modelov je implementovaná funkcia \textit{load\_model\_data()} v triede \textit{DataLoader} v scripte \textit{loader.py},
     ktorá načíta binárnu podobu modelu a všetky informácie z konfiguračného súboru \textit{settings.json}.
