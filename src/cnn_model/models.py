@@ -199,18 +199,18 @@ class VGGLike(MyModel):
 
         model.add(Conv2D(32, FILTER_SIZE, padding='same',
                          input_shape=self.input_shape, activation='relu'))
-        model.add(Conv2D(32, FILTER_SIZE, padding='same'))
+        model.add(Conv2D(32, FILTER_SIZE, padding='same', activation='relu'))
         model.add(MaxPooling2D(pool_size=POOL_SIZE, strides=STRIDES))
         model.add(Dropout(0.25))
 
-        model.add(Conv2D(64, FILTER_SIZE, padding='same'))
-        model.add(Conv2D(64, FILTER_SIZE, padding='same'))
+        model.add(Conv2D(64, FILTER_SIZE, padding='same', activation='relu'))
+        model.add(Conv2D(64, FILTER_SIZE, padding='same', activation='relu'))
         model.add(MaxPooling2D(pool_size=POOL_SIZE, strides=STRIDES))
         model.add(Dropout(0.25))
 
-        model.add(Conv2D(128, FILTER_SIZE, padding='same'))
-        model.add(Conv2D(128, FILTER_SIZE, padding='same'))
-        model.add(Conv2D(128, FILTER_SIZE, padding='same'))
+        model.add(Conv2D(128, FILTER_SIZE, padding='same', activation='relu'))
+        model.add(Conv2D(128, FILTER_SIZE, padding='same', activation='relu'))
+        model.add(Conv2D(128, FILTER_SIZE, padding='same', activation='relu'))
         model.add(MaxPooling2D(pool_size=POOL_SIZE, strides=STRIDES))
         model.add(Dropout(0.25))
 
