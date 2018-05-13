@@ -1,6 +1,7 @@
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import to_categorical
 from skimage.color import rgb2grey
+from skimage.feature import hog
 from sklearn.utils import shuffle
 from imutils import rotate_bound
 from printer import print_info, print_warning, print_error
@@ -107,6 +108,16 @@ class Preprocessing():
             return np.array([rgb2grey(image) for image in image_data])
         else:
             return rgb2grey(image_data)
+
+    @staticmethod
+    def hog(image_data):
+        """Histogram oriented gradients
+        """
+        features = []
+        for image in image_data:
+            fd = hog(image, orientations=4, pixels_per_cell=(8, 8), cells_per_block=(1, 1))
+            features.append(fd)
+        return np.array(features)
 
     @staticmethod
     def flat(image_data):

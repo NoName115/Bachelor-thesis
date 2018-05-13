@@ -15,15 +15,14 @@ IMAGE_WIDTH = 128
 IMAGE_HEIGHT = 128
 MODEL_NAME = args['alg']
 
-ROTATE_ANGLE = 5
-if (MODEL_NAME == Algorithm.CNN_A):
-    ROTATION_TYPE = args['rt']  # yaw, pitch, roll
-
 EPOCHS = 45 if (not args['ep']) else int(args['ep'])
 BS = 16 if (not args['bs']) else int(args['bs'])
 
 alg = Algorithm.translate(args['alg'])
 
+ROTATE_ANGLE = 5
+if (alg == Algorithm.CNN_A):
+    ROTATION_TYPE = args['rt']  # yaw, pitch, roll
 
 # Load input data
 if (alg == Algorithm.CNN_A):
@@ -55,33 +54,42 @@ preproc.set_datagen()
 if (using_keras):
     preproc.add_func(Preprocessing.normalize)
     images = preproc.apply(images)
-else:
-    preproc.add_func(Preprocessing.normalize)
-    preproc.add_func(Preprocessing.flat)
 
-# Split data only into training & test
-splited_data = DataLoader.split_data(
-    images, labels, path_list,
-    num_classes=len(labels_dict),
-    split_size=0.3,
-    use_to_categorical=True if (using_keras) else False,
-    get_test=True if (using_keras) else False,
-)
+    # Split data only into training & test
+    splited_data = DataLoader.split_data(
+        images, labels, path_list,
+        num_classes=len(labels_dict),
+        split_size=0.3,
+        use_to_categorical=True if (using_keras) else False,
+        get_test=True if (using_keras) else False,
+    )
 
-train_x, train_y, train_p = splited_data[0:3]
-if (using_keras):
+    train_x, train_y, train_p = splited_data[0:3]
     val_x, val_y, val_p = splited_data[3:6]
     test_x, test_y, test_p = splited_data[6:9]
 else:
-    test_x, test_y, test_p = splited_data[3:6]
-
-# Data augmentation
-if (not using_keras):
-    train_x, train_y, train_p = ClassificationGenerator(
-        train_x, train_y, train_p,
+    images, labels, path_list = ClassificationGenerator(
+        images, labels, path_list,
         1, preproc.get_datagen()
     ).flow()
-    train_x = preproc.apply(train_x)
+
+    preproc.add_func(Preprocessing.normalize)
+    preproc.add_func(Preprocessing.grayscale)
+    preproc.add_func(Preprocessing.hog)
+    images = preproc.apply(images)
+
+    # Split data only into training & test
+    splited_data = DataLoader.split_data(
+        images, labels, path_list,
+        num_classes=len(labels_dict),
+        split_size=0.3,
+        use_to_categorical=True if (using_keras) else False,
+        get_test=True if (using_keras) else False,
+    )
+
+    train_x, train_y, train_p = splited_data[0:3]
+    test_x, test_y, test_p = splited_data[3:6]
+
 
 # Build & train model
 
@@ -104,6 +112,12 @@ if (alg == Algorithm.CNN_C):
         train_x.shape, labels_dict, 'class',
         model_name=MODEL_NAME
     ).build()
+    '''
+    model_class = VGGLike(
+        train_x.shape, labels_dict, 'class',
+        model_name=MODEL_NAME
+    ).build()
+    '''
     history = model_class.train(
         train_x, train_y,
         val_x, val_y,
@@ -125,6 +139,12 @@ elif (alg == Algorithm.CNN_A):
         train_x.shape, labels_dict, 'angle',
         model_name=MODEL_NAME, rotation_type=ROTATION_TYPE
     ).build()
+    '''
+    model_class = VGGLike(
+        train_x.shape, labels_dict, 'angle',
+        model_name=MODEL_NAME, rotation_type=ROTATION_TYPE
+    ).build()
+    '''
     history = model_class.train(
         train_x, train_y,
         val_x, val_y,
