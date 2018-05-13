@@ -5,7 +5,7 @@ Pre správne trénovanie klasifikátorov a neurónových sietí je dôležité m
 Trénovacia databáza je získaná z niekoľkých zdrojov.
 \begin{enumerate}
     \item[$\bullet$] \textbf{IMFDB}\footnote{\url{http://www.imfdb.org/wiki/Main_Page}} - je databáza záberov z filmov, v ktorých sa nachádzajú zbrane.
-    Obsahuje nie len celkové scény ale aj samostatné obrázky zbraní, ktoré sa v danej scéne nachádzajú.
+    Obsahuje nie len celkové scény, ale aj samostatné obrázky zbraní, ktoré sa v danej scéne nachádzajú.
     Pre túto prácu je potrebné, aby daný obrázok obsahoval iba zbraň, preto je potrebné obrázky z tejto databázy ručne odfiltrovať na samotné zbrane a scény so zbraňami.
     Následne ich potom zaradiť do správnej kategórie na krátke a dlhé.
     \item[$\bullet$] \textbf{ImageNet}\footnote{\url{http://www.image-net.org/}} - je databáza obrázkov, ktorá obsahuje viac ako 14 miliónov obrázkov vo viac ako 21000 kategóriách.
@@ -27,13 +27,13 @@ Následne sa použije software od Ing. Tomáša Goldmanna na generovanie obrázk
 
 Keďže 3D modely, ktoré budú použité nie sú v požadovanom formáte, je potrebné ich prekonvertovať, to je možné urobiť
     pomocou nástroja \textbf{fbx-conv}\footnote{\url{https://github.com/libgdx/fbx-conv}}.
-Tento nástroj podporuje konvertovanie 3D modelov z formátu \textit{fbx} alebo \textit{obj} do požadovaného formátu g3db.
+Tento nástroj podporuje konvertovanie 3D modelov z formátu \textit{fbx}, alebo \textit{obj} do požadovaného formátu \texttt{g3db}.
 
 \subsection{Augmentácia obrázkov}
 \label{subsec:augmentacia}
 Ako bolo opísané v kapitole \ref{sec:preprocessing} jedna z možností zväčšenia počtu vstupných dát a zlepšenia generalizácie pri klasifikácii je augmentácia vstupných dát.
 V tejto práci môžeme rozdeliť augmentáciu dát do dvoch skupín, prvý druh augmentácie bude prebiehať pre trénovanie klasifikátorov, ktoré
-    určuju typ zbrane, druhý druh augmentácie bude prebiehať pri obrázkoch určených pre náklon zbrane.
+    určujú typ zbrane, druhý druh augmentácie bude prebiehať pri obrázkoch určených pre náklon zbrane.
 
 Pri augmentácií dát pre klasifikovanie dvoch tried, na krátke a dlhé zbrane, prebehne niekoľko transfomácií obrázka.
 \begin{enumerate}
@@ -41,7 +41,7 @@ Pri augmentácií dát pre klasifikovanie dvoch tried, na krátke a dlhé zbrane
     \item[$\bullet$] \textbf{Rotácia} - obrázky budú rotované o náhodný uhol v rozmedzí 0-180 stupňov.
     \item[$\bullet$] \textbf{Preklopenie} - vertikálne alebo horizonálne preklopenie obrázka.
     \item[$\bullet$] \textbf{Posun} - posun obrázka po x-ovej a y-ovej osi.
-    \item[$\bullet$] \textbf{Výplň} - pri rotácií alebo posunu obrázka môže vzniknúť čierna plocha pixelov, tieto čierne pixely je potrebné vyplniť.
+    \item[$\bullet$] \textbf{Výplň} - pri rotácií alebo posune obrázka môže vzniknúť čierna plocha pixelov, tieto čierne pixely je potrebné vyplniť.
     Tieto čierne pixely budú doplnené hraničným pixelom obrázka, ktorý bude nakopírovaný až po nový okraj.
 \end{enumerate}
 
@@ -55,8 +55,8 @@ Pri augmentácií dát pre klasifikovanie dvoch tried, na krátke a dlhé zbrane
 \end{figure}
 
 Druhý typ augmentácie dát prebieha pri obrázkoch, ktoré boli vygenerované pomocou 3D modelu.
-Keďže nieje potrebné generovať všetky polohy otočenia od 0 po 360 stupňov, stačí vygenerovať dáta v polohách od 0 po 90 stupňov a od 270 do 359 stupňov,
-    zvyšné polohy je možné dogenerovať pomocou transformácie obrázka, pomocou vertikálneho alebo horizonálneho preklopenia.
+Keďže nieje potrebné generovať všetky polohy otočenia od 0 po 360 stupňov, stačí vygenerovať dáta v polohách od 0 po 90 stupňov a od 270 do 359 stupňov.
+Zvyšné polohy je možné dogenerovať pomocou transformácie obrázka, pomocou vertikálneho alebo hotizontálneho preklopenia.
 Avšak v tomto prípade je potrebné po transformácii obrázka vyrátať novú hodnotu uhla transformovaného obrázka, to je možné dosiahnuť pomocou niekoľkých
     jednoduchých vzorcov.
 

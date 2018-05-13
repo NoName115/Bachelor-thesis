@@ -14,12 +14,12 @@ Proces trénovania prebieha v niekoľkých krokoch.
     \item[$\bullet$] Testovanie presnosti modelu pomocou testovacích dát.
 \end{enumerate}
 
-Pre uľahčenie trénovania je implementovaný script \textit{train.py} ktorý požaduje niekoľko argumentov na vstupe.
+Pre uľahčenie trénovania je implementovaný script \textit{train.py}, ktorý požaduje niekoľko argumentov na vstupe.
 Zoznam vstupných argumentov a ich význam, argumenty v hranatých zátvorkách sú voliteľné:
 \begin{enumerate}
   \item[$\bullet$] \textbf{--model} cesta k priečinku do ktorého bude natrénovaný model uložený.
   \item[$\bullet$] \textbf{--dataset} cesta k priečinku z ktorého budú načítane vstupné dáta.
-  \item[$\bullet$] \textbf{--alg} voľba modelu ktorý bude trénovaný, tento argument má niekoľko možností.
+  \item[$\bullet$] \textbf{--alg} voľba modelu, ktorý bude trénovaný, tento argument má niekoľko možností.
   Možnosť ``cnnc'' pre trénovanie konvolučnej neurónovej siete určenej na klasifikáciu zbrane,
   ``cnna'' pre trénovanie konvolučnej neurónovej siete pre určenie náklonu zbrane a
   ``svm'' alebo ``kmeans'' pre trénovanie SVM alebo K-nearest-neighbor klasifikátora na určenie typu zbrane.
@@ -34,13 +34,13 @@ Zoznam vstupných argumentov a ich význam, argumenty v hranatých zátvorkách 
 \subsection{Hodnotenie presnosti modelov}
 \label{subsec:hodnoteniepresnosti}
 Pre celkové hodnotenie presnosti modelov bola implementovaná funkcia \textit{evaluate\_model} v scripte \textit{evaluation.py}.
-Ktorá hodnotí presnosť siete podľa nižšie spomínaných metrík.
+Hodnotí presnosť siete podľa nižšie spomínaných metrík.
 
 V prípade určenia typu zbrane sa používa tzv. chybová alebo tiež kontigenčná matica.
-Kde každý stĺpec v matici predstavuje klasifikované triedy a jednotlivé riadky predstavujú správne triedy.
+Každý stĺpec v matici predstavuje klasifikované triedy a jednotlivé riadky predstavujú správne triedy.
 Tabuľka \ref{tab:chybovamatica} zobrazuje túto maticu.
 Hodnota TP označuje počet správne klasifikovaných obrázkov triedy true, hodnota FP označuje počet nesprávne klasfikovaných obrázkov triedy true.
-Hodnota TN označuje poćet správne klasifikovaných obrázkov triedy false, hodnota FN označuje počet nesprávne klasifikovaných obrázkov triedy false \cite{odkaz:ChybovaMatica}.
+Hodnota TN označuje počet správne klasifikovaných obrázkov triedy false, hodnota FN označuje počet nesprávne klasifikovaných obrázkov triedy false \cite{odkaz:ChybovaMatica}.
 \begin{table}[H]
     \centering
     \label{tab:chybovamatica}
@@ -66,6 +66,6 @@ Ako je opísané v \ref{subsec:odchylkachyby}, v scripte \textit{base.py} je imp
     skutočnymi a predpovedanými uhlami siete.
 Táto funkcia je použitá ako metrika počas trénovania siete, pri koncovom testovaní presnosti siete je nastavená prahová hodnota uhla podľa ktorej sa určuje,
     či daná predpoveď siete bola správna alebo nie.
-Správne určenie je vypočítane, ako rozdiel medzi skutočným uhlom a predpovedaným uhol pomocou siete, ak je rozdiel menší ako prahová hodnota, tak predikcia
+Správne určenie je vypočítané, ako rozdiel medzi skutočným uhlom a predpovedaným uhol pomocou siete, ak je rozdiel menší ako prahová hodnota, tak predikcia
     sa považuje za správnu.
 Toto koncové testovanie siete už využíva metriku presnosti podľa chybovej matice.

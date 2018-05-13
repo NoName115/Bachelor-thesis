@@ -35,7 +35,7 @@ Pre toto generovanie bolo použitých desať pozadí scény a päť 3D modelov z
 \end{figure}
 
 Niektoré použité modely mali nastavený zlý bod otáčania a taktiež boli veľmi malé.
-Preto, ako je vidieť na obrázku \ref{pic:generator3d}, museli byť výsledne obrázky ešte orezané aby sa vnich nachádzala iba zbraň bez nepotrebného okolia.
+Preto, ako je vidieť na obrázku \ref{pic:generator3d}, museli byť výsledne obrázky ešte orezané aby sa v nich nachádzala iba zbraň bez nepotrebného okolia.
 
 \begin{figure}[H]
     \centering
@@ -66,16 +66,16 @@ Pre zvyšné 2 osi boli obrázky generované, počty sa líša kvôli niektorým
 \label{subsec:nacitaniedat}
 Pre načítavanie dát je implementovaná trieda \textit{DataLoader} v scripte \textit{loader.py}.
 Trieda obsahuje niekoľko funkcií pre načítanie týchto dát, tieto funkcie vrátia pole načítaných obrázkov, pole indexov označení [eng. labels] obrázkov a
-    štruktúru typu dictionary, ktorá obsahuje index a názov označenia, napr. \{0: ``kratka zbran'', 1: ``dlha zbran''\}.
+    slovník, ktorý obsahuje index a názov označenia, napr. \{0: ``kratka zbran'', 1: ``dlha zbran''\}.
 
-Prvá z funkcií načítava dáta z priečinka, kde označenie obrázkov, či je to krátka alebo dlhá zbraň, je zabezpečené podľa názvou podpriečinkov.
-Pre obrázky o náklone zbrane sa označenie osi berie takisto z názvu podpriečinka, avšak presné označenie o koľko stupňov je model v obrázku otočený
-    je získaný z názvu obrázka, ktorý musí spĺnať presný formát: \textit{p0.0\_y0.0\_r0.0-typzbrane.jpg}.
+Prvá z funkcií načítava dáta z priečinka, kde označenie obrázkov, či je to krátka alebo dlhá zbraň, je zabezpečené podľa názvov podpriečinkov.
+Pre obrázky o náklone zbrane sa označenie osi berie tiež z názvu podpriečinka, avšak presné označenie o koľko stupňov je model v obrázku otočený
+    sa získa z názvu obrázka, ktorý musí spĺnať presný formát: \textit{p0.0\_y0.0\_r0.0-typzbrane.jpg}.
 Kde \textit{p0.0} označuje hodnotu náklonu v osi pitch, \textit{y0.0} hodnotu náklonu v osi yaw, \textit{r0.0} v osi roll a \textit{typzbrane} môže byť
-    akýkoľvek reťazec.
+    aký koľvek reťazec.
 Formát vstupných obrázkov môže byť \textit{.jpg} alebo \textit{.jpeg}.
 
-Správnu hierarchiu priečinkov je vidieť na obrázkov \ref{pic:folderhierarchy}
+Správnu hierarchiu priečinkov je vidieť na obrázku \ref{pic:folderhierarchy}.
 
 \begin{figure}[H]
     \centering
@@ -87,16 +87,16 @@ Správnu hierarchiu priečinkov je vidieť na obrázkov \ref{pic:folderhierarchy
 \end{figure}
 
 Druhá z funkcií umožňuje načítať zoznam obrázkov z textového súboru, kde sa na každom riadku nachádza práve jedna cesta k požadovanému obrázku.
-Spôsob označovania obrázkov je rovnaký ako v prvom prípade, preto je taktiež potrebné dodržat správnu hierachiu priečinkov.
+Spôsob označovania obrázkov je rovnaký ako v prvom prípade, preto je taktiež potrebné dodržať správnu hierachiu priečinkov.
 
 \subsection{Predspracovanie dát}
 \label{subsec:predspracovaniedat}
 Pre predspracovanie obrazu sú implementované 2 triedy \textit{Preprocessor} a \textit{Preprocessing} v scripte \textit{preprocessing.py}.
-Trieda \textit{Preprocessor} obsahuje list do, ktorého je možné pridávať funckíe, ktoré sú implementované v triede \textit{Preprocessing}.
+Trieda \textit{Preprocessor} obsahuje list do, ktorého je možné pridávať funkcie, ktoré sú implementované v triede \textit{Preprocessing}.
 Po zavolaní funkcie \textit{apply(input\_data)} z triedy \textit{Preprocessor}, sa tieto
     funkcie v poradí v akom boli pridané do listu zavolajú a prebehne predspracovanie vstupných dát.
-Každá z možností predspracovanie obrazu, ktorá bola uvedená v \ref{sec:preprocessing}, je implementovaná v triede \textit{Preprocessing} pomocou
-    knižnice scikit-image.
+Každá z možností predspracovanie obrazu, ktorá bola uvedená v \ref{sec:preprocessing}, je implementovaná v triede \textit{Preprocessing}, v samostatnej funkcii,
+    pomocou knižnice scikit-image.
 
 Pre augmentáciu dát určených na klasfikáciu typu zbrane je použitá trieda \textit{ImageDataGenerator} z knižnice Keras.
 Parametre tohto generátora sú nastavené na: horizonálne a vertikálne preklopenia obrázka, posun obrázka až o 15\% jeho dĺžky alebo šírky,

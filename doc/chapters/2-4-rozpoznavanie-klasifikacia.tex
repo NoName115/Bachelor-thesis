@@ -14,7 +14,7 @@ Algoritmus je pamäťovo náročný [eng. memory-based] a nepotrebuje žiaden tr
 Pre jeho fungovanie nie je potrebný žiaden explicitný postup trénovania, okrem zberu vektorov príznakov s označeniami tried do ktorých patria.
 
 Klasifikácia dát prebieha v 2 krokoch: nájdenie \textit{k} najbližších susedov, spomedzi trénovaných dát a
-vykonanie ``väčšinového hlasovania'' medzi nájdenými susedmi pre priradenie najčastejšie sa vykytovaného označenia triedy.
+vykonanie ``väčšinového hlasovania'' medzi nájdenými susedmi pre priradenie najčastejšie sa vyskytovaného označenia triedy.
 
 Nech $\{ (x_i, y_i); i = 1, 2, \dots, n \}$ je množina trénovacích dát, kde $x_i$ je vektor príznakov a $y_i$ je názov triedy, do ktorej patrí vektor $x_i$.
 Predpokladáme, že každé $x_i$ je v určitom multidimenzionálnom priestore príznakov s metrikou $P$ a $y_i \in \{ 1, 2, \dots, l \}$, kde $y_i$ je číslo zodpovedajúcej triedy.
@@ -269,7 +269,7 @@ Pretože má 2 hlavné nevýhody \cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
 
 \subsubsection{Tanh}
 Funkcia tanh je dalšou z aktivačných funkcií neurónu je zobrazená na obrázku \ref{pic:ActivationFunctions} vpravo.
-Tanh zoberie skutočné čislo a stlačí ho do rozmedzia -1 až 1. Pracuje podobne ako sigmoid.
+Tanh zoberie skutočné číslo a stlačí ho do rozmedzia -1 až 1. Pracuje podobne ako sigmoid.
 Matematický zápis je \cite{odkaz:ConvolutionalNeuralNetworkCS231n}:
 \begin{equation}
     tanh(x) = 2\sigma(2x) - 1
@@ -358,7 +358,7 @@ Avšak množstvo knižníc, ktoré implementujú neurónové siete, používajú
 
 Kde hlavným cieľom konvolúcie v konvolučných neurónových sieťach je extrakcia príznakov zo vstupného obrázka.
 V jednoduchosti je možné si predstaviť 2-dimenzionálne dáta (obrázok) o rozmeroch 5x5 pixelov, ktorých hodnoty sú 0 alebo 1.
-Jadro alebo môžeme nazvať aj filter o veľkosti napr. 3x3, prechádza postupne celý vstupný obrázok s krokom 1 a ráta hodnotu výstupneho pixelu na základe svojich hodnôt, ktoré obsahuje.
+Jadro, alebo môžeme ho nazvať aj filter o veľkosti napr. 3x3, prechádza postupne celý vstupný obrázok s krokom 1 a ráta hodnotu výstupneho pixelu na základe svojich hodnôt, ktoré obsahuje.
 Výsledkom je potom mapa príznakov [eng. Feature map] označovaná aj ako aktivačná mapa [eng. Activation map] o veľkosti 3x3 pixeli \cite{odkaz:CNNArticle}.
 \begin{figure}[H]
     \centering
@@ -373,18 +373,18 @@ Veľkosť aktivačnej mapy je možné nastaviť pomocou 3 parametrov.
     \item[$\bullet$] \textbf{Krok} [eng. Stride] - počet pixelov o ktorý sa filter posúva počas výpočtu aktivačnej mapy.
     Použitím väčších skokov bude výsledná aktivačná mapa menšia.
     \item[$\bullet$] \textbf{Nulový doplnok} [eng. Zero-padding] - občas je vhodné vložiť nulový doplnok okolo vstupného obrázka.
-    Tento spôsob nám umožňuje ovládať veľkosť výstupej aktivačnej mapy.
+    Tento spôsob nám umožňuje ovládať veľkosť výstupnej aktivačnej mapy.
 \end{enumerate}
 
 
 \subsubsection{Zlučovanie}
-Zlučovanie [eng. Pooling] je další krok ktorý sa vykonáva v CNN, tento krok je vykonaný v Pooling vrstvách siete.
+Zlučovanie [eng. Pooling] je další krok, ktorý sa vykonáva v CNN, tento krok je vykonaný v Pooling vrstvách siete.
 Jeho funkciou je znižovanie dimenzionality vstupnej aktivačnej mapy, ale so snahou zachovať dôležitú informáciu, ktorá táto mapa obsahuje.
 Existuje niekoľko rôznych typov zlučovania napr. maximum, priemer alebo suma.
 
-Pre tento krok je potrebné definovať veľkost okna (napr. 2x2 pixely) a krok o, ktorý sa bude toto okno posúvať.
+Pre tento krok je potrebné definovať veľkosť okna (napr. 2x2 pixely) a krok o, ktorý sa bude toto okno posúvať.
 V prípade typu Max Pooling s veľkosťou filtra 2x2 sa zoberú 4 hodnoty z aktivačnej mapy a vyberie sa z nich maximálna, podobným spôsobom
-    fungujú aj ostatné typy zlučovania, ale výsledná hodnota je napr. priemer alebo suma týchto 4 hodnôt.
+    fungujú aj ostatné typy zlučovania, ale výsledná hodnota je napr. priemer, alebo suma týchto 4 hodnôt.
 V praxi sa ukázalo, že najvýhodnejší je výber maxima \cite{odkaz:CNNArticle}.
 \begin{figure}[H]
     \centering
@@ -409,7 +409,7 @@ Pre stavbu CNN sa využívajú 3 základné typy vrstiev a 1 podporná vrstva.
     Jej funkciou je postupné znižovanie priestorovej veľkosti reprezentovaného vstupu, pre zníženie množstva parametrov a výpočtov v sietí, a teda aj kontroly pretrénovania.
     \item[$\bullet$] \textbf{Fully-Connected layer} - rovnako ako v obvyklých neurónových sieťach, je to vrstva kde všetky neuróny sú prepojené s predchádzajucou vrstvou.
     \item[$\bullet$] \textbf{Dropout layer} - cieľom tejto vrstvy je prevencia k pretrénovaniu siete, podľa nastavenia sa určité percento neurónov, ktoré sa počas trénovanie zahadzuje.
-    Táto vrstva tlačí neúronovú sieť k tomu aby sa učila na komplexnejších príznakoch, implementovaním tejto vrstvy do siete sa približne zdvojnásobí počet interácií trénovania.
+    Táto vrstva tlačí neúronovú sieť k tomu, aby sa učila na komplexnejších príznakoch, implementovaním tejto vrstvy do siete sa približne zdvojnásobí počet interácií trénovania.
     Avšak trénovaci čas pre každú iteráciu je kratší.
 \end{enumerate}
 
@@ -430,7 +430,7 @@ Keďže konvolučné neurónové siete už existujú niekoľko rokov a komunita 
     pre výhru v súťaži 2012 ILSVRC (ImageNet Large-Scale Visual Recognition Challenge).
 V porovnaní s modernými architektúrami bola táto veľmi jednoduchá, tvorilo ju 5 konvolučných vrstiev, pooling vrstviev, dropout vrstiev a 3 plne prepojených vrstiev.
 Sieť bola použitá pre klasifikáciu objektov do 1000 kategórií.
-Výchadzala z niekoľkých hlavných princípov \cite{odkaz:PopularCNN}:
+Vychádzala z niekoľkých hlavných princípov \cite{odkaz:PopularCNN}:
 \begin{enumerate}
     \item[$\bullet$] bola trénovaná na ImageNet\footnote{\url{http://www.image-net.org/}} databázovej sade, ktorá obsahuje cez 15 miliónov obrázkov vo viac ako 22000 kategóriách.
     \item[$\bullet$] Použila ReLU nelineárnu aktivačnú funkciu (objavil sa kratší čas trénovania, keďže výpočet ReLU je niekoľko krát rýchlejši ako oproti v tej dobe bežne používanej Tanh).
@@ -439,11 +439,11 @@ Výchadzala z niekoľkých hlavných princípov \cite{odkaz:PopularCNN}:
     \item[$\bullet$] Trénovanie prebiehalo na dvoch GTX 580 grafických kartách, počas 5 až 6 dní.
 \end{enumerate}
 
-\textbf{VGG Net} (2014) je možné nájsť v niekoľkých variáciách, ako VGG16 alebo VGG19, čislo v názve udáva súčet konvolučných a plne prepojených vrstiev.
-Veľkosti filtrov v konvolučných vrstvách sú o rozmeroch 3x3 oproti AlexNet kde ich veľkosť bola 11x11.
+\textbf{VGG Net} (2014) je možné nájsť v niekoľkých variáciách, ako VGG16 alebo VGG19, číslo v názve udáva súčet konvolučných a plne prepojených vrstiev.
+Veľkosti filtrov v konvolučných vrstvách sú o rozmeroch 3x3 oproti AlexNet, kde ich veľkosť bola 11x11.
 Avšak základná myšlienka tejto architektúry je v hĺbke a jednoduchosti, keďže sa zakladá na veľkom množstve konvolučných vrstiev, z čoho vyplýva
     veľké množstvo filtrov a tým pádom zväčšuje svoj výstup do hĺbky.
-Aj keď táto architektúra nebola výťaznou v roku 2014 na ILSVRC, ukázala základnú myšlienku, že sieť môže byť jednoduchá, ale musí byť hlboká \cite{odkaz:PopularCNN}.
+Aj keď táto architektúra nebola víťaznou v roku 2014 na ILSVRC, ukázala základnú myšlienku, že sieť môže byť jednoduchá, ale musí byť hlboká \cite{odkaz:PopularCNN}.
 
 \begin{figure}[H]
     \centering

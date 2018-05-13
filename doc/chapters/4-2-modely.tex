@@ -3,10 +3,10 @@
 \label{sec:modely}
 Všetky modely pre trénovanie sú implementované v scripte \textit{models.py}.
 Existuje jedna hlavná trieda \textit{class Model}, ktorá obsahuje všetky základné atributy potrebné pre modely, ako napr.
-    meno modelu, vstupný rozmer dát, zvolený algoritmus trénovania a štruktúru typu dictionary, ktorá obsahuje indexi a názvy označení obrázkov.
+    meno modelu, vstupný rozmer dát, zvolený algoritmus trénovania a slovník, ktorý obsahuje indexi a názvy označení obrázkov.
 
-Každý model následne dedí z tejto hlavnej triedy a implementuje v sebe 2 funkcie \textit{build} ktorá zabezpečuje vytvorenie modelu a
-    funkciu \textit{train} ktorá sa volá pri spustení trénovania daného modelu.
+Každý model následne dedí z tejto hlavnej triedy a implementuje v sebe dve funkcie \textit{build}, ktorá zabezpečuje vytvorenie modelu a
+    funkciu \textit{train}, ktorá sa volá pri spustení trénovania daného modelu.
 
 \begin{figure}[H]
     \centering
@@ -17,6 +17,7 @@ Každý model následne dedí z tejto hlavnej triedy a implementuje v sebe 2 fun
 
 Konvolučné neurónové siete sú implementované pomocou triedy \textit{Sequencia} z knižnice Keras.
 Pre klasifikátor K-Nearest-Neighbor je použitá trieda \textit{KNeighborsClassifier} a trieda \textit{SVC} pre klasifikátor SVM z knižnice scikit-learn.
+
 %Pre klasifikátor K-Nearest-Neighbor je použitá trieda \textit{KNeighborsClassifier} s počtom 1 a 5 najbližších susedov, a trieda \textit{SVC} pre klasifikátor SVM
 %    so základnými nastavenia trénovania z knižnice scikit-learn.
 
