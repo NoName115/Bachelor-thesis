@@ -8,7 +8,7 @@ V tejto podkapitole bude podrobne popísaných niekoľko algoritmov, pomocou kto
 
 
 \subsection{K-Nearest-Neighbor}
-\textit{k}-Nearest Neighbor je algoritmus, ktorý sa učí pod dozorom [eng. supervised learning algorithm] často používaný pri rozpoznávaní vzorov v klasifikácii,
+\textit{k}-Nearest Neighbor je algoritmus, ktorý sa učí pod dozorom (angl. \textit{supervised learning algorithm}) často používaný pri rozpoznávaní vzorov v klasifikácii,
 avšak je možné ho použiť aj pre odhad a predikciu \cite{book:DataMining}.
 Algoritmus je pamäťovo náročný [eng. memory-based] a nepotrebuje žiaden trénovací model.
 Pre jeho fungovanie nie je potrebný žiaden explicitný postup trénovania, okrem zberu vektorov príznakov s označeniami tried do ktorých patria.
@@ -85,7 +85,7 @@ V tomto prípade, keď je možné lineárne rozdeliť dve triedy, tak optimálna
 \end{equation}
 
 V tomto prípade lineárneho rozdelenia dát, pri nájdení optimálnej rozdeľujúcej hyper--roviny, dátove body, ktoré ležia na jej okraji
-    sa nazývajú podporné vektorové body[eng. support vector points] a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodov (viď. obrázok \ref{pic:SVMMAxMargin} ).
+    sa nazývajú podporné vektorové body (angl. \textit{support vector points}) a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodov (viď. obrázok \ref{pic:SVMMAxMargin} ).
 Ostatné body sú ignorované \cite{prop:SupervisedMachineLearning}.
 
 \begin{figure}[H]
@@ -97,17 +97,17 @@ Ostatné body sú ignorované \cite{prop:SupervisedMachineLearning}.
 
 Avšak väčsina reálnych problémov zahŕňa nelineárne rozdelenie dát pre, ktoré neexistuje žiadna hyper--rovina, ktorá by úspešne rozdelila trénovacie dáta.
 Riešenie tohto problému je mapovať dáta do vyššie--dimenzionálneho priestoru a definovať tam rozdeľujúcu hyper--rovinu.
-Tento vyšší-dimenzionálny priestor je tzv. transformovaný priestor príznakov[eng. transformed feature space], ako opak ku vstupnému priestoru[eng. input space] obsahujúcemu trénovacie dáta \cite{prop:SupervisedMachineLearning}.
+Tento vyšší-dimenzionálny priestor je tzv. transformovaný priestor príznakov (angl. \textit{transformed feature space}), ako opak ku vstupnému priestoru (angl. \textit{input space}) obsahujúcemu trénovacie dáta \cite{prop:SupervisedMachineLearning}.
 
 Pri vhodne zvolenom transformovanom priestore príznakov dostatočnej veľkosti, môžu byť všetky trénovacie dáta rozdelitelné.
 Lineárne rozdelenie v tomto priestore zodpovedá nelineárnemu rozdeleniu v pôvodnom vstupnom priestore.
 
 Pri mapovaní dát do určitého Hilbertovho priestora \cite{prop:HilbertSpace} $H$ ako $\Phi:R^d \rightarrow H$.
-Potom trénovací algoritmus závisí len na údajoch zo skalárneho súčinu[eng. dot products] v priestore $H$, t.j na funkciách v tvare $\Phi(x_i) * \Phi(x_j)$.
-Ak bude existovať ``funkcia jadra''[eng. kernel function] $K$ ako $K(x_i, x_j) = \Phi(x_i)*\Phi(x_j)$, tak budeme musieť použiť iba funkciu $K$ v trénovacom algoritme
+Potom trénovací algoritmus závisí len na údajoch zo skalárneho súčinu (angl. \textit{dot products}) v priestore $H$, t.j na funkciách v tvare $\Phi(x_i) * \Phi(x_j)$.
+Ak bude existovať ``funkcia jadra''(angl. \textit{kernel function}) $K$ ako $K(x_i, x_j) = \Phi(x_i)*\Phi(x_j)$, tak budeme musieť použiť iba funkciu $K$ v trénovacom algoritme
     a nikdy nebudeme potrebovať explicitne definovať $\Phi$ \cite{prop:SupervisedMachineLearning}.
 
-Takže jadrá[eng. kernels] sú špeciálnou triedou funkcií, ktoré dovoľujú, aby sa vnútorné produkty vypočítali priamo vo funkčnom priestore[eng. feature space] bez toho, aby sa vykonalo vyššie popísané mapovanie.
+Takže jadrá(angl. \textit{kernels}) sú špeciálnou triedou funkcií, ktoré dovoľujú, aby sa vnútorné produkty vypočítali priamo vo funkčnom priestore (angl. \textit{feature space}) bez toho, aby sa vykonalo vyššie popísané mapovanie.
 Po vytvorení hyper--roviny sa funkcia jadra použije na mapovanie nových bodov do funkčného priestoru pre klasifikáciu \cite{prop:SupervisedMachineLearning}.
 
 Voľba správnej funkcie jadra je veľmi dôležitá, keďže definujú transformovaný priestor príznakov v ktorom budú trénovacie dáta klasifikované.
@@ -142,7 +142,7 @@ Výpočtova zložitosť algoritmov učenia sa stáva kritickým obmedzujúcim fa
 Preto sa pre veľké množiny dát začal používať Stochastic Gradient Descent \cite{prop:StochasticGradientDescent}, ktorý tieto výpočty dokáže optimalizovať.
 
 Každý vzor $z$ je pár $(x, y)$ kde $x$ je ľubovolný vstup a $y$ skalárny výstup.
-Máme stratovú funkciu [eng. loss function] $\ell(\hat{y},y)$ ktorá meria hodnotu predpovedania $\hat{y}$ keď správna odpoveď je $y$,
+Máme stratovú funkciu (angl. \textit{loss function}) $\ell(\hat{y},y)$ ktorá meria hodnotu predpovedania $\hat{y}$ keď správna odpoveď je $y$,
     a zvolíme si rodinu $\mathcal{F}$ funkcií $f_w(x)$ parametrizované váhovym vektorom $w$.
 
 Hľadáme funkciue $f \in \mathcal{F}$, ktorá minimalizuje stratu $Q(z,w) = \ell(f_w(x), y)$ spriemerovanú vzhľaďom na vzory $z$.
@@ -152,11 +152,11 @@ Avšak pre napodobenie prírody je prirodzenejšie priemerovať vzhľadom na nez
 \end{equation}
 $E_n(f)$ meria výkonnosť trénovacích dát. $E(f)$ meria generalizovanú výkonnosť, teda očakávaný výkon v budúcich vzorkách.
 
-Pomocou klesania gradientu[eng. gradient descent] minimalizujeme $E_n(f_w)$, kde každá iterácia aktualizuje váhove vektory $w$ na základné gradientu.
+Pomocou klesania gradientu (angl. \textit{gradient descent}) minimalizujeme $E_n(f_w)$, kde každá iterácia aktualizuje váhove vektory $w$ na základné gradientu.
 \begin{equation}
     w_{t+1} = w_t - \gamma \frac{1}{n}\sum_{i=1}^{n}\bigtriangledown_w Q(z_i, w_t)
 \end{equation}
-kde $\gamma$ je vhodne zvolený zisk[eng. gain].
+kde $\gamma$ je vhodne zvolený zisk (angl. \textit{gain}).
 
 Stochastic Gradient Descent algoritmus je drastické zjednodušenie.
 Namiesto počítania gradientu pre $E_n(f_n)$, každá iterácia odhadne tento gradient na základe jednej náhodne vybranej vzorky $z_t$\cite{prop:StochasticGradientDescent}:
@@ -169,7 +169,7 @@ Namiesto počítania gradientu pre $E_n(f_n)$, každá iterácia odhadne tento g
 
 \subsection{Neurónové siete}
 \label{subsec:neuralnetworks}
-Neurónová sieť [eng. neural network] (NN) je masívne paralelný procesor, ktorý má sklon k uchovávaniu experimentálnych vedomostí a ich ďalšieho využívania.
+Neurónová sieť (angl. \textit{neural network}) (NN) je masívne paralelný procesor, ktorý má sklon k uchovávaniu experimentálnych vedomostí a ich ďalšieho využívania.
 Napodobňuje ľudský mozog v dvoch aspektoch \cite{odkaz:NNIntroduction}:
 \begin{enumerate}
 	\item[$\bullet$] poznatky sú zbierané v neurónovej sietí počas učenia,
@@ -179,7 +179,7 @@ Toto je jedna z definícii neurónových sietí, akceptovaná komunitou.
 Je zrejmé, že inšpirácia ku vzniku NN prišla z biologických systémov.
 Na prvý dojem vysoko abstraktná disciplína nachádza množstvo aplikácii v praxi a stáva sa prostriedkom pre riešenie problémov v širokom spektre odborných oblastí \cite{odkaz:NNIntroduction}.
 
-Rôzne architektúry umelých neurónových sietí [eng. artificial neural network] sa používajú pre riešenie rôznych úloh.
+Rôzne architektúry umelých neurónových sietí (angl. \textit{artificial neural network}) sa používajú pre riešenie rôznych úloh.
 Konvolučné a rekurentné NN sú dve z najúspešnejších a sú z veľkej časti zodpovedné za nedávnu revolúciu umelej inteligencie \cite{odkaz:CorrectionOfImageOrentation}.
 
 Vo všeobecnosti môžeme vymenovať nasledovné oblasti využitia neurónových sietí \cite{odkaz:NNIntroduction}:
@@ -213,7 +213,7 @@ V jednoduchosti, perceptron zoberie niekoľko vstupov, $x_1, x_2, \dots$ a repro
 	\label{pic:Perceptron}
 \end{figure}
 Rosenblatt navrhol jednoduché pravidlo pre výpočet výstupu.
-Zaviedol váhy[eng. weights], $w_1, w_2, \dots$,
+Zaviedol váhy (angl. \textit{weights}), $w_1, w_2, \dots$,
     reálne čisla ktoré vyjadrujú dôležitosť príslušných vstupov vzhľadom na výstupy.
 Výstup neurónu, 0 alebo 1, sa určuje podľa toho či vážena suma $\sum_j w_j x_j$ je menšia alebo väčsia ako určitá prahová hodnota.
 Matematické vyjadrenie aktivačnej funkcie perceptronu by potom bolo \cite{odkaz:HandwrittenDigitRecognision}:
@@ -224,7 +224,7 @@ Matematické vyjadrenie aktivačnej funkcie perceptronu by potom bolo \cite{odka
     output = 1, \; ak \; \sum_j w_j x_j > threshold
 \end{equation}
 
-Matematický model perceptronu je možné zjednodušiť a to prepísaním formuly $\sum_j w_j x_j$ na skalárny súčin[eng. dot product],
+Matematický model perceptronu je možné zjednodušiť a to prepísaním formuly $\sum_j w_j x_j$ na skalárny súčin (angl. \textit{dot product}),
     $w*x \equiv \sum_j w_j x_j$, kde $w$ a $x$ sú vektory váh a vstupov.
 Druhá zmena je presun prahovej hodnoty na opačnú stranu nerovnice, a nahradiť ju tzv. perceptron bias, $b \equiv -threshold$.
 Použitím týchto úprav bude model vyzerať nasledovne \cite{odkaz:HandwrittenDigitRecognision}:
@@ -249,17 +249,17 @@ Sigmoid je jedna z aktivačných funkcií používaná v neurónových sieťach,
 \begin{equation}
     \sigma(x) = \frac{1}{1 + e^{-x}}
 \end{equation}
-zobrazená na obrázku \ref{pic:ActivationFunctions} vľavo.
+, $\sigma$ je matematická sigmoida a $x$ je vstupná hodnota funkcie, zobrazená na obrázku \ref{pic:ActivationFunctions} vľavo.
 
 Funkcia zoberie skutočné číslo a ``stlačí'' ho do rozmedzia 0 až 1.
 Kde veľké záporné čísla nadobudnú hodnotu 0 a veľké kladné čísla hodnotu 1.
 Funkcia sigmoid sa historicky často používala pretože má peknú interpretáciu pre spúštanie ``výstrelu'' neurónu,
     od nevypálenia (0) až po úplne nasýtenie strely pri predpokladanej maximálnej frekvencii (1).
 V praxi, sa sigmoid používa už len zriedka.
-Pretože má 2 hlavné nevýhody \cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
+Pretože má dve hlavné nevýhody \cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
 \begin{enumerate}
-    \item[$\bullet$] \textbf{Zabíjanie prechodov [eng. gradients]} - keď sa aktivácia neurónu nasýti na obidvoch koncoch 0 alebo 1, gradient v týchto oblastiach je takmer nulový.
-    Tento gradient sa používa pri spätnej propagácií [eng. backpropagation] v neurónových sieťach. Preto ak je miestny gradient veľmi malý, takmer žiaden signál
+    \item[$\bullet$] \textbf{Nasýtenie sigmoidu} - veľmi nežiadnúca vlasnoť sigmoid neurónu je, že keď sa aktivácia neurónu nasýti na obidvoch koncoch 0 alebo 1, sklon (angl. \textit{gradient}) v týchto oblastiach je takmer nulový.
+    Tento sklon sa používa pri spätnej propagácií (angl. \textit{backpropagation}) v neurónových sieťach. Preto ak je miestny gradient veľmi malý, takmer žiaden signál
     neurónom nepreteká k jeho váham a rekurzívne k jeho dátam. Rovnako ak pri inicializácií sú váhy príliš veľké, väčsina neurónov by bola nasýtených a sieť by sa sotva niečo učila.
     \item[$\bullet$] \textbf{Výstupy nie sú centrované na nulu} - to má dôsledky na dynamiku pri klesaní gradient-u, pretože ak sú údaje prichádzajúce do neurónu vždy kladné,
     potom gradient na váhach $w$ nadobudne, počas spätnej propagáciie, všetky hodnoty pozitívne alebo negatívne (v závisloti na gradient-e celého výrazu).
@@ -303,7 +303,7 @@ alebo jeho obdobu Leaky ReLU, ktorá sa snaží vyriešiť nevýhody ReLU.
 \begin{equation}
     f(x) = ax \quad ak \; x <= 0
 \end{equation}
-kde $a$ je malá konštanta (napr. 0.01) \cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
+kde $a$ je malá konštanta (napr. 0.01) a $x$ vstupná hodnota \cite{odkaz:ConvolutionalNeuralNetworkCS231n}.
 
 \subsubsection{Architektúra neurónovej siete}
 Ako bolo spomínané už vyššie, neurónová sieť je modelovaná ako kolekcia neurónov, ktoré sú prepojené v acyklickom grafe.
@@ -331,10 +331,10 @@ Na obrázku \ref{pic:XNNLayerExample} je vidieť rozdiel klasifikácie dát do 2
 
 \subsection{Konvolučné neurónové siete}
 \label{subsec:convolutionalneuralnetwork}
-Konvolučné neurónové siete [eng. convolutional neural networks] (CNNs), sú špeciálnym prípadom neurónových sietí pre spracovanie
+Konvolučné neurónové siete (angl. \textit{convolutional neural networks}) (CNNs), sú špeciálnym prípadom neurónových sietí pre spracovanie
     dát, ktoré majú známu topológiu podobnú mriežke.
 Pre príklad je možné uviesť 2-dimenzionálne dáta ako sieť pixelov pri spracovaní obrázkov.
-Názov týchto sietí \textit{konvolučné} indikuje používanie matematickej operácie zvanej konvolúcia [eng. convolution] \cite{book:Goodfellow-et-al-2016}.
+Názov týchto sietí \textit{konvolučné} indikuje používanie matematickej operácie zvanej konvolúcia (angl. \textit{convolution}) \cite{book:Goodfellow-et-al-2016}.
 
 \subsubsection{Konvolúcia}
 Vo svojej najvšeobecnejšej podobe, konvolúcia je operácia dvoch funkcií s reálnymi hodnotami argumentov.
@@ -343,23 +343,23 @@ Operácia konvolúcie je typicky označovaná hviezdičkou:
     s(t) = (x * w)(t)
 \end{equation}
 V terminilógií konvolučnej siete sa prvý argument (v tomto príklade funkcie $x$) často označuje ako vstup a druhý
-    argument (v tomto príklade funkcia $w$) ako jadro [eng. kernel]. Výstup je niekedy označovaný ako mapa príznakov.
+    argument (v tomto príklade funkcia $w$) ako jadro (angl. \textit{kernel}), v čase $t$. Výstup je niekedy označovaný ako mapa príznakov.
 
 Bežne konvolúciu používame na viac ako jednej osi súčasne.
-Pri použítí 2-dimenzionálneho obrázka $I$ ako náš vstup, budeme chcieť použiť aj 2-dimenzionálne jadro $K$ \cite{book:Goodfellow-et-al-2016}:
+Pri použítí 2-dimenzionálneho obrázka $I$ ako náš vstup, budeme chcieť použiť aj 2-dimenzionálne jadro $K$, kde $m$ a $n$ sú veľkosti vstupov \cite{book:Goodfellow-et-al-2016}.
 \begin{equation}
     S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(m,n) K(i - m, j - n)
 \end{equation}
 
-Avšak množstvo knižníc, ktoré implementujú neurónové siete, používajú tzv. cross-correlation funkciu \cite{book:Goodfellow-et-al-2016}:
+Avšak množstvo knižníc, ktoré implementujú neurónové siete, používajú tzv. cross-correlation funkciu \cite{book:Goodfellow-et-al-2016}.
 \begin{equation}
     S(i,j) = (I * K)(i, j) = \sum_m \sum_n I(i + m, i + n) K(m, n)
 \end{equation}
 
-Kde hlavným cieľom konvolúcie v konvolučných neurónových sieťach je extrakcia príznakov zo vstupného obrázka.
+Hlavným cieľom konvolúcie v konvolučných neurónových sieťach je extrakcia príznakov zo vstupného obrázka.
 V jednoduchosti je možné si predstaviť 2-dimenzionálne dáta (obrázok) o rozmeroch 5x5 pixelov, ktorých hodnoty sú 0 alebo 1.
 Jadro, alebo môžeme ho nazvať aj filter o veľkosti napr. 3x3, prechádza postupne celý vstupný obrázok s krokom 1 a ráta hodnotu výstupneho pixelu na základe svojich hodnôt, ktoré obsahuje.
-Výsledkom je potom mapa príznakov [eng. Feature map] označovaná aj ako aktivačná mapa [eng. Activation map] o veľkosti 3x3 pixeli \cite{odkaz:CNNArticle}.
+Výsledkom je potom mapa príznakov (angl. \textit{Feature map}) označovaná aj ako aktivačná mapa (angl. \textit{Activation map}) o veľkosti 3x3 pixeli \cite{odkaz:CNNArticle}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.4\textwidth]{convolution}
@@ -369,8 +369,8 @@ Výsledkom je potom mapa príznakov [eng. Feature map] označovaná aj ako aktiv
 
 Veľkosť aktivačnej mapy je možné nastaviť pomocou 3 parametrov.
 \begin{enumerate}
-    \item[$\bullet$] \textbf{Hĺbka} [eng. Depth] - veľkosť hĺbky zodpovedá počtu použitých filtrov v konvolučnej vrstve siete.
-    \item[$\bullet$] \textbf{Krok} [eng. Stride] - počet pixelov o ktorý sa filter posúva počas výpočtu aktivačnej mapy.
+    \item[$\bullet$] \textbf{Hĺbka} (angl. \textit{Depth}) - veľkosť hĺbky zodpovedá počtu použitých filtrov v konvolučnej vrstve siete.
+    \item[$\bullet$] \textbf{Krok} (angl. \textit{Stride}) - počet pixelov o ktorý sa filter posúva počas výpočtu aktivačnej mapy.
     Použitím väčších skokov bude výsledná aktivačná mapa menšia.
     \item[$\bullet$] \textbf{Nulový doplnok} [eng. Zero-padding] - občas je vhodné vložiť nulový doplnok okolo vstupného obrázka.
     Tento spôsob nám umožňuje ovládať veľkosť výstupnej aktivačnej mapy.
@@ -378,7 +378,7 @@ Veľkosť aktivačnej mapy je možné nastaviť pomocou 3 parametrov.
 
 
 \subsubsection{Zlučovanie}
-Zlučovanie [eng. Pooling] je další krok, ktorý sa vykonáva v CNN, tento krok je vykonaný v Pooling vrstvách siete.
+Zlučovanie (angl. \textit{Pooling}) je další krok, ktorý sa vykonáva v CNN, tento krok je vykonaný v Pooling vrstvách siete.
 Jeho funkciou je znižovanie dimenzionality vstupnej aktivačnej mapy, ale so snahou zachovať dôležitú informáciu, ktorá táto mapa obsahuje.
 Existuje niekoľko rôznych typov zlučovania napr. maximum, priemer alebo suma.
 
@@ -397,7 +397,7 @@ V praxi sa ukázalo, že najvýhodnejší je výber maxima \cite{odkaz:CNNArticl
 \subsubsection{Architektúra}
 CNN využívajú skutočnosti, že vstup pozostáva z obrázkov.
 Na rozdiel od obyčajnej neurónovej siete majú vrstvy CNN neuróny usporiadané v troch rozmeroch: šírka, výška, hĺbka [eng. width, height, depth].
-Hĺbka odkazuje na 3.dimenziu aktivačného zväzku [eng. activation volume], nie na celkovú hĺbku neurónovej siete.
+Hĺbka odkazuje na 3.dimenziu aktivačného zväzku (angl. \textit{activation volume}), nie na celkovú hĺbku neurónovej siete.
 Neuróny vo vrtsve budú prepojené iba k malej oblasti vrstvy pred ňou, namiesto plného prepojenia \cite{odkaz:CNNArchitecture}.
 
 Pre stavbu CNN sa využívajú 3 základné typy vrstiev a 1 podporná vrstva.

@@ -21,9 +21,9 @@ Tento prístup je rýchly a relatívne jednoduchý, až natoľko, že sa tento a
     detekciu tvári v reálnom čase s malým množstvom potrebného výkonu.
 V jednoduchosti, algoritmus generuje rôzne, môže až tisíce, jednoduché binárne klasifikátory pomocou tzv. Haar funkcií.
 Tieto klasifikátory sú kaskádovito zoradené a vyhodnocované v poradí podľa ich zložitosti, s využitím viacnásobného posuvného okna [eng. multi-scale sliding window].
-V prípade negatívnej klasifikácie v ktorejkoľvek úrovni vyhodnocovania, je tento proces ukončený a pokračuje sa klasifikáciou nad ďalším podoknom [eng. subwindow] \cite{prop:Viola2001RobustRF}.
+V prípade negatívnej klasifikácie v ktorejkoľvek úrovni vyhodnocovania, je tento proces ukončený a pokračuje sa klasifikáciou nad ďalším podoknom (angl. \textit{subwindow}) \cite{prop:Viola2001RobustRF}.
 
-Druhý spôsob je klasifikácia pomocou histogramu orientovaných prechodov [eng. histogram of oriented gradients] a Support Vector Machine, ktorý bude podrobne
+Druhý spôsob je klasifikácia pomocou histogramu orientovaných prechodov (angl. \textit{histogram of oriented gradients}) a Support Vector Machine, ktorý bude podrobne
     rozobratý v kap. \ref{sec:klasifikacia}. Tento prístup takisto používa viacnásobné posuvné okno, avšak aj keď je lepší ako Viola-Jones, je oveľa pomalší \cite{odkaz:ObjectDetectionOverview}.
 
 \subsubsection{Prístup pomocou hlbokých neurónových sietí}
@@ -32,14 +32,14 @@ S príchodom neurónových sietí prišla aj veľká zmena v oblasti spracovania
 
 \textbf{R-CNN} je jeden z prvých riešení \cite{prop:rcnn}, v ktorom navrhovali 3 stupňový prístup:
 \begin{enumerate}
-	\item[$\bullet$] extrahovať možné objekty pomocou metódy regionálnych návrhov [eng. region proposal],
+	\item[$\bullet$] extrahovať možné objekty pomocou metódy regionálnych návrhov (angl. \textit{region proposal}),
     \item[$\bullet$] extrahovať príznaky z každého regiónu pomocou konvolučných neurónových sietí,
     \item[$\bullet$] klasifikovať každý región pomocou Support Vector Machine.
 \end{enumerate}
 
 \textbf{Fast R-CNN} je označenie pre prístup, ktorý vylepšil predchádzajúci R-CNN, základom je, že stavia už iba na využítí konvolučných neurónových sietí.
 V práci použili dva prístupy k detekcii objektu, sliding window a region proposal.
-Výsledky ukázali, že prístup pomocou regionálnych návrhov [eng. region proposals] bol rýchlejší a dosiahli rýchlosť spracovania až 2 snímkov za sekundu \cite{prop:fast-rcnn}.
+Výsledky ukázali, že prístup pomocou regionálnych návrhov (angl. \textit{region proposals}) bol rýchlejší a dosiahli rýchlosť spracovania až 2 snímkov za sekundu \cite{prop:fast-rcnn}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{rcnn}
@@ -49,10 +49,10 @@ Výsledky ukázali, že prístup pomocou regionálnych návrhov [eng. region pro
     \label{pic:FastRCNN}
 \end{figure}
 
-\textbf{YOLO} [eng. You Only Look Once], rieši problém detekcie objektu v obraze ako regresívny problém.
+\textbf{YOLO} (angl. \textit{You Only Look Once}), rieši problém detekcie objektu v obraze ako regresívny problém.
 Namiesto bežného postupu ako je najprv použitie techniky regionálnych návrhov a následne klasifikovanie týchto regiónov.
 To vedie YOLO k veľmi rýchlemu spracovaniu v reálnom čase ale za cenu presnosti.
-Týmto spôsobom YOLO dokáže dosiahnuť 63.4\% mAP s 22 ms oneskorením \cite{prop:Redmon2016YouOL}.
+Týmto spôsobom YOLO dokáže dosiahnuť 63.4\% mAP, kde mAP je metrika pre určenie presnosti detekcie objektu v obraze \cite{prop:metrics}, s 22 ms oneskorením \cite{prop:Redmon2016YouOL}.
 
 \begin{comment}
     \subsubsection{Vyhľadávač na základe vizuálnej podobnosti obrázkov}
@@ -69,7 +69,7 @@ Týmto spôsobom YOLO dokáže dosiahnuť 63.4\% mAP s 22 ms oneskorením \cite{
 
 \subsection{Kĺzajúce okno}
 \label{subsec:slidingwindow}
-Kĺzajúce okno [eng. Sliding window] je jedna z metód pre detekciu objektov v obraze.
+Kĺzajúce okno (angl. \textit{Sliding window}) je jedna z metód pre detekciu objektov v obraze.
 Táto metóda je veľmi vyčerpávajúca pretože zakladá na veľkom počte kandidátnych okien, až $10^4$, vo vstupnom obrázku.
 Metóda prechádza vstupný obrázok na všetkých lokáciách s rôznou veľkosťou okna, následne sa na každom ``okne'' spúšťa klasifikátor.
 Nevýhodou tohto prístupu je jeho časová náročnosť, preto sa tento spôsob nedá použiť pri spracovaní obrazu v reálnom čase.
@@ -77,7 +77,7 @@ Ale na druhú stranu metóda poskytuje dobrú presnosť pri kvalitnom klasifiká
 
 \subsection{Regionálne návrhy}
 \label{subsec:regionproposal}
-Metóda regionálych návrhov [eng. region proposals] na rozdiel od metódy kĺzajúceho okna, nepredpokladá za kandidátne okná všetky možnosti.
-Tieto kandidátne okná sú vybrané pomocou metód návrhu detekcie [eng. detecion proposel methods], konkrétne metódy
+Metóda regionálych návrhov (angl. \textit{region proposals}) na rozdiel od metódy kĺzajúceho okna, nepredpokladá za kandidátne okná všetky možnosti.
+Tieto kandidátne okná sú vybrané pomocou metód návrhu detekcie (angl. \textit{detecion proposel methods}), konkrétne metódy
     a ich porovnanie je možné nájsť v članku \textit{What makes for effective detection proposals?} \cite{prop:ProposalMethods}.
 Prvý model na detekciu objektov, ktorý použil konvolučné neurónové siete s touto metódou pre výber okien bol R-CNN \cite{prop:AutomaticHandgunDetection}.

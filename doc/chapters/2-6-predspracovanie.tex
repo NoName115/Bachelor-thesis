@@ -30,10 +30,10 @@ Taktiež sa ukázalo, že výber niektorých aktivačných funkcií nieje kompat
 Nevhodný vstup môže viesť k nesprávnemu učeniu siete, preto je vhodné tieto dáta normalizovať do rozpätia 0-1 \cite{odkaz:PreprocessingNormalization}.
 
 \subsubsection{Histogram orientovaných prechodov}
-Základnou myšlienkou za dekriptorom histogramu orientovaných prechodov [eng. Histogram of oriented gradients descriptor] je to, že lokálny vzhľad objektu a tvar v obraze, môžu byť popísané
+Základnou myšlienkou za dekriptorom histogramu orientovaných prechodov (angl. \textit{Histogram of oriented gradients descriptor}) je to, že lokálny vzhľad objektu a tvar v obraze, môžu byť popísané
 	distribúciou intenzity gradientov alebo smerov hrán.
 
-Obraz je rozdelený na malé spojené oblasti nazývané bunky [eng. cells], a pre pixely v každej bunke sa vytvára histogram orientovaných prechodov.
+Obraz je rozdelený na malé spojené oblasti nazývané bunky (angl. \textit{cells}), a pre pixely v každej bunke sa vytvára histogram orientovaných prechodov.
 Deskriptor je spojenie týchto histogramov.
 Pre zvýšenie presnosti môžu byť lokálne histogramy kontrastovo-normalizované výpočtom miery intenzity vo väčšej oblasti obrazu nazývanej blok a potom
 	pomocou tejto hodnoty normalizovať všetky bunky v rámci bloku.

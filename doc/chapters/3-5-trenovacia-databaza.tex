@@ -22,7 +22,7 @@ Pre trénovanie neurónových sietí na určenie náklonu zbrane v obraze bude p
 \subsection{Generovanie dát z 3D modelov}
 \label{subsec:generovanie3d}
 Generovanie obrázkov pre určenie náklonu zbrane v scéne bude prebiehať pomocou databázy 3D modelov zo zdroja Free3D.
-Následne sa použije software od Ing. Tomáša Goldmanna na generovanie obrázkov z 3D modelov\footnote{\url{http://www.fit.vutbr.cz/~igoldmann/app/SYDAGenerator}},
+Následne sa použije software SYDAGenerator\footnote{\url{http://www.fit.vutbr.cz/~igoldmann/app/SYDAGenerator}} na generovanie obrázkov z 3D modelov,
     do ktorého je potrebné vložiť 3D model vo formáte g3db a pozadie scény.
 
 Keďže 3D modely, ktoré budú použité nie sú v požadovanom formáte, je potrebné ich prekonvertovať, to je možné urobiť
@@ -61,12 +61,14 @@ Avšak v tomto prípade je potrebné po transformácii obrázka vyrátať novú 
     jednoduchých vzorcov.
 
 \textbf{Roll}, pri natočení modelu v ose roll, je potrebné aplikovať horizontálne preklopenie obrázka.
-Následne uhol transformovaného obrázka $trans\_angle$ bude vypočítaný z pôvodného uhla $angle$ podľa:
+Následne uhol transformovaného obrázka $trans\_angle$ bude vypočítaný z pôvodného uhla $angle$.
+V rozsahu $270 \leq angle \leq 359$ podľa:
 \begin{equation}
-    trans\_angle = -angle + 540 \quad ak \; 270 \leq angle \leq 359
+    trans\_angle = -angle + 540 
 \end{equation}
+a v rozsahu $0 \leq angle \leq 90$ podľa:
 \begin{equation}
-    trans\_angle = abs(angle - 180) \quad ak \; 0 \leq angle \leq 90
+    trans\_angle = abs(angle - 180)
 \end{equation}
 
 \begin{figure}[H]
@@ -81,12 +83,13 @@ Následne uhol transformovaného obrázka $trans\_angle$ bude vypočítaný z p�
 \end{figure}
 
 \textbf{Yaw}, pri natočení v ose yaw, sa aplikuje vertikálne preklopenia obrázka.
-Uhol transformovaného obrázka sa vypočíta podľa:
+Uhol transformovaného obrázka sa vypočíta v rozsahu $270 \leq angle \leq 359$ podľa:
 \begin{equation}
-    trans\_angle = abs(angle - 540) \quad ak \; 270 \leq angle \leq 359
+    trans\_angle = abs(angle - 540)
 \end{equation}
+a v rozsahu $0 \leq angle \leq 90$ podľa:
 \begin{equation}
-    trans\_angle = abs(angle - 180) \quad ak \; 0 \leq angle \leq 90
+    trans\_angle = abs(angle - 180)
 \end{equation}
 
 \begin{figure}[H]

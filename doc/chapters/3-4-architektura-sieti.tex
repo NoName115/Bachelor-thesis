@@ -67,3 +67,36 @@ V celej sietí je použitá ReLu aktivačná funkcia.
     \caption{VGG-Like navrhovaná architektúra.}
     \label{pic:kNN}
 \end{figure}
+
+\subsection{Hodnotenie presnosti modelov}
+\label{subsec:hodnoteniepresnosti}
+Hodnotenie presnosti modelov bude prebiehať pomocou dvoch metrík.
+
+Prvá z metrík je tzv. chybová alebo tiež kontigenčná matica.
+Každý stĺpec v matici predstavuje klasifikované triedy a jednotlivé riadky predstavujú správne triedy.
+Tabuľka \ref{tab:chybovamatica} zobrazuje túto maticu.
+Hodnota TP označuje počet správne klasifikovaných obrázkov triedy true, hodnota FP označuje počet nesprávne klasfikovaných obrázkov triedy true.
+Hodnota TN označuje počet správne klasifikovaných obrázkov triedy false, hodnota FN označuje počet nesprávne klasifikovaných obrázkov triedy false \cite{odkaz:ChybovaMatica}.
+\begin{table}[H]
+    \centering
+    \label{tab:chybovamatica}
+        \begin{tabular}{lllc}
+                                                                &                                   & \multicolumn{2}{c}{Klasifikované hodnoty}                                           \\ \cline{3-4} 
+                                                                & \multicolumn{1}{l|}{}             & \multicolumn{1}{c|}{Trieda false}        & \multicolumn{1}{c|}{Trieda true}         \\ \cline{2-4} 
+        \multicolumn{1}{c|}{\multirow{2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Trieda false} & \multicolumn{1}{l|}{TN (True Negative)}  & \multicolumn{1}{c|}{FP (False Positive)} \\ \cline{2-4} 
+        \multicolumn{1}{c|}{}                                 & \multicolumn{1}{c|}{Trieda true}  & \multicolumn{1}{l|}{FN (False Negative)} & \multicolumn{1}{c|}{TP (True Positive)}  \\ \cline{2-4} 
+    \end{tabular}
+    \caption{Chybová matica}
+\end{table}
+Pre prípad tejto práce si môžeme previesť triedu true na triedu krátke zbrane a triedu false na triedu dlhé zbrane.
+Ako hodnotenie presnosti bude použitá metrika úspešnosť (angl. \textit{Accuracy}).
+
+Úspešnosť - táto hodnota určuje ako často klasfikátor správne klasifikoval daný obrázok, počíta sa ako:
+\begin{equation}
+    Accuracy = \frac{TP + TN}{TP + TN + FP + FN}
+\end{equation}
+
+Ako druhá metrika, pre určenie presnosti modelov ktoré určujú náklon zbrane, bude implementovaná funkcia \textit{angle\_error}, ako bolo opísané v \ref{subsec:odchylkachyby}.
+Hodnotenie funguje tak, že je nastavená prahová hodnota uhla podľa ktorej sa určuje, či daná predpoveď siete bola správna alebo nie.
+Správne určenie je vypočítané, ako rozdiel medzi skutočným uhlom a predpovedaným uhol pomocou natrenovaného modelu, ak je rozdiel menší ako prahová hodnota, tak predikcia
+    sa považuje za správnu v opačnom prípade za nesprávnu.
