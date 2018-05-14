@@ -28,7 +28,7 @@
     * models - všetky zdrojové súbory použité pre trénovanie, testovanie a tvorbu modelov, ich podrobná  implementácia je opísaná v kapitole 4.Implementácia v bakalárskej práci
 * Pipfile a Pipfile.lock - konfiguračné súbory pre nástroj pipenv, ktorý vytvára virtuálne prostredie pre programovací jazyk Python
 
-## Postup spustenia programu
+## Postup spustenia programu
 1. Nainštalovanie nástroja pipenv - https://github.com/pypa/pipenv
 2. Vytvorenie virtuálneho prostredia a inštalácia všetkých potrebných balíčkov
 ```bash
