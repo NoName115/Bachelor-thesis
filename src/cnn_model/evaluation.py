@@ -222,12 +222,12 @@ def __evaluate_angle(model_class, test_x, test_y, test_p, threshold):
     for image, label, path in zip(test_x, test_y, test_p):
         # Rotate image & change shape to (1, x, y, depth)
         if (model_class.rotation_type == 'roll'):
-            rotated, angle, _ = Preprocessing.rotate_and_crop_image(
-                image, model_class.labels_dict
-            )
-        elif (model_class.rotation_type == 'pitch'):
             rotated, angle, _ = Preprocessing.rotate_pitch_image(
                 image, label, model_class.labels_dict
+            )
+        elif (model_class.rotation_type == 'pitch'):
+            rotated, angle, _ = Preprocessing.rotate_and_crop_image(
+                image, model_class.labels_dict
             )
         elif (model_class.rotation_type == 'yaw'):
             rotated, angle, _ = Preprocessing.rotate_yaw_image(
