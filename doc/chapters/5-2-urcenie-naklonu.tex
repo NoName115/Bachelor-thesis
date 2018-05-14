@@ -5,7 +5,7 @@ Každá z týchto sieti bola natrénovaná tri-krát kvôli trom osiam rotácie.
 Nastavenia sieti boli opísane v návrhu.
 
 Pre trénovanie v osi pitch bolo použitých 1036 obrázkov, na validáciu 222 a taktiež 222 pre testovanie presnosti siete.
-V osi roll bolo na trénovanie použitých 3315 obrázkov, na validáciu 668 a 667 pre testovanie.
+V osi roll bolo na trénovanie použitých 3315 obrázkov, na validáciu 667 a 668 pre testovanie.
 Nakoniec pre os yaw bolo použitých 3220 obrázkov na trénovanie a po 690 na validáciu a testovanie.
 Všetky tieto obrázky prešli augmentáciou dát ako je opísane v \ref{subsec:augmentacia}.
 
@@ -19,7 +19,7 @@ Hodnoty $angle\_error$ zobrazujú celkovú presnosť sieťe vzhľadom na priemer
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.49\textwidth]{alexnet-pitch5-training_history}
-	\includegraphics[width=0.49\textwidth]{alexnet-training_history} %vgglike-yaw5-training_history
+	\includegraphics[width=0.49\textwidth]{vgglike-pitch5-training_history}
 	\caption{Priebeh trénovania sieti AlexNetLike(vľavo) a VGGLike(vpravo).}
 	\label{pic:pitchaxis}
 \end{figure}
@@ -42,8 +42,8 @@ Výsledna presnosť sieti je uvedená v tabuľkách \ref{tab:alexnetpitchresults
     \begin{tabular}{|c|c|c|c|}
         \hline
         Prahová hodnota & V prahovej hodnota       & Mimo prahovej hodnoty    & Úspešnosť    \\ \hline
-        5               & {\color[HTML]{009901} -} & {\color[HTML]{9A0000} -} & \textbf{-\%} \\ \hline
-        10              & {\color[HTML]{009901} -} & {\color[HTML]{9A0000} -} & \textbf{-\%} \\ \hline
+        5               & {\color[HTML]{009901} 9} & {\color[HTML]{9A0000} 213} & \textbf{4.05\%} \\ \hline
+        10              & {\color[HTML]{009901} 17} & {\color[HTML]{9A0000} 205} & \textbf{7.66\%} \\ \hline
     \end{tabular}
     \caption{Výsledky natrénovanej siete VGGLike pre os Pitch.}
     \label{tab:vgglikepitchresults}
@@ -51,12 +51,15 @@ Výsledna presnosť sieti je uvedená v tabuľkách \ref{tab:alexnetpitchresults
 
 
 \subsubsection{Roll}
-Trénovanie prebiehalo rovnako ako v Pitch osi.
+V prípade AlexNetLike architektúry prebiehalo trénovanie rovnako ako v prípade osi Pitch,
+    avšak pri sieti VGGLike bolo potrebné znížiť počet interácií trénovania kvôli dlhej dobe
+    spracovania jedej interácie.
+Aj z priebehu trénovanie zobrazeného na obrázku \ref{pic:rollaxis} je možné vidieť že sieť veľmi nenapreduje k lepším výsledkom.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.49\textwidth]{alexnet-roll5-training_history} %
-	\includegraphics[width=0.49\textwidth]{alexnet-training_history} %vgglike-roll-training_history
+    \includegraphics[width=0.49\textwidth]{alexnet-roll5-training_history}
+	\includegraphics[width=0.49\textwidth]{vgglike-roll5-training_history}
 	\caption{Priebeh trénovania sieti AlexNetLike(vľavo) a VGGLike(vpravo).}
 	\label{pic:rollaxis}
 \end{figure}
@@ -77,8 +80,8 @@ Trénovanie prebiehalo rovnako ako v Pitch osi.
     \begin{tabular}{|c|c|c|c|}
         \hline
         Prahová hodnota & V prahovej hodnota       & Mimo prahovej hodnoty    & Úspešnosť    \\ \hline
-        5               & {\color[HTML]{009901} -} & {\color[HTML]{9A0000} -} & \textbf{-\%} \\ \hline
-        10              & {\color[HTML]{009901} -} & {\color[HTML]{9A0000} -} & \textbf{-\%} \\ \hline
+        5               & {\color[HTML]{009901} 25} & {\color[HTML]{9A0000} 643} & \textbf{3.74\%} \\ \hline
+        10              & {\color[HTML]{009901} 36} & {\color[HTML]{9A0000} 632} & \textbf{5.39\%} \\ \hline
     \end{tabular}
     \caption{Výsledky natrénovanej siete VGGLike pre os Roll.}
     \label{tab:vgglikerollresults}
@@ -86,12 +89,13 @@ Trénovanie prebiehalo rovnako ako v Pitch osi.
 
 
 \subsubsection{Yaw}
-Priebeh trénovania a výsledky pre os Yaw.
+Trénovanie pre os Yaw prebiehalo rovnako ako v prípade osi Roll, počét epóch pre sieť VGGLike
+    bol rovnako skrátený na 15 kvôli časovej náročnosti trénovania.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.49\textwidth]{alexnet-yaw5-training_history}
-	\includegraphics[width=0.49\textwidth]{alexnet-training_history} %vgglike-yaw-training_history
+	\includegraphics[width=0.49\textwidth]{vgglike-yaw5-training_history}
 	\caption{Priebeh trénovania sieti AlexNetLike(vľavo) a VGGLike(vpravo).}
 	\label{pic:yawaxis}
 \end{figure}
@@ -112,8 +116,8 @@ Priebeh trénovania a výsledky pre os Yaw.
     \begin{tabular}{|c|c|c|c|}
         \hline
         Prahová hodnota & V prahovej hodnota       & Mimo prahovej hodnoty    & Úspešnosť    \\ \hline
-        5               & {\color[HTML]{009901} -} & {\color[HTML]{9A0000} -} & \textbf{-\%} \\ \hline
-        10              & {\color[HTML]{009901} -} & {\color[HTML]{9A0000} -} & \textbf{-\%} \\ \hline
+        5               & {\color[HTML]{009901} 26} & {\color[HTML]{9A0000} 662} & \textbf{3.78\%} \\ \hline
+        10              & {\color[HTML]{009901} 41} & {\color[HTML]{9A0000} 647} & \textbf{5.96\%} \\ \hline
     \end{tabular}
     \caption{Výsledky natrénovanej siete VGGLike pre os Yaw.}
     \label{tab:vgglikeyawresults}
