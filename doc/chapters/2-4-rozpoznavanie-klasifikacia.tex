@@ -56,14 +56,14 @@ V ukážke je vidno, že v prípade 1-NN klasifikátora, niektoré body vytvára
 
 
 \subsection{Support Vector Machines}
-Support Vector Machines (SVM's) sú metódy učenia používané pre binárnu klasifikáciu.
+Support Vector Machines sú metódy učenia používané pre binárnu klasifikáciu.
 Základnou myšlienkou je nájdenie hyper--roviny, ktorá perfektne oddelí \textit{d}--dimenzionálne dáta do dvoch tried \cite{prop:IntroductionToSVM}.
 SVM sa snaží maximalizovať vzdialenosť medzi rozdeľujúcou rovinou a dátami nachádzajúcimi sa v každej z 2 polrovín \cite{prop:SupervisedMachineLearning}.
-Avšak keďže vstupné dáta väčšinou nie su lineárne separovatelné, SVM's predstavujú pojem “kernel induced feature space”,
+Avšak keďže vstupné dáta väčšinou nie su lineárne separovatelné, SVM predstavujú pojem \textit{kernel induced feature space},
     ktorý prevádza dáta do vyššieho dimenzionálneho priestoru, kde sú dáta oddeliteľné.\cite{prop:IntroductionToSVM}.
 
-Ak trénovacie dáta sú lineárne separovatelné, tak dvojica $(w, b)$, kde $w$ je váhový vektor a $b$ je predpoveď
-    (alebo $-b$ je prahová hodnota) existuje ako \cite{prop:SupervisedMachineLearning}:
+Ak trénovacie dáta sú lineárne separovatelné, tak existuje dvojica $(w, b)$, kde $w$ je váhový vektor, $b$ je predpoveď
+    (alebo $-b$ je prahová hodnota) a $x_i$ vstupná hodnota, ako \cite{prop:SupervisedMachineLearning}:
 \begin{equation}
     \label{eq:SVMPair1}
     w^T * x_i + b \geq 1, \; pre \; x_i \in P
@@ -72,17 +72,21 @@ Ak trénovacie dáta sú lineárne separovatelné, tak dvojica $(w, b)$, kde $w$
     \label{eq:SVMPair2}
     w^T * x_i + b \leq -1, \; pre \; x_i \in N
 \end{equation}
-s rozhodovacím pravidlom
+s rozhodovacím pravidlom, kde funkcia $sgn$ je funkcia znamienka (angl. \textit{sign function}).
 \begin{equation}
     \label{eq:SVMDecisionRule}
     f_{w,b}(x) = sgn(w^T x + b)
 \end{equation}
+
 V tomto prípade, keď je možné lineárne rozdeliť dve triedy, tak optimálna hyper--rovina pre rozdelenie
-    môže byť nájdena, minimalizáciou kvadratickej formy rozdeľujúcej hyper--roviny
+    môže byť nájdena, ako minimalizácia kvadratickej formy rozdeľujúcej hyper--roviny
+
+\begin{comment}
 \begin{equation}
     \label{eq:SVMDecisionRule}
     mininimize_{w,h} \; \Phi(w) = \frac{1}{2}||w||^2, \; pre \; y_i(w^Tx_i + b) \geq 1, i = 1, \dots, l
-\end{equation}
+\end{equation}    
+\end{comment}
 
 V tomto prípade lineárneho rozdelenia dát, pri nájdení optimálnej rozdeľujúcej hyper--roviny, dátove body, ktoré ležia na jej okraji
     sa nazývajú podporné vektorové body (angl. \textit{support vector points}) a riešenie je reprezentované ako lineárna kombinácia iba 3 týchto bodov (viď. obrázok \ref{pic:SVMMAxMargin} ).
@@ -97,18 +101,21 @@ Ostatné body sú ignorované \cite{prop:SupervisedMachineLearning}.
 
 Avšak väčsina reálnych problémov zahŕňa nelineárne rozdelenie dát pre, ktoré neexistuje žiadna hyper--rovina, ktorá by úspešne rozdelila trénovacie dáta.
 Riešenie tohto problému je mapovať dáta do vyššie--dimenzionálneho priestoru a definovať tam rozdeľujúcu hyper--rovinu.
-Tento vyšší-dimenzionálny priestor je tzv. transformovaný priestor príznakov (angl. \textit{transformed feature space}), ako opak ku vstupnému priestoru (angl. \textit{input space}) obsahujúcemu trénovacie dáta \cite{prop:SupervisedMachineLearning}.
+Tento vyšší-dimenzionálny priestor je tzv. transformovaný priestor príznakov (angl. \textit{transformed feature space}), ktorý je určený ako opak ku vstupnému priestoru (angl. \textit{input space}) obsahujúcemu trénovacie dáta \cite{prop:SupervisedMachineLearning}.
 
 Pri vhodne zvolenom transformovanom priestore príznakov dostatočnej veľkosti, môžu byť všetky trénovacie dáta rozdelitelné.
 Lineárne rozdelenie v tomto priestore zodpovedá nelineárnemu rozdeleniu v pôvodnom vstupnom priestore.
 
+\begin{comment}
 Pri mapovaní dát do určitého Hilbertovho priestora \cite{prop:HilbertSpace} $H$ ako $\Phi:R^d \rightarrow H$.
 Potom trénovací algoritmus závisí len na údajoch zo skalárneho súčinu (angl. \textit{dot products}) v priestore $H$, t.j na funkciách v tvare $\Phi(x_i) * \Phi(x_j)$.
 Ak bude existovať ``funkcia jadra''(angl. \textit{kernel function}) $K$ ako $K(x_i, x_j) = \Phi(x_i)*\Phi(x_j)$, tak budeme musieť použiť iba funkciu $K$ v trénovacom algoritme
-    a nikdy nebudeme potrebovať explicitne definovať $\Phi$ \cite{prop:SupervisedMachineLearning}.
+    a nikdy nebudeme potrebovať explicitne definovať $\Phi$ \cite{prop:SupervisedMachineLearning}.    
+\end{comment}
 
-Takže jadrá(angl. \textit{kernels}) sú špeciálnou triedou funkcií, ktoré dovoľujú, aby sa vnútorné produkty vypočítali priamo vo funkčnom priestore (angl. \textit{feature space}) bez toho, aby sa vykonalo vyššie popísané mapovanie.
-Po vytvorení hyper--roviny sa funkcia jadra použije na mapovanie nových bodov do funkčného priestoru pre klasifikáciu \cite{prop:SupervisedMachineLearning}.
+Jadrá(angl. \textit{kernels}) sú špeciálnou triedou funkcií, ktoré dovoľujú, aby sa táto reprezentácia dát vypočítala priamo vo funkčnom priestore (angl. \textit{feature space}) bez toho,
+    aby sa vykonalo vyššie popísané mapovanie do určitého Hilbertovho priestora \cite{prop:HilbertSpace}.
+Po vytvorení správnej hyper--roviny sa funkcia jadra použije na mapovanie nových bodov do funkčného priestoru pre klasifikáciu \cite{prop:SupervisedMachineLearning}.
 
 Voľba správnej funkcie jadra je veľmi dôležitá, keďže definujú transformovaný priestor príznakov v ktorom budú trénovacie dáta klasifikované.
 Genton \cite{prop:KernelClasses} popísal niekoľko tried jadier, avšak neadresoval otázku, ktorá trieda je najvhodnejšie pre daný problém.
