@@ -76,6 +76,7 @@ Celková úspešnosť je 69.22\%.
 \end{table}
 Celková úspešnosť je 69.49\%.
 
+
 \subsection{Konvolučné neurónové siete}
 Pre určenie typu zbrane pomocou konvolučných neurónových sieti, boli použité dve navrhované architektúry (viď. \ref{subsec:navrharchitektur}).
 Presné nastavenia a parametre siete boli popísane v návrhu.
@@ -104,13 +105,13 @@ Výsledna presnosť na testovacích dátach je v tabuľke \ref{tab:alexnetresult
     \begin{tabular}{ccccc}
                                                                 &                                    & \multicolumn{2}{c}{Klasifikované hodnoty}                                                         &                                    \\ \cline{3-5} 
                                                                 & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{Dlhé zbrane}                & \multicolumn{1}{c|}{Krátke zbrane}              & \multicolumn{1}{c|}{Úspešnosť}     \\ \cline{2-5} 
-        \multicolumn{1}{c|}{}                                  & \multicolumn{1}{c|}{Dlhé zbrane}   & \multicolumn{1}{c|}{{\color[HTML]{009901} 101}} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} 23}}  & \multicolumn{1}{c|}{\textbf{81\%}} \\ \cline{2-5} 
-        \multicolumn{1}{c|}{\multirow{-2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Krátke zbrane} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} 18}}  & \multicolumn{1}{c|}{{\color[HTML]{009901} 113}} & \multicolumn{1}{c|}{\textbf{86\%}} \\ \cline{2-5} 
+        \multicolumn{1}{c|}{}                                  & \multicolumn{1}{c|}{Dlhé zbrane}   & \multicolumn{1}{c|}{{\color[HTML]{009901} 117}} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} 7}}  & \multicolumn{1}{c|}{\textbf{94\%}} \\ \cline{2-5} 
+        \multicolumn{1}{c|}{\multirow{-2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Krátke zbrane} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} 95}}  & \multicolumn{1}{c|}{{\color[HTML]{009901} 36}} & \multicolumn{1}{c|}{\textbf{73\%}} \\ \cline{2-5} 
     \end{tabular}
     \caption{Výsledky natrénovanej siete AlexNetLike.}
     \label{tab:alexnetresults}
 \end{table}
-Celková úspešnosť je 83.92\%.
+Celková úspešnosť je 83.14\%.
 
 \subsubsection{VGGLike}
 Druhá architektúra bola inšpirovaná VGGLike architektúrov, jej trénovanie priebehalo tak isto v 40 epochách.
