@@ -1,0 +1,28 @@
+{
+    "name":"cnnc",
+    "type":"class",
+    "algorithm":"Convolutial Neural Network",
+    "rotation_type":"",
+    "width":128,
+    "height":128,
+    "labels":{
+        "long_weapon":0,
+        "short_weapon":1
+    },
+    "depth":3,
+    "batch_size":16,
+    "epochs":50,
+    "preprocessing":{
+        "func_list":[
+            "normalize"
+        ],
+        "datagen_args":{
+            "rotation_range":180,
+            "width_shift_range":0.15,
+            "height_shift_range":0.15,
+            "fill_mode":"nearest",
+            "horizontal_flip":true,
+            "vertical_flip":true
+        }
+    }
+}
