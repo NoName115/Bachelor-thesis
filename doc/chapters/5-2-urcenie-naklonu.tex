@@ -1,7 +1,7 @@
 
 \section{Určenie náklonu zbrane}
 Pre určenie náklonu zbrane v troch osách boli navrhnuté dve architektúry konvolučných neurónových sietí.
-Každá z týchto sieti bola natrénovaná trikrát kvôli trom osám rotácie.
+Každá z týchto sieti bola natrénovaná tri-krát kvôli trom osiam rotácie.
 Nastavenia sieti boli opísane v návrhu.
 
 Pre trénovanie v osi pitch bolo použitých 1036 obrázkov, na validáciu 222 a taktiež 222 pre testovanie presnosti siete.
@@ -11,14 +11,14 @@ Všetky tieto obrázky prešli augmentáciou dát ako je opísane v \ref{subsec:
 
 \subsubsection{Pitch}
 Sieť bola trénovaná v 50 epochách.
-Priebeh trénovania obydvoch sieti pre os Pitch je vidieť na obrázku \ref{pic:pitchaxis}.
+Priebeh trénovania obidvoch sieti pre os Pitch je vidieť na obrázku \ref{pic:pitchaxis}.
 Kde pre presnosť týchto sietí je použitá metrika opísana v \ref{subsec:presnostmodelov}.
 Hodnoty $angle\_error$ zobrazujú celkovú presnosť sieťe vzhľadom na priemernu odchylku uhla pre trénovacie dáta,
     $val\_angle\_error$ určuje túto odchylku pre validačné dáta.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.49\textwidth]{alexnet-training_history}
+    \includegraphics[width=0.49\textwidth]{alexnet-pitch5-training_history}
 	\includegraphics[width=0.49\textwidth]{alexnet-training_history} %vgglike-yaw5-training_history
 	\caption{Priebeh trénovania sieti AlexNetLike(vľavo) a VGGLike(vpravo).}
 	\label{pic:pitchaxis}
@@ -31,8 +31,8 @@ Výsledna presnosť sieti je uvedená v tabuľkách \ref{tab:alexnetpitchresults
     \begin{tabular}{|c|c|c|c|}
         \hline
         Prahová hodnota & V prahovej hodnota       & Mimo prahovej hodnoty    & Úspešnosť    \\ \hline
-        5               & {\color[HTML]{009901} -} & {\color[HTML]{9A0000} -} & \textbf{-\%} \\ \hline
-        10              & {\color[HTML]{009901} -} & {\color[HTML]{9A0000} -} & \textbf{-\%} \\ \hline
+        5               & {\color[HTML]{009901} 189} & {\color[HTML]{9A0000} 33} & \textbf{85.14\%} \\ \hline
+        10              & {\color[HTML]{009901} 205} & {\color[HTML]{9A0000} 17} & \textbf{92.34\%} \\ \hline
     \end{tabular}
     \caption{Výsledky natrénovanej siete AlexNetLike pre os Pitch.}
     \label{tab:alexnetpitchresults}

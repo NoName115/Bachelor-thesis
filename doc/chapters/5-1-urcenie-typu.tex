@@ -7,17 +7,17 @@ Pre určenie typu zbrane v dvoch kategóriach a to na krátka a dlhé zbrane, bo
 Pre trénovanie K-Nearest-Neighbor a SVM boli načítané všetky vstupné trénovancie dáta (1377 pre krátke zbrane a 850 pre dlhé zbrane),
     následne boli tieto dve skupiny zarovnané na rovnaký počet obrázkov pre každú kategórií na 850 obrázkov.
 Následne bola veľkosť tejto vstupnej databázy, pomocou augmentácie dát, zväčšená štvornásobne a rozdelená na trénovacie a testovacie dáta.
-Tieto augmentované dáta prešli predspracovaním ktoré pozostáva z normalizácie, šedotónovej, a hogovej transformácie.
+Tieto augmentované dáta prešli predspracovaním, ktoré pozostáva z normalizácie, šedotónovej, a hogovej transformácie.
 Na trénovanie bolo použitých 5950 obrázkov, na testovanie resp. evaluáciu modelu 2550 obrázkov.
 
 \subsubsection{SVM}
-Trénovanie SVM klasifikátora prebiehalo so základnymi nastaveniami ktoré nastavuje scikit-learn knižnica pre triedu \textit{SVC}\footnote{\url{http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html}}.
+Trénovanie SVM klasifikátora prebiehalo so základnymi nastaveniami, ktoré nastavuje scikit-learn knižnica pre triedu \textit{SVC}\footnote{\url{http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html}}.
 Avšak pre porovnanie rôznych výsledkov bol pre dalšie trénovanie ešte zmenený kernel v SVM klasifikátore na ``linear''.
 
 Štatistiky nižšie zobrazujú výsledky týchto dvoch SVM klasifikátorov, tabuľky vychádzaju z chybovej matice avšak
-    zobrazujú ešte aj uspešnosť určenia v danej kategórií, ktorá je vyrátana ako
+    zobrazujú ešte aj úspešnosť určenia v danej kategórií, ktorá je vyrátana ako
     $$uspesnost = \frac{spravne\_urcene}{spravne\_urcene + nespravne\_urcene} * 100$$
-Výsledky ďalej ešte uvádzaju celkový výpočet úspešnosti.
+Výsledky ďalej ešte uvádzajú celkový výpočet úspešnosti.
 
 \begin{table}[H]
     \centering
@@ -47,7 +47,7 @@ Celková úspešnosť je 59.29\%.
 
 \subsubsection{K-Nearest-Neighbor}
 Trénovanie K-Nearest-Neighbor klasifikátora prebiehalo dvakrát, s prvým nastavením $k=5$, kde $k$ je celé číslo, ktoré určuje
-    počet nabližších susedov na základne ktorých sa určuje kategória.
+    počet nabližších susedov na základné ktorých sa určuje kategória.
 A s nastavením $k=1$.
 
 \begin{table}[H]
@@ -86,7 +86,7 @@ Celkovo bolo na trénovanie použitých 1190 obrázkov, na validáciu 255 a na t
 
 \subsubsection{AlexNetLike}
 Prvá archiktúra bola inšpirovaná AlexNet architektúrov, jej trénovanie prebiehalo v 40 epochách.
-Kedže ako je vidno na obrázku \ref{pic:alexnetlikehistory}, medzi 30. a 40. epochou už veľké zlepšenie neprebiahlo, preto nebolo potrebné trénovať sieť ďalej.
+Kedže, ako je vidno na obrázku \ref{pic:alexnetlikehistory}, medzi 30. a 40. epochou už veľké zlepšenie neprebiehalo, preto nebolo potrebné trénovať sieť ďalej.
 
 \begin{figure}[H]
 	\centering
@@ -96,7 +96,7 @@ Kedže ako je vidno na obrázku \ref{pic:alexnetlikehistory}, medzi 30. a 40. ep
 \end{figure}
 Kde \textit{acc} označuje celkovú presnosť siete na trénovacích dátach, \textit{val\_acc} presnosť siete na validačných dátach, \textit{train\_loss} a
     \textit{val\_loss} je tzv. \textit{loss\ function} alebo označovaná aj ako \textit{cost\ function}, ktorá v jednoduchosti určuje nepresnosť danej siete,
-    to znamená že čím nižšia hodnota tým lepšia.
+    to znamená, že čím nižšia hodnota tým lepšie.
 
 Výsledna presnosť na testovacích dátach je v tabuľke \ref{tab:alexnetresults}.
 
@@ -123,7 +123,7 @@ Druhá architektúra bola inšpirovaná VGGLike architektúrov, jej trénovanie 
 	\label{pic:vgglikehistory}
 \end{figure}
 
-Počiatočná hodnota $train\_loss$ bola veľmi vysoká, graf je následkom toho veľmi skrekrelný a nieje možné presne vidieť postup trénovanie,
+Počiatočná hodnota $train\_loss$ bola veľmi vysoká, graf je následkom toho veľmi skreslený a nieje možné presne vidieť postup trénovanie,
     avšak kompletné výsledky nad testovacími dátami sú uvedené v tabuľke \ref{tab:vgglikeresults}.
 
 \begin{table}[H]
