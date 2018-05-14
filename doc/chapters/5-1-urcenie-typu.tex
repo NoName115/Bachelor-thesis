@@ -117,19 +117,23 @@ Druhá architektúra bola inšpirovaná VGGLike architektúrov, jej trénovanie 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.75\textwidth]{alexnet-training_history} %vgglike-training_history
+	\includegraphics[width=0.75\textwidth]{vgglike-training_history}
 	\caption{Priebeh trénovania siete VGGLike.}
 	\label{pic:vgglikehistory}
 \end{figure}
+
+Počiatočná hodnota $train\_loss$ bola veľmi vysoká, graf je následkom toho veľmi skrekrelný a nieje možné presne vidieť postup trénovanie,
+    avšak kompletné výsledky nad testovacími dátami sú uvedené v tabuľke \ref{tab:vgglikeresults}.
 
 \begin{table}[H]
     \centering
     \begin{tabular}{ccccc}
                                                                 &                                    & \multicolumn{2}{c}{Klasifikované hodnoty}                                                         &                                    \\ \cline{3-5} 
                                                                 & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{Dlhé zbrane}                & \multicolumn{1}{c|}{Krátke zbrane}              & \multicolumn{1}{c|}{Úspešnosť}     \\ \cline{2-5} 
-        \multicolumn{1}{c|}{}                                  & \multicolumn{1}{c|}{Dlhé zbrane}   & \multicolumn{1}{c|}{{\color[HTML]{009901} -}} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} -}}  & \multicolumn{1}{c|}{\textbf{-\%}} \\ \cline{2-5} 
-        \multicolumn{1}{c|}{\multirow{-2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Krátke zbrane} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} -}}  & \multicolumn{1}{c|}{{\color[HTML]{009901} -}} & \multicolumn{1}{c|}{\textbf{-\%}} \\ \cline{2-5} 
+        \multicolumn{1}{c|}{}                                  & \multicolumn{1}{c|}{Dlhé zbrane}   & \multicolumn{1}{c|}{{\color[HTML]{009901} 108}} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} 26}}  & \multicolumn{1}{c|}{\textbf{87\%}} \\ \cline{2-5} 
+        \multicolumn{1}{c|}{\multirow{-2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Krátke zbrane} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} 63}}  & \multicolumn{1}{c|}{{\color[HTML]{009901} 68}} & \multicolumn{1}{c|}{\textbf{48\%}} \\ \cline{2-5} 
     \end{tabular}
     \caption{Výsledky natrénovanej siete VGGLike.}
     \label{tab:vgglikeresults}
 \end{table}
+Celková presnosť siete je 67.06\%.

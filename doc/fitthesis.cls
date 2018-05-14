@@ -746,7 +746,7 @@ Management}{\@fit@EN}%
 
 \vspace{5mm}
 
-\mktxtt{14}{\MakeUppercase{\ifslovak\@supervisor@SK\else\ifczech\@supervisor@CS\else\@supervisor@EN\fi\fi} \hfill \get@supervisor}
+\mktxtt{14}{\MakeUppercase{\ifslovak\@supervisor@SK\else\ifczech\@supervisor@CS\else\@supervisor@EN\fi\fi} \hfill {\setfontsize{13}\get@supervisor}}
 \iftoggle{slovak_used}{
 \mkuctxtt{10}{\@supervisor@EN}
 }{
