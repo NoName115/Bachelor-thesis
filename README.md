@@ -29,4 +29,17 @@
 * Pipfile a Pipfile.lock - konfiguračné súbory pre nástroj pipenv, ktorý vytvára virtuálne prostredie pre programovací jazyk Python
 
 ## Postup spustenia programu
-1. Vytvorenie virtuálneho prostredia a inštalácia všetkých potrebných balíčkov
+1. Nainštalovanie nástroja pipenv - https://github.com/pypa/pipenv
+2. Vytvorenie virtuálneho prostredia a inštalácia všetkých potrebných balíčkov
+```bash
+$ pipenv shell
+(virtualenv) $ pipenv install
+```
+3. Doinštalovanie tensorflow knižnice
+```bash
+(virtualenv) $ pip install tensorflow
+```
+4. Spustenie programu predikcie
+```bash
+(virtualenv) $ python src/model/predict.py --class models/class/ --anglex models/anglex/ --angley models/angley/ --anglez models/anglez/ --image path_to_image
+```
