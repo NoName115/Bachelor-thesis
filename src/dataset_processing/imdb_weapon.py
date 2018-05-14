@@ -1,3 +1,8 @@
+# Script for downloading images from imfdb
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 from bs4 import BeautifulSoup
 import urllib.request
 import requests

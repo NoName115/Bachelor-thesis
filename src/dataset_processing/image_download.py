@@ -1,3 +1,8 @@
+# Script for downloading images
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 from glob import glob
 import urllib.request
 

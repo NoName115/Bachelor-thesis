@@ -1,3 +1,8 @@
+# Script for sorting image database
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 # kill $(ps -A | grep python | awk '{print $1}')
 
 import argparse
