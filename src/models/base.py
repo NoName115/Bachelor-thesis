@@ -1,3 +1,8 @@
+# Script contain base function
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 from printer import print_error
 
 import keras.backend as K

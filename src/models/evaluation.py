@@ -1,3 +1,8 @@
+# Script contain functions for model evaluation
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 from printer import print_info, print_error
 from preprocessing import Preprocessing
 from base import calculate_diff_angle, get_prediction, Algorithm, \

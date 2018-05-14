@@ -1,3 +1,8 @@
+# Script responsible for loading and saving input data
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 from keras.preprocessing.image import load_img, img_to_array
 from keras.utils import to_categorical, print_summary
 from keras.models import load_model, model_from_json
@@ -18,10 +23,6 @@ import glob
 import os
 import re
 
-a = {
-    'a': 2,
-    'b': 3
-}
 
 MODEL_SETTINGS_FILE = 'settings.json'
 MODEL_BINARY_FILE = 'model.h5'

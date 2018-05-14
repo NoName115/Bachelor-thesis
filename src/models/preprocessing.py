@@ -1,3 +1,8 @@
+# Script contain functions for image preprocessing
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import to_categorical
 from skimage.color import rgb2grey

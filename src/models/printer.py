@@ -1,3 +1,7 @@
+# Script responsible for printing infomation to stdout
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
 
 def print_blank(message, spaces=0):
     print(
