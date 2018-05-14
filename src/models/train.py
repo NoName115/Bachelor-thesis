@@ -1,3 +1,8 @@
+# Script responsible for training the models
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 from keras.optimizers import Adam, SGD
 from preprocessing import Preprocessor, Preprocessing, AngleGenerator, \
                           ClassificationGenerator
@@ -70,7 +75,7 @@ if (using_keras):
 else:
     images, labels, path_list = ClassificationGenerator(
         images, labels, path_list,
-        1, preproc.get_datagen()
+        5, preproc.get_datagen()
     ).flow()
 
     preproc.add_func(Preprocessing.normalize)
@@ -108,16 +113,18 @@ if (alg == Algorithm.CNN_C):
         model_name=MODEL_NAME
     ).build()
     '''
+    '''
     model_class = AlexNetLike(
         train_x.shape, labels_dict, 'class',
         model_name=MODEL_NAME
     ).build()
     '''
+    #'''
     model_class = VGGLike(
         train_x.shape, labels_dict, 'class',
         model_name=MODEL_NAME
     ).build()
-    '''
+    #'''
     history = model_class.train(
         train_x, train_y,
         val_x, val_y,
@@ -135,16 +142,18 @@ elif (alg == Algorithm.CNN_A):
         model_name=MODEL_NAME, rotation_type=ROTATION_TYPE
     ).build()
     '''
+    '''
     model_class = AlexNetLike(
         train_x.shape, labels_dict, 'angle',
         model_name=MODEL_NAME, rotation_type=ROTATION_TYPE
     ).build()
     '''
+    #'''
     model_class = VGGLike(
         train_x.shape, labels_dict, 'angle',
         model_name=MODEL_NAME, rotation_type=ROTATION_TYPE
     ).build()
-    '''
+    #'''
     history = model_class.train(
         train_x, train_y,
         val_x, val_y,
@@ -159,7 +168,7 @@ elif (alg == Algorithm.SVM):
     model_class = SVM(
         [None, IMAGE_WIDTH, IMAGE_HEIGHT, 3], labels_dict, 'class',
         model_name=MODEL_NAME
-    ).build()
+    ).build(kernel='rbf')
     model_class.train(
         train_x, train_y
     )
@@ -167,9 +176,9 @@ elif (alg == Algorithm.KMEANS):
     model_class = KMeans(
         [None, IMAGE_WIDTH, IMAGE_HEIGHT, 3], labels_dict, 'class',
         model_name=MODEL_NAME
-    ).build()
+    ).build(n_neighbors=5)
     model_class.train(
-        train_x, train_y
+        train_x, train_y,
     )
 elif (alg == Algorithm.MLP):
     model_class = MLPerceptron(
@@ -194,11 +203,13 @@ DataSaver.save_model(
 )
 
 # Evaluate trained model
+'''
 if (not using_keras):
     test_x, test_y, test_p = ClassificationGenerator(
         test_x, test_y, test_p,
         1, preproc.get_datagen()
     ).flow()
     test_x = preproc.apply(test_x)
+'''
 
 evaluate_model(model_class, test_x, test_y, test_p)

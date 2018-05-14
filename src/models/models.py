@@ -1,3 +1,8 @@
+# Script contain all models
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.layers.core import Activation, Flatten, Dense, Dropout
 from keras.models import Sequential
@@ -160,16 +165,20 @@ class AlexNetLike(MyModel):
         model.add(MaxPooling2D(pool_size=POOL_SIZE, strides=STRIDES))   # Output 8x8x128
         model.add(Dropout(0.20))
 
+        '''
         model.add(Conv2D(256, FILTER_SIZE, padding='same', activation='relu'))   # Output 8x8x256
         model.add(MaxPooling2D(pool_size=POOL_SIZE, strides=STRIDES))   # Output 4x4x256
         model.add(Dropout(0.20))
+        '''
 
         model.add(Flatten())
         model.add(Dense(1024, activation='relu'))
         model.add(Dropout(0.5))
 
+        '''
         model.add(Dense(1024, activation='relu'))
         model.add(Dropout(0.5))
+        '''
 
         model.add(Dense(self.num_of_classes, activation='softmax'))
 
@@ -227,7 +236,7 @@ class VGGLike(MyModel):
 
     def train(self, train_x, train_y, val_x, val_y, datagen,
             loss, optimizer, metrics, batch_size=16, epochs=40):
-        return super(AlexNetLike, self).train(train_x, train_y, val_x, val_y, datagen,
+        return super(VGGLike, self).train(train_x, train_y, val_x, val_y, datagen,
                                        loss, optimizer, metrics,
                                        batch_size, epochs)
 
