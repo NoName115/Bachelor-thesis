@@ -1,3 +1,8 @@
+# Script for renaming images
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 import re
 import sys
 import glob
