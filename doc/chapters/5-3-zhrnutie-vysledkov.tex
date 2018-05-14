@@ -1,6 +1,52 @@
 
 \section{Zhodnotenie výsledkov}
+V tabuľke \ref{tab:allresultsclass} je uvedené celkové porovnanie výsledkov pre určenie typu zbrane.
+Z týchto výsledkov môžeme vidieť že narvhovaná architektúra AlexNetLike dosiahla najlepšie čiastočné ale hlavne aj celkové výsledky až 83.14\%.
+Farebne sú vyznačené najlepšie (zelené) a najhoršie (červené) výsledky pre jednotlivé presnosti.
 
-% TODO
-% Tabulka pre porovnanie klasifikacie zbrani
-% Tabulka nejaka logicka pre presnost vramci naklonu zbrane
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Názov siete  & Dlhá zbraň - presnosť       & Krátka zbraň - presnosť     & Celková presnosť                        \\ \hline
+        SVM          & 61\%                        & {\color[HTML]{9A0000} 59\%} & \textbf{59.65\%}                        \\ %\hline
+        SVM - linear & {\color[HTML]{9A0000} 57\%} & 62\%                        & {\color[HTML]{9A0000} \textbf{59.29\%}} \\ \hline
+        KMeans - 1   & 70\%                        & 69\%                        & \textbf{69.49\%}                        \\ %\hline
+        KMenas - 5   & 70\%                        & 68\%                        & \textbf{69.22\%}                        \\ \hline
+        AlexNetLike  & {\color[HTML]{009901} 94\%} & {\color[HTML]{009901} 73\%} & {\color[HTML]{009901} \textbf{83.14\%}} \\ %\hline
+        VGGNetLike   & 87\%                        & 48\%                        & \textbf{67.06\%}                        \\ \hline
+    \end{tabular}
+    \caption{Celkové porovnanie výsledkov pre určenie typu zbrane.}
+    \label{tab:allresultsclass}
+\end{table}
+
+Ďalej tabuľka \ref{tab:allresultsangle} zobrazuje výsledky pre jednotlivé osi a dve navrhované architektúry.
+Je jasne vidieť, že architektúra AlexNetLike rádovo predskočila úspešnosťou druhú navrhovanú architektúru.
+V hlavičke tabuľky je uvedené $p$, ktoré označuje hodnotu prahovej hodnoty pre určenie správnej predikcie.
+Farebne sú znova vyznačené najlepšie a najhoršie výsledky.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        {\color[HTML]{000000} Os rotácie}              & {\color[HTML]{000000} Názov siete} & {\color[HTML]{000000} Presnosť pre p=5} & {\color[HTML]{000000} Presnosť pre p=10} \\ \hline
+        {\color[HTML]{000000} }                        & {\color[HTML]{000000} AlexNetLike} & {\color[HTML]{009901} \textbf{85.14\%}} & {\color[HTML]{009901} \textbf{92.34\%}}  \\
+        \multirow{-2}{*}{{\color[HTML]{000000} Pitch}} & {\color[HTML]{000000} VGGLike}     & {\color[HTML]{9A0000} \textbf{4.05\%}}  & {\color[HTML]{9A0000} \textbf{7.66\%}}   \\ \hline
+        {\color[HTML]{000000} }                        & {\color[HTML]{000000} AlexNetLike} & {\color[HTML]{009901} \textbf{91.02\%}} & {\color[HTML]{009901} \textbf{95.51\%}}  \\
+        \multirow{-2}{*}{{\color[HTML]{000000} Roll}}  & {\color[HTML]{000000} VGGLike}     & {\color[HTML]{9A0000} \textbf{3.74\%}}  & {\color[HTML]{9A0000} \textbf{5.39\%}}   \\ \hline
+        {\color[HTML]{000000} }                        & {\color[HTML]{000000} AlexNetLike} & {\color[HTML]{009901} \textbf{49.71\%}} & {\color[HTML]{009901} \textbf{54.65\%}}  \\
+        \multirow{-2}{*}{{\color[HTML]{000000} Yaw}}   & {\color[HTML]{000000} VGGLike}     & {\color[HTML]{9A0000} \textbf{3.78\%}}  & {\color[HTML]{9A0000} \textbf{5.96\%}}   \\ \hline
+    \end{tabular}
+    \caption{Súhrné porovnanie dosiahnutých výsledkov pre určeni náklonu zbrane.}
+    \label{tab:allresultsangle}
+\end{table}
+
+V závere je možné konštatovať že pre riešené problémy sú vhodnejšie menšie konvolučné neurónové siete na rozdiel od tých hlbokých, kedže
+    veľkosť trénovacích dát je veľmi malá, rádovo len v pár tisíckach.
+
+Výsledkom tohto porovnania sú štyri najlepšie modely, AlexNetLike pre určenie typu zbrane a tri AlexNetLike modely pre určenie náklonu zbrane,
+    tieto štyri modeli je možné použiť pre celkovú predikciu pomocou scriptu \textit{predict.py}.
+
+Kde ako vstupné argumenty je potrebné vložiť cestu k týmto štyrom modelom, mená argumentov sú \textit{--class} pre model určujúci typ zbrane,
+    \textit{--anglep} pre model určujúci náklon v ose pitch, \textit{--angler} pre os roll, \textit{--angley} pre os yaw a argument
+    \textit{--image} ktorého hodnota je cesta k obrázku použitého na predikciu.

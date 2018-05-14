@@ -27,7 +27,7 @@ Pre ukladanie natrénovaných modelov je implemtovaná funkcia \textit{save\_mod
 Pri ukladaní modelu sa ukladá model v binárnej forme, ukladá sa konfiguračný súbor \textit{settings.json}, ktorý obsahuje informácie ako veľkosť
     vstupných dát, použité funkcie na predspracovanie dát, meno modelu, typ algoritmu učenia, zoznam indexov označenia dát a dalšie informácie
     špecifické pre daný typ modelu.
-Uložením konvolučnej neurónovej siete sa ukladá graf priebehu trénovanie.
+Uložením konvolučnej neurónovej siete sa ukladá graf priebehu trénovania.
 
 Naopak pre načítanie modelov je implementovaná funkcia \textit{load\_model\_data()} v triede \textit{DataLoader} v scripte \textit{loader.py},
     ktorá načíta binárnu podobu modelu a všetky informácie z konfiguračného súboru \textit{settings.json}.
@@ -62,9 +62,9 @@ Proces trénovania prebieha v niekoľkých krokoch.
 Pre uľahčenie trénovania je implementovaný script \textit{train.py}, ktorý požaduje niekoľko argumentov na vstupe.
 Zoznam vstupných argumentov a ich význam, argumenty v hranatých zátvorkách sú voliteľné:
 \begin{enumerate}
-    \item[$\bullet$] \textbf{--model} cesta k priečinku do ktorého bude natrénovaný model uložený.
-    \item[$\bullet$] \textbf{--dataset} cesta k priečinku z ktorého budú načítane vstupné dáta.
-    \item[$\bullet$] \textbf{--alg} voľba modelu, ktorý bude trénovaný, tento argument má niekoľko možností.
+    \item[$\bullet$] \textbf{--model} cesta k priečinku, do ktorého bude natrénovaný model uložený.
+    \item[$\bullet$] \textbf{--dataset} cesta k priečinku, z ktorého budú načítane vstupné dáta.
+    \item[$\bullet$] \textbf{--alg} voľba modelu, ktorý bude trénovaný. Tento argument má niekoľko možností.
     Možnosť ``cnnc'' pre trénovanie konvolučnej neurónovej siete určenej na klasifikáciu zbrane,
     ``cnna'' pre trénovanie konvolučnej neurónovej siete pre určenie náklonu zbrane a
     ``svm'' alebo ``kmeans'' pre trénovanie SVM alebo K-nearest-neighbor klasifikátora na určenie typu zbrane.
@@ -84,8 +84,8 @@ Hodnotí presnosť modelov podľa metrík spomenutých v \ref{subsec:hodnoteniep
 V prípade určenia typu zbrane sa používa kontigenčná matica a hodnota celkovej úspešnosti modela.
 Táto metrika je použitá aj počas trénovania CNN na predbežné určenie presnosti a taktiež pri koncovom testovaní modelov.
 
-Avšak v prípade CNN, ktoré určujú náklon zbrane je potrebné túto metriku trošku pozmeniť.
-Ako je opísané v \ref{subsec:odchylkachyby}, v scripte \textit{base.py} je implementovaná funkcia \textit{angle\_error}, ktorá ráta priemerny rozdiel medzi
+Avšak v prípade CNN, ktoré určujú náklon zbrane je potrebné túto metriku trocha pozmeniť.
+Ako je opísané v \ref{subsec:odchylkachyby}, v scripte \textit{base.py} je implementovaná funkcia \textit{angle\_error}, ktorá ráta priemerný rozdiel medzi
     skutočnymi a predpovedanými uhlami siete.
 Táto funkcia je použitá ako metrika počas trénovania CNN a pri koncovom testovaní presnosti siete.
-Následne po určení či je predikcia správna alebo nie, pomocou prahovej hodnoty, sa použije výpočet úspešnosti z hodnôt v chybovej matici.
+Následne po určení, či je predikcia správna alebo nie, pomocou prahovej hodnoty, sa použije výpočet úspešnosti z hodnôt v chybovej matici.

@@ -9,7 +9,7 @@ Trénovacia databáza je získaná z niekoľkých zdrojov.
     Pre túto prácu je potrebné, aby daný obrázok obsahoval iba zbraň, preto je potrebné obrázky z tejto databázy ručne odfiltrovať na samotné zbrane a scény so zbraňami.
     Následne ich potom zaradiť do správnej kategórie na krátke a dlhé.
     \item[$\bullet$] \textbf{ImageNet}\footnote{\url{http://www.image-net.org/}} - je databáza obrázkov, ktorá obsahuje viac ako 14 miliónov obrázkov vo viac ako 21000 kategóriách.
-    Výhodou tejto databázy je, že obrázky už patria do určenej kategórie a tak nieje potrebné ich ručne prechádzať a kategorizovať.
+    Výhodou tejto databázy je, že obrázky už patria do určenej kategórie a tak nie je potrebné ich ručne prechádzať a kategorizovať.
     \item[$\bullet$] \textbf{Google}\footnote{\url{http://www.google.com}} - pre doplnenie a zväčšenie počtu obrázkov je možné použiť google vyhľadávanie.
     Tak ako v prípade IMFDB bude potrebné obrázky ručne kategorizovať.
     \item[$\bullet$] \textbf{Free3D}\footnote{\url{https://free3d.com/3d-models/weapons}} - databáza voľne dostupných 3D modelov zbraní s textúrami v rôznych formátoch.
@@ -55,7 +55,7 @@ Pri augmentácií dát pre klasifikovanie dvoch tried, na krátke a dlhé zbrane
 \end{figure}
 
 Druhý typ augmentácie dát prebieha pri obrázkoch, ktoré boli vygenerované pomocou 3D modelu.
-Keďže nieje potrebné generovať všetky polohy otočenia od 0 po 360 stupňov, stačí vygenerovať dáta v polohách od 0 po 90 stupňov a od 270 do 359 stupňov.
+Keďže nie je potrebné generovať všetky polohy otočenia od 0 po 360 stupňov, stačí vygenerovať dáta v polohách od 0 po 90 stupňov a od 270 do 359 stupňov.
 Zvyšné polohy je možné dogenerovať pomocou transformácie obrázka, pomocou vertikálneho alebo hotizontálneho preklopenia.
 Avšak v tomto prípade je potrebné po transformácii obrázka vyrátať novú hodnotu uhla transformovaného obrázka, to je možné dosiahnuť pomocou niekoľkých
     jednoduchých vzorcov.
@@ -105,7 +105,7 @@ a v rozsahu $0 \leq angle \leq 90$ podľa:
 
 \textbf{Pitch}, v ose pitch postačuje vygenerovať obrázok zbrane s náklonom 0 stupňov so smerovaním hlavne zbrane doprava.
 Počas augmentácie dát sa môže aplikovať horizontálne preklopenie a následne sa tento vstupný obrázok otočí o náhodný uhol.
-Preto nieje potrebný žiaden další prepočet uhla.
+Preto nie je potrebný žiaden další prepočet uhla.
 
 \begin{figure}[H]
     \centering
