@@ -1,3 +1,0 @@
-Accuracy: 2.4%
-	Correct: 16
-	Wrong: 652
