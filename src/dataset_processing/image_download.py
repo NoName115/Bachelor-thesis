@@ -1,6 +1,6 @@
 # Script for downloading images
 #
-# Author: Róbert Kolcún, FIT
+# Author: Robert Kolcun, FIT
 # <xkolcu00@stud.fit.vutbr.cz>
 
 from glob import glob

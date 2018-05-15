@@ -1,6 +1,6 @@
 # Script for sorting image database
 #
-# Author: Róbert Kolcún, FIT
+# Author: Robert Kolcun, FIT
 # <xkolcu00@stud.fit.vutbr.cz>
 
 # kill $(ps -A | grep python | awk '{print $1}')

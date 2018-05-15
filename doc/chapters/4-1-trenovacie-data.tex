@@ -66,7 +66,7 @@ Pre zvyšné 2 osi boli obrázky generované, počty sa líša kvôli niektorým
 \label{subsec:nacitaniedat}
 Pre načítavanie dát je implementovaná trieda \textit{DataLoader} v~scripte \textit{loader.py}.
 Trieda obsahuje niekoľko funkcií pre načítanie týchto dát, tieto funkcie vrátia pole načítaných obrázkov, pole indexov označení (angl. \textit{labels}) obrázkov a
-    slovník, ktorý obsahuje index a názov označenia, napr. \{0: ``kratka zbran'', 1: ``dlha zbran''\}.
+    slovník, ktorý obsahuje index a názov označenia, napr. \{``kratka zbran'': 0, ``dlha zbran'': 1\}.
 
 Prvá z~funkcií načítava dáta z~priečinka, kde označenie obrázkov, či je to krátka alebo dlhá zbraň, je zabezpečené podľa názvov podpriečinkov.
 Pre obrázky o~náklone zbrane sa označenie osi berie tiež z~názvu podpriečinka, avšak presné označenie o~koľko stupňov je model v~obrázku otočený

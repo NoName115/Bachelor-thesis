@@ -1,6 +1,6 @@
 # Script for prediction of image type and orientation
 #
-# Author: Róbert Kolcún, FIT
+# Author: Robert Kolcun, FIT
 # <xkolcu00@stud.fit.vutbr.cz>
 
 from base import parse_arguments_prediction

@@ -1,6 +1,6 @@
 # Script responsible for loading and saving input data
 #
-# Author: Róbert Kolcún, FIT
+# Author: Robert Kolcun, FIT
 # <xkolcu00@stud.fit.vutbr.cz>
 
 from keras.preprocessing.image import load_img, img_to_array

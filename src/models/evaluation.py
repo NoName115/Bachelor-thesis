@@ -1,6 +1,6 @@
 # Script contain functions for model evaluation
 #
-# Author: Róbert Kolcún, FIT
+# Author: Robert Kolcun, FIT
 # <xkolcu00@stud.fit.vutbr.cz>
 
 from printer import print_info, print_error
@@ -278,9 +278,11 @@ def __evaluate_image(model_class, image, threshold=None):
 
     print_info("Labels: " + str(switched_labels), 1)
 
+    '''
     if (model_class.algorithm == Algorithm.CNN and
        model_class.model_type == 'angle'):
         print_info("Threshold: " + str(threshold), 1)
+    '''
 
     print_info("Prediction:\t" + str(switched_labels[prediction]) + '\n', 1)
 
@@ -415,7 +417,6 @@ if (__name__ == "__main__"):
     # Predict images from file
     if (args['file']):
         print_info('File prediction...')
-        print("ALG: " + alg)
         if (alg == Algorithm.CNN_A):
             image_data, image_labels, path_list = DataLoader.load_images_from_file(
                 args['file'],

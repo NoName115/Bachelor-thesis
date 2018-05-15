@@ -1,6 +1,6 @@
 # Convert & resize images to 128x128, .jpg
 #
-# Author: Róbert Kolcún, FIT
+# Author: Robert Kolcun, FIT
 # <xkolcu00@stud.fit.vutbr.cz>
 
 # Convert & resize images to 128x128, jpg

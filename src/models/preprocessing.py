@@ -1,6 +1,6 @@
 # Script contain functions for image preprocessing
 #
-# Author: Róbert Kolcún, FIT
+# Author: Robert Kolcun, FIT
 # <xkolcu00@stud.fit.vutbr.cz>
 
 from keras.preprocessing.image import ImageDataGenerator

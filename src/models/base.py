@@ -1,6 +1,6 @@
 # Script contain base function
 #
-# Author: Róbert Kolcún, FIT
+# Author: Robert Kolcun, FIT
 # <xkolcu00@stud.fit.vutbr.cz>
 
 from printer import print_error

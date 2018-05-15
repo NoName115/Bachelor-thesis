@@ -1,6 +1,6 @@
 # Script responsible for training the models
 #
-# Author: Róbert Kolcún, FIT
+# Author: Robert Kolcun, FIT
 # <xkolcu00@stud.fit.vutbr.cz>
 
 from keras.optimizers import Adam, SGD
