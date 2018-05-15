@@ -1,11 +1,11 @@
 
 \section{Modely}
 \label{sec:modely}
-Všetky modely pre trénovanie sú implementované v scripte \textit{models.py}.
+Všetky modely pre trénovanie sú implementované v~scripte \textit{models.py}.
 Existuje jedna hlavná trieda \textit{class Model}, ktorá obsahuje všetky základné atributy potrebné pre modely, ako napr.
     meno modelu, vstupný rozmer dát, zvolený algoritmus trénovania a slovník, ktorý obsahuje indexi a názvy označení obrázkov.
 
-Každý model následne dedí z tejto hlavnej triedy a implementuje v sebe dve funkcie \textit{build}, ktorá zabezpečuje vytvorenie modelu a
+Každý model následne dedí z~tejto hlavnej triedy a implementuje v~sebe dve funkcie \textit{build}, ktorá zabezpečuje vytvorenie modelu a
     funkciu \textit{train}, ktorá sa volá pri spustení trénovania daného modelu.
 
 \begin{figure}[H]
@@ -15,27 +15,27 @@ Každý model následne dedí z tejto hlavnej triedy a implementuje v sebe dve f
     \label{pic:inheritance}
 \end{figure}
 
-Konvolučné neurónové siete sú implementované pomocou triedy \textit{Sequencia} z knižnice Keras.
-Pre klasifikátor K-Nearest-Neighbor je použitá trieda \textit{KNeighborsClassifier} a trieda \textit{SVC} pre klasifikátor SVM z knižnice scikit-learn.
+Konvolučné neurónové siete sú implementované pomocou triedy \textit{Sequencia} z~knižnice Keras.
+Pre klasifikátor K-Nearest-Neighbor je použitá trieda \textit{KNeighborsClassifier} a trieda \textit{SVC} pre klasifikátor SVM z~knižnice scikit-learn.
 
 %Pre klasifikátor K-Nearest-Neighbor je použitá trieda \textit{KNeighborsClassifier} s počtom 1 a 5 najbližších susedov, a trieda \textit{SVC} pre klasifikátor SVM
 %    so základnými nastavenia trénovania z knižnice scikit-learn.
 
 \subsection{Ukladanie a načítanie modelu}
 \label{subsec:ukladaniemodelu}
-Pre ukladanie natrénovaných modelov je implemtovaná funkcia \textit{save\_model()} v triede \textit{DataSaver} v scripte \textit{loader.py}.
-Pri ukladaní modelu sa ukladá model v binárnej forme, ukladá sa konfiguračný súbor \textit{settings.json}, ktorý obsahuje informácie ako veľkosť
+Pre ukladanie natrénovaných modelov je implemtovaná funkcia \textit{save\_model()} v~triede \textit{DataSaver} v~scripte \textit{loader.py}.
+Pri ukladaní modelu sa ukladá model v~binárnej forme, ukladá sa konfiguračný súbor \textit{settings.json}, ktorý obsahuje informácie ako veľkosť
     vstupných dát, použité funkcie na predspracovanie dát, meno modelu, typ algoritmu učenia, zoznam indexov označenia dát a dalšie informácie
     špecifické pre daný typ modelu.
 Uložením konvolučnej neurónovej siete sa ukladá graf priebehu trénovania.
 
-Naopak pre načítanie modelov je implementovaná funkcia \textit{load\_model\_data()} v triede \textit{DataLoader} v scripte \textit{loader.py},
-    ktorá načíta binárnu podobu modelu a všetky informácie z konfiguračného súboru \textit{settings.json}.
+Naopak pre načítanie modelov je implementovaná funkcia \textit{load\_model\_data()} v~triede \textit{DataLoader} v~scripte \textit{loader.py},
+    ktorá načíta binárnu podobu modelu a všetky informácie z~konfiguračného súboru \textit{settings.json}.
 
 \subsection{Trénovanie modelov}
 \label{sec:trenovanie}
-Pre trénovanie modelov sú v rámci implementácie použité všetky triedy, ktoré boli podrobne opísané vyššie.
-Proces trénovania prebieha v niekoľkých krokoch.
+Pre trénovanie modelov sú v~rámci implementácie použité všetky triedy, ktoré boli podrobne opísané vyššie.
+Proces trénovania prebieha v~niekoľkých krokoch.
 \begin{enumerate}
     \item Načítanie vstupných dát.
     \item Predspracovanie načítaných dát.
@@ -60,10 +60,10 @@ Proces trénovania prebieha v niekoľkých krokoch.
 \end{enumerate}
 
 Pre uľahčenie trénovania je implementovaný script \textit{train.py}, ktorý požaduje niekoľko argumentov na vstupe.
-Zoznam vstupných argumentov a ich význam, argumenty v hranatých zátvorkách sú voliteľné:
+Zoznam vstupných argumentov a ich význam, argumenty v~hranatých zátvorkách sú voliteľné:
 \begin{enumerate}
-    \item[$\bullet$] \textbf{--model} cesta k priečinku, do ktorého bude natrénovaný model uložený.
-    \item[$\bullet$] \textbf{--dataset} cesta k priečinku, z ktorého budú načítane vstupné dáta.
+    \item[$\bullet$] \textbf{--model} cesta k~priečinku, do ktorého bude natrénovaný model uložený.
+    \item[$\bullet$] \textbf{--dataset} cesta k~priečinku, z~ktorého budú načítane vstupné dáta.
     \item[$\bullet$] \textbf{--alg} voľba modelu, ktorý bude trénovaný. Tento argument má niekoľko možností.
     Možnosť ``cnnc'' pre trénovanie konvolučnej neurónovej siete určenej na klasifikáciu zbrane,
     ``cnna'' pre trénovanie konvolučnej neurónovej siete pre určenie náklonu zbrane a
@@ -78,14 +78,14 @@ Zoznam vstupných argumentov a ich význam, argumenty v hranatých zátvorkách 
 
 \subsection{Presnosť modelov}
 \label{subsec:presnostmodelov}
-Pre celkové hodnotenie presnosti modelov bola implementovaná funkcia \textit{evaluate\_model} v scripte \textit{evaluation.py}.
-Hodnotí presnosť modelov podľa metrík spomenutých v \ref{subsec:hodnoteniepresnosti}.
+Pre celkové hodnotenie presnosti modelov bola implementovaná funkcia \textit{evaluate\_model} v~scripte \textit{evaluation.py}.
+Hodnotí presnosť modelov podľa metrík spomenutých v~\ref{subsec:hodnoteniepresnosti}.
 
-V prípade určenia typu zbrane sa používa kontigenčná matica a hodnota celkovej úspešnosti modela.
+V~prípade určenia typu zbrane sa používa kontigenčná matica a hodnota celkovej úspešnosti modela.
 Táto metrika je použitá aj počas trénovania CNN na predbežné určenie presnosti a taktiež pri koncovom testovaní modelov.
 
-Avšak v prípade CNN, ktoré určujú náklon zbrane je potrebné túto metriku trocha pozmeniť.
-Ako je opísané v \ref{subsec:odchylkachyby}, v scripte \textit{base.py} je implementovaná funkcia \textit{angle\_error}, ktorá ráta priemerný rozdiel medzi
+Avšak v~prípade CNN, ktoré určujú náklon zbrane je potrebné túto metriku trocha pozmeniť.
+Ako je opísané v~\ref{subsec:odchylkachyby}, v~scripte \textit{base.py} je implementovaná funkcia \textit{angle\_error}, ktorá ráta priemerný rozdiel medzi
     skutočnymi a predpovedanými uhlami siete.
 Táto funkcia je použitá ako metrika počas trénovania CNN a pri koncovom testovaní presnosti siete.
-Následne po určení, či je predikcia správna alebo nie, pomocou prahovej hodnoty, sa použije výpočet úspešnosti z hodnôt v chybovej matici.
+Následne po určení, či je predikcia správna alebo nie, pomocou prahovej hodnoty, sa použije výpočet úspešnosti z~hodnôt v~chybovej matici.

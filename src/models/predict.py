@@ -1,3 +1,8 @@
+# Script for prediction of image type and orientation
+#
+# Author: Róbert Kolcún, FIT
+# <xkolcu00@stud.fit.vutbr.cz>
+
 from base import parse_arguments_prediction
 from loader import DataLoader
 from evaluation import get_prediction
@@ -6,7 +11,7 @@ from evaluation import get_prediction
 def get_max(results):
     return max(results, key=results.get)
 
-# --class, --anglex, --angley, --anglez, --image
+# --class, --anglep, --angler, --angley, --image
 args = parse_arguments_prediction()
 
 # Load all models

@@ -1,52 +1,52 @@
 
 \section{Nástroje pre tvorbu klasifikátorov a neurónových sietí}
 \label{sec:frameworks}
-V oblasti klasifikácie, či už pomocou klasických prístupov, alebo pomocou neurónových sietí, existuje množstvo nástrojov,
+V~oblasti klasifikácie, či už pomocou klasických prístupov, alebo pomocou neurónových sietí, existuje množstvo nástrojov,
     ktoré implementujú tieto techniky a sú voľné dostupné na použitie.
 Technické giganty ako Google, Amazon, Facebook alebo Microsoft sú firmy, ktoré vkladajú veľké investície do tejto oblasti.
 Vedú buď svoj vlastný vývoj, alebo získavajú/podporujú niektoré existujúce riešenia.
-Keďže existuje veľké množstvo týchto nástrojov, tak v kapitole budú spomenuté iba niektoré, ktoré sa radia medzi najpopulárnejšie \cite{odkaz:FrameworkComparison}.
+Keďže existuje veľké množstvo týchto nástrojov, tak v~kapitole budú spomenuté iba niektoré, ktoré sa radia medzi najpopulárnejšie \cite{odkaz:FrameworkComparison}.
 
 \subsubsection{Theano}
-Theano je jeden z prvých nástrojov, vytvoril ho Yoshua Bengio spolu s výskumným tímom na University of Montreal v roku 2007.
+Theano je jeden z~prvých nástrojov, vytvoril ho Yoshua Bengio spolu s~výskumným tímom na University of Montreal v~roku 2007.
 Bol prvý široko používaný nástroj pre strojové učenie.
 Theano je Python knižnica, extrémne rýchla a výkonná, ale kritizovaná za to, že je nízko úrovňovým nástrojom.
-Tím, ktorý stojí za touto knižnicou oznámil v roku 2017, že po vydaný poslednej verzie v roku 2018 už vývoj nebude pokračovať \cite{odkaz:FrameworkComparison}.
+Tím, ktorý stojí za touto knižnicou oznámil v~roku 2017, že po vydaný poslednej verzie v~roku 2018 už vývoj nebude pokračovať \cite{odkaz:FrameworkComparison}.
 
 \subsubsection{TensorFlow}
-TensorFlow je softvérová knižnica s otvoreným zdrojovým kódom (angl. \textit{open source library}) pre numerické výpočty pomocou dátových vývojových diagramov (angl. \textit{data flow graphs}).
-Uzly v grafe reprezentujú matematické operácie, zatiaľ čo hrany grafu reprezentujú multidimenzionálne dátové polia (tensors), ktoré medzi sebou kominukujú.
+TensorFlow je softvérová knižnica s~otvoreným zdrojovým kódom (angl. \textit{open source library}) pre numerické výpočty pomocou dátových vývojových diagramov (angl. \textit{data flow graphs}).
+Uzly v~grafe reprezentujú matematické operácie, zatiaľ čo hrany grafu reprezentujú multidimenzionálne dátové polia (tensors), ktoré medzi sebou kominukujú.
 Flexibilná architektúra umožňuje nasadenie na viacerých CPU alebo GPU, serveroch alebo aj mobilných zariadeniach.
 TensorFlow bol pôvodne vyvinutý na účely výskumu strojového učenia a výskumu hlbokých neurónových sietí \cite{odkaz:TensorFlow}.
 
 Aktuálne je TensorFlow najviac používaný systém pre trénovanie hlbokých neurónových sietí.
-Stojí za ním veľká komunita technických firiem, odborníkov a technologických nadšencov z celého sveta, aj keď bola kritizovaná za jej prílišnú komplexnosť.
-Ďalšou bežnou kritikou je, že podľa mnohých odborníkov je oveľa pomalšia v porovnaní s inými knižnicami \cite{odkaz:FrameworkComparison}.
+Stojí za ním veľká komunita technických firiem, odborníkov a technologických nadšencov z~celého sveta, aj keď bola kritizovaná za jej prílišnú komplexnosť.
+Ďalšou bežnou kritikou je, že podľa mnohých odborníkov je oveľa pomalšia v~porovnaní s~inými knižnicami \cite{odkaz:FrameworkComparison}.
 
 \subsubsection{Keras}
 Keďže vysoká všeobecnosť knižice TensorFlow pre jej širokú aplikáciu, robí jej použitie pre tvorbu neurónových sietí komplikovanejšiu.
-Keras sa v tomto smere snaží využívať TensorFlow ako svoj backend a tvorbu neurónových sietí zjednodušiť.
+Keras sa v~tomto smere snaží využívať TensorFlow ako svoj backend a tvorbu neurónových sietí zjednodušiť.
 Za jeho backend je možné použiť aj CNTK alebo Theano.
-Táto implementácia knižnice Keras robí experimentovanie s neurónovými sieťami jednoduchšie a rýchlejšie.
+Táto implementácia knižnice Keras robí experimentovanie s~neurónovými sieťami jednoduchšie a rýchlejšie.
 Aj keď sa snaží implementáciu zjednodušiť, stále si zachováva modularitu a preto je možné dostatočne dobré modely neurónových sietí upravovať a prispôsobovať pre riešienie rôznych problémov \cite{odkaz:Keras}.
 
 \subsubsection{PyTorch a Torch}
-PyTorch je python implementácia nástroja Torch, ktorý bol vydaný spoločnosťou Facebook v roku 2017.
-Používa dynamické výpočtové grafy (angl. \textit{dynamic computational graphs}), ktoré významne prispievajú, k analýze neštrukturovaných údajov.
+PyTorch je python implementácia nástroja Torch, ktorý bol vydaný spoločnosťou Facebook v~roku 2017.
+Používa dynamické výpočtové grafy (angl. \textit{dynamic computational graphs}), ktoré významne prispievajú, k~analýze neštrukturovaných údajov.
 PyTorch si upravil alokátor GPU, ktorý umožňuje, aby modely neurónových sietí boli viac pamäťovo efektívne.
-Niektoré z hlavných nevýhod sú, že nástroj je stále v porovnateľne novej beta verzií a nemá dostatočne veľkú podporu komunity \cite{odkaz:FrameworkComparison}.
+Niektoré z~hlavných nevýhod sú, že nástroj je stále v~porovnateľne novej beta verzií a nemá dostatočne veľkú podporu komunity \cite{odkaz:FrameworkComparison}.
 
 \subsubsection{Caffe a Caffe2}
-Caffe je dalši z nástrojov pre tvorbu neurónových sietí, avšak jeho použitie je priamo mierené pre spracovanie obrazu a nie na iné aplikácie,
+Caffe je dalši z~nástrojov pre tvorbu neurónových sietí, avšak jeho použitie je priamo mierené pre spracovanie obrazu a nie na iné aplikácie,
     ako spracovanie textu alebo zvuku \cite{odkaz:FrameworkComparison2}.
 Za pritiotu si dáva rýchlosť a modularitu. Bol vyvinutý Berkley Artificial Intelligence Research.
-Pre veľkú popularitu Caffe sa Facebook rozhodol vydať Caffe2 v roku 2017.
+Pre veľkú popularitu Caffe sa Facebook rozhodol vydať Caffe2 v~roku 2017.
 Kde Caffe2 ponúka užívateľovi použiť predtrénované modely pre rýchlu tvorbu demo aplikácií \cite{odkaz:FrameworkComparison}.
 
 \subsubsection{Scikit-learn a Scikit-image}
 Scikit-learn je vysoko úrovňová knižnica navrhnutá pre algoritmy strojového učenia pod dozorom, alebo bez dozoru.
-Ako jedna zo zložiek vedeckého ekosystému jazyka Python, je postavená na knižniciach NumPy a SciPy, kde každá z nich je zodpovedná za úlohy z vedeckej oblasti spracovania dát na nízkej úrovni.
+Ako jedna zo zložiek vedeckého ekosystému jazyka Python, je postavená na knižniciach NumPy a SciPy, kde každá z~nich je zodpovedná za úlohy z~vedeckej oblasti spracovania dát na nízkej úrovni.
 Obsahuje množstvo algoritmov pre klasifikáciu, regresiu alebo zhlukovanie dát \cite{odkaz:FrameworkComparison3}.
 
 Sciki-image je voľne dostupná knižnica, ktorá obsahuje kolekciu algoritmov pre spracovanie obrázkov, určená pre SciPy.
-Je písaná v jazyku Python, knižnica je vývíjaná SciPy komunitou \cite{prop:scikit-image}.
+Je písaná v~jazyku Python, knižnica je vývíjaná SciPy komunitou \cite{prop:scikit-image}.

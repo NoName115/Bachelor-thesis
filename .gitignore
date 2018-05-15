@@ -2,6 +2,7 @@
 .vscode/
 *test.py
 .pytest_cache
+*.te~
 
 # All images
 dataset/
