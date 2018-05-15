@@ -16,20 +16,23 @@
 
 ## Obsah priečinka
 * dataset
-    * priečinok angle_detection obsahuje 2 podpriečinky.
+    * priečinok angle\_detection obsahuje 2 podpriečinky.
         * training_data - obrazky na ktorých prebiehalo trénovanie modelov.
         * test_data - zvyšné obrázky ktoré neboli použité ani na trénovanie ani na testovanie.
-    * priečinok classification obsahuje rovnako 2 podpriečinky s rovnakým významom ako priečinok angle_detection.
+    * priečinok classification obsahuje rovnako 2 podpriečinky s rovnakým významom ako priečinok angle\_detection.
 * doc - priečinok obsahujúci všetky tex-ovské zdrojové súbory, bibliografiu a obrázky použité v bakalárskej práci.
 * models - priečinok obsahuje 4 podpriečinky v ktorých sú natrénovane modely pre určenie typu a náklonu zbrane.
-    * TODO
+    * cnnc - model pre klasifikáciu typu zbrane
+    * cnna\_pitch - model pre určenie náklonu zbrane v ose pitch
+    * cnna\_roll - model pre určenie náklonu zbrane v ose roll
+    * cnna\_yaw - model pre určenie náklonu zbrane v ose yaw
 * src - zdrojové súbory implementácie
-    * dataset_processing - obsahuje pomocné scripty použité pri stahovaní a generovaní vstupných dát pre trénovanie modelov
+    * dataset\_processing - obsahuje pomocné scripty použité pri stahovaní a generovaní vstupných dát pre trénovanie modelov
     * models - všetky zdrojové súbory použité pre trénovanie, testovanie a tvorbu modelov, ich podrobná  implementácia je opísaná v kapitole 4.Implementácia v bakalárskej práci
 * Pipfile a Pipfile.lock - konfiguračné súbory pre nástroj pipenv, ktorý vytvára virtuálne prostredie pre programovací jazyk Python
 
 ## Postup spustenia programu
-1. Nainštalovanie nástroja pipenv - https://github.com/pypa/pipenv
+1. Pre spustenie programu je potrebné mať nainštalovaný nástroj pipenv a python3.6
 2. Vytvorenie virtuálneho prostredia a inštalácia všetkých potrebných balíčkov
 ```bash
 $ pipenv shell
@@ -41,5 +44,5 @@ $ pipenv shell
 ```
 4. Spustenie programu predikcie
 ```bash
-(virtualenv) $ python src/model/predict.py --class models/class/ --anglex models/anglex/ --angley models/angley/ --anglez models/anglez/ --image path_to_image
+(virtualenv) $ python src/models/predict.py --class models/cnnc/ --anglep models/cnna_pitch/ --angler models/cnna_roll/ --angley models/cnna_yaw/ --image path_to_image
 ```
