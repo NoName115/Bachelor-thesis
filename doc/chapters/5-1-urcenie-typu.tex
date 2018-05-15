@@ -1,12 +1,12 @@
 
 \section{Určenie typu zbrane}
-Pre určenie typu zbrane v~dvoch kategóriách a to na krátka a dlhé zbrane, boli navrhnuté dva klasické prístupy
+Pre určenie typu zbrane v~dvoch kategóriách a to na krátke a dlhé zbrane, boli navrhnuté dva klasické prístupy
     K-Nearest-Neighbor a SVM klasifikátor a dve architektúry pre konvolučné neurónové siete.
 
 \subsection{Klasický prístup}
 Pre trénovanie K-Nearest-Neighbor a SVM boli načítané všetky vstupné trénovancie dáta (1377 pre krátke zbrane a 850 pre dlhé zbrane),
     následne boli tieto dve skupiny zarovnané na rovnaký počet obrázkov pre každú kategórií na 850 obrázkov.
-Následne bola veľkosť tejto vstupnej databázy, pomocou augmentácie dát, zväčšená štvornásobne a rozdelená na trénovacie a testovacie dáta.
+Veľkosť tejto vstupnej databázy bola, pomocou augmentácie dát, zväčšená päťnásobne a rozdelená na trénovacie a testovacie dáta.
 Tieto augmentované dáta prešli predspracovaním, ktoré pozostáva z~normalizácie, šedotónovej, a hoghovej transformácie.
 Na trénovanie bolo použitých 5950 obrázkov, na testovanie resp. evaluáciu modelu 2550 obrázkov.
 
@@ -56,7 +56,7 @@ A~s~nastavením $k=1$.
                                                                 &                                    & \multicolumn{2}{c}{Klasifikované hodnoty}                                                         &                                    \\ \cline{3-5} 
                                                                 & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{Dlhé zbrane}                & \multicolumn{1}{c|}{Krátke zbrane}              & \multicolumn{1}{c|}{Úspešnosť}     \\ \cline{2-5} 
         \multicolumn{1}{c|}{}                                  & \multicolumn{1}{c|}{Dlhé zbrane}   & \multicolumn{1}{c|}{{\color[HTML]{009901} 880}} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} 374}} & \multicolumn{1}{c|}{\textbf{70\%}} \\ \cline{2-5} 
-        \multicolumn{1}{c|}{\multirow{-2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Krátke zbrane} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} 441}} & \multicolumn{1}{c|}{{\color[HTML]{009901} 885}} & \multicolumn{1}{c|}{\textbf{68\%}} \\ \cline{2-5} 
+        \multicolumn{1}{c|}{\multirow{-2}{*}{Správne hodnoty}} & \multicolumn{1}{c|}{Krátke zbrane} & \multicolumn{1}{c|}{{\color[HTML]{9A0000} 411}} & \multicolumn{1}{c|}{{\color[HTML]{009901} 885}} & \multicolumn{1}{c|}{\textbf{68\%}} \\ \cline{2-5} 
     \end{tabular}
     \caption{Výsledky klasifikácie pre K-Nearest-Neighbor s~$k=5$.}
     \label{tab:kmeans5}
@@ -85,8 +85,8 @@ Počet a rozdelenie vstupných dát na rovnaký pomer je totožný s~uvedeným p
 Celkovo bolo na trénovanie použitých 1190 obrázkov, na validáciu 255 a na testovanie tak isto 255 obrázkov.
 
 \subsubsection{AlexNetLike}
-Prvá archiktúra bola inšpirovaná AlexNet architektúrov, jej trénovanie prebiehalo v~40 epochách.
-Kedže, ako je vidno na obrázku \ref{pic:alexnetlikehistory}, medzi 30. a 40. epochou už veľké zlepšenie neprebiehalo, preto nebolo potrebné trénovať sieť ďalej.
+Prvá archiktúra bola inšpirovaná AlexNet architektúrov, jej trénovanie prebiehalo v~50 epochách.
+Kedže, ako je vidno na obrázku \ref{pic:alexnetlikehistory}, od 40.epochy už veľké zlepšenie neprebiehalo, preto nebolo potrebné trénovať sieť ďalej.
 
 \begin{figure}[H]
 	\centering
@@ -96,7 +96,7 @@ Kedže, ako je vidno na obrázku \ref{pic:alexnetlikehistory}, medzi 30. a 40. e
 \end{figure}
 Kde \textit{acc} označuje celkovú presnosť siete na trénovacích dátach, \textit{val\_acc} presnosť siete na validačných dátach, \textit{train\_loss} a
     \textit{val\_loss} je tzv. \textit{loss\ function} alebo označovaná aj ako \textit{cost\ function}, ktorá v~jednoduchosti určuje nepresnosť danej siete,
-    to znamená, že čím nižšia hodnota, tým by mala byť sieť dosahovať lepšie výsledky.
+    to znamená, že čím nižšia hodnota, tým by mala sieť dosahovať lepšie výsledky.
 
     Výsledná presnosť na testovacích dátach je v~tabuľke \ref{tab:alexnetresults}.
 
@@ -114,7 +114,7 @@ Kde \textit{acc} označuje celkovú presnosť siete na trénovacích dátach, \t
 Celková úspešnosť je 83.14\%.
 
 \subsubsection{VGGLike}
-Druhá architektúra bola inšpirovaná VGGLike architektúrov, jej trénovanie priebehalo tak isto v~40 epochách.
+Druhá architektúra bola inšpirovaná VGGLike architektúrov, jej trénovanie priebehalo v~40 epochách.
 
 \begin{figure}[H]
 	\centering

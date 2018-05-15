@@ -6,11 +6,11 @@ Nastavenia sietí boli opísané v~návrhu.
 
 Pre trénovanie v~osi pitch bolo použitých 1036 obrázkov, na validáciu 222 a taktiež 222 pre testovanie presnosti siete.
 V~osi roll bolo na trénovanie použitých 3315 obrázkov, na validáciu 667 a 668 pre testovanie.
-Nakoniec pre os yaw bolo použitých 3220 obrázkov na trénovanie a po 690 na validáciu a testovanie.
+Nakoniec pre os yaw bolo použitých 3208 obrázkov na trénovanie a po 688 na validáciu a testovanie.
 Všetky tieto obrázky prešli augmentáciou dát, ako je opísané v~\ref{subsec:augmentacia}.
 
 \subsubsection{Pitch}
-Sieť bola trénovaná v~50 epochách.
+Siete boli trénovane v~50 epochách.
 Priebeh trénovania obidvoch sietí pre os Pitch je vidieť na obrázku \ref{pic:pitchaxis}.
 Kde pre presnosť týchto sietí je použitá metrika opísaná v~\ref{subsec:presnostmodelov}.
 Hodnoty $angle\_error$ zobrazujú celkovú presnosť siete vzhľadom na priemernú odchýlku uhla pre trénovacie dáta,
@@ -53,7 +53,7 @@ Výsledná presnosť sietí je uvedená v~tabuľkách \ref{tab:alexnetpitchresul
 \subsubsection{Roll}
 V~prípade AlexNetLike architektúry prebiehalo trénovanie rovnako ako v~prípade osi Pitch,
     avšak pri sietí VGGLike bolo potrebné znížiť počet interácií trénovania kvôli dlhej dobe
-    spracovania jedej interácie.
+    spracovania jednej interácie, kedže trénovanie prebiehalo na väčšom počte dát oproti trénovaniu v~ose Pitch.
 Aj z~priebehu trénovanie zobrazeného na obrázku \ref{pic:rollaxis} je možné vidieť že sieť veľmi nenapreduje k~lepším výsledkom.
 
 \begin{figure}[H]
@@ -89,7 +89,7 @@ Aj z~priebehu trénovanie zobrazeného na obrázku \ref{pic:rollaxis} je možné
 
 
 \subsubsection{Yaw}
-Trénovanie pre os Yaw prebiehalo rovnako ako v~prípade osi Roll, počét epóch pre sieť VGGLike
+Trénovanie pre os Yaw prebiehalo rovnako ako v~prípade osi Roll, počet epóch pre sieť VGGLike
     bol rovnako skrátený na 15 kvôli časovej náročnosti trénovania.
 
 \begin{figure}[H]
