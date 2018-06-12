@@ -6,35 +6,33 @@
 \usepackage{fancyvrb}
 \usepackage{verbatim}
 \usepackage{multirow}
-\usetheme{FIT}
+%\usetheme[]{FIT}
+\usetheme[CZlogo]{FIT} % CZ logo
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[]{Určení typu a směru zbraně v obrazové scéně}
 
 \author[]{Róbert Kolcún}
 
-\institute[]{Vysoké Učení Technické v Brně, Fakulta Informačních Technológií\\
-Bo\v{z}et\v{e}chova 1/2. 612 66 Brno - Kr\'alovo Pole\\
+%\institute[]{Brno University of Technology, Faculty of Information Technology\\
+%Bo\v{z}et\v{e}chova 1/2. 612 66 Brno - Kr\'alovo Pole\\
+%login@fit.vutbr.cz}
+
+% CZ verzia
+\institute[]{Vysoké učení technické v Brně, Fakulta informačních technologií\\
+Božetěchova 1/2 612 66 Brno - Kr\'alovo Pole\\
 xkolcu00@fit.vutbr.cz}
 
-%\date{January 1, 2016}
-\date{\today}
+
+\date{8. Jún 2018}
+%\date{\today}
 %\date{} % bez data
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-% Title page
+
 \frame[plain]{\titlepage}
-
-
-\begin{comment}
-    % Frame
-    \begin{frame}\frametitle{Frame Title}
-        Example \emph{content}.
-    \end{frame}
-\end{comment}
-
 
 % Frame
 \begin{frame}\frametitle{Cieľ práce}
@@ -57,14 +55,14 @@ xkolcu00@fit.vutbr.cz}
 % Frame
 \begin{frame}\frametitle{Návrhovaný postup}
     \begin{itemize}
-        \item Predspracovanie obrazu
+        \item Extrakcia príznakov a predspracovanie obrazu
         \begin{itemize}
-            \item Hoghova tranformácia obrazu
+            \item Histogram of Oriented Gradients
 
             \begin{figure}[H]
                 \centering
                 \includegraphics[width=0.55\textwidth]{img/hog}
-                \caption{Príklad Hoghovej transformácie vstupných dát.}
+                \caption{Príklad exktrakcie príznakov.}
             \end{figure}
 
             \item Augmentácia dát
@@ -81,41 +79,59 @@ xkolcu00@fit.vutbr.cz}
 \end{frame}
 
 % Frame
-\begin{frame}\frametitle{Klasifikácia}
+\begin{frame}\frametitle{Klasifikácia typu zbrane}
     \begin{itemize}
-        \item Klasifikácia zbrane do dvoch kategórií
-        \begin{itemize}
-            \item krátke a dlhé
-            \vspace{0.2cm}
-            \item Klasický prístup - SVM, K-Nearest-Neigbour
-            \item Konvolučné neurónové siete - 2 architektúry (AlexNetLike, VGGLike)
-        \end{itemize}
-
-        \vspace{0.1cm}
-
-        \item Určenie náklonu zbrane
-        \begin{itemize}
-            \item Klasifikácia do 72 kategórií po 5 stupňov.
-            \item Tri modely - tri osi.
-            \vspace{0.2cm}
-            \item Konvolučné neurónové siete - 2 architektúry (AlexNetLike, VGGLike)
-        \end{itemize}
-
+        \item 2 kategórie - krátke a dlhé
         \vspace{0.3cm}
-
-        \item Použité knižnice
-        \begin{itemize}
-            \item scikit-image, Keras - predspracovanie obrazu
-            \item scikit-learn, Keras - algoritmy strojového učenia
-        \end{itemize}
-
+        \item Klasický prístup - SVM, K-Nearest-Neighbour
+        \vspace{0.1cm}
+        \item Konvolučné neurónové siete - 2 architektúry (AlexNetLike, VGGLike)
     \end{itemize}
 \end{frame}
-\begin{comment}
-    - pre klasicky pristup bola pouzita Hoghova transformacia
-    - pre CNN bola pouzita augmentacia dat pre zvacsenie mnozstva vstupnych datasetov
-    - vsetky postupy boli implementovane a nasledne porovnane
-\end{comment}
+
+\begin{frame}\frametitle{Určenie náklonu zbrane}
+    \begin{itemize}
+        \item Klasifikácia do 72 kategórií po 5 stupňov.
+        \item Tri modely - tri osi.
+        \vspace{0.2cm}
+        \item Konvolučné neurónové siete - 2 architektúry (AlexNetLike, VGGLike)
+    \end{itemize}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.55\textwidth]{img/airplane-axis}
+        \caption{Pomenovanie osi otáčania.}
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}\frametitle{Použité knižnice}
+    \begin{itemize}
+        \item Extrakcia príznakov a predspracovanie obrazu - scikit-image, Keras
+        \item Algoritmy strojového učenia - scikit-learn, Keras, TensorFlow
+    \end{itemize}
+
+    \vspace{0.4cm}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.4\textwidth]{img/keras-tensorflow}
+        %\caption{Pomenovanie osi otáčania.}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.2\textwidth]{img/scikit-learn-logo}
+        \qquad
+        \includegraphics[width=0.4\textwidth]{img/scikit-image-logo}
+    \end{figure}
+
+    %\begin{figure}[H]
+     %   \centering
+      %  \includegraphics[width=0.4\textwidth]{img/scikit-image-logo}
+        %\caption{Pomenovanie osi otáčania.}
+    %\end{figure}
+\end{frame}
 
 % Frame
 \begin{frame}\frametitle{Výsledky}
@@ -123,38 +139,65 @@ xkolcu00@fit.vutbr.cz}
         \begin{tabular}{ l | c | c }
             \textbf{Typ klasifikácie}   & \textbf{Model}                    & \textbf{Presnosť}   \\
             \hline
-            \textit{Krátke/Dlhé}    &                                   & {83,14\%}           \\
-            \textit{Pitch}          &                                   & {85,14\%}           \\
-            \textit{Roll}           &                                   & {91,02\%}           \\
-            \textit{Yaw}            & \multirow{-4}{*}{AlexNetLike}     & {49,71\%}
+            \textit{Krátke/Dlhé}    &                                   & {83,14 \%}           \\
+            \textit{Pitch}          &                                   & {85,14 \%}           \\
+            \textit{Roll}           &                                   & {91,02 \%}           \\
+            \textit{Yaw}            & \multirow{-4}{*}{AlexNetLike}     & {49,71 \%}
         \end{tabular}
         \caption{Výsledna presnosť modelov.}
     \end{table}
 
+    
+
+\end{frame}
+
+\begin{frame}\frametitle{Príklad klasifikácie}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.6\textwidth]{img/prediction-weapon}
-        \caption{Obrázok zbrane pre príklad výstupu klasfikácie nižšie.}
+        \includegraphics[width=0.5\textwidth]{img/prediction-weapon}
+        \includegraphics[width=0.9\textwidth]{img/result-prediction}
+        \caption{Príklad správneho výsledku klasifikácie.}
     \end{figure}
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=1\textwidth]{img/result-prediction}
+        \includegraphics[width=0.4\textwidth]{img/weapon_2023}
+        \includegraphics[width=0.9\textwidth]{img/class_bad}
+        \caption{Príklad nesprávneho výsledku klasifikácie.}
     \end{figure}
 
 \end{frame}
+
+\appendix
 
 % Last page
 \bluepage{Ďakujem za pozornosť.}
 
+% Questions
+\addtocounter{framenumber}{-\value{framenumber}} % Framennumber reset
 
-% Frame
-\begin{frame}\frametitle{Otázky oponenta}
+\begin{frame}
+\frametitle{1. Otázka oponenta}
+    Z jakého důvodu je testovací množina pro hodnocení úspěšnosti neuronových sítí menší oproti množině pro testování detektoru založeného na SVM (Support Vector Machine)?
+    \vspace{0.3cm}
     \begin{itemize}
-        \item \dots
-        \item \dots
+        \item SVM, 1 cyklus, 5-násobene dáta augmentáciou,
+        \item 1,700 * 5 = 8,500 obrázkov (5,950 trénovanie, 2,550 testovanie).
+        \vspace{0.2cm}
+        \item CNN, \textit{n} cyklov, augmentácia pre každý cyklus,
+        \item 1,700 obrázkov (1,190 trénovanie, 255 validácia, 255 testovanie).
     \end{itemize}
 \end{frame}
 
+\begin{frame}
+\frametitle{2. Otázka oponenta}
+    Jaké jsou další možnosti pro zlepšení detekce zbraní v obraze?
+    \vspace{0.3cm}
+    \begin{itemize}
+        \item Kvalitnejšie a väčšia variácia 3D modelov pre generovanie vstupných dát.
+        \item Väčšie množstvo vstupných dát.
+        \item Použiť už natrénovane modely hlbokých CNN.
+    \end{itemize}
+\end{frame}
 
 \end{document}

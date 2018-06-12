@@ -6,7 +6,11 @@
 
 \mode<presentation>
 
-\pgfdeclareimage[width=6cm,interpolate=true]{fitlogotext}{img/fitlogo1_cz}
+\pgfdeclareimage[width=6cm,interpolate=true]{fitlogotext}{img/fitlogo1}
+
+\ifbeamer@CZlogo
+	\pgfdeclareimage[width=6cm,interpolate=true]{fitlogotext}{img/fitlogo1_cz}
+\fi
 
 \ifbeamer@mylogo
   \pgfdeclareimage[width=1.7cm,interpolate=true]{fitlogotext}{img/mylogo}
@@ -15,6 +19,9 @@
 \ifbeamer@nologo
   \titlegraphic{\pgfuseimage{fitlogotext}}
 \fi
+
+% Nove
+\newcommand{\insertslash}{\textrm{/}} % Uprava /
 
 
 \setbeamercolor{section in head/foot}{parent=palette primary}
@@ -45,10 +52,22 @@
   \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=.3cm ]{author in head/foot}%
   \usebeamercolor[fg]{page number in head/foot}%
   \usebeamerfont{page number in head/foot}%
-  \insertpagenumber\,/\,\insertpresentationendpage\kern1em%
+  \insertpagenumber\,\insertslash\,\insertpresentationendpage\kern1em%
     
   \end{beamercolorbox}}%
   \vskip0pt%
+}
+\g@addto@macro\appendix{%
+  \setbeamertemplate{footline}[page number appendix]%
+  \renewcommand*{\insertpagenumber}{%
+    \Roman{framenumber}%
+  }%
+  \renewcommand*{\insertpresentationendpage}{%
+    %
+  }%
+  \renewcommand*{\insertslash}{%
+    %
+  }%
 }
 
 \setbeamercolor{frametitle}{parent=subsection in head/foot}
